@@ -1,0 +1,165 @@
+/* ============================================================
+   PRAVAH — typography.css
+   Prose styles for all reading modes.
+   ============================================================ */
+
+/* ---- Base reading prose (Merriweather for English) ---- */
+.prose-reading {
+  font-family: 'Merriweather', Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 300;
+  line-height: var(--reading-line-height, 1.95);
+  letter-spacing: 0.01em;
+  color: var(--text-secondary);
+  max-width: 68ch;
+}
+.prose-reading p { margin: 0 0 1.4em; }
+.prose-reading p:last-child { margin-bottom: 0; }
+.prose-reading strong { font-weight: 600; color: var(--text-primary); }
+.prose-reading em { font-style: italic; color: var(--text-secondary); }
+
+/* ---- Story / long-form prose ---- */
+.prose-story {
+  font-family: 'Merriweather', Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 300;
+  line-height: 2.0;
+  letter-spacing: 0.01em;
+  color: var(--text-secondary);
+  max-width: 68ch;
+}
+.prose-story p { margin: 0 0 1.6em; }
+.prose-story p:last-child { margin-bottom: 0; }
+.prose-story .drop-cap::first-letter {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 4.5em;
+  font-weight: 600;
+  float: left;
+  line-height: 0.75;
+  margin: 0.1em 0.12em 0 0;
+  color: var(--accent-saffron);
+}
+
+/* ---- Biography prose ---- */
+.prose-biography {
+  font-family: 'Merriweather', Georgia, serif;
+  font-size: 1.05rem;
+  font-weight: 300;
+  line-height: 1.95;
+  color: var(--text-secondary);
+  max-width: 68ch;
+}
+.prose-biography p { margin: 0 0 1.3em; }
+
+/* ---- Poetry prose (English) ---- */
+.prose-poetry {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.3rem;
+  line-height: 2.1;
+  letter-spacing: 0.015em;
+  color: var(--text-primary);
+  white-space: pre-line;
+  max-width: 55ch;
+  font-weight: 400;
+}
+.prose-poetry .poem-line {
+  display: block;
+  margin: 0;
+}
+.prose-poetry .poem-stanza { margin-bottom: 1.25em; }
+
+/* ---- Hindi / Devanagari prose ---- */
+.prose-devanagari {
+  font-family: 'Noto Serif Devanagari', serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  line-height: 2.2;
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
+  white-space: pre-line;
+  max-width: 58ch;
+}
+.prose-devanagari .poem-line { display: block; }
+.prose-devanagari .poem-stanza { margin-bottom: 1.4em; }
+
+/* ---- Roman Urdu / Transliterated ---- */
+.prose-roman {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.25rem;
+  font-style: italic;
+  line-height: 2.0;
+  letter-spacing: 0.01em;
+  color: var(--text-primary);
+  white-space: pre-line;
+}
+
+/* ---- Pull quotes ---- */
+.pull-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.45rem;
+  font-style: italic;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  border-left: 3px solid var(--room-current);
+  padding-left: 1.5rem;
+  margin: 2rem 0;
+}
+
+/* ---- Philosophy / deep thought ---- */
+.prose-philosophy {
+  font-family: 'Merriweather', Georgia, serif;
+  font-size: 1.05rem;
+  font-weight: 300;
+  line-height: 1.95;
+  color: var(--text-secondary);
+  max-width: 68ch;
+}
+.prose-philosophy p { margin: 0 0 1.4em; }
+.prose-philosophy p:last-child { margin-bottom: 0; }
+
+/* ---- Section label (small caps style) ---- */
+.section-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 0.5rem;
+}
+
+/* ---- Journal editor ---- */
+.journal-editor {
+  font-family: 'Merriweather', Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 300;
+  line-height: 1.9;
+  letter-spacing: 0.01em;
+  color: var(--text-primary);
+  caret-color: var(--accent-saffron);
+}
+.journal-editor:focus { outline: none; }
+.journal-editor[contenteditable="true"]:empty::before {
+  content: attr(data-placeholder);
+  color: var(--text-faint);
+  font-style: italic;
+  pointer-events: none;
+}
+
+/* ---- Mantra text ---- */
+.mantra-text {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.2rem, 3vw, 1.9rem);
+  font-style: italic;
+  line-height: 1.65;
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
+  text-align: center;
+}
+.mantra-devanagari {
+  font-family: 'Noto Serif Devanagari', serif;
+  font-size: clamp(1.15rem, 2.5vw, 1.65rem);
+  font-weight: 500;
+  line-height: 1.85;
+  text-align: center;
+}

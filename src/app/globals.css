@@ -1,0 +1,364 @@
+/* ============================================================
+   PRAVAH — globals.css
+   Root stylesheet. CSS variables, font loading, scrollbars, resets.
+   ============================================================ */
+
+/* ---- Fonts via Google Fonts CDN ---- */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Noto+Serif+Devanagari:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   THEME 1: CREAM (default) — Warm parchment minimalism
+   ============================================================ */
+:root,
+[data-theme="cream"] {
+  --bg-primary:    #F5F0E8;
+  --bg-secondary:  #EDE8DC;
+  --bg-tertiary:   #E4DDD0;
+  --bg-glass:      rgba(245, 240, 232, 0.80);
+  --bg-paper:      #F9F5EC;
+
+  --text-primary:  #1C1917;
+  --text-secondary:#3D3530;
+  --text-muted:    #7C746A;
+  --text-faint:    #A89E94;
+
+  --accent-saffron:  #C4873A;
+  --accent-moss:     #4A7C59;
+  --accent-moonblue: #5B7FA6;
+  --accent-mauve:    #8B7297;
+  --accent-terra:    #8B6355;
+  --accent-gold:     #D4A853;
+
+  --border-default: rgba(28, 25, 23, 0.10);
+  --border-hover:   rgba(28, 25, 23, 0.20);
+  --border-strong:  rgba(28, 25, 23, 0.35);
+
+  --shadow-sm: 0 1px 3px rgba(28,25,23,0.06), 0 1px 2px rgba(28,25,23,0.04);
+  --shadow-md: 0 4px 16px rgba(28,25,23,0.08), 0 2px 6px rgba(28,25,23,0.05);
+  --shadow-lg: 0 12px 40px rgba(28,25,23,0.10), 0 4px 12px rgba(28,25,23,0.06);
+
+  --texture-overlay: none;
+  --reading-line-height: 1.95;
+}
+
+/* ============================================================
+   THEME 2: VAN GOGH — Painterly blues and yellows
+   ============================================================ */
+[data-theme="vangogh"] {
+  --bg-primary:    #F2EDD5;
+  --bg-secondary:  #EAE4C4;
+  --bg-tertiary:   #E0D8B0;
+  --bg-glass:      rgba(242, 237, 213, 0.82);
+  --bg-paper:      #F7F2DC;
+
+  --text-primary:  #1A2035;
+  --text-secondary:#2D3A52;
+  --text-muted:    #6B7A96;
+  --text-faint:    #9DAABE;
+
+  --accent-saffron:  #D4A020;
+  --accent-moss:     #4A6B8A;
+  --accent-moonblue: #3A5A8A;
+  --accent-mauve:    #7A6BA6;
+  --accent-terra:    #8B7355;
+  --accent-gold:     #E8C050;
+
+  --border-default: rgba(26, 32, 53, 0.10);
+  --border-hover:   rgba(26, 32, 53, 0.18);
+  --border-strong:  rgba(26, 32, 53, 0.30);
+
+  --shadow-sm: 0 1px 4px rgba(26,32,53,0.08);
+  --shadow-md: 0 4px 20px rgba(26,32,53,0.10);
+  --shadow-lg: 0 12px 48px rgba(26,32,53,0.14);
+
+  --reading-line-height: 2.0;
+}
+
+/* ============================================================
+   THEME 3: RAINY LIBRARY — Warm browns, candlelight, paper
+   ============================================================ */
+[data-theme="rainy"] {
+  --bg-primary:    #1A1208;
+  --bg-secondary:  #241A0E;
+  --bg-tertiary:   #2E2012;
+  --bg-glass:      rgba(26, 18, 8, 0.88);
+  --bg-paper:      #1E160A;
+
+  --text-primary:  #E8D9B8;
+  --text-secondary:#CAAD88;
+  --text-muted:    #8A7454;
+  --text-faint:    #5C4C34;
+
+  --accent-saffron:  #D4943A;
+  --accent-moss:     #6A8A5A;
+  --accent-moonblue: #8A9EC4;
+  --accent-mauve:    #A68AB8;
+  --accent-terra:    #C4885A;
+  --accent-gold:     #E8C878;
+
+  --border-default: rgba(232, 217, 184, 0.10);
+  --border-hover:   rgba(232, 217, 184, 0.20);
+  --border-strong:  rgba(232, 217, 184, 0.35);
+
+  --shadow-sm: 0 1px 4px rgba(0,0,0,0.30);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.45);
+  --shadow-lg: 0 12px 48px rgba(0,0,0,0.60);
+
+  --reading-line-height: 2.05;
+}
+
+/* ============================================================
+   THEME 4: FOREST — Moss greens, earth, watercolor peace
+   ============================================================ */
+[data-theme="forest"] {
+  --bg-primary:    #F0F4EC;
+  --bg-secondary:  #E4EAE0;
+  --bg-tertiary:   #D8E0D2;
+  --bg-glass:      rgba(240, 244, 236, 0.82);
+  --bg-paper:      #F4F8F0;
+
+  --text-primary:  #1A2818;
+  --text-secondary:#2E3E2C;
+  --text-muted:    #6A7A68;
+  --text-faint:    #98A896;
+
+  --accent-saffron:  #8A7A4A;
+  --accent-moss:     #4A7C59;
+  --accent-moonblue: #5A7A6A;
+  --accent-mauve:    #7A8A6A;
+  --accent-terra:    #7A6A4A;
+  --accent-gold:     #B8A060;
+
+  --border-default: rgba(26, 40, 24, 0.10);
+  --border-hover:   rgba(26, 40, 24, 0.18);
+  --border-strong:  rgba(26, 40, 24, 0.30);
+
+  --shadow-sm: 0 1px 4px rgba(26,40,24,0.07);
+  --shadow-md: 0 4px 18px rgba(26,40,24,0.09);
+  --shadow-lg: 0 12px 42px rgba(26,40,24,0.12);
+
+  --reading-line-height: 2.0;
+}
+
+/* ============================================================
+   ROOM ACCENT COLORS (shared across all themes)
+   ============================================================ */
+:root,
+[data-theme="cream"],
+[data-theme="vangogh"],
+[data-theme="rainy"],
+[data-theme="forest"] {
+  --room-aarambh:      #C4873A;
+  --room-agni:         #C25B3A;
+  --room-sukoon:       #8B7297;
+  --room-srot:         #5B7FA6;
+  --room-kathakar:     #8B6355;
+  --room-samvaad:      #4A7C59;
+  --room-manthan:      #6B7FA6;
+  --room-darshan:      #7297A6;
+  --room-neurolab:     #7A6BA6;
+  --room-cosmos:       #3A4A7C;
+  --room-bodh:         #D4A853;
+  --room-duniya:       #4A6B5B;
+  --room-aranya:       #5B8B5B;
+  --room-neelakurinji: #3A6B8B;
+  --room-vibhav:       #A67C52;
+  --room-riyaz:        #8B4A7C;
+  --room-safar:        #4A7C8B;
+  --room-bharati:      #C4703A;
+  --room-rangeen:      #D45B3A;
+  --room-noor:         #D4A320;
+  --room-antarman:     #6B8B7A;
+  --room-bargad:       #5B7A4A;
+  --room-lekhak:       #7A5A8A;
+  --room-samvaad:      #4A7C8B;
+
+  --room-current: var(--room-aarambh);
+
+  --sidebar-width: 260px;
+  --sidebar-collapsed: 56px;
+  --topbar-height: 64px;
+  --mobile-nav-height: 64px;
+}
+
+/* ============================================================
+   BASE RESETS
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  scroll-behavior: smooth;
+  transition:
+    background-color 400ms ease,
+    color 400ms ease,
+    border-color 400ms ease;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---- Custom Scrollbar ---- */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border-strong); }
+
+/* ---- Selection ---- */
+::selection {
+  background-color: var(--accent-saffron);
+  color: #FFFFFF;
+}
+
+/* ---- Focus visible ---- */
+:focus-visible {
+  outline: 2px solid var(--accent-saffron);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ---- Global color transition ---- */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 350ms;
+  transition-timing-function: ease;
+}
+.no-color-transition { transition: none !important; }
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+.glass {
+  background: var(--bg-glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-default);
+}
+
+.card-base {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-default);
+  border-radius: 16px;
+  transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+}
+.card-base:hover {
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-sm);
+}
+
+.room-accent     { color: var(--room-current); }
+.room-accent-bg  { background-color: color-mix(in srgb, var(--room-current) 12%, transparent); }
+.room-accent-border { border-color: color-mix(in srgb, var(--room-current) 40%, transparent); }
+
+/* Skeleton loading */
+.skeleton {
+  background: linear-gradient(90deg,
+    var(--bg-tertiary) 25%,
+    var(--bg-secondary) 50%,
+    var(--bg-tertiary) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.6s ease-in-out infinite;
+  border-radius: 8px;
+}
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ============================================================
+   FONT UTILITIES
+   ============================================================ */
+.font-devanagari { font-family: 'Noto Serif Devanagari', serif; }
+
+/* ---- Prose Reading Typography Styles ---- */
+.prose-reading {
+  font-family: 'Merriweather', Georgia, serif;
+  font-size: 1.1rem;
+  line-height: 2.0;
+  font-weight: 300;
+}
+.prose-story {
+  font-family: 'Merriweather', Georgia, serif;
+  font-size: 1.1rem;
+  line-height: 2.05;
+  font-weight: 300;
+}
+.prose-biography {
+  font-family: 'Merriweather', Georgia, serif;
+  font-size: 1.05rem;
+  line-height: 1.95;
+  font-weight: 300;
+}
+.prose-philosophy {
+  font-family: 'Merriweather', Georgia, serif;
+  font-size: 1.05rem;
+  line-height: 1.95;
+  font-weight: 300;
+}
+.prose-poetry {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.25rem;
+  line-height: 2.1;
+  font-weight: 400;
+}
+.prose-devanagari {
+  font-family: 'Noto Serif Devanagari', serif;
+  font-size: 1.15rem;
+  line-height: 2.2;
+  font-weight: 400;
+}
+.prose-roman {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 1.2rem;
+  line-height: 2.0;
+  font-weight: 400;
+}
+.journal-editor {
+  font-family: 'Merriweather', Georgia, serif;
+  font-size: 1.1rem;
+  line-height: 1.9;
+  font-weight: 300;
+}
+
+@media (max-width: 1024px) {
+  .prose-reading, .prose-story, .journal-editor { font-size: 1.05rem; }
+  .prose-biography, .prose-philosophy { font-size: 1.0rem; }
+  .prose-poetry { font-size: 1.2rem; }
+  .prose-devanagari { font-size: 1.1rem; }
+  .prose-roman { font-size: 1.15rem; }
+}
+
+@media (max-width: 768px) {
+  .prose-reading, .prose-story, .journal-editor { font-size: 1.0rem; }
+  .prose-biography, .prose-philosophy { font-size: 0.95rem; }
+  .prose-poetry { font-size: 1.15rem; }
+  .prose-devanagari { font-size: 1.05rem; }
+  .prose-roman { font-size: 1.1rem; }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

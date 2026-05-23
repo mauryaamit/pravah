@@ -1,0 +1,47 @@
+{
+  "name": "pravah",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "seed": "tsx scripts/seed-firestore.ts",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.76.0",
+    "clsx": "^2.1.1",
+    "date-fns": "^3.6.0",
+    "firebase": "^12.13.0",
+    "firebase-admin": "^13.10.0",
+    "framer-motion": "^11.18.0",
+    "howler": "^2.2.4",
+    "lucide-react": "^0.511.0",
+    "next": "14.2.29",
+    "next-pwa": "^5.6.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-markdown": "^9.0.3",
+    "remark-gfm": "^4.0.1",
+    "tailwind-merge": "^2.6.0",
+    "uuid": "^11.1.0",
+    "zustand": "^4.5.6"
+  },
+  "devDependencies": {
+    "@types/howler": "^2.2.12",
+    "@types/node": "^20.17.50",
+    "@types/react": "^18.3.20",
+    "@types/react-dom": "^18.3.6",
+    "@types/uuid": "^10.0.0",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "14.2.29",
+    "postcss": "^8.5.3",
+    "prettier": "^3.5.3",
+    "tailwindcss": "^3.4.17",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3"
+  }
+}

@@ -1,0 +1,33 @@
+# dependencies
+node_modules/
+
+# build
+.next/
+out/
+
+# env
+.env.local
+.env.*.local
+
+# database
+data/
+*.db
+*.db-shm
+*.db-wal
+
+# sounds (user downloads these)
+public/sounds/*.mp3
+!public/sounds/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
