@@ -7,7 +7,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import { useMoods } from '@/lib/hooks/useMoods';
 import { useStreak } from '@/lib/hooks/useStreak';
-import { Check, ArrowRight } from 'lucide-react';
+import { Check, ArrowRight, Volume2, VolumeX } from 'lucide-react';
+import { speak } from '@/lib/utils/tts';
 import Link from 'next/link';
 import BreathingOrb from '@/components/shared/BreathingOrb';
 import MoodPulse from '@/components/shared/MoodPulse';
@@ -53,6 +54,116 @@ export default function AarambhPage() {
   const [challengeDone, setChallengeDone] = useState(false);
   const [showBreathing, setShowBreathing] = useState(false);
   const [script, setScript] = useState<'devanagari' | 'roman'>('devanagari');
+
+  // Breathing overlay states
+  const [phase, setPhase] = useState<'idle' | 'inhale' | 'hold' | 'exhale'>('idle');
+  const [elapsedSeconds, setElapsedSeconds] = useState(0);
+  const [cycleCount, setCycleCount] = useState(1);
+  const [isVoiceMuted, setIsVoiceMuted] = useState(false);
+
+  const isOpenRef = useRef(false);
+  const isVoiceMutedRef = useRef(false);
+  const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  // Sync showBreathing with isOpenRef and clear timers on close
+  useEffect(() => {
+    isOpenRef.current = showBreathing;
+    if (!showBreathing) {
+      if (typeof window !== 'undefined' && window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+      }
+      timersRef.current.forEach(clearTimeout);
+      timersRef.current = [];
+      setPhase('idle');
+      setElapsedSeconds(0);
+      setCycleCount(1);
+    }
+  }, [showBreathing]);
+
+  // Sync isVoiceMuted with ref
+  useEffect(() => {
+    isVoiceMutedRef.current = isVoiceMuted;
+  }, [isVoiceMuted]);
+
+  // Clean up all voice synthesis and timeouts on unmount
+  useEffect(() => {
+    return () => {
+      timersRef.current.forEach(clearTimeout);
+      if (typeof window !== 'undefined' && window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, []);
+
+  const runBreathingCycle = useCallback(() => {
+    if (!isOpenRef.current) return;
+
+    const wait = (ms: number) => new Promise<void>(resolve => {
+      const timer = setTimeout(resolve, ms);
+      timersRef.current.push(timer);
+    });
+
+    const speakGuidance = (phrase: string, pitch: number, rate: number) => {
+      if (isVoiceMutedRef.current) return;
+      speak(phrase, { rate, pitch, lang: 'en-IN', volume: 0.9 });
+    };
+
+    const run = async () => {
+      let currentCycle = 1;
+      while (isOpenRef.current) {
+        setCycleCount(currentCycle);
+
+        // 1. INHALE — 4 seconds
+        setPhase('inhale');
+        setElapsedSeconds(0);
+        speakGuidance("Breathe in...", 0.75, 0.55);
+
+        for (let s = 1; s <= 4; s++) {
+          await wait(1000);
+          if (!isOpenRef.current) return;
+          setElapsedSeconds(s);
+        }
+
+        // 2. HOLD — 4 seconds
+        setPhase('hold');
+        setElapsedSeconds(0);
+        speakGuidance("Hold...", 0.70, 0.5);
+
+        for (let s = 1; s <= 4; s++) {
+          await wait(1000);
+          if (!isOpenRef.current) return;
+          setElapsedSeconds(s);
+        }
+
+        // 3. EXHALE — 4 seconds
+        setPhase('exhale');
+        setElapsedSeconds(0);
+        speakGuidance("Release...", 0.68, 0.5);
+
+        for (let s = 1; s <= 4; s++) {
+          await wait(1000);
+          if (!isOpenRef.current) return;
+          setElapsedSeconds(s);
+        }
+
+        // 4. Brief pause between cycles — 1 second silence
+        setPhase('idle');
+        setElapsedSeconds(0);
+        await wait(1000);
+        if (!isOpenRef.current) return;
+
+        currentCycle++;
+      }
+    };
+
+    run();
+  }, []);
+
+  useEffect(() => {
+    if (showBreathing) {
+      runBreathingCycle();
+    }
+  }, [showBreathing, runBreathingCycle]);
 
   const greeting = getTimeGreeting();
   const dayOfYear = getDayOfYear();
@@ -396,7 +507,7 @@ export default function AarambhPage() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
-            className="fixed inset-0 z-50 flex items-center justify-center"
+            className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 min-h-screen overflow-y-auto"
             style={{ background: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(12px)' }}
             onClick={() => setShowBreathing(false)}
           >
@@ -405,19 +516,64 @@ export default function AarambhPage() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
               transition={{ duration: 0.4, ease: [0.22, 0.1, 0.36, 1] }}
-              className="text-center space-y-6 p-8"
+              className="text-center space-y-6 p-8 relative max-w-sm w-full"
               onClick={e => e.stopPropagation()}
             >
-              <BreathingOrb size={210} mood={mood} />
-              <div>
-                <p className="font-serif text-2xl text-white/90 mb-2">Breathe with me</p>
-                <p className="text-sm text-white/50">Inhale 4s - Hold 4s - Exhale 4s</p>
+              <BreathingOrb size={210} mood={mood} phase={phase} />
+              
+              <div className="h-10 flex items-center justify-center">
+                <AnimatePresence mode="wait">
+                  <motion.p
+                    key={phase}
+                    initial={{ opacity: 0, y: 5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -5 }}
+                    transition={{ duration: 0.3 }}
+                    className="font-serif text-2xl text-white text-center"
+                  >
+                    {phase === 'inhale' ? 'Breathe in...' :
+                     phase === 'hold' ? 'Hold...' :
+                     phase === 'exhale' ? 'Release...' :
+                     'Breathe with me'}
+                  </motion.p>
+                </AnimatePresence>
               </div>
+
+              {/* Progress countdown dots */}
+              <div className="flex justify-center gap-2 mt-4" style={{ height: '24px' }}>
+                {phase !== 'idle' && [1, 2, 3, 4].map(dotIndex => (
+                  <span
+                    key={dotIndex}
+                    className="text-lg transition-all duration-300 select-none"
+                    style={{
+                      color: dotIndex <= elapsedSeconds ? 'white' : 'rgba(255,255,255,0.25)',
+                    }}
+                  >
+                    ●
+                  </span>
+                ))}
+              </div>
+
               <button
                 onClick={() => setShowBreathing(false)}
-                className="text-white/40 text-sm hover:text-white/70 transition-colors"
+                className="text-white/40 text-xs hover:text-white/70 transition-colors mt-8 select-none"
               >
                 Tap anywhere to close
+              </button>
+
+              {/* Bottom-left cycle count */}
+              <div className="absolute bottom-6 left-6 z-10 text-xs text-white/60 select-none">
+                Cycle {cycleCount}
+              </div>
+
+              {/* Bottom-right mute toggle */}
+              <button
+                onClick={() => setIsVoiceMuted(prev => !prev)}
+                className="absolute bottom-6 right-6 z-10 w-9 h-9 rounded-full flex items-center justify-center text-white/60 hover:text-white/90 hover:bg-white/10 transition-all"
+                style={{ background: 'rgba(255,255,255,0.05)' }}
+                title={isVoiceMuted ? 'Unmute voice guidance' : 'Mute voice guidance'}
+              >
+                {isVoiceMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
               </button>
             </motion.div>
           </motion.div>

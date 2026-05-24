@@ -39,15 +39,17 @@ export function speak(text: string, options: Partial<TTSOptions> = {}): SpeechSy
   utterance.pitch = config.pitch;
   utterance.volume = config.volume;
 
-  // Prefer Indian voices - search available voices
+  // Filter voices by requested language first, if available
   const voices = window.speechSynthesis.getVoices();
+  const matchingVoices = voices.filter(v => v.lang.toLowerCase() === resolvedLang.toLowerCase() || v.lang.toLowerCase().replace('_', '-').startsWith(resolvedLang.toLowerCase().split('-')[0]));
 
-  // Priority order for Indian voices:
   const preferredVoice =
-    voices.find(v => v.lang === 'hi-IN' && v.name.includes('Google')) ||
-    voices.find(v => v.lang === 'hi-IN') ||
-    voices.find(v => v.lang === 'en-IN' && v.name.includes('Google')) ||
-    voices.find(v => v.lang === 'en-IN') ||
+    matchingVoices.find(v => v.name.includes('Google')) ||
+    matchingVoices[0] ||
+    voices.find(v => v.lang === resolvedLang && v.name.includes('Google')) ||
+    voices.find(v => v.lang === resolvedLang) ||
+    voices.find(v => v.lang.startsWith(resolvedLang.split('-')[0]) && v.name.includes('Google')) ||
+    voices.find(v => v.lang.startsWith(resolvedLang.split('-')[0])) ||
     voices.find(v => v.name.includes('Google')) ||
     voices[0] ||
     null;
