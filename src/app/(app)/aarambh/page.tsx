@@ -519,7 +519,7 @@ export default function AarambhPage() {
               className="text-center space-y-6 p-8 relative max-w-sm w-full"
               onClick={e => e.stopPropagation()}
             >
-              <BreathingOrb size={210} mood={mood} phase={phase} />
+              <BreathingOrb size={210} mood={mood} phase={phase} className="mx-auto" />
               
               <div className="h-10 flex items-center justify-center">
                 <AnimatePresence mode="wait">
