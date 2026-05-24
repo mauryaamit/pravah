@@ -12,6 +12,7 @@ import ScriptToggle from '@/components/shared/ScriptToggle';
 import PageTransition from '@/components/layout/PageTransition';
 import DiscoveryCard from '@/app/(app)/aarambh/components/DiscoveryCard';
 import GrowthWhisper, { recordRoomVisit } from '@/components/shared/GrowthWhisper';
+import ReadAloudButton from '@/components/shared/ReadAloudButton';
 import { useUser } from '@/components/providers/UserProvider';
 import { useMood } from '@/components/providers/MoodProvider';
 import { getTimeGreeting, getDayOfYear, formatHindiDate } from '@/lib/utils/date';
@@ -201,9 +202,12 @@ export default function AarambhPage() {
             {challengeDone && <Check size={13} />}
           </button>
           <div>
-            <p className="section-label mb-1">
-              {moodProfile.challengeIntensity === 'light' ? 'Gentle Nudge' : 'Today\'s Challenge'}
-            </p>
+            <div className="flex items-center justify-between gap-2 mb-1 w-full">
+              <p className="section-label">
+                {moodProfile.challengeIntensity === 'light' ? 'Gentle Nudge' : 'Today\'s Challenge'}
+              </p>
+              <ReadAloudButton text={challengeText} lang="en-IN" size="sm" />
+            </div>
             <p className="leading-relaxed text-base"
               style={{
                 color: challengeDone ? 'var(--text-muted)' : 'var(--text-primary)',
@@ -234,7 +238,14 @@ export default function AarambhPage() {
           />
           <div className="relative z-10 flex items-center justify-between mb-1">
             <p className="section-label">Daily Mantra</p>
-            <ScriptToggle value={script} onChange={setScript} />
+            <div className="flex items-center gap-2">
+              <ReadAloudButton
+                text={script === 'devanagari' ? (mantra.hi || mantra.body) : (mantra.en || mantra.body)}
+                lang={script === 'devanagari' ? 'hi-IN' : 'en-IN'}
+                size="sm"
+              />
+              <ScriptToggle value={script} onChange={setScript} />
+            </div>
           </div>
           <p
             className={cn(

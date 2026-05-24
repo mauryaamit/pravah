@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FADE_UP, STAGGER_CONTAINER, STAGGER_ITEM } from '@/lib/utils/motion';
 import PageTransition from '@/components/layout/PageTransition';
 import { getDayOfYear } from '@/lib/utils/date';
+import ReadAloudButton from '@/components/shared/ReadAloudButton';
 
 const WONDERS = [
   {
@@ -140,11 +141,20 @@ export default function NeelakurinjiPage() {
             transition={{ duration: 0.35 }}
             className="space-y-5"
           >
-            <div className="card-base p-6 space-y-3" style={{ background: 'color-mix(in srgb, #7B6BA6 6%, var(--bg-secondary))', border: '1px solid #7B6BA6' }}>
-              <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: '#7B6BA6' }}>{selected.category}</span>
-              <h2 className="font-serif text-xl leading-tight" style={{ color: 'var(--text-primary)' }}>{selected.title}</h2>
-              <p className="font-devanagari text-base" style={{ color: 'var(--text-muted)' }}>{selected.titleHindi}</p>
-              <p className="font-serif italic text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{selected.teaser}</p>
+            <div className="card-base p-6 space-y-3 relative" style={{ background: 'color-mix(in srgb, #7B6BA6 6%, var(--bg-secondary))', border: '1px solid #7B6BA6' }}>
+              <div className="absolute top-6 right-6">
+                <ReadAloudButton
+                  text={`${selected.title}. ${selected.titleHindi}. ${selected.teaser}. ${selected.content}`}
+                  lang="en-IN"
+                  size="sm"
+                  variant="pill"
+                  label="Listen Wonder"
+                />
+              </div>
+              <span className="text-xs font-semibold uppercase tracking-widest block pr-32" style={{ color: '#7B6BA6' }}>{selected.category}</span>
+              <h2 className="font-serif text-xl leading-tight pr-32" style={{ color: 'var(--text-primary)' }}>{selected.title}</h2>
+              <p className="font-devanagari text-base pr-32" style={{ color: 'var(--text-muted)' }}>{selected.titleHindi}</p>
+              <p className="font-serif italic text-base leading-relaxed pr-32" style={{ color: 'var(--text-secondary)' }}>{selected.teaser}</p>
             </div>
 
             <div className="card-base p-6 space-y-4">

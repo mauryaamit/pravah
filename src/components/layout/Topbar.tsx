@@ -26,12 +26,12 @@ export default function Topbar() {
       <div className="flex items-center gap-3 min-w-0">
         {/* Pravah logo on mobile only */}
         <div className="lg:hidden flex items-center gap-2">
-          <div
-            className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-xs font-bold font-devanagari"
-            style={{ background: 'var(--accent-saffron)', fontSize: '0.75rem' }}
-          >
-            प्र
-          </div>
+          <img 
+            src="/logo.png" 
+            alt="Pravah Logo" 
+            className="w-9 h-9 object-contain rounded-xl flex-shrink-0" 
+            style={{ boxShadow: '0 2px 12px rgba(196,135,58,0.25)' }}
+          />
         </div>
 
         <AnimatePresence mode="wait">
@@ -46,10 +46,10 @@ export default function Topbar() {
             >
               <div className="flex items-center gap-2">
                 <div>
-                  <div className="font-semibold text-sm leading-tight" style={{ color: 'var(--text-primary)' }}>
+                  <div className="leading-tight" style={{ color: 'var(--text-primary)', fontSize: '18px', fontWeight: 500 }}>
                     {room.name}
                   </div>
-                  <div className="text-xs leading-tight font-devanagari" style={{ color: 'var(--text-muted)' }}>
+                  <div className="leading-tight font-devanagari" style={{ color: 'var(--text-muted)', fontSize: '13px' }}>
                     {room.nameHindi}
                   </div>
                 </div>
@@ -62,8 +62,8 @@ export default function Topbar() {
       {/* Right: Controls */}
       <div className="flex items-center gap-1">
         {/* Hindi date */}
-        <div className="hidden md:block text-sm font-devanagari px-3"
-          style={{ color: 'var(--text-muted)' }}>
+        <div className="hidden md:block font-devanagari px-3"
+          style={{ color: 'var(--text-muted)', fontSize: '14px' }}>
           {formatHindiDate()}
         </div>
 

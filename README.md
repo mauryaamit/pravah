@@ -56,6 +56,11 @@ pnpm dev
 ```
 Open [http://localhost:3000](http://localhost:3000) to view the application.
 
+### 5. Verified Sender Domain for Reset Emails
+
+> [!IMPORTANT]
+> For the Forgot Password feature (`sendPasswordResetEmail()`) to deliver emails reliably to users, the Firebase sender domain needs to be verified in the **Firebase Console** → **Authentication** → **Templates** (select Password reset, edit templates, and follow instructions to customize/verify your sender domain).
+
 ---
 
 ## ☁️ Deployment on Vercel

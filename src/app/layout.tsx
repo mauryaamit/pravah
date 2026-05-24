@@ -14,6 +14,10 @@ export const metadata: Metadata = {
   title: 'Pravah - प्रवाह',
   description: 'A cognitive operating system for an evolving mind. Daily brain-rewiring through beauty, curiosity, and depth.',
   manifest: '/manifest.json',
+  icons: {
+    icon: '/logo.png',
+    apple: '/logo.png',
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',

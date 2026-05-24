@@ -1,39 +1,63 @@
 // src/lib/utils/tts.ts
-// Browser Web Speech API TTS wrapper
+// Contemplative Indian TTS Voice Customization Engine
+
+export interface TTSOptions {
+  lang: 'hi-IN' | 'en-IN' | 'ur-PK' | 'en' | 'hi' | 'ur';
+  rate: number;    // default 0.75 (slow, contemplative)
+  pitch: number;   // default 0.85 (more bass)
+  volume: number;  // 1.0
+}
 
 const LANG_MAP: Record<string, string> = {
-  en: 'en-US',
+  en: 'en-IN',
   hi: 'hi-IN',
   ur: 'ur-PK',
+  'en-IN': 'en-IN',
+  'hi-IN': 'hi-IN',
+  'ur-PK': 'ur-PK',
 };
 
-let currentUtterance: SpeechSynthesisUtterance | null = null;
+export function speak(text: string, options: Partial<TTSOptions> = {}): SpeechSynthesisUtterance | null {
+  if (typeof window === 'undefined' || !window.speechSynthesis) return null;
+  window.speechSynthesis.cancel();
 
-export function speak(text: string, lang: string = 'en', rate: number = 1.0): void {
-  if (typeof window === 'undefined' || !window.speechSynthesis) return;
-  stopSpeaking();
-  const utter = new SpeechSynthesisUtterance(text);
-  utter.lang = LANG_MAP[lang] || 'en-US';
-  utter.rate = rate;
-  utter.pitch = 1.0;
-  utter.volume = 1.0;
+  const config = {
+    lang: 'hi-IN' as const,
+    rate: 0.75,    // Slower than default — contemplative pace
+    pitch: 0.85,   // Lower pitch = more bass, authoritative
+    volume: 1.0,
+    ...options,
+  };
 
-  // Try to find a suitable voice
+  const utterance = new SpeechSynthesisUtterance(text);
+  const resolvedLang = LANG_MAP[config.lang] || 'hi-IN';
+  utterance.lang = resolvedLang;
+  utterance.rate = config.rate;
+  utterance.pitch = config.pitch;
+  utterance.volume = config.volume;
+
+  // Prefer Indian voices — search available voices
   const voices = window.speechSynthesis.getVoices();
-  const targetLang = LANG_MAP[lang] || 'en-US';
-  const voice = voices.find(v => v.lang === targetLang) ||
-                voices.find(v => v.lang.startsWith(targetLang.split('-')[0])) ||
-                voices[0];
-  if (voice) utter.voice = voice;
 
-  currentUtterance = utter;
-  window.speechSynthesis.speak(utter);
+  // Priority order for Indian voices:
+  const preferredVoice =
+    voices.find(v => v.lang === 'hi-IN' && v.name.includes('Google')) ||
+    voices.find(v => v.lang === 'hi-IN') ||
+    voices.find(v => v.lang === 'en-IN' && v.name.includes('Google')) ||
+    voices.find(v => v.lang === 'en-IN') ||
+    voices.find(v => v.name.includes('Google')) ||
+    voices[0] ||
+    null;
+
+  if (preferredVoice) utterance.voice = preferredVoice;
+
+  window.speechSynthesis.speak(utterance);
+  return utterance;
 }
 
 export function stopSpeaking(): void {
   if (typeof window === 'undefined') return;
   window.speechSynthesis.cancel();
-  currentUtterance = null;
 }
 
 export function pauseSpeaking(): void {

@@ -5,6 +5,7 @@ import { ChevronDown, ExternalLink } from 'lucide-react';
 import { FADE_UP, STAGGER_CONTAINER, STAGGER_ITEM } from '@/lib/utils/motion';
 import PageTransition from '@/components/layout/PageTransition';
 import { getDayOfYear } from '@/lib/utils/date';
+import ReadAloudButton from '@/components/shared/ReadAloudButton';
 
 interface Person {
   id: string;
@@ -374,9 +375,16 @@ export default function VibhavPage() {
             </div>
 
             {/* Famous Quote */}
-            <div className="card-base p-6" style={{ background: 'color-mix(in srgb, var(--accent-saffron) 6%, var(--bg-secondary))' }}>
+            <div className="card-base p-6 relative" style={{ background: 'color-mix(in srgb, var(--accent-saffron) 6%, var(--bg-secondary))' }}>
+              <div className="absolute top-6 right-6">
+                <ReadAloudButton
+                  text={selected.famousQuote}
+                  lang="en-IN"
+                  size="sm"
+                />
+              </div>
               <p className="section-label mb-3">In Their Own Words</p>
-              <blockquote className="font-serif text-xl leading-relaxed" style={{ color: 'var(--text-primary)' }}>
+              <blockquote className="font-serif text-xl leading-relaxed pr-8" style={{ color: 'var(--text-primary)' }}>
                 "{selected.famousQuote}"
               </blockquote>
               <p className="text-sm mt-3" style={{ color: 'var(--text-muted)' }}>— {selected.name}</p>
@@ -390,15 +398,33 @@ export default function VibhavPage() {
               { key: 'connection', title: 'Connection to Now', content: selected.connection },
             ].map(section => (
               <div key={section.key} className="card-base overflow-hidden">
-                <button
-                  onClick={() => setExpandedSection(expandedSection === section.key ? null : section.key)}
-                  className="w-full flex items-center justify-between p-5"
-                >
-                  <span className="font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>{section.title}</span>
-                  <motion.div animate={{ rotate: expandedSection === section.key ? 180 : 0 }} transition={{ duration: 0.2 }}>
-                    <ChevronDown size={16} style={{ color: 'var(--text-muted)' }} />
-                  </motion.div>
-                </button>
+                <div className="w-full relative">
+                  <div className="flex items-center justify-between p-5">
+                    <button
+                      onClick={() => setExpandedSection(expandedSection === section.key ? null : section.key)}
+                      className="flex-1 text-left font-semibold text-sm"
+                      style={{ color: 'var(--text-primary)' }}
+                    >
+                      {section.title}
+                    </button>
+                    
+                    <div className="flex items-center gap-2 flex-shrink-0" onClick={e => e.stopPropagation()}>
+                      <ReadAloudButton
+                        text={`${section.title}. ${section.content}`}
+                        lang="en-IN"
+                        size="sm"
+                      />
+                      <button
+                        onClick={() => setExpandedSection(expandedSection === section.key ? null : section.key)}
+                        className="p-1 rounded-full hover:bg-secondary transition-all"
+                      >
+                        <motion.div animate={{ rotate: expandedSection === section.key ? 180 : 0 }} transition={{ duration: 0.2 }}>
+                          <ChevronDown size={16} style={{ color: 'var(--text-muted)' }} />
+                        </motion.div>
+                      </button>
+                    </div>
+                  </div>
+                </div>
                 <AnimatePresence>
                   {expandedSection === section.key && (
                     <motion.div

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FADE_UP } from '@/lib/utils/motion';
 import PageTransition from '@/components/layout/PageTransition';
 import { getDayOfYear } from '@/lib/utils/date';
+import ReadAloudButton from '@/components/shared/ReadAloudButton';
 
 const QUESTIONS = [
   {
@@ -140,23 +141,39 @@ export default function ManthanPage() {
             className="space-y-5"
           >
             {/* The Question */}
-            <div className="card-base p-7 text-center space-y-3" style={{ background: 'color-mix(in srgb, #6A3A8A 6%, var(--bg-secondary))', border: '1px solid #6A3A8A' }}>
+            <div className="card-base p-7 text-center space-y-3 relative" style={{ background: 'color-mix(in srgb, #6A3A8A 6%, var(--bg-secondary))', border: '1px solid #6A3A8A' }}>
+              <div className="absolute top-4 right-4">
+                <ReadAloudButton
+                  text={`${selected.question}. ${selected.hindi}`}
+                  lang="en-IN"
+                  size="sm"
+                />
+              </div>
               <p className="section-label" style={{ color: '#6A3A8A' }}>Today's Question</p>
-              <h2 className="font-serif text-xl leading-relaxed" style={{ color: 'var(--text-primary)' }}>
+              <h2 className="font-serif text-xl leading-relaxed pr-8 pl-8" style={{ color: 'var(--text-primary)' }}>
                 {selected.question}
               </h2>
-              <p className="font-devanagari text-base" style={{ color: 'var(--text-muted)' }}>
+              <p className="font-devanagari text-base pr-8 pl-8" style={{ color: 'var(--text-muted)' }}>
                 {selected.hindi}
               </p>
               <p className="text-xs" style={{ color: 'var(--text-faint)' }}>Sit with this for a moment before reading further.</p>
             </div>
 
             {/* Deep exploration */}
-            <div className="card-base p-6 space-y-4">
+            <div className="card-base p-6 space-y-4 relative">
+              <div className="absolute top-4 right-4">
+                <ReadAloudButton
+                  text={selected.depth}
+                  lang="en-IN"
+                  size="sm"
+                />
+              </div>
               <p className="section-label">The Depth</p>
-              {(showFull ? selected.depth : previewText).split('\n\n').map((para, i) => (
-                <p key={i} className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)', lineHeight: 1.9 }}>{para}</p>
-              ))}
+              <div className="pr-8">
+                {(showFull ? selected.depth : previewText).split('\n\n').map((para, i) => (
+                  <p key={i} className="text-sm leading-relaxed mb-4 last:mb-0" style={{ color: 'var(--text-secondary)', lineHeight: 1.9 }}>{para}</p>
+                ))}
+              </div>
               {!showFull && (
                 <button onClick={() => setShowFull(true)} className="px-5 py-2 rounded-full text-sm font-medium" style={{ background: '#6A3A8A', color: 'white' }}>
                   Go Deeper →
@@ -168,9 +185,16 @@ export default function ManthanPage() {
             <div className="card-base p-5 space-y-4">
               <p className="section-label">Four Perspectives</p>
               {selected.perspectives.map((p, i) => (
-                <div key={i} className="p-4 rounded-xl space-y-1" style={{ background: 'var(--bg-tertiary)' }}>
+                <div key={i} className="p-4 rounded-xl space-y-1 relative" style={{ background: 'var(--bg-tertiary)' }}>
+                  <div className="absolute top-3 right-3">
+                    <ReadAloudButton
+                      text={`${p.source}. ${p.view}`}
+                      lang="en-IN"
+                      size="sm"
+                    />
+                  </div>
                   <p className="text-xs font-semibold uppercase tracking-wide" style={{ color: '#6A3A8A' }}>{p.source}</p>
-                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{p.view}</p>
+                  <p className="text-sm leading-relaxed pr-8" style={{ color: 'var(--text-secondary)' }}>{p.view}</p>
                 </div>
               ))}
             </div>

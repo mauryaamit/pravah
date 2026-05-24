@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FADE_UP, STAGGER_CONTAINER, STAGGER_ITEM } from '@/lib/utils/motion';
 import PageTransition from '@/components/layout/PageTransition';
 import { getDayOfYear } from '@/lib/utils/date';
+import ReadAloudButton from '@/components/shared/ReadAloudButton';
+import { Copy, Check } from 'lucide-react';
 
 type Script = 'hi' | 'roman' | 'en';
 
@@ -715,6 +717,39 @@ export default function SukoonPage() {
   const dayOfYear = getDayOfYear();
   const [activePoem, setActivePoem] = useState(POEMS[dayOfYear % POEMS.length]);
   const [expandedPoem, setExpandedPoem] = useState<string | null>(activePoem.id);
+  const [openTranslations, setOpenTranslations] = useState<Record<string, boolean>>({});
+  const [copiedIndex, setCopiedIndex] = useState<string | null>(null);
+
+  const groupLinesIntoCouplets = (linesList: string[]) => {
+    const result: string[][] = [];
+    let current: string[] = [];
+    for (const line of linesList) {
+      if (line.trim() === '') {
+        if (current.length > 0) {
+          result.push(current);
+          current = [];
+        }
+      } else {
+        current.push(line);
+      }
+    }
+    if (current.length > 0) {
+      result.push(current);
+    }
+    return result;
+  };
+
+  const handleCopySher = (key: string, text: string, author: string) => {
+    navigator.clipboard.writeText(`${text}\n— ${author}`);
+    setCopiedIndex(key);
+    setTimeout(() => setCopiedIndex(null), 2000);
+  };
+
+  const toggleTranslation = (key: string) => {
+    setOpenTranslations(prev => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  const linesForActive = script === 'hi' ? activePoem.hi : script === 'roman' ? activePoem.roman : activePoem.en;
 
   return (
     <PageTransition>
@@ -752,20 +787,33 @@ export default function SukoonPage() {
           variants={FADE_UP}
           initial="initial"
           animate="animate"
-          className="card-base p-1"
+          className="card-base p-1 relative overflow-hidden"
           style={{ border: '1px solid var(--accent-saffron)', background: 'color-mix(in srgb, var(--accent-saffron) 4%, var(--bg-secondary))' }}
         >
-          <div className="p-4">
+          {activePoem.id === 'ghalib-khwahish' && (
+            <div 
+              className="absolute inset-0 bg-cover bg-center pointer-events-none z-0" 
+              style={{ backgroundImage: "url('/paintings/starry-night.jpg')", opacity: 0.08 }} 
+            />
+          )}
+          <div className="p-4 relative z-10">
             <div className="flex items-center justify-between mb-1">
               <span className="text-xs font-semibold" style={{ color: 'var(--accent-saffron)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
                 Today's Poem
               </span>
-              <span className="text-xs" style={{ color: 'var(--text-faint)' }}>{activePoem.tradition}</span>
+              <div className="flex items-center gap-2" onClick={e => e.stopPropagation()}>
+                <ReadAloudButton
+                  text={linesForActive.filter(l => l.trim()).join('\n')}
+                  lang={script === 'en' ? 'en-IN' : 'hi-IN'}
+                  size="sm"
+                />
+                <span className="text-xs" style={{ color: 'var(--text-faint)' }}>{activePoem.tradition}</span>
+              </div>
             </div>
-            <h2 className="font-serif text-xl" style={{ color: 'var(--text-primary)' }}>
+            <h2 className="font-serif text-xl cursor-pointer" style={{ color: 'var(--text-primary)' }} onClick={() => setExpandedPoem(expandedPoem === activePoem.id ? null : activePoem.id)}>
               {script === 'hi' ? activePoem.titleHi : activePoem.title}
             </h2>
-            <p className="text-sm mt-0.5" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-sm mt-0.5" style={{ color: activePoem.id === 'ghalib-khwahish' ? 'var(--accent-saffron)' : 'var(--text-muted)' }}>
               {script === 'hi' ? activePoem.authorHi : activePoem.author} · {activePoem.period}
             </p>
           </div>
@@ -786,42 +834,82 @@ export default function SukoonPage() {
               <motion.div
                 key={poem.id}
                 variants={STAGGER_ITEM}
-                className="card-base overflow-hidden"
+                className="card-base overflow-hidden relative"
+                style={poem.id === 'ghalib-khwahish' ? {
+                  borderColor: 'var(--accent-saffron)',
+                } : undefined}
               >
-                {/* Poem header */}
-                <button
-                  onClick={() => setExpandedPoem(isExpanded ? null : poem.id)}
-                  className="w-full text-left p-5 space-y-2"
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <h3 className="font-serif text-lg" style={{ color: 'var(--text-primary)' }}>
-                        {script === 'hi' ? poem.titleHi : poem.title}
-                      </h3>
-                      <p className="text-sm mt-0.5" style={{ color: 'var(--text-muted)' }}>
-                        {script === 'hi' ? poem.authorHi : poem.author} · {poem.period}
-                      </p>
-                      <p className="text-xs mt-0.5" style={{ color: 'var(--text-faint)' }}>{poem.tradition}</p>
-                    </div>
-                    <motion.div
-                      animate={{ rotate: isExpanded ? 180 : 0 }}
-                      transition={{ duration: 0.2 }}
-                      className="flex-shrink-0 mt-1"
-                    >
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: 'var(--text-muted)' }}>
-                        <polyline points="6 9 12 15 18 9" />
-                      </svg>
-                    </motion.div>
-                  </div>
+                {/* Custom backgrounds for Ghalib */}
+                {poem.id === 'ghalib-khwahish' && (
+                  <div 
+                    className="absolute inset-0 bg-cover bg-center pointer-events-none z-0" 
+                    style={{ backgroundImage: "url('/paintings/starry-night.jpg')", opacity: 0.08 }} 
+                  />
+                )}
 
-                  {/* Preview - first 2 non-empty lines */}
-                  {!isExpanded && (
-                    <p className={`text-sm leading-relaxed ${script === 'hi' ? 'font-devanagari' : 'font-serif italic'}`}
-                      style={{ color: 'var(--text-muted)' }}>
-                      {lines.filter(l => l.trim()).slice(0, 2).join(' / ')}…
-                    </p>
-                  )}
-                </button>
+                {/* Poem header */}
+                <div className="w-full relative z-10">
+                  <div className="flex items-start justify-between gap-3 p-5">
+                    <button
+                      onClick={() => setExpandedPoem(isExpanded ? null : poem.id)}
+                      className="flex-1 text-left space-y-2"
+                    >
+                      <div>
+                        <h3 className="font-serif text-lg" style={{ color: 'var(--text-primary)' }}>
+                          {script === 'hi' ? poem.titleHi : poem.title}
+                        </h3>
+                        <p className="text-sm mt-0.5 animate-pulse-slow" style={{ 
+                          color: poem.id === 'ghalib-khwahish' ? 'var(--accent-saffron)' : 'var(--text-muted)',
+                          fontSize: poem.id === 'ghalib-khwahish' ? '16px' : '14px',
+                          fontWeight: poem.id === 'ghalib-khwahish' ? '600' : 'normal'
+                        }}>
+                          {script === 'hi' ? poem.authorHi : poem.author} · {poem.period}
+                        </p>
+                        {poem.id === 'ghalib-khwahish' ? (
+                          <span className="inline-block text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full border mt-1"
+                                style={{ 
+                                  color: 'var(--accent-saffron)', 
+                                  borderColor: 'color-mix(in srgb, var(--accent-saffron) 30%, transparent)',
+                                  background: 'color-mix(in srgb, var(--accent-saffron) 8%, transparent)' 
+                                }}>
+                            {poem.tradition}
+                          </span>
+                        ) : (
+                          <p className="text-xs mt-0.5" style={{ color: 'var(--text-faint)' }}>{poem.tradition}</p>
+                        )}
+                      </div>
+
+                      {/* Preview - first 2 non-empty lines */}
+                      {!isExpanded && (
+                        <p className={`text-sm leading-relaxed ${script === 'hi' ? 'font-devanagari' : 'font-serif italic'}`}
+                          style={{ color: 'var(--text-muted)' }}>
+                          {lines.filter(l => l.trim()).slice(0, 2).join(' / ')}…
+                        </p>
+                      )}
+                    </button>
+
+                    <div className="flex items-center gap-2 flex-shrink-0 mt-1" onClick={e => e.stopPropagation()}>
+                      <ReadAloudButton
+                        text={lines.filter(l => l.trim()).join('\n')}
+                        lang={script === 'en' ? 'en-IN' : 'hi-IN'}
+                        size="sm"
+                      />
+                      <button
+                        onClick={() => setExpandedPoem(isExpanded ? null : poem.id)}
+                        className="p-1 rounded-full hover:bg-secondary transition-all"
+                      >
+                        <motion.div
+                          animate={{ rotate: isExpanded ? 180 : 0 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: 'var(--text-muted)' }}>
+                            <polyline points="6 9 12 15 18 9" />
+                          </svg>
+                        </motion.div>
+                      </button>
+                    </div>
+                  </div>
+                </div>
 
                 {/* Full poem + commentary */}
                 <AnimatePresence>
@@ -831,22 +919,102 @@ export default function SukoonPage() {
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.35 }}
-                      className="overflow-hidden"
+                      className="overflow-hidden relative z-10"
                     >
                       <div className="border-t" style={{ borderColor: 'var(--border-default)' }}>
                         {/* Full poem text */}
                         <div className="p-6 space-y-1">
-                          {lines.map((line, i) => (
-                            line === '' ? (
-                              <div key={i} className="h-3" />
-                            ) : (
-                              <p key={i}
-                                className={`leading-relaxed ${script === 'hi' ? 'font-devanagari text-base' : 'font-serif italic text-base'}`}
-                                style={{ color: 'var(--text-primary)' }}>
-                                {line}
-                              </p>
-                            )
-                          ))}
+                          {poem.id === 'ghalib-khwahish' ? (
+                            <div className="space-y-6">
+                              {groupLinesIntoCouplets(lines).map((sher, idx) => {
+                                const key = `${poem.id}-${idx}`;
+                                const showTranslation = openTranslations[key] || false;
+                                const isCopied = copiedIndex === key;
+                                
+                                const enCouplet = groupLinesIntoCouplets(poem.en)[idx] || [];
+                                const enText = enCouplet.join('\n');
+                                const sherText = sher.join('\n');
+                                
+                                return (
+                                  <div key={idx} className="space-y-2 pb-4 last:pb-0 border-b last:border-0 border-dashed" style={{ borderColor: 'var(--border-default)' }}>
+                                    <div className="flex justify-between items-start gap-4">
+                                      <div className="space-y-1 flex-1">
+                                        {sher.map((line, lIdx) => (
+                                          <p
+                                            key={lIdx}
+                                            className={`leading-relaxed text-base md:text-lg ${script === 'hi' ? 'font-devanagari font-medium' : 'font-serif italic'}`}
+                                            style={{ color: 'var(--text-primary)' }}
+                                          >
+                                            {line}
+                                          </p>
+                                        ))}
+                                      </div>
+                                      
+                                      <button
+                                        onClick={() => handleCopySher(key, sherText, poem.author)}
+                                        className="p-1.5 rounded-lg border text-muted hover:text-primary hover:border-strong transition-all flex-shrink-0"
+                                        title="Copy this couplet"
+                                        style={{ background: 'var(--bg-tertiary)', borderColor: 'var(--border-default)' }}
+                                      >
+                                        {isCopied ? <Check size={14} className="text-emerald-600" /> : <Copy size={14} />}
+                                      </button>
+                                    </div>
+                                    
+                                    {script !== 'en' && (
+                                      <div className="pt-1">
+                                        <button
+                                          onClick={() => toggleTranslation(key)}
+                                          className="text-xs font-semibold uppercase tracking-wider transition-all hover:opacity-80"
+                                          style={{ color: 'var(--accent-saffron)' }}
+                                        >
+                                          {showTranslation ? 'Hide Translation' : 'View Translation'}
+                                        </button>
+                                        <AnimatePresence>
+                                          {showTranslation && (
+                                            <motion.div
+                                              initial={{ height: 0, opacity: 0 }}
+                                              animate={{ height: 'auto', opacity: 1 }}
+                                              exit={{ height: 0, opacity: 0 }}
+                                              className="mt-2 pl-3 border-l-2 overflow-hidden"
+                                              style={{ borderColor: 'var(--accent-saffron)' }}
+                                            >
+                                              {enCouplet.map((line, lIdx) => (
+                                                <p
+                                                  key={lIdx}
+                                                  className="font-serif italic text-sm text-secondary"
+                                                  style={{ color: 'var(--text-secondary)' }}
+                                                >
+                                                  {line}
+                                                </p>
+                                              ))}
+                                            </motion.div>
+                                          )}
+                                        </AnimatePresence>
+                                      </div>
+                                    )}
+
+                                    {idx < groupLinesIntoCouplets(lines).length - 1 && (
+                                      <div className="text-center py-2 text-faint select-none" style={{ color: 'var(--text-faint)', letterSpacing: '0.2em' }}>
+                                        —✦—
+                                      </div>
+                                    )}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          ) : (
+                            lines.map((line, i) => (
+                              line === '' ? (
+                                <div key={i} className="h-3" />
+                              ) : (
+                                <p key={i}
+                                  className={`leading-relaxed ${script === 'hi' ? 'font-devanagari text-base' : 'font-serif italic text-base'}`}
+                                  style={{ color: 'var(--text-primary)' }}>
+                                  {line}
+                                </p>
+                              )
+                            ))
+                          )}
                         </div>
 
                         {/* Author biography */}

@@ -2,6 +2,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, LogOut, Settings, Languages, MessageSquare, Volume2, User as UserIcon } from 'lucide-react';
 import { useUser } from '@/components/providers/UserProvider';
+import { BACKGROUND_PAINTINGS } from '@/lib/constants/paintings';
 
 interface SettingsModalProps {
   isOpen: boolean;
@@ -153,6 +154,65 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                       );
                     })}
                   </div>
+                </div>
+              </div>
+
+              {/* Background Ambience Settings */}
+              <div className="space-y-4">
+                <h3 className="text-xs uppercase tracking-wider font-semibold text-text-faint" style={{ color: 'var(--text-faint)' }}>
+                  Background Ambience
+                </h3>
+
+                {/* Painting Selector */}
+                <div className="space-y-2">
+                  <span className="text-xs block" style={{ color: 'var(--text-secondary)' }}>Select Painting</span>
+                  <div className="flex gap-3 overflow-x-auto pb-1 no-scrollbar">
+                    {BACKGROUND_PAINTINGS.map(p => {
+                      const isActive = (preferences.backgroundPainting || 'starry-night') === p.id;
+                      return (
+                        <button
+                          key={p.id}
+                          onClick={() => updatePreferences({ backgroundPainting: p.id })}
+                          className="flex flex-col items-center gap-1.5 flex-shrink-0 focus:outline-none"
+                        >
+                          <div
+                            className="w-16 h-16 rounded-lg overflow-hidden border-2 transition-all"
+                            style={{
+                              borderColor: isActive ? 'var(--accent-saffron)' : 'var(--border-default)',
+                              boxShadow: isActive ? '0 0 8px rgba(196,135,58,0.4)' : 'none',
+                            }}
+                          >
+                            <img src={p.file} alt={p.name} className="w-full h-full object-cover" />
+                          </div>
+                          <span className="text-[10px] text-center w-16 truncate" style={{ color: isActive ? 'var(--text-primary)' : 'var(--text-muted)' }}>
+                            {p.name}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Opacity Slider */}
+                <div className="space-y-1.5">
+                  <div className="flex justify-between text-xs font-medium">
+                    <span style={{ color: 'var(--text-secondary)' }}>Painting Intensity</span>
+                    <span style={{ color: 'var(--accent-saffron)' }}>
+                      {Math.round((preferences.backgroundOpacity !== undefined ? preferences.backgroundOpacity : 0.07) * 100)}%
+                    </span>
+                  </div>
+                  <input
+                    type="range"
+                    min="0"
+                    max="0.25"
+                    step="0.01"
+                    value={preferences.backgroundOpacity !== undefined ? preferences.backgroundOpacity : 0.07}
+                    onChange={e => updatePreferences({ backgroundOpacity: parseFloat(e.target.value) })}
+                    className="w-full h-1 bg-tertiary rounded-lg appearance-none cursor-pointer"
+                    style={{
+                      background: 'var(--bg-tertiary)',
+                    }}
+                  />
                 </div>
               </div>
 

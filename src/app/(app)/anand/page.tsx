@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FADE_UP, STAGGER_CONTAINER, STAGGER_ITEM } from '@/lib/utils/motion';
 import PageTransition from '@/components/layout/PageTransition';
 import { getDayOfYear } from '@/lib/utils/date';
+import ReadAloudButton from '@/components/shared/ReadAloudButton';
 
 type JoyCategory = 'art' | 'humor' | 'games' | 'play';
 
@@ -155,9 +156,20 @@ export default function AnandPage() {
                     onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-5">
-                    <h2 className="font-serif text-xl text-white">{selectedArt.title}</h2>
-                    <p className="text-sm text-white/70">{selectedArt.artist}, {selectedArt.year}</p>
+                  <div className="absolute bottom-0 left-0 right-0 p-5 flex justify-between items-end">
+                    <div>
+                      <h2 className="font-serif text-xl text-white">{selectedArt.title}</h2>
+                      <p className="text-sm text-white/70">{selectedArt.artist}, {selectedArt.year}</p>
+                    </div>
+                    <div onClick={e => e.stopPropagation()} className="relative z-20">
+                      <ReadAloudButton
+                        text={`${selectedArt.title}. By ${selectedArt.artist}. ${selectedArt.story}`}
+                        lang="en-IN"
+                        size="sm"
+                        variant="pill"
+                        label="Listen Story"
+                      />
+                    </div>
                   </div>
                 </div>
                 <div className="p-6 space-y-3">
@@ -185,17 +197,35 @@ export default function AnandPage() {
               <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Wit is intelligence with warmth. These are essays in lightness — about the small absurdities that make up a life.</p>
               {HUMOR_PIECES.map((piece, i) => (
                 <div key={i} className="card-base overflow-hidden">
-                  <button
-                    className="w-full text-left p-5 flex items-center justify-between gap-3"
-                    onClick={() => setExpandedHumor(expandedHumor === i ? null : i)}
-                  >
-                    <span className="font-serif text-base" style={{ color: 'var(--text-primary)' }}>{piece.title}</span>
-                    <motion.div animate={{ rotate: expandedHumor === i ? 180 : 0 }} transition={{ duration: 0.2 }}>
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: 'var(--text-muted)' }}>
-                        <polyline points="6 9 12 15 18 9" />
-                      </svg>
-                    </motion.div>
-                  </button>
+                  <div className="w-full relative">
+                    <div className="flex items-center justify-between p-5">
+                      <button
+                        className="flex-1 text-left font-serif text-base"
+                        style={{ color: 'var(--text-primary)' }}
+                        onClick={() => setExpandedHumor(expandedHumor === i ? null : i)}
+                      >
+                        {piece.title}
+                      </button>
+                      
+                      <div className="flex items-center gap-2 flex-shrink-0" onClick={e => e.stopPropagation()}>
+                        <ReadAloudButton
+                          text={`${piece.title}. ${piece.content}`}
+                          lang="en-IN"
+                          size="sm"
+                        />
+                        <button
+                          onClick={() => setExpandedHumor(expandedHumor === i ? null : i)}
+                          className="p-1 rounded-full hover:bg-secondary transition-all"
+                        >
+                          <motion.div animate={{ rotate: expandedHumor === i ? 180 : 0 }} transition={{ duration: 0.2 }}>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: 'var(--text-muted)' }}>
+                              <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                          </motion.div>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                   <AnimatePresence>
                     {expandedHumor === i && (
                       <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3 }} className="overflow-hidden">

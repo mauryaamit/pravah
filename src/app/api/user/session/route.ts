@@ -1,12 +1,10 @@
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
-import { adminAuth } from '@/lib/firebase/admin';
+import { getAdminAuth } from '@/lib/firebase/admin';
 
 export async function POST(req: NextRequest) {
   try {
-    if (!adminAuth) {
-      return NextResponse.json({ error: 'Firebase Admin not initialized' }, { status: 500 });
-    }
+    const adminAuth = getAdminAuth();
 
     const { idToken } = await req.json();
     if (!idToken) {
@@ -27,7 +25,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ ok: true });
   } catch (err: any) {
-    console.error('Session create error:', err);
+    console.error('[session] Error:', err);
     return NextResponse.json({ error: err.message || 'Unauthorized' }, { status: 401 });
   }
 }

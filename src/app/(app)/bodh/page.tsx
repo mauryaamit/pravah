@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FADE_UP, STAGGER_CONTAINER, STAGGER_ITEM } from '@/lib/utils/motion';
 import PageTransition from '@/components/layout/PageTransition';
 import { getDayOfYear } from '@/lib/utils/date';
+import ReadAloudButton from '@/components/shared/ReadAloudButton';
 
 const MENTAL_MODELS = [
   {
@@ -119,10 +120,17 @@ export default function BodhPage() {
         </motion.div>
 
         {/* Today's model highlight */}
-        <div className="card-base p-5 space-y-2" style={{ border: '1px solid var(--accent-saffron)', background: 'color-mix(in srgb, var(--accent-saffron) 5%, var(--bg-secondary))' }}>
+        <div className="card-base p-5 space-y-2 relative" style={{ border: '1px solid var(--accent-saffron)', background: 'color-mix(in srgb, var(--accent-saffron) 5%, var(--bg-secondary))' }}>
+          <div className="absolute top-4 right-4">
+            <ReadAloudButton
+              text={`${todayModel.name}. ${todayModel.tagline}. ${todayModel.core}`}
+              lang="en-IN"
+              size="sm"
+            />
+          </div>
           <p className="section-label">Today's Mental Model</p>
-          <h2 className="font-serif text-xl" style={{ color: 'var(--text-primary)' }}>{todayModel.name}</h2>
-          <p className="text-sm italic font-serif" style={{ color: 'var(--accent-saffron)' }}>"{todayModel.tagline}"</p>
+          <h2 className="font-serif text-xl pr-8" style={{ color: 'var(--text-primary)' }}>{todayModel.name}</h2>
+          <p className="text-sm italic font-serif pr-8" style={{ color: 'var(--accent-saffron)' }}>"{todayModel.tagline}"</p>
           <p className="text-xs" style={{ color: 'var(--text-faint)' }}>{todayModel.origin}</p>
         </div>
 
@@ -130,23 +138,38 @@ export default function BodhPage() {
         <motion.div variants={STAGGER_CONTAINER} initial="initial" animate="animate" className="space-y-3">
           {MENTAL_MODELS.map((model) => (
             <motion.div key={model.id} variants={STAGGER_ITEM} className="card-base overflow-hidden">
-              <button
-                className="w-full text-left p-5 space-y-1"
-                onClick={() => setExpanded(expanded === model.id ? null : model.id)}
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <h3 className="font-semibold text-base" style={{ color: 'var(--text-primary)' }}>{model.name}</h3>
-                    <p className="text-xs mt-0.5" style={{ color: 'var(--text-faint)' }}>{model.origin}</p>
+              <div className="w-full relative">
+                <div className="flex items-start justify-between gap-3 p-5">
+                  <button
+                    className="flex-1 text-left space-y-1"
+                    onClick={() => setExpanded(expanded === model.id ? null : model.id)}
+                  >
+                    <div>
+                      <h3 className="font-semibold text-base" style={{ color: 'var(--text-primary)' }}>{model.name}</h3>
+                      <p className="text-xs mt-0.5" style={{ color: 'var(--text-faint)' }}>{model.origin}</p>
+                    </div>
+                    <p className="text-sm font-serif italic pr-8" style={{ color: 'var(--accent-saffron)' }}>"{model.tagline}"</p>
+                  </button>
+
+                  <div className="flex items-center gap-2 flex-shrink-0 mt-1" onClick={e => e.stopPropagation()}>
+                    <ReadAloudButton
+                      text={`${model.name}. ${model.tagline}. ${model.core}`}
+                      lang="en-IN"
+                      size="sm"
+                    />
+                    <button
+                      onClick={() => setExpanded(expanded === model.id ? null : model.id)}
+                      className="p-1 rounded-full hover:bg-secondary transition-all"
+                    >
+                      <motion.div animate={{ rotate: expanded === model.id ? 180 : 0 }} transition={{ duration: 0.2 }}>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: 'var(--text-muted)' }}>
+                          <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                      </motion.div>
+                    </button>
                   </div>
-                  <motion.div animate={{ rotate: expanded === model.id ? 180 : 0 }} transition={{ duration: 0.2 }} className="flex-shrink-0 mt-1">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: 'var(--text-muted)' }}>
-                      <polyline points="6 9 12 15 18 9" />
-                    </svg>
-                  </motion.div>
                 </div>
-                <p className="text-sm font-serif italic" style={{ color: 'var(--accent-saffron)' }}>"{model.tagline}"</p>
-              </button>
+              </div>
 
               <AnimatePresence>
                 {expanded === model.id && (

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FADE_UP } from '@/lib/utils/motion';
 import PageTransition from '@/components/layout/PageTransition';
 import { getDayOfYear } from '@/lib/utils/date';
+import ReadAloudButton from '@/components/shared/ReadAloudButton';
 
 const FLAMES = [
   {
@@ -127,13 +128,23 @@ export default function NoorPage() {
             className="space-y-5"
           >
             {/* Header */}
-            <div className="card-base p-7 text-center space-y-4" style={{ background: 'color-mix(in srgb, #D4A853 6%, var(--bg-secondary))', border: '1px solid #D4A853' }}>
+            <div className="card-base p-7 text-center space-y-4 relative" style={{ background: 'color-mix(in srgb, #D4A853 6%, var(--bg-secondary))', border: '1px solid #D4A853' }}>
+              <div className="absolute top-6 right-6">
+                <ReadAloudButton
+                  text={`${selected.title}. ${selected.titleHindi}. ${selected.intro}. ${selected.fullText}`}
+                  lang="en-IN"
+                  size="sm"
+                  variant="pill"
+                  label="Listen slow"
+                  defaultPreset="slow"
+                />
+              </div>
               <span className="text-3xl">🌟</span>
-              <div>
+              <div className="pr-32 pl-32">
                 <h2 className="font-serif text-2xl leading-tight" style={{ color: 'var(--text-primary)' }}>{selected.title}</h2>
                 <p className="font-devanagari text-base mt-1" style={{ color: 'var(--text-muted)' }}>{selected.titleHindi}</p>
               </div>
-              <p className="font-serif italic text-base" style={{ color: '#D4A853' }}>{selected.intro}</p>
+              <p className="font-serif italic text-base pr-32 pl-32" style={{ color: '#D4A853' }}>{selected.intro}</p>
             </div>
 
             {/* Content */}

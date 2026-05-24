@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FADE_UP, STAGGER_CONTAINER, STAGGER_ITEM } from '@/lib/utils/motion';
 import PageTransition from '@/components/layout/PageTransition';
 import { getDayOfYear } from '@/lib/utils/date';
+import ReadAloudButton from '@/components/shared/ReadAloudButton';
 
 const WORDS = [
   {
@@ -148,9 +149,17 @@ export default function SamvaadPage() {
             className="space-y-4"
           >
             {/* Word hero */}
-            <div className="card-base p-7 text-center space-y-3" style={{ background: 'color-mix(in srgb, var(--accent-saffron) 5%, var(--bg-secondary))' }}>
+            <div className="card-base p-7 text-center space-y-3 relative" style={{ background: 'color-mix(in srgb, var(--accent-saffron) 5%, var(--bg-secondary))' }}>
+              <div className="absolute top-4 right-4">
+                <ReadAloudButton
+                  text={selected.word}
+                  lang={selected.language === 'Portuguese' ? 'en-IN' : selected.language === 'Japanese' ? 'en-IN' : 'hi-IN'}
+                  size="sm"
+                  variant="icon"
+                />
+              </div>
               <div className="space-y-1">
-                <h2 className="font-serif" style={{ fontSize: '3rem', color: 'var(--text-primary)', lineHeight: 1.1 }}>{selected.word}</h2>
+                <h2 className="font-serif pr-8 pl-8" style={{ fontSize: '3rem', color: 'var(--text-primary)', lineHeight: 1.1 }}>{selected.word}</h2>
                 {selected.script !== selected.word && (
                   <p className="font-devanagari text-2xl" style={{ color: 'var(--text-muted)' }}>{selected.script}</p>
                 )}

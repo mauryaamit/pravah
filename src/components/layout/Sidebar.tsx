@@ -13,6 +13,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import { ROOMS, ROOMS_BY_CLUSTER, CLUSTER_LABELS, type RoomCluster } from '@/lib/constants/rooms';
 import { useUser } from '@/components/providers/UserProvider';
+import { useTheme } from '@/components/providers/ThemeProvider';
 import { cn } from '@/lib/utils/cn';
 import { ACCORDION_CONTENT } from '@/lib/utils/motion';
 import SettingsModal from '@/components/shared/SettingsModal';
@@ -34,6 +35,7 @@ const DEFAULT_OPEN: RoomCluster[] = ['daily'];
 export default function Sidebar() {
   const pathname = usePathname();
   const { user } = useUser();
+  const { isDark } = useTheme();
   const [collapsed, setCollapsed] = useState(false);
   const [openClusters, setOpenClusters] = useState<RoomCluster[]>(DEFAULT_OPEN);
   const [pendingRoom, setPendingRoom] = useState<string | null>(null);
@@ -95,12 +97,12 @@ export default function Sidebar() {
             className="flex items-center gap-3 px-4 py-4 border-b flex-shrink-0"
             style={{ borderColor: 'var(--border-default)', minHeight: 64 }}
           >
-            <div
-              className="w-7 h-7 rounded-lg flex items-center justify-center text-white font-bold font-devanagari flex-shrink-0"
-              style={{ background: 'var(--accent-saffron)', fontSize: '0.72rem' }}
-            >
-              प्र
-            </div>
+            <img 
+              src="/logo.png" 
+              alt="Pravah Logo" 
+              className="w-8 h-8 object-contain rounded-lg flex-shrink-0" 
+              style={{ boxShadow: '0 2px 12px rgba(196,135,58,0.25)' }}
+            />
             <AnimatePresence>
               {!collapsed && (
                 <motion.div
@@ -110,7 +112,7 @@ export default function Sidebar() {
                   transition={{ duration: 0.15 }}
                 >
                   <div className="font-serif text-base leading-tight" style={{ color: 'var(--text-primary)' }}>Pravah</div>
-                  <div className="font-devanagari text-xs" style={{ color: 'var(--text-muted)' }}>प्रवाह</div>
+                  <div className="font-devanagari text-xs" style={{ color: 'var(--text-secondary)' }}>प्रवाह</div>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -119,12 +121,12 @@ export default function Sidebar() {
           {/* User */}
           {user && (
             <div
-              className="flex items-center gap-3 px-4 py-2.5 border-b flex-shrink-0"
+              className="flex items-center gap-3 px-4 py-3 border-b flex-shrink-0"
               style={{ borderColor: 'var(--border-default)' }}
             >
               <div
-                className="w-6 h-6 rounded-full flex items-center justify-center text-white flex-shrink-0"
-                style={{ background: 'var(--accent-saffron)', fontSize: '0.65rem', fontWeight: 600 }}
+                className="w-7 h-7 rounded-full flex items-center justify-center text-white flex-shrink-0"
+                style={{ background: 'var(--accent-saffron)', fontSize: '0.75rem', fontWeight: 600 }}
               >
                 {user.name.charAt(0).toUpperCase()}
               </div>
@@ -132,7 +134,8 @@ export default function Sidebar() {
                 {!collapsed && (
                   <motion.span
                     initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                    className="text-xs truncate" style={{ color: 'var(--text-secondary)' }}
+                    className="truncate" 
+                    style={{ color: 'var(--text-primary)', fontSize: '15px', fontWeight: 500 }}
                   >
                     {user.name}
                   </motion.span>
@@ -154,10 +157,10 @@ export default function Sidebar() {
                   {!collapsed && (
                     <button
                       onClick={() => toggleCluster(cluster)}
-                      className="w-full flex items-center justify-between px-4 py-1.5 transition-colors"
-                      style={{ color: hasActive ? 'var(--accent-saffron)' : 'var(--text-faint)' }}
+                      className="w-full flex items-center justify-between px-4 py-2 transition-colors"
+                      style={{ color: isDark ? '#D4B896' : '#5C4A2A' }}
                     >
-                      <span className="text-xs font-semibold tracking-widest uppercase" style={{ letterSpacing: '0.12em', fontSize: '0.65rem' }}>
+                      <span className="tracking-widest uppercase" style={{ letterSpacing: '0.14em', fontSize: '13px', fontWeight: 600 }}>
                         {CLUSTER_LABELS[cluster]}
                       </span>
                       <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
@@ -243,17 +246,21 @@ export default function Sidebar() {
                                   className="flex-1 min-w-0"
                                 >
                                   <div
-                                    className="text-sm leading-tight truncate"
+                                    className="leading-tight truncate"
                                     style={{
-                                      color: isActive ? room.colorHex : 'var(--text-primary)',
-                                      fontWeight: isActive ? 600 : 400,
+                                      color: 'var(--text-primary)',
+                                      fontSize: '16px',
+                                      fontWeight: 500,
                                     }}
                                   >
                                     {room.name}
                                   </div>
                                   <div
-                                    className="text-xs truncate font-devanagari leading-tight"
-                                    style={{ color: isActive ? room.colorHex : 'var(--text-faint)', opacity: isActive ? 0.85 : 1 }}
+                                    className="truncate font-devanagari leading-tight"
+                                    style={{
+                                      color: 'var(--text-secondary)',
+                                      fontSize: '12px',
+                                    }}
                                   >
                                     {room.nameHindi}
                                   </div>

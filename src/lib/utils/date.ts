@@ -24,8 +24,14 @@ export function getDayOfYear(date: Date = new Date()): number {
   return Math.floor(diff / (1000 * 60 * 60 * 24));
 }
 
-/** Human-readable date string */
+/** YYYY-MM-DD date string for database keys */
 export function toDateString(date: Date = new Date()): string {
+  return format(date, 'yyyy-MM-dd');
+}
+
+/** Human-readable date string for UI display */
+export function formatDisplayDate(dateInput: Date | string = new Date()): string {
+  const date = typeof dateInput === 'string' ? new Date(dateInput) : dateInput;
   return format(date, 'EEEE, MMMM d');
 }
 

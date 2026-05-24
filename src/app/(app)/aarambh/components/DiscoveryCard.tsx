@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { getDayIndex } from '@/lib/utils/date';
 import { FADE_UP } from '@/lib/utils/motion';
 import { cn } from '@/lib/utils/cn';
+import ReadAloudButton from '@/components/shared/ReadAloudButton';
 
 // 30 curated daily discoveries — cross-domain, serendipitous, mind-expanding
 const DISCOVERIES = [
@@ -255,13 +256,20 @@ export default function DiscoveryCard() {
           >
             {discovery.category}
           </span>
-          {/* Breathing dot = alive */}
-          <motion.div
-            animate={{ scale: [1, 1.4, 1], opacity: [0.6, 1, 0.6] }}
-            transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut' }}
-            className="w-2 h-2 rounded-full"
-            style={{ background: discovery.color }}
-          />
+          <div className="flex items-center gap-2" onClick={e => e.stopPropagation()}>
+            <ReadAloudButton
+              text={`${discovery.title}. ${discovery.body} ${discovery.prompt}`}
+              lang="en-IN"
+              size="sm"
+            />
+            {/* Breathing dot = alive */}
+            <motion.div
+              animate={{ scale: [1, 1.4, 1], opacity: [0.6, 1, 0.6] }}
+              transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut' }}
+              className="w-2 h-2 rounded-full"
+              style={{ background: discovery.color }}
+            />
+          </div>
         </div>
         <h3 className="font-serif text-xl leading-snug" style={{ color: 'var(--text-primary)' }}>
           {discovery.title}

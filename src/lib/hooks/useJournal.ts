@@ -15,7 +15,7 @@ export interface JournalEntry {
   word_count: number;
 }
 
-export function useJournal() {
+export function useJournal(selectedDate: string) {
   const { user } = useAuth();
   const { addRewireScore, updateStreak } = useStreak();
   const [todayEntry, setTodayEntry] = useState<JournalEntry | null>(null);
@@ -28,15 +28,15 @@ export function useJournal() {
       return;
     }
 
-    const todayStr = toDateString(new Date());
+    setLoading(true);
 
-    // 1. Listen to today's entry
-    const todayDocRef = doc(db, `users/${user.uid}/journalEntries`, todayStr);
+    // 1. Listen to selected date's entry
+    const todayDocRef = doc(db, `users/${user.uid}/journalEntries`, selectedDate);
     const unsubToday = onSnapshot(todayDocRef, (docSnap) => {
       if (docSnap.exists()) {
         const data = docSnap.data();
         setTodayEntry({
-          date: todayStr,
+          date: selectedDate,
           content: data.content || '',
           mood: data.mood || 3,
           gratitude: data.gratitude || ['', '', ''],
@@ -49,7 +49,7 @@ export function useJournal() {
       }
       setLoading(false);
     }, (err) => {
-      console.error('Stream today journal entry error:', err);
+      console.error('Stream journal entry error:', err);
       setLoading(false);
     });
 
@@ -80,7 +80,7 @@ export function useJournal() {
       unsubToday();
       unsubAll();
     };
-  }, [user]);
+  }, [user, selectedDate]);
 
   const saveEntry = async (data: {
     content: string;
@@ -90,8 +90,7 @@ export function useJournal() {
     intention: string;
   }) => {
     if (!user || !db) return;
-    const todayStr = toDateString(new Date());
-    const docRef = doc(db, `users/${user.uid}/journalEntries`, todayStr);
+    const docRef = doc(db, `users/${user.uid}/journalEntries`, selectedDate);
 
     const wordCount = data.content.trim().split(/\s+/).filter(Boolean).length;
 

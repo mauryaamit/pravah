@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FADE_UP, STAGGER_CONTAINER, STAGGER_ITEM } from '@/lib/utils/motion';
 import PageTransition from '@/components/layout/PageTransition';
 import { getDayOfYear } from '@/lib/utils/date';
+import ReadAloudButton from '@/components/shared/ReadAloudButton';
 
 const STORIES = [
   {
@@ -194,18 +195,27 @@ export default function KathakarPage() {
             className="space-y-5"
           >
             {/* Story header */}
-            <div className="card-base p-6 space-y-3" style={{ background: 'color-mix(in srgb, var(--accent-saffron) 5%, var(--bg-secondary))' }}>
-              <div className="flex items-center justify-between gap-3">
+            <div className="card-base p-6 space-y-3 relative" style={{ background: 'color-mix(in srgb, var(--accent-saffron) 5%, var(--bg-secondary))' }}>
+              <div className="absolute top-6 right-6">
+                <ReadAloudButton
+                  text={`${selected.title}. ${selected.titleHindi}. ${selected.preview}. ${selected.content}`}
+                  lang="en-IN"
+                  size="md"
+                  variant="pill"
+                  label="Listen Story"
+                />
+              </div>
+              <div className="flex items-center justify-between gap-3 pr-32">
                 <span className="text-xs px-2.5 py-1 rounded-full" style={{ background: 'var(--bg-tertiary)', color: 'var(--text-muted)' }}>
                   {selected.genre}
                 </span>
                 <span className="text-xs" style={{ color: 'var(--text-faint)' }}>{selected.readTime} read</span>
               </div>
-              <div>
+              <div className="pr-32">
                 <h2 className="font-serif text-2xl leading-tight" style={{ color: 'var(--text-primary)' }}>{selected.title}</h2>
                 <p className="font-devanagari text-base mt-1" style={{ color: 'var(--text-muted)' }}>{selected.titleHindi}</p>
               </div>
-              <p className="font-serif italic text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+              <p className="font-serif italic text-base leading-relaxed pr-32" style={{ color: 'var(--text-secondary)' }}>
                 {selected.preview}
               </p>
             </div>

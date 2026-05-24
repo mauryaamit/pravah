@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FADE_UP, STAGGER_CONTAINER, STAGGER_ITEM } from '@/lib/utils/motion';
 import PageTransition from '@/components/layout/PageTransition';
 import { getDayOfYear } from '@/lib/utils/date';
+import ReadAloudButton from '@/components/shared/ReadAloudButton';
 
 const PHILOSOPHIES = [
   {
@@ -158,10 +159,21 @@ export default function DarshanPage() {
                 onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
               />
             </div>
-            <div className="p-5 space-y-2">
-              <p className="section-label">Philosopher of the Day</p>
-              <h2 className="font-serif text-xl" style={{ color: 'var(--text-primary)' }}>{philosopher.name}</h2>
-              <p className="text-xs" style={{ color: 'var(--text-faint)' }}>{philosopher.period} · {philosopher.nationality}</p>
+            <div className="p-5 space-y-2 flex-1">
+              <div className="flex justify-between items-start">
+                <div>
+                  <p className="section-label">Philosopher of the Day</p>
+                  <h2 className="font-serif text-xl" style={{ color: 'var(--text-primary)' }}>{philosopher.name}</h2>
+                  <p className="text-xs" style={{ color: 'var(--text-faint)' }}>{philosopher.period} · {philosopher.nationality}</p>
+                </div>
+                <ReadAloudButton
+                  text={`${philosopher.name}. ${philosopher.bio}`}
+                  lang="en-IN"
+                  size="sm"
+                  variant="pill"
+                  label="Listen Bio"
+                />
+              </div>
               <div className="space-y-2 pt-1">
                 {philosopher.bio.split('\n\n').map((para, i) => (
                   <p key={i} className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)', lineHeight: 1.8 }}>
@@ -179,27 +191,42 @@ export default function DarshanPage() {
           <motion.div variants={STAGGER_CONTAINER} initial="initial" animate="animate" className="space-y-3">
             {PHILOSOPHIES.map(phil => (
               <motion.div key={phil.id} variants={STAGGER_ITEM} className="card-base overflow-hidden">
-                <button
-                  className="w-full text-left p-5"
-                  onClick={() => setExpanded(expanded === phil.id ? null : phil.id)}
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex items-start gap-3">
-                      <span className="text-2xl flex-shrink-0 mt-0.5">{phil.symbol}</span>
-                      <div>
-                        <h3 className="font-semibold text-base" style={{ color: 'var(--text-primary)' }}>{phil.name}</h3>
-                        <p className="font-devanagari text-sm" style={{ color: 'var(--text-muted)' }}>{phil.hindi}</p>
-                        <p className="text-xs mt-0.5" style={{ color: 'var(--text-faint)' }}>{phil.founder}</p>
+                <div className="w-full relative">
+                  <div className="flex items-start justify-between gap-3 p-5">
+                    <button
+                      className="flex-1 text-left"
+                      onClick={() => setExpanded(expanded === phil.id ? null : phil.id)}
+                    >
+                      <div className="flex items-start gap-3">
+                        <span className="text-2xl flex-shrink-0 mt-0.5">{phil.symbol}</span>
+                        <div>
+                          <h3 className="font-semibold text-base" style={{ color: 'var(--text-primary)' }}>{phil.name}</h3>
+                          <p className="font-devanagari text-sm" style={{ color: 'var(--text-muted)' }}>{phil.hindi}</p>
+                          <p className="text-xs mt-0.5" style={{ color: 'var(--text-faint)' }}>{phil.founder}</p>
+                        </div>
                       </div>
+                      <p className="mt-2 font-serif italic text-sm" style={{ color: phil.color }}>"{phil.tagline}"</p>
+                    </button>
+
+                    <div className="flex items-center gap-2 flex-shrink-0 mt-1" onClick={e => e.stopPropagation()}>
+                      <ReadAloudButton
+                        text={`${phil.name}. ${phil.tagline}. ${phil.core}`}
+                        lang={phil.id === 'advaita' || phil.id === 'buddhism' ? 'hi-IN' : 'en-IN'}
+                        size="sm"
+                      />
+                      <button
+                        onClick={() => setExpanded(expanded === phil.id ? null : phil.id)}
+                        className="p-1 rounded-full hover:bg-secondary transition-all"
+                      >
+                        <motion.div animate={{ rotate: expanded === phil.id ? 180 : 0 }} transition={{ duration: 0.2 }}>
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: 'var(--text-muted)' }}>
+                            <polyline points="6 9 12 15 18 9" />
+                          </svg>
+                        </motion.div>
+                      </button>
                     </div>
-                    <motion.div animate={{ rotate: expanded === phil.id ? 180 : 0 }} transition={{ duration: 0.2 }} className="flex-shrink-0 mt-1">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: 'var(--text-muted)' }}>
-                        <polyline points="6 9 12 15 18 9" />
-                      </svg>
-                    </motion.div>
                   </div>
-                  <p className="mt-2 font-serif italic text-sm" style={{ color: phil.color }}>"{phil.tagline}"</p>
-                </button>
+                </div>
 
                 <AnimatePresence>
                   {expanded === phil.id && (

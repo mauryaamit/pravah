@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { adminDb, adminAuth } from '@/lib/firebase/admin';
+import { getAdminDb, getAdminAuth } from '@/lib/firebase/admin';
 
 export async function POST(req: NextRequest) {
   try {
-    if (!adminDb || !adminAuth) {
-      return NextResponse.json({ error: 'Firebase Admin not initialized' }, { status: 500 });
-    }
+    // getAdminDb/getAdminAuth throw a clear error if env vars are missing
+    const adminDb   = getAdminDb();
+    const adminAuth = getAdminAuth();
 
     const { name, email } = await req.json();
     if (!name) {
@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
         });
       }
     } else {
-      // Create a guest/anonymous user with no email
+      // Create a guest user with no email
       const userRef = adminDb.collection('users').doc();
       uid = userRef.id;
       isNewUser = true;
@@ -88,7 +88,7 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Generate Custom Token
+    // Generate Custom Token for client-side Firebase Auth sign-in
     const customToken = await adminAuth.createCustomToken(uid);
 
     return NextResponse.json({
@@ -102,7 +102,7 @@ export async function POST(req: NextRequest) {
       isNewUser,
     });
   } catch (err: any) {
-    console.error('Login-or-create error:', err);
+    console.error('[login-or-create] Error:', err);
     return NextResponse.json({ error: err.message || 'Authentication failed' }, { status: 500 });
   }
 }

@@ -14,6 +14,8 @@ export interface UserPreferences {
   soundEnabled: boolean;
   volume: number; // 0–1
   ttsSpeed: number; // 0.7 | 1.0 | 1.25 | 1.5
+  backgroundPainting: 'starry-night' | 'water-lilies' | 'wanderer-fog' | 'great-wave' | 'tree-of-life';
+  backgroundOpacity: number; // 0 to 0.25
 }
 
 export const DEFAULT_PREFERENCES: UserPreferences = {
@@ -23,4 +25,6 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   soundEnabled: false,
   volume: 0.15,
   ttsSpeed: 1.0,
+  backgroundPainting: 'starry-night',
+  backgroundOpacity: 0.07,
 };
