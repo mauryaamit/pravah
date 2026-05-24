@@ -6,7 +6,7 @@
 /* ---- Base reading prose (Merriweather for English) ---- */
 .prose-reading {
   font-family: 'Merriweather', Georgia, serif;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   font-weight: 300;
   line-height: var(--reading-line-height, 1.95);
   letter-spacing: 0.01em;
@@ -21,7 +21,7 @@
 /* ---- Story / long-form prose ---- */
 .prose-story {
   font-family: 'Merriweather', Georgia, serif;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   font-weight: 300;
   line-height: 2.0;
   letter-spacing: 0.01em;
@@ -43,7 +43,7 @@
 /* ---- Biography prose ---- */
 .prose-biography {
   font-family: 'Merriweather', Georgia, serif;
-  font-size: 1.05rem;
+  font-size: 1.2rem;
   font-weight: 300;
   line-height: 1.95;
   color: var(--text-secondary);
@@ -54,7 +54,7 @@
 /* ---- Poetry prose (English) ---- */
 .prose-poetry {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 1.3rem;
+  font-size: 1.45rem;
   line-height: 2.1;
   letter-spacing: 0.015em;
   color: var(--text-primary);
@@ -71,7 +71,7 @@
 /* ---- Hindi / Devanagari prose ---- */
 .prose-devanagari {
   font-family: 'Noto Serif Devanagari', serif;
-  font-size: 1.2rem;
+  font-size: 1.35rem;
   font-weight: 400;
   line-height: 2.2;
   letter-spacing: 0.02em;
@@ -85,7 +85,7 @@
 /* ---- Roman Urdu / Transliterated ---- */
 .prose-roman {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 1.25rem;
+  font-size: 1.4rem;
   font-style: italic;
   line-height: 2.0;
   letter-spacing: 0.01em;
@@ -108,7 +108,7 @@
 /* ---- Philosophy / deep thought ---- */
 .prose-philosophy {
   font-family: 'Merriweather', Georgia, serif;
-  font-size: 1.05rem;
+  font-size: 1.2rem;
   font-weight: 300;
   line-height: 1.95;
   color: var(--text-secondary);
@@ -131,7 +131,7 @@
 /* ---- Journal editor ---- */
 .journal-editor {
   font-family: 'Merriweather', Georgia, serif;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   font-weight: 300;
   line-height: 1.9;
   letter-spacing: 0.01em;

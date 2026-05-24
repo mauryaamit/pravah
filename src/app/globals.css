@@ -288,68 +288,88 @@ body {
 /* ---- Prose Reading Typography Styles ---- */
 .prose-reading {
   font-family: 'Merriweather', Georgia, serif;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   line-height: 2.0;
   font-weight: 300;
 }
 .prose-story {
   font-family: 'Merriweather', Georgia, serif;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   line-height: 2.05;
   font-weight: 300;
 }
 .prose-biography {
   font-family: 'Merriweather', Georgia, serif;
-  font-size: 1.05rem;
+  font-size: 1.2rem;
   line-height: 1.95;
   font-weight: 300;
 }
 .prose-philosophy {
   font-family: 'Merriweather', Georgia, serif;
-  font-size: 1.05rem;
+  font-size: 1.2rem;
   line-height: 1.95;
   font-weight: 300;
 }
 .prose-poetry {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 1.25rem;
+  font-size: 1.45rem;
   line-height: 2.1;
   font-weight: 400;
 }
 .prose-devanagari {
   font-family: 'Noto Serif Devanagari', serif;
-  font-size: 1.15rem;
+  font-size: 1.35rem;
   line-height: 2.2;
   font-weight: 400;
 }
 .prose-roman {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-style: italic;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   line-height: 2.0;
   font-weight: 400;
 }
 .journal-editor {
   font-family: 'Merriweather', Georgia, serif;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   line-height: 1.9;
   font-weight: 300;
 }
 
+/* Global Core Content Overrides based on Tailwind font size class */
+p.leading-relaxed.text-sm {
+  font-size: 1.05rem !important;
+}
+p.leading-relaxed.text-base {
+  font-size: 1.2rem !important;
+}
+p.leading-relaxed.text-lg {
+  font-size: 1.3rem !important;
+}
+p.leading-relaxed:not(.text-sm):not(.text-base):not(.text-lg):not(.text-xs) {
+  font-size: 1.2rem !important;
+}
+
 @media (max-width: 1024px) {
-  .prose-reading, .prose-story, .journal-editor { font-size: 1.05rem; }
-  .prose-biography, .prose-philosophy { font-size: 1.0rem; }
-  .prose-poetry { font-size: 1.2rem; }
-  .prose-devanagari { font-size: 1.1rem; }
-  .prose-roman { font-size: 1.15rem; }
+  .prose-reading, .prose-story, .journal-editor { font-size: 1.18rem; }
+  .prose-biography, .prose-philosophy { font-size: 1.12rem; }
+  .prose-poetry { font-size: 1.35rem; }
+  .prose-devanagari { font-size: 1.28rem; }
+  .prose-roman { font-size: 1.32rem; }
+  p.leading-relaxed.text-sm { font-size: 1.0rem !important; }
+  p.leading-relaxed.text-base { font-size: 1.15rem !important; }
+  p.leading-relaxed:not(.text-sm):not(.text-base):not(.text-lg):not(.text-xs) { font-size: 1.15rem !important; }
 }
 
 @media (max-width: 768px) {
-  .prose-reading, .prose-story, .journal-editor { font-size: 1.0rem; }
-  .prose-biography, .prose-philosophy { font-size: 0.95rem; }
-  .prose-poetry { font-size: 1.15rem; }
-  .prose-devanagari { font-size: 1.05rem; }
-  .prose-roman { font-size: 1.1rem; }
+  .prose-reading, .prose-story, .journal-editor { font-size: 1.1rem; }
+  .prose-biography, .prose-philosophy { font-size: 1.05rem; }
+  .prose-poetry { font-size: 1.25rem; }
+  .prose-devanagari { font-size: 1.18rem; }
+  .prose-roman { font-size: 1.22rem; }
+  p.leading-relaxed.text-sm { font-size: 0.95rem !important; }
+  p.leading-relaxed.text-base { font-size: 1.08rem !important; }
+  p.leading-relaxed:not(.text-sm):not(.text-base):not(.text-lg):not(.text-xs) { font-size: 1.08rem !important; }
 }
 
 /* ============================================================
