@@ -1,9 +1,9 @@
 /* ============================================================
-   PRAVAH — animations.css
+   PRAVAH - animations.css
    All keyframe animations. Slow, contemplative, sacred.
    ============================================================ */
 
-/* ---- Breathing Orb (Aarambh) — deeply slow ---- */
+/* ---- Breathing Orb (Aarambh) - deeply slow ---- */
 @keyframes breathe {
   0%, 100% { transform: scale(1); opacity: 0.85; }
   50%       { transform: scale(1.07); opacity: 1; }
@@ -32,7 +32,7 @@
   100% { transform: scale(1) rotate(360deg); opacity: 1; }
 }
 
-/* ---- Floating — very slow and gentle ---- */
+/* ---- Floating - very slow and gentle ---- */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50%       { transform: translateY(-5px); }
@@ -52,7 +52,7 @@
   to   { transform: translateY(-100vh) translateX(20px); opacity: 0; }
 }
 
-/* ---- Skeleton shimmer — calm ---- */
+/* ---- Skeleton shimmer - calm ---- */
 @keyframes skeleton-shimmer {
   0%   { background-position: 200% 0; }
   100% { background-position: -200% 0; }
@@ -84,7 +84,7 @@
   to   { opacity: 0; transform: translateY(-10px); }
 }
 
-/* ---- Card entrance — slower ---- */
+/* ---- Card entrance - slower ---- */
 @keyframes card-enter {
   from { opacity: 0; transform: scale(0.97) translateY(10px); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
@@ -149,7 +149,7 @@
 .animate-pravah-bloom   { animation: pravah-bloom 0.9s cubic-bezier(0.34,1.56,0.64,1) forwards; }
 .animate-text-emerge    { animation: text-emerge 0.7s ease-out forwards; }
 
-/* Staggered children — slower gaps */
+/* Staggered children - slower gaps */
 .stagger > *:nth-child(1) { animation-delay: 0ms; }
 .stagger > *:nth-child(2) { animation-delay: 80ms; }
 .stagger > *:nth-child(3) { animation-delay: 160ms; }

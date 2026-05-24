@@ -740,7 +740,7 @@ export default function SukoonPage() {
   };
 
   const handleCopySher = (key: string, text: string, author: string) => {
-    navigator.clipboard.writeText(`${text}\n— ${author}`);
+    navigator.clipboard.writeText(`${text}\n- ${author}`);
     setCopiedIndex(key);
     setTimeout(() => setCopiedIndex(null), 2000);
   };
@@ -995,7 +995,7 @@ export default function SukoonPage() {
 
                                     {idx < groupLinesIntoCouplets(lines).length - 1 && (
                                       <div className="text-center py-2 text-faint select-none" style={{ color: 'var(--text-faint)', letterSpacing: '0.2em' }}>
-                                        —✦—
+                                        -✦-
                                       </div>
                                     )}
                                   </div>

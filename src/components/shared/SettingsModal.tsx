@@ -1,8 +1,10 @@
 'use client';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, LogOut, Settings, Languages, MessageSquare, Volume2, User as UserIcon } from 'lucide-react';
+import { X, LogOut, Settings, Languages, MessageSquare, Volume2, User as UserIcon, Palette, VolumeX } from 'lucide-react';
 import { useUser } from '@/components/providers/UserProvider';
 import { BACKGROUND_PAINTINGS } from '@/lib/constants/paintings';
+import { useTheme } from '@/components/providers/ThemeProvider';
+import { useAudio } from '@/components/providers/AudioProvider';
 
 interface SettingsModalProps {
   isOpen: boolean;
@@ -11,6 +13,8 @@ interface SettingsModalProps {
 
 export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
   const { user, preferences, updatePreferences, logout } = useUser();
+  const { theme, setTheme } = useTheme();
+  const { isMuted, toggleMute, enableAudio } = useAudio();
 
   if (!user) return null;
 
@@ -155,6 +159,59 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                     })}
                   </div>
                 </div>
+
+                {/* Theme Selector */}
+                <div className="space-y-1.5 pt-2">
+                  <div className="flex justify-between text-xs">
+                    <span style={{ color: 'var(--text-secondary)' }}>Sanctuary Theme</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      onClick={() => setTheme('cream')}
+                      className="px-3 py-2.5 rounded-xl text-xs transition-all border text-center font-medium min-h-[44px]"
+                      style={{
+                        backgroundColor: theme === 'cream' ? 'var(--bg-tertiary)' : 'transparent',
+                        borderColor: theme === 'cream' ? 'var(--accent-saffron)' : 'var(--border-default)',
+                        color: theme === 'cream' ? 'var(--text-primary)' : 'var(--text-muted)',
+                      }}
+                    >
+                      ☀️ Day (Cream)
+                    </button>
+                    <button
+                      onClick={() => setTheme('rainy')}
+                      className="px-3 py-2.5 rounded-xl text-xs transition-all border text-center font-medium min-h-[44px]"
+                      style={{
+                        backgroundColor: theme === 'rainy' ? 'var(--bg-tertiary)' : 'transparent',
+                        borderColor: theme === 'rainy' ? 'var(--accent-saffron)' : 'var(--border-default)',
+                        color: theme === 'rainy' ? 'var(--text-primary)' : 'var(--text-muted)',
+                      }}
+                    >
+                      🌙 Night (Library)
+                    </button>
+                    <button
+                      onClick={() => setTheme('vangogh')}
+                      className="px-3 py-2.5 rounded-xl text-xs transition-all border text-center font-medium min-h-[44px]"
+                      style={{
+                        backgroundColor: theme === 'vangogh' ? 'var(--bg-tertiary)' : 'transparent',
+                        borderColor: theme === 'vangogh' ? 'var(--accent-saffron)' : 'var(--border-default)',
+                        color: theme === 'vangogh' ? 'var(--text-primary)' : 'var(--text-muted)',
+                      }}
+                    >
+                      🎨 Painterly (Van Gogh)
+                    </button>
+                    <button
+                      onClick={() => setTheme('forest')}
+                      className="px-3 py-2.5 rounded-xl text-xs transition-all border text-center font-medium min-h-[44px]"
+                      style={{
+                        backgroundColor: theme === 'forest' ? 'var(--bg-tertiary)' : 'transparent',
+                        borderColor: theme === 'forest' ? 'var(--accent-saffron)' : 'var(--border-default)',
+                        color: theme === 'forest' ? 'var(--text-primary)' : 'var(--text-muted)',
+                      }}
+                    >
+                      🌲 Nature (Forest)
+                    </button>
+                  </div>
+                </div>
               </div>
 
               {/* Background Ambience Settings */}
@@ -234,7 +291,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                         <button
                           key={speed}
                           onClick={() => updatePreferences({ ttsSpeed: speed })}
-                          className="px-2 py-2 rounded-xl text-xs transition-all border text-center"
+                          className="px-2 py-2 rounded-xl text-xs transition-all border text-center min-h-[44px]"
                           style={{
                             backgroundColor: isActive ? 'var(--bg-tertiary)' : 'transparent',
                             borderColor: isActive ? 'var(--accent-saffron)' : 'var(--border-default)',
@@ -248,6 +305,24 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                     })}
                   </div>
                 </div>
+
+                {/* Sound Toggle */}
+                <div className="space-y-1.5 pt-2">
+                  <div className="flex justify-between text-xs">
+                    <span style={{ color: 'var(--text-secondary)' }}>Ambient Sounds</span>
+                  </div>
+                  <button
+                    onClick={() => isMuted ? enableAudio() : toggleMute()}
+                    className="w-full px-4 py-2.5 rounded-xl text-xs transition-all border text-center font-semibold uppercase tracking-wider min-h-[44px]"
+                    style={{
+                      backgroundColor: !isMuted ? 'color-mix(in srgb, var(--accent-saffron) 12%, var(--bg-tertiary))' : 'transparent',
+                      borderColor: !isMuted ? 'var(--accent-saffron)' : 'var(--border-default)',
+                      color: !isMuted ? 'var(--accent-saffron)' : 'var(--text-muted)',
+                    }}
+                  >
+                    {!isMuted ? '🔈 Sound On (Unmuted)' : '🔇 Sound Off (Muted)'}
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -258,7 +333,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
             >
               <button
                 onClick={logout}
-                className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs text-red-500 hover:bg-red-500/10 transition-colors"
+                className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-xs text-red-500 hover:bg-red-500/10 transition-colors min-h-[44px]"
                 title="Sign out of sanctuary"
               >
                 <LogOut size={14} />
@@ -266,7 +341,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
               </button>
               <button
                 onClick={onClose}
-                className="px-4 py-2 rounded-xl text-xs font-medium transition-all"
+                className="px-4 py-2.5 rounded-xl text-xs font-medium transition-all min-h-[44px]"
                 style={{
                   backgroundColor: 'var(--bg-tertiary)',
                   border: '1px solid var(--border-default)',

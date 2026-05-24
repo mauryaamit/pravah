@@ -12,7 +12,7 @@ import ReadAloudButton from '@/components/shared/ReadAloudButton';
 
 // Curated neuroscience tips
 const NEUROSCIENCE_TIPS = [
-  'After 21 days, habits move from prefrontal cortex to basal ganglia — becoming automatic.',
+  'After 21 days, habits move from prefrontal cortex to basal ganglia - becoming automatic.',
   'Stacking your new habit after an existing anchor routine creates strong synaptic connections.',
   'The 2-minute rule makes starting so easy that resistance vanishes. Just begin.',
   'Your brain craves immediate rewards. Celebrate every micro-win to release dopamine.',
@@ -21,7 +21,8 @@ const NEUROSCIENCE_TIPS = [
 ];
 
 export default function AgniPage() {
-  const { user } = useUser();
+  const [selectedDate, setSelectedDate] = useState(() => toDateString(new Date()));
+  const [showPastHistory, setShowPastHistory] = useState(false);
   const [newHabitName, setNewHabitName] = useState('');
   const [newHabitFeeling, setNewHabitFeeling] = useState('');
   const [showAdd, setShowAdd] = useState(false);
@@ -33,10 +34,14 @@ export default function AgniPage() {
   const { habits = [], weeklyCompletions = {}, loading: isLoading, addHabit, completeHabit, deleteHabit } = useHabits();
   const { streak: streakData } = useStreak();
 
+  const isCompleted = (habitId: string) => {
+    return (weeklyCompletions[selectedDate] || []).includes(habitId);
+  };
+
   const handleCompleteHabit = async (id: string) => {
     setCelebrated(id);
     setTimeout(() => setCelebrated(null), 1500);
-    await completeHabit(id);
+    await completeHabit(id, selectedDate);
   };
 
   const handleAddHabit = async () => {
@@ -51,7 +56,7 @@ export default function AgniPage() {
     await deleteHabit(id);
   };
 
-  const completedCount = habits.filter(h => h.completedToday).length;
+  const completedCount = habits.filter(h => isCompleted(h.id)).length;
   const total = habits.length;
   const progress = total > 0 ? completedCount / total : 0;
 
@@ -81,6 +86,28 @@ export default function AgniPage() {
   };
 
   const weekDates = getWeekDates();
+
+  const getRollingPastDates = () => {
+    const dates: { dateStr: string; label: string; isToday: boolean }[] = [];
+    const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const today = new Date();
+    const todayStr = toDateString(today);
+    
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(today);
+      d.setDate(today.getDate() - i);
+      const ds = toDateString(d);
+      dates.push({
+        dateStr: ds,
+        label: weekdays[d.getDay()],
+        isToday: ds === todayStr,
+      });
+    }
+    return dates;
+  };
+
+  const rollingPastDates = getRollingPastDates();
+  const displayDates = showPastHistory ? rollingPastDates : weekDates;
 
   const getDayProgress = (dateStr: string) => {
     if (habits.length === 0) return 0;
@@ -185,34 +212,34 @@ export default function AgniPage() {
                   celebrated === habit.id ? 'animate-check-bounce' : ''
                 )}
                 style={{
-                  background: habit.completedToday
+                  background: isCompleted(habit.id)
                     ? 'color-mix(in srgb, #4A7C59 8%, var(--bg-secondary))'
                     : undefined,
-                  borderColor: habit.completedToday
+                  borderColor: isCompleted(habit.id)
                     ? 'color-mix(in srgb, #4A7C59 30%, transparent)'
                     : undefined,
                 }}
               >
                 {/* Complete button */}
                 <button
-                  onClick={() => !habit.completedToday && handleCompleteHabit(habit.id)}
-                  disabled={habit.completedToday}
+                  onClick={() => !isCompleted(habit.id) && handleCompleteHabit(habit.id)}
+                  disabled={isCompleted(habit.id)}
                   className="flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all"
                   style={{
-                    borderColor: habit.completedToday ? '#4A7C59' : 'var(--border-strong)',
-                    background: habit.completedToday ? '#4A7C59' : 'transparent',
+                    borderColor: isCompleted(habit.id) ? '#4A7C59' : 'var(--border-strong)',
+                    background: isCompleted(habit.id) ? '#4A7C59' : 'transparent',
                     color: 'white',
-                    cursor: habit.completedToday ? 'default' : 'pointer',
+                    cursor: isCompleted(habit.id) ? 'default' : 'pointer',
                   }}
                 >
-                  {habit.completedToday && <Check size={14} />}
+                  {isCompleted(habit.id) && <Check size={14} />}
                 </button>
                 <div className="flex-1 min-w-0">
                   <div
                     className="font-medium text-base"
                     style={{
-                      color: habit.completedToday ? 'var(--text-muted)' : 'var(--text-primary)',
-                      textDecoration: habit.completedToday ? 'line-through' : 'none',
+                      color: isCompleted(habit.id) ? 'var(--text-muted)' : 'var(--text-primary)',
+                      textDecoration: isCompleted(habit.id) ? 'line-through' : 'none',
                     }}
                   >
                     {habit.name}
@@ -298,37 +325,56 @@ export default function AgniPage() {
 
         {/* ─── This Week Completion Progress Circles ─── */}
         <div className="card-base p-5 space-y-3">
-          <h3 className="text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--text-secondary)' }}>
-            This Week
-          </h3>
+          <div className="flex justify-between items-center">
+            <h3 className="text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--text-secondary)' }}>
+              {showPastHistory ? 'Past 7 Days History' : 'This Week'}
+            </h3>
+            <button
+              onClick={() => setShowPastHistory(p => !p)}
+              className="text-xs font-semibold uppercase tracking-wider transition-all hover:opacity-85"
+              style={{ color: 'var(--accent-saffron)' }}
+            >
+              {showPastHistory ? 'Show Mon-Sun' : 'Show Past 7 Days'}
+            </button>
+          </div>
           <div className="grid grid-cols-7 gap-2">
-            {weekDates.map(wd => {
+            {displayDates.map(wd => {
               const progressVal = getDayProgress(wd.dateStr);
               const isDone = progressVal === 1 && total > 0;
               const percent = Math.round(progressVal * 100);
+              const isSel = selectedDate === wd.dateStr;
               return (
                 <div key={wd.dateStr} className="flex flex-col items-center gap-1.5">
-                  <div
+                  <button
+                    onClick={() => setSelectedDate(wd.dateStr)}
                     className={cn(
-                      "w-9 h-9 rounded-full border-2 flex items-center justify-center text-[10px] font-bold transition-all"
+                      "w-9 h-9 rounded-full border-2 flex items-center justify-center text-[10px] font-bold transition-all hover:scale-105 active:scale-95"
                     )}
                     style={{
-                      borderColor: wd.isToday ? 'var(--room-current)' : 'var(--border-default)',
+                      borderColor: isSel
+                        ? 'var(--accent-saffron)'
+                        : wd.isToday
+                        ? 'var(--room-current)'
+                        : 'var(--border-default)',
                       background: isDone
                         ? 'var(--accent-moss)'
                         : progressVal > 0 && total > 0
                         ? `color-mix(in srgb, var(--room-current) ${percent}%, var(--bg-tertiary))`
                         : 'transparent',
                       color: isDone ? 'white' : 'var(--text-primary)',
-                      boxShadow: wd.isToday ? '0 0 8px rgba(194,91,58,0.25)' : 'none',
+                      boxShadow: isSel
+                        ? '0 0 8px rgba(194,91,58,0.45)'
+                        : wd.isToday
+                        ? '0 0 8px rgba(194,91,58,0.25)'
+                        : 'none',
                     }}
                     title={`${wd.label}: ${percent}%`}
                   >
                     {isDone ? '✓' : `${percent}%`}
-                  </div>
+                  </button>
                   <span 
                     className="text-[10px] font-medium" 
-                    style={{ color: wd.isToday ? 'var(--room-current)' : 'var(--text-muted)' }}
+                    style={{ color: isSel ? 'var(--accent-saffron)' : wd.isToday ? 'var(--room-current)' : 'var(--text-muted)' }}
                   >
                     {wd.label}
                   </span>

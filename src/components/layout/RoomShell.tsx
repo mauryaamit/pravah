@@ -33,7 +33,7 @@ export default function RoomShell({ children }: RoomShellProps) {
       }}
       className="relative min-h-screen"
     >
-      {/* Background painting — always rendered, opacity controlled by user */}
+      {/* Background painting - always rendered, opacity controlled by user */}
       <div
         className="fixed inset-0 z-0 pointer-events-none transition-opacity duration-300"
         style={{ opacity: opacity }}

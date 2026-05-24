@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase/client';
-import { doc, onSnapshot, setDoc } from 'firebase/firestore';
+import { doc, onSnapshot, setDoc, serverTimestamp } from 'firebase/firestore';
 import { useAuth } from './useAuth';
 import { toDateString } from '@/lib/utils/date';
 
@@ -8,6 +8,7 @@ export interface TodoTask {
   id: string;
   text: string;
   completed: boolean;
+  order: number;
 }
 
 export function useTodos(selectedDate: string) {
@@ -43,8 +44,15 @@ export function useTodos(selectedDate: string) {
   const saveTodos = async (updatedTasks: TodoTask[]) => {
     if (!user || !db) return;
     const docRef = doc(db, `users/${user.uid}/todos`, selectedDate);
+    const tasksWithOrder = updatedTasks.map((t, idx) => ({
+      id: t.id,
+      text: t.text,
+      completed: t.completed,
+      order: t.order !== undefined ? t.order : idx,
+    }));
     await setDoc(docRef, {
-      tasks: updatedTasks,
+      tasks: tasksWithOrder,
+      updatedAt: serverTimestamp(),
     }, { merge: true });
   };
 
@@ -56,6 +64,7 @@ export function useTodos(selectedDate: string) {
       id: crypto.randomUUID(),
       text: text.trim(),
       completed: false,
+      order: todos.length,
     };
     const next = [...todos, newTask];
     await saveTodos(next);
@@ -116,6 +125,7 @@ export function useTodos(selectedDate: string) {
           id: crypto.randomUUID(), // assign fresh ID for today
           text: t.text,
           completed: false,
+          order: combined.length,
         });
       }
       

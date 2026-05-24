@@ -1,5 +1,5 @@
 // src/lib/firebase/admin.ts
-// Firebase Admin SDK — singleton pattern safe for Next.js dev hot-reload.
+// Firebase Admin SDK - singleton pattern safe for Next.js dev hot-reload.
 
 import { getApps, initializeApp, cert, type App } from 'firebase-admin/app';
 import { getFirestore, type Firestore } from 'firebase-admin/firestore';
@@ -36,7 +36,7 @@ function getOrInitAdminApp(): App {
   );
 }
 
-// Cached references — survive module re-evaluation in Next.js dev hot-reload
+// Cached references - survive module re-evaluation in Next.js dev hot-reload
 // because getApps() is a singleton maintained by firebase-admin itself.
 let _db:   Firestore | null = null;
 let _auth: Auth | null = null;

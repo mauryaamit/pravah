@@ -1,4 +1,4 @@
-// src/middleware.ts — Route protection
+// src/middleware.ts - Route protection
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 

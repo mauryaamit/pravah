@@ -15,13 +15,13 @@ const ART_PIECES = [
     artist: 'Vincent van Gogh',
     year: '1889',
     imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/800px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg',
-    story: `Vincent van Gogh painted The Starry Night in June 1889, while he was voluntarily committed to the Saint-Paul-de-Mausole asylum in Saint-Rémy-de-Provence, a year before his death. He painted it from memory and imagination — the village in the painting is not Saint-Rémy but an idealized version of his childhood village in the Netherlands. The church spire is characteristically Dutch, not French. He was painting home while confined far from it.
+    story: `Vincent van Gogh painted The Starry Night in June 1889, while he was voluntarily committed to the Saint-Paul-de-Mausole asylum in Saint-Rémy-de-Provence, a year before his death. He painted it from memory and imagination - the village in the painting is not Saint-Rémy but an idealized version of his childhood village in the Netherlands. The church spire is characteristically Dutch, not French. He was painting home while confined far from it.
 
 The painting was not considered his masterpiece during his lifetime. Van Gogh preferred other works. He wrote to his brother Theo that the starry night canvas was a "failure." He died believing his work had value but not knowing the extent of its impact. The Starry Night was sold after his death, passed through several collections, and arrived at the Museum of Modern Art in New York in 1941, where it has been since.
 
-The painting's extraordinary quality comes from several sources. The night sky is not representational — van Gogh took liberties that are essentially expressionist: the stars have corona-like halos, the Milky Way swirls in waves like the sea, a crescent moon glows like a sun. The visual rhythm is relentless and alive. Every part of the sky is moving — not chaotically but in vast, organized flows.
+The painting's extraordinary quality comes from several sources. The night sky is not representational - van Gogh took liberties that are essentially expressionist: the stars have corona-like halos, the Milky Way swirls in waves like the sea, a crescent moon glows like a sun. The visual rhythm is relentless and alive. Every part of the sky is moving - not chaotically but in vast, organized flows.
 
-What van Gogh painted was not the appearance of the night sky but the feeling of it: the sense that the sky is not a static backdrop but a dynamic, living, breathing presence. Astronomical researchers have noted that the swirling patterns in The Starry Night correspond to turbulent fluid dynamics — the same mathematical patterns that describe atmospheric turbulence in physics. Whether van Gogh consciously understood this mathematics is irrelevant. He felt it accurately enough to paint it.
+What van Gogh painted was not the appearance of the night sky but the feeling of it: the sense that the sky is not a static backdrop but a dynamic, living, breathing presence. Astronomical researchers have noted that the swirling patterns in The Starry Night correspond to turbulent fluid dynamics - the same mathematical patterns that describe atmospheric turbulence in physics. Whether van Gogh consciously understood this mathematics is irrelevant. He felt it accurately enough to paint it.
 
 There is something deeply poignant about The Starry Night's history: made by a man in an asylum, depicting a village from memory, dismissed by its own creator, now perhaps the most recognized painting in history. Van Gogh sold one painting in his lifetime. He wrote 800 letters to his brother documenting his psychology, his technique, and his persistent hope that the work mattered. He was right. He just didn't live to know it.`,
   },
@@ -31,15 +31,15 @@ There is something deeply poignant about The Starry Night's history: made by a m
     artist: 'Katsushika Hokusai',
     year: 'c. 1831',
     imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/The_Great_Wave_off_Kanagawa.jpg/800px-The_Great_Wave_off_Kanagawa.jpg',
-    story: `Katsushika Hokusai was 70 years old when he published The Great Wave off Kanagawa as part of his series "Thirty-six Views of Mount Fuji." He had been a printmaker for over 50 years by that point — he had spent his entire adult life making images. And yet the works for which he is remembered worldwide were made in his seventies and eighties.
+    story: `Katsushika Hokusai was 70 years old when he published The Great Wave off Kanagawa as part of his series "Thirty-six Views of Mount Fuji." He had been a printmaker for over 50 years by that point - he had spent his entire adult life making images. And yet the works for which he is remembered worldwide were made in his seventies and eighties.
 
 He wrote, at age 75: "Since the age of six, I have had a mania for drawing the forms of things. By the time I was fifty, I had published an infinity of designs, but all I produced before the age of seventy is not worth taking into account. At the age of seventy-three I partly understood the structure of animals, plants, birds, fishes, and insects. Consequently when I am eighty I shall have made still more progress; at ninety I shall have penetrated to the essence of things; at one hundred I shall have reached a magnificent stage; and when I am one hundred and ten, everything I do, be it a dot or a line, will be alive." He died at 88.
 
-The Great Wave is deceptive in its apparent simplicity. It is a woodblock print — made from carved wooden blocks inked separately and applied to paper in multiple passes. The blue comes from Prussian Blue, a synthetic pigment that had recently arrived in Japan from Europe and which Hokusai used with extraordinary skill. The color range in ukiyo-e printing was limited; working within those constraints, Hokusai created a composition that feels vast.
+The Great Wave is deceptive in its apparent simplicity. It is a woodblock print - made from carved wooden blocks inked separately and applied to paper in multiple passes. The blue comes from Prussian Blue, a synthetic pigment that had recently arrived in Japan from Europe and which Hokusai used with extraordinary skill. The color range in ukiyo-e printing was limited; working within those constraints, Hokusai created a composition that feels vast.
 
-Look at the structure: The great wave in the foreground is poised at the precise moment before it crashes — a frozen instant of maximum tension. Mount Fuji, serene and distant, appears in the valley between the wave's claws. The boats are tiny, nearly swallowed. The whole composition is about scale — the immensity of nature against the fragility of human endeavor — but it is not pessimistic. The boats are still afloat. Fuji is still serene. The wave is enormous, but it is also temporary. It will break and recede.
+Look at the structure: The great wave in the foreground is poised at the precise moment before it crashes - a frozen instant of maximum tension. Mount Fuji, serene and distant, appears in the valley between the wave's claws. The boats are tiny, nearly swallowed. The whole composition is about scale - the immensity of nature against the fragility of human endeavor - but it is not pessimistic. The boats are still afloat. Fuji is still serene. The wave is enormous, but it is also temporary. It will break and recede.
 
-The image has been referenced, parodied, reinterpreted, and reproduced more than almost any other work of art. It appears in Debussy's score for La Mer. It appears in countless album covers, advertisements, tattoos, and cultural references across every medium. What makes it so universally legible is what makes all great art universally legible: it captures something true about a human experience — in this case, the experience of being small in the presence of something immense — with perfect visual economy.`,
+The image has been referenced, parodied, reinterpreted, and reproduced more than almost any other work of art. It appears in Debussy's score for La Mer. It appears in countless album covers, advertisements, tattoos, and cultural references across every medium. What makes it so universally legible is what makes all great art universally legible: it captures something true about a human experience - in this case, the experience of being small in the presence of something immense - with perfect visual economy.`,
   },
 ];
 
@@ -70,14 +70,14 @@ The entire process was designed to be more efficient than random selection. Rese
 
 "Rest for 10 minutes before serving." This is the recipe's way of testing your commitment. You have been cooking for 45 minutes and you are hungry and the food smells ready. The recipe wants you to wait. The recipe is right. You will not wait. The meat will be dry. The recipe will feel vindicated.
 
-And yet: the dish is edible. Sometimes it is good. Occasionally it is excellent. The recipe's optimism, it turns out, is not misplaced — it is aspirational. It describes what the dish could be, in the hands of the version of you who has the time, the equipment, and the patience. You're getting there.`,
+And yet: the dish is edible. Sometimes it is good. Occasionally it is excellent. The recipe's optimism, it turns out, is not misplaced - it is aspirational. It describes what the dish could be, in the hands of the version of you who has the time, the equipment, and the patience. You're getting there.`,
   },
 ];
 
 const MICRO_GAMES = [
-  { title: 'Two Truths and a Lie — About the Universe', items: ['The Great Wall of China is not visible from space with the naked eye.', 'Honey never expires — archaeologists have found 3,000-year-old honey in Egyptian tombs that is still edible.', 'Bananas are technically berries, but strawberries are not.', '(All three are true — this was a trick. All three are genuinely true facts that most people don\'t believe.)'] },
+  { title: 'Two Truths and a Lie - About the Universe', items: ['The Great Wall of China is not visible from space with the naked eye.', 'Honey never expires - archaeologists have found 3,000-year-old honey in Egyptian tombs that is still edible.', 'Bananas are technically berries, but strawberries are not.', '(All three are true - this was a trick. All three are genuinely true facts that most people don\'t believe.)'] },
   { title: 'The 60-Second Story Game', items: ['Write a complete story in exactly 6 words. Hemingway was once challenged to write a six-word story and produced: "For sale: baby shoes, never worn." That\'s an entire tragedy in six words. Try to write your own. Right now. Give yourself 60 seconds.'] },
-  { title: 'The Unfair Comparison', items: ['What if dogs were in charge of something specific — and cats were in charge of something else? Dogs: public transport timetables (enthusiastic but chaotic). Cats: international diplomacy (precise, unpredictable, mostly ignores everyone). What would work? What wouldn\'t? This is actually a useful management exercise disguised as a joke.'] },
+  { title: 'The Unfair Comparison', items: ['What if dogs were in charge of something specific - and cats were in charge of something else? Dogs: public transport timetables (enthusiastic but chaotic). Cats: international diplomacy (precise, unpredictable, mostly ignores everyone). What would work? What wouldn\'t? This is actually a useful management exercise disguised as a joke.'] },
 ];
 
 export default function AnandPage() {
@@ -93,9 +93,9 @@ export default function AnandPage() {
 
         <motion.div variants={FADE_UP} initial="initial" animate="animate" className="space-y-1">
           <p className="section-label">Joy Room</p>
-          <h1 className="font-serif text-2xl" style={{ color: 'var(--text-primary)' }}>आनंद — Anand</h1>
+          <h1 className="font-serif text-2xl" style={{ color: 'var(--text-primary)' }}>आनंद - Anand</h1>
           <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-            Joy is not frivolous. It is essential. Art, humor, games, and play — the brain needs all of them.
+            Joy is not frivolous. It is essential. Art, humor, games, and play - the brain needs all of them.
           </p>
         </motion.div>
 
@@ -194,7 +194,7 @@ export default function AnandPage() {
               exit={{ opacity: 0 }}
               className="space-y-4"
             >
-              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Wit is intelligence with warmth. These are essays in lightness — about the small absurdities that make up a life.</p>
+              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Wit is intelligence with warmth. These are essays in lightness - about the small absurdities that make up a life.</p>
               {HUMOR_PIECES.map((piece, i) => (
                 <div key={i} className="card-base overflow-hidden">
                   <div className="w-full relative">
@@ -250,7 +250,7 @@ export default function AnandPage() {
               exit={{ opacity: 0 }}
               className="space-y-4"
             >
-              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Play is not the opposite of seriousness. It is its purest form — engagement without anxiety about outcome.</p>
+              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Play is not the opposite of seriousness. It is its purest form - engagement without anxiety about outcome.</p>
               {MICRO_GAMES.map((game, i) => (
                 <div key={i} className="card-base p-5 space-y-3">
                   <h3 className="font-semibold" style={{ color: 'var(--text-primary)' }}>{game.title}</h3>

@@ -1,16 +1,20 @@
 'use client';
+import { useState } from 'react';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Volume2, VolumeX } from 'lucide-react';
+import { Volume2, VolumeX, Settings } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ROOMS } from '@/lib/constants/rooms';
 import { useAudio } from '@/components/providers/AudioProvider';
 import { formatHindiDate } from '@/lib/utils/date';
 import ThemeToggle from '@/components/shared/ThemeToggle';
 import AmbientSoundPicker from '@/components/shared/AmbientSoundPicker';
+import SettingsModal from '@/components/shared/SettingsModal';
 
 export default function Topbar() {
   const pathname = usePathname();
   const { isMuted, toggleMute, enableAudio } = useAudio();
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const room = ROOMS.find(r => pathname.startsWith(r.route));
 
   return (
@@ -25,14 +29,14 @@ export default function Topbar() {
       {/* Left: Room identity */}
       <div className="flex items-center gap-3 min-w-0">
         {/* Pravah logo on mobile only */}
-        <div className="lg:hidden flex items-center gap-2">
+        <Link href="/aarambh" className="lg:hidden flex items-center gap-2 hover:opacity-80 transition-opacity">
           <img 
             src="/logo.png" 
             alt="Pravah Logo" 
             className="w-9 h-9 object-contain rounded-xl flex-shrink-0" 
             style={{ boxShadow: '0 2px 12px rgba(196,135,58,0.25)' }}
           />
-        </div>
+        </Link>
 
         <AnimatePresence mode="wait">
           {room && (
@@ -82,7 +86,19 @@ export default function Topbar() {
 
         {/* Theme toggle - opens downward since we're at the top of screen */}
         <ThemeToggle direction="down" />
+
+        {/* Settings gear toggle */}
+        <button
+          onClick={() => setIsSettingsOpen(true)}
+          className="p-2 rounded-lg transition-colors"
+          style={{ color: 'var(--text-muted)' }}
+          title="Settings"
+        >
+          <Settings size={17} />
+        </button>
       </div>
+
+      <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
     </header>
   );
 }

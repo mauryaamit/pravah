@@ -91,7 +91,7 @@ export default function OnboardingPage() {
                 Welcome, {name}.
               </h2>
               <p style={{ color: 'var(--text-secondary)' }} className="text-lg leading-relaxed">
-                Pravah is your daily sanctuary. A space to learn, feel, and grow — beautifully.
+                Pravah is your daily sanctuary. A space to learn, feel, and grow - beautifully.
               </p>
               <p className="font-devanagari text-sm" style={{ color: 'var(--text-muted)' }}>
                 यह आपका एक नया अध्याय है।
@@ -140,7 +140,7 @@ export default function OnboardingPage() {
                     Jo beet gayi so baat gayi
                   </p>
                 )}
-                <p className="text-xs text-center mt-1" style={{ color: 'var(--text-muted)' }}>— Harivansh Rai Bachchan</p>
+                <p className="text-xs text-center mt-1" style={{ color: 'var(--text-muted)' }}>- Harivansh Rai Bachchan</p>
               </div>
             </div>
           )}

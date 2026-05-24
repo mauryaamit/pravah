@@ -10,11 +10,11 @@ interface BreathingOrbProps {
 }
 
 const MOOD_COLORS: Record<number, string> = {
-  1: '#7A6BA6', // low — mauve
-  2: '#5B7FA6', // calm — blue
-  3: '#C4873A', // neutral — saffron
-  4: '#4A7C59', // good — moss
-  5: '#D4A853', // great — gold
+  1: '#7A6BA6', // low - mauve
+  2: '#5B7FA6', // calm - blue
+  3: '#C4873A', // neutral - saffron
+  4: '#4A7C59', // good - moss
+  5: '#D4A853', // great - gold
 };
 
 export default function BreathingOrb({ onClick, size = 120, mood = 3, className }: BreathingOrbProps) {

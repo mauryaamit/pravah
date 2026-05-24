@@ -281,7 +281,7 @@ export default function LoginPage() {
           style={{ boxShadow: '0 12px 48px rgba(196,135,58,0.25), 0 4px 16px rgba(0,0,0,0.15)' }}
         />
         <h1 className="font-serif text-3xl mb-1" style={{ color: 'var(--text-primary)' }}>Pravah</h1>
-        <p className="font-devanagari text-xs" style={{ color: 'var(--text-muted)' }}>प्रवाह — अपनी यात्रा शुरू करें</p>
+        <p className="font-devanagari text-xs" style={{ color: 'var(--text-muted)' }}>प्रवाह - अपनी यात्रा शुरू करें</p>
       </motion.div>
 
       {/* Form wrapped in Suspense for useSearchParams */}

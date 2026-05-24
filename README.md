@@ -1,4 +1,4 @@
-# PRAVAH — Contemplative Living Companion
+# PRAVAH - Contemplative Living Companion
 
 Pravah is a premium, beautifully-designed contemplative companion web application featuring 22 meditative rooms, ambient soundscapes, habit trackers, streak rewiring, and daily reading sparks. 
 

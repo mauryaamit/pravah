@@ -1,6 +1,6 @@
 // src/lib/utils/motion.ts
 // Shared Framer Motion animation presets for Pravah.
-// Import these everywhere — never use inline variants.
+// Import these everywhere - never use inline variants.
 // Design rule: slow, contemplative, cinematic. Nothing faster than 200ms for visible UI.
 
 import type { Variants } from 'framer-motion';

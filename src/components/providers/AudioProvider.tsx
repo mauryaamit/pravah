@@ -56,12 +56,12 @@ export function AudioProvider({ children }: { children: ReactNode }) {
 
     const current = ambientRef.current;
     if (current && current.src.includes(encodeURIComponent(mode.url.split('/').pop() || ''))) {
-      // Same track — just update volume
+      // Same track - just update volume
       current.volume = volume;
       return;
     }
 
-    // New track — crossfade
+    // New track - crossfade
     if (current) {
       current.pause();
     }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase/client';
-import { collection, query, onSnapshot, doc, setDoc, addDoc, deleteDoc, where, serverTimestamp } from 'firebase/firestore';
+import { collection, query, onSnapshot, doc, setDoc, addDoc, deleteDoc, where, serverTimestamp, arrayUnion } from 'firebase/firestore';
 import { useAuth } from './useAuth';
 import { useStreak } from './useStreak';
 import { toDateString } from '@/lib/utils/date';
@@ -30,26 +30,17 @@ export function useHabits() {
 
     // Calculate start and end of current week (Monday to Sunday)
     const today = new Date();
-    const day = today.getDay(); // 0 is Sun, 1 is Mon...
-    const diffToMon = day === 0 ? -6 : 1 - day;
-    
-    const monday = new Date(today);
-    monday.setDate(today.getDate() + diffToMon);
-    
-    const sunday = new Date(monday);
-    sunday.setDate(monday.getDate() + 6);
-
-    const startOfWeekStr = toDateString(monday);
-    const endOfWeekStr = toDateString(sunday);
+    const thirtyDaysAgo = new Date(today);
+    thirtyDaysAgo.setDate(today.getDate() - 30);
+    const startStr = toDateString(thirtyDaysAgo);
 
     // Listen to habits
     const habitsQuery = query(collection(db, `users/${user.uid}/habits`));
     
-    // Listen to weekly completions (covers Mon-Sun)
+    // Listen to completions (covers past 30 days)
     const completionsQuery = query(
       collection(db, `users/${user.uid}/habitCompletions`),
-      where('date', '>=', startOfWeekStr),
-      where('date', '<=', endOfWeekStr)
+      where('date', '>=', startStr)
     );
 
     let rawHabits: any[] = [];
@@ -80,11 +71,10 @@ export function useHabits() {
       const map: Record<string, string[]> = {};
       snap.docs.forEach(d => {
         const data = d.data();
-        const date = data.date;
-        const habitId = data.habitId;
-        if (date && habitId) {
-          if (!map[date]) map[date] = [];
-          map[date].push(habitId);
+        const date = data.date || d.id;
+        const completed = data.completedHabits || [];
+        if (date) {
+          map[date] = completed;
         }
       });
       completionsMap = map;
@@ -112,22 +102,23 @@ export function useHabits() {
     });
   };
 
-  const completeHabit = async (habitId: string) => {
+  const completeHabit = async (habitId: string, dateStr?: string) => {
     if (!user || !db) return;
-    const todayStr = toDateString(new Date());
-    const docId = `${todayStr}_${habitId}`;
-    const docRef = doc(db, `users/${user.uid}/habitCompletions`, docId);
+    const targetDate = dateStr || toDateString(new Date());
+    const docRef = doc(db, `users/${user.uid}/habitCompletions`, targetDate);
     
-    // Save completion
+    // Save completion as arrayUnion under today/selected date
     await setDoc(docRef, {
-      habitId,
-      date: todayStr,
-      completedAt: serverTimestamp(),
-    });
+      completedHabits: arrayUnion(habitId),
+      date: targetDate,
+      updatedAt: serverTimestamp(),
+    }, { merge: true });
 
-    // Award +3 rewire score and update active streak
-    await addRewireScore(3);
-    await updateStreak();
+    // Award +3 rewire score and update active streak if completing today
+    if (targetDate === toDateString(new Date())) {
+      await addRewireScore(3);
+      await updateStreak();
+    }
   };
 
   const deleteHabit = async (habitId: string) => {

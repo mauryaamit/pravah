@@ -62,7 +62,7 @@ export default function Sidebar() {
     } catch {}
   }, []);
 
-  // Inject CSS variable for main content margin — synced with sidebar width
+  // Inject CSS variable for main content margin - synced with sidebar width
   useEffect(() => {
     document.documentElement.style.setProperty(
       '--sidebar-width',
@@ -93,8 +93,9 @@ export default function Sidebar() {
       >
         <div className="flex flex-col h-full w-full overflow-hidden">
           {/* Logo */}
-          <div
-            className="flex items-center gap-3 px-4 py-4 border-b flex-shrink-0"
+          <Link
+            href="/aarambh"
+            className="flex items-center gap-3 px-4 py-4 border-b flex-shrink-0 hover:opacity-85 transition-opacity"
             style={{ borderColor: 'var(--border-default)', minHeight: 64 }}
           >
             <img 
@@ -116,7 +117,7 @@ export default function Sidebar() {
                 </motion.div>
               )}
             </AnimatePresence>
-          </div>
+          </Link>
 
           {/* User */}
           {user && (
@@ -169,7 +170,7 @@ export default function Sidebar() {
                     </button>
                   )}
 
-                  {/* Room list — accordion in expanded mode, always visible in collapsed */}
+                  {/* Room list - accordion in expanded mode, always visible in collapsed */}
                   <motion.div
                     variants={ACCORDION_CONTENT}
                     initial={isOpen ? 'open' : 'collapsed'}
@@ -187,7 +188,7 @@ export default function Sidebar() {
                           prefetch={true}
                           onClick={() => setPendingRoom(room.id)}
                           className="block"
-                          title={collapsed ? `${room.name} — ${room.nameHindi}` : undefined}
+                          title={collapsed ? `${room.name} - ${room.nameHindi}` : undefined}
                         >
                           <div
                             className="relative flex items-center gap-3 transition-all duration-150"
@@ -210,7 +211,7 @@ export default function Sidebar() {
                               if (!isActive) (e.currentTarget as HTMLElement).style.background = 'transparent';
                             }}
                           >
-                            {/* Active bar — 3px, full height of row */}
+                            {/* Active bar - 3px, full height of row */}
                             {isActive && (
                               <div
                                 className="absolute left-0 top-1 bottom-1 w-[3px] rounded-r-full"
@@ -238,7 +239,7 @@ export default function Sidebar() {
                               )}
                             </div>
 
-                            {/* Labels — only in expanded mode */}
+                            {/* Labels - only in expanded mode */}
                             <AnimatePresence>
                               {!collapsed && (
                                 <motion.div

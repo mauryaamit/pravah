@@ -1,5 +1,5 @@
 // src/lib/constants/rooms.ts
-// Master room list for PRAVAH — all 23 rooms
+// Master room list for PRAVAH - all 23 rooms
 
 export type RoomCluster = 'daily' | 'inner' | 'knowledge' | 'world' | 'creative';
 

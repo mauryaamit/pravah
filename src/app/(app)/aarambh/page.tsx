@@ -1,5 +1,8 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { db } from '@/lib/firebase/client';
+import { doc, onSnapshot, setDoc, serverTimestamp } from 'firebase/firestore';
+import { toDateString } from '@/lib/utils/date';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import { useMoods } from '@/lib/hooks/useMoods';
@@ -44,6 +47,9 @@ export default function AarambhPage() {
   const { mood: moodLevel, profile: moodProfile, setMood: setMoodInProvider } = useMood();
   const [mood, setMood] = useState<number>(moodLevel);
   const [intention, setIntention] = useState('');
+  const [intentionSaveStatus, setIntentionSaveStatus] = useState<'idle' | 'saving' | 'saved'>('idle');
+  const intentionRef = useRef<HTMLDivElement>(null);
+  const intentionTimer = useRef<ReturnType<typeof setTimeout>>();
   const [challengeDone, setChallengeDone] = useState(false);
   const [showBreathing, setShowBreathing] = useState(false);
   const [script, setScript] = useState<'devanagari' | 'roman'>('devanagari');
@@ -61,6 +67,64 @@ export default function AarambhPage() {
   useEffect(() => {
     setMood(moodLevel);
   }, [moodLevel]);
+
+  // Real-time listener for today's intention
+  useEffect(() => {
+    if (!user || !db) return;
+    const todayStr = toDateString(new Date());
+    const docRef = doc(db, `users/${user.id}/intentions`, todayStr);
+
+    const unsub = onSnapshot(docRef, (docSnap) => {
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        const val = data.intention || '';
+        setIntention(val);
+        // Sync text in editor if not currently focused to avoid cursor jumping
+        if (intentionRef.current && document.activeElement !== intentionRef.current) {
+          intentionRef.current.innerText = val;
+        }
+      } else {
+        setIntention('');
+        if (intentionRef.current && document.activeElement !== intentionRef.current) {
+          intentionRef.current.innerText = '';
+        }
+      }
+    }, (err) => {
+      console.error('Failed to stream daily intention:', err);
+    });
+
+    return () => {
+      unsub();
+      clearTimeout(intentionTimer.current);
+    };
+  }, [user]);
+
+  const saveIntentionToFirestore = useCallback(async (text: string) => {
+    if (!user || !db) return;
+    const todayStr = toDateString(new Date());
+    const docRef = doc(db, `users/${user.id}/intentions`, todayStr);
+    setIntentionSaveStatus('saving');
+    try {
+      await setDoc(docRef, {
+        intention: text,
+        date: todayStr,
+        updatedAt: serverTimestamp(),
+      }, { merge: true });
+      setIntentionSaveStatus('saved');
+    } catch (err) {
+      console.error('Failed to save intention:', err);
+      setIntentionSaveStatus('idle');
+    }
+  }, [user]);
+
+  const handleIntentionChange = (text: string) => {
+    setIntention(text);
+    setIntentionSaveStatus('saving');
+    clearTimeout(intentionTimer.current);
+    intentionTimer.current = setTimeout(() => {
+      saveIntentionToFirestore(text);
+    }, 1500); // 1.5s debounce
+  };
 
   const { data: mantraData } = useQuery({
     queryKey: ['daily', 'aarambh', 'mantra'],
@@ -155,13 +219,18 @@ export default function AarambhPage() {
           transition={{ duration: 0.55, delay: 0.35, ease: [0.22, 0.1, 0.36, 1] }}
           className="card-base p-6 space-y-3"
         >
-          <h2 className="section-label">Today&apos;s Intention</h2>
+          <div className="flex justify-between items-center">
+            <h2 className="section-label">Today&apos;s Intention</h2>
+            {intentionSaveStatus === 'saving' && <span className="text-[10px] text-amber-600 font-semibold uppercase tracking-wider">Saving...</span>}
+            {intentionSaveStatus === 'saved' && <span className="text-[10px] text-emerald-600 font-semibold uppercase tracking-wider">Saved ✓</span>}
+          </div>
           <div
+            ref={intentionRef}
             className="journal-editor w-full min-h-[52px] outline-none"
             contentEditable
             suppressContentEditableWarning
             data-placeholder="What matters most today..."
-            onInput={e => setIntention((e.target as HTMLElement).innerText)}
+            onInput={e => handleIntentionChange((e.target as HTMLElement).innerText)}
             style={{ color: 'var(--text-primary)' }}
           />
           {!intention && (

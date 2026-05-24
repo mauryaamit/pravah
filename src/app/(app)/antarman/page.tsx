@@ -1,5 +1,7 @@
 'use client';
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { db } from '@/lib/firebase/client';
+import { collection, onSnapshot } from 'firebase/firestore';
 import { motion, AnimatePresence, Reorder } from 'framer-motion';
 import { useJournal } from '@/lib/hooks/useJournal';
 import { useTodos, TodoTask } from '@/lib/hooks/useTodos';
@@ -47,12 +49,59 @@ export default function AntarmanPage() {
   const isDirtyRef = useRef(false);
   const saveTimer = useRef<ReturnType<typeof setTimeout>>();
   const editorRef = useRef<HTMLDivElement>(null);
-  const [editorInitializedForDate, setEditorInitializedForDate] = useState<string | null>(null);
+  const [datesWithTodos, setDatesWithTodos] = useState<Set<string>>(new Set());
+  const [currentMonthDate, setCurrentMonthDate] = useState(() => new Date());
+
+  // Real-time listener for dates with todos
+  useEffect(() => {
+    if (!user || !db) return;
+    const q = collection(db, `users/${user.id}/todos`);
+    const unsub = onSnapshot(q, (snap) => {
+      const dates = new Set(snap.docs.map(d => d.id));
+      setDatesWithTodos(dates);
+    }, (err) => {
+      console.error('Failed to load todo dates:', err);
+    });
+    return unsub;
+  }, [user]);
+
+  const getCalendarDays = () => {
+    const year = currentMonthDate.getFullYear();
+    const month = currentMonthDate.getMonth();
+    
+    const firstDay = new Date(year, month, 1);
+    const startDayOfWeek = firstDay.getDay();
+    const totalDays = new Date(year, month + 1, 0).getDate();
+    
+    const days: { dateStr: string; dayNumber: number; isCurrentMonth: boolean }[] = [];
+    
+    const prevMonthTotalDays = new Date(year, month, 0).getDate();
+    for (let i = startDayOfWeek - 1; i >= 0; i--) {
+      const d = prevMonthTotalDays - i;
+      const prevMonth = month === 0 ? 11 : month - 1;
+      const prevYear = month === 0 ? year - 1 : year;
+      const dateStr = `${prevYear}-${String(prevMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+      days.push({ dateStr, dayNumber: d, isCurrentMonth: false });
+    }
+    
+    for (let d = 1; d <= totalDays; d++) {
+      const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+      days.push({ dateStr, dayNumber: d, isCurrentMonth: true });
+    }
+    
+    return days;
+  };
+
+  const calendarDays = getCalendarDays();
+  const monthNames = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
 
   const dayOfYear = getDayOfYear();
 
   // Fetch journal entries & todos from custom hooks
-  const { todayEntry: entry, allEntries = [], saveEntry } = useJournal(selectedDate);
+  const { todayEntry: entry, allEntries = [], saveEntry, loading } = useJournal(selectedDate);
   const { 
     todos, 
     addTodo, 
@@ -63,8 +112,11 @@ export default function AntarmanPage() {
     saveTodos 
   } = useTodos(selectedDate);
 
-  // Load entry content when it changes or when selectedDate changes
+  // Load entry content when it changes or when selectedDate changes, but only if not currently dirty and not loading
   useEffect(() => {
+    if (loading) return;
+    if (isDirtyRef.current) return;
+    
     if (entry) {
       setContent(entry.content || '');
       setMood(entry.mood || 3);
@@ -81,15 +133,14 @@ export default function AntarmanPage() {
       setWordCount(0);
     }
     isDirtyRef.current = false;
-  }, [entry, selectedDate]);
+  }, [entry, selectedDate, loading]);
 
-  // Prevent cursor jumping by only initializing editor innerText when date changes
+  // Keep editor innerText in sync with content state when NOT focused
   useEffect(() => {
-    if (editorRef.current && editorInitializedForDate !== selectedDate) {
-      editorRef.current.innerText = entry ? entry.content : '';
-      setEditorInitializedForDate(selectedDate);
+    if (editorRef.current && document.activeElement !== editorRef.current) {
+      editorRef.current.innerText = content;
     }
-  }, [entry, selectedDate, editorInitializedForDate]);
+  }, [content]);
 
   // Debounced auto-save triggers
   const save = useCallback(async (data: {
@@ -129,7 +180,7 @@ export default function AntarmanPage() {
     clearTimeout(saveTimer.current);
     saveTimer.current = setTimeout(() => {
       save({ content, mood, gratitude, learned, intention });
-    }, 10000);
+    }, 3000);
 
     return () => clearTimeout(saveTimer.current);
   }, [content, mood, gratitude, learned, intention, save]);
@@ -202,7 +253,7 @@ export default function AntarmanPage() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="font-serif text-3xl" style={{ color: 'var(--text-primary)' }}>Antarman</h1>
-            <p className="font-devanagari text-sm" style={{ color: 'var(--text-muted)' }}>अन्तर्मन — आपकी आंतरिक दुनिया</p>
+            <p className="font-devanagari text-sm" style={{ color: 'var(--text-muted)' }}>अन्तर्मन - आपकी आंतरिक दुनिया</p>
           </div>
           <div className="flex flex-col items-end gap-1">
             <span className="text-xs font-semibold" style={{ color: 'var(--accent-moss)' }}>
@@ -247,7 +298,7 @@ export default function AntarmanPage() {
               {/* LEFT COLUMN: Journal Editor & Form Inputs (col-span-7) */}
               <div className="lg:col-span-7 space-y-4">
                 {/* Mood */}
-                <div className="card-base p-4">
+                <div className="card-base practice-card p-4">
                   <div className="flex justify-between items-center mb-3">
                     <p className="text-xs uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>How are you feeling?</p>
                     {/* Inline tts for prompt of the day */}
@@ -257,7 +308,7 @@ export default function AntarmanPage() {
                 </div>
 
                 {/* Main editor */}
-                <div className="card-base p-5 space-y-2 relative">
+                <div className="card-base journal-card p-5 space-y-2 relative">
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
                       <Feather size={14} style={{ color: 'var(--text-muted)' }} />
@@ -288,7 +339,7 @@ export default function AntarmanPage() {
                 </div>
 
                 {/* Gratitude prompts */}
-                <div className="card-base p-5 space-y-3">
+                <div className="card-base practice-card p-5 space-y-3">
                   <p className="text-xs uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Three Things I&apos;m Grateful For</p>
                   {gratitude.map((g, i) => (
                     <div key={i} className="flex items-center gap-3">
@@ -302,10 +353,9 @@ export default function AntarmanPage() {
                           handleInputChange(setGratitude, next);
                         }}
                         placeholder={GRATITUDE_PROMPTS[i % GRATITUDE_PROMPTS.length]}
-                        className="flex-1 bg-transparent outline-none text-sm"
+                        className="flex-1 bg-transparent outline-none text-sm gratitude-input"
                         style={{
                           color: 'var(--text-primary)',
-                          borderBottom: '1px solid var(--border-default)',
                           paddingBottom: '4px',
                         }}
                       />
@@ -315,7 +365,7 @@ export default function AntarmanPage() {
 
                 {/* Today I Learned + Tomorrow Intention */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="card-base p-4 space-y-2">
+                  <div className="card-base practice-card p-4 space-y-2">
                     <p className="text-xs uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Today I Learned</p>
                     <textarea
                       value={learned}
@@ -326,7 +376,7 @@ export default function AntarmanPage() {
                       style={{ color: 'var(--text-primary)' }}
                     />
                   </div>
-                  <div className="card-base p-4 space-y-2">
+                  <div className="card-base practice-card p-4 space-y-2">
                     <p className="text-xs uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Tomorrow&apos;s Intention</p>
                     <textarea
                       value={intention}
@@ -354,8 +404,8 @@ export default function AntarmanPage() {
 
               {/* RIGHT COLUMN: Checklist / Todo Section (col-span-5) */}
               <div 
-                className="lg:col-span-5 p-5 rounded-2xl space-y-4"
-                style={{ background: 'var(--bg-secondary)', borderRadius: 16 }}
+                className="lg:col-span-5 p-5 card-base practice-card space-y-4"
+                style={{ borderRadius: 16 }}
               >
                 <div className="flex items-center justify-between">
                   <h3 className="font-serif text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>Daily Checklist</h3>
@@ -530,32 +580,88 @@ export default function AntarmanPage() {
               exit={{ opacity: 0 }}
               className="space-y-4 max-w-2xl mx-auto"
             >
-              <div className="card-base p-5">
-                <p className="text-xs uppercase tracking-wider mb-4" style={{ color: 'var(--text-muted)' }}>
-                  {allEntries.length} entries written
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {allEntries.map((e: any) => (
+              <div className="card-base p-5 space-y-4">
+                {/* Calendar Header */}
+                <div className="flex items-center justify-between">
+                  <h3 className="font-serif text-lg font-medium" style={{ color: 'var(--text-primary)' }}>
+                    {monthNames[currentMonthDate.getMonth()]} {currentMonthDate.getFullYear()}
+                  </h3>
+                  <div className="flex gap-2">
                     <button
-                      key={e.date}
-                      onClick={() => handleDateClick(e.date)}
-                      className="w-10 h-10 rounded-lg flex flex-col items-center justify-center text-xs cursor-pointer transition-all hover:scale-110"
-                      style={{
-                        background: `color-mix(in srgb, var(--room-antarman) ${Math.min(e.word_count / 5, 100)}%, var(--bg-tertiary))`,
-                        border: selectedDate === e.date ? '2px solid var(--room-antarman)' : '1px solid var(--border-default)',
-                        color: 'var(--text-primary)',
-                      }}
-                      title={`${formatDisplayDate(e.date)} · ${e.word_count} words`}
+                      onClick={() => setCurrentMonthDate(new Date(currentMonthDate.getFullYear(), currentMonthDate.getMonth() - 1, 1))}
+                      className="p-1.5 rounded-lg border transition-colors hover:bg-bg-tertiary"
+                      style={{ borderColor: 'var(--border-default)', color: 'var(--text-muted)' }}
                     >
-                      <span>{new Date(e.date).getDate()}</span>
+                      <ChevronLeft size={16} />
                     </button>
+                    <button
+                      onClick={() => setCurrentMonthDate(new Date(currentMonthDate.getFullYear(), currentMonthDate.getMonth() + 1, 1))}
+                      className="p-1.5 rounded-lg border transition-colors hover:bg-bg-tertiary"
+                      style={{ borderColor: 'var(--border-default)', color: 'var(--text-muted)' }}
+                    >
+                      <ChevronRight size={16} />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Weekdays Labels */}
+                <div className="grid grid-cols-7 gap-1 text-center text-xs font-semibold uppercase tracking-wider py-1 border-b" style={{ color: 'var(--text-faint)', borderColor: 'var(--border-default)' }}>
+                  {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(w => (
+                    <div key={w}>{w}</div>
                   ))}
                 </div>
-                {allEntries.length === 0 && (
-                  <p className="text-sm text-center py-4" style={{ color: 'var(--text-muted)' }}>
-                    Start writing to see your journey appear here.
-                  </p>
-                )}
+
+                {/* Days Grid */}
+                <div className="grid grid-cols-7 gap-1 text-center">
+                  {calendarDays.map(({ dateStr, dayNumber, isCurrentMonth }) => {
+                    const isSelected = selectedDate === dateStr;
+                    const journalDates = new Set(allEntries.map((e: any) => e.date));
+                    const hasJournal = journalDates.has(dateStr);
+                    const hasTodos = datesWithTodos.has(dateStr);
+                    
+                    return (
+                      <button
+                        key={dateStr}
+                        onClick={() => handleDateClick(dateStr)}
+                        className="h-12 w-full rounded-lg flex flex-col items-center justify-between p-1.5 relative transition-all hover:scale-105 active:scale-95 border"
+                        style={{
+                          background: isSelected 
+                            ? 'color-mix(in srgb, var(--room-antarman) 15%, var(--bg-tertiary))' 
+                            : 'transparent',
+                          borderColor: isSelected 
+                            ? 'var(--room-antarman)' 
+                            : 'transparent',
+                          opacity: isCurrentMonth ? 1 : 0.35,
+                        }}
+                      >
+                        <span 
+                          className="text-xs font-medium"
+                          style={{ color: isSelected ? 'var(--room-antarman)' : 'var(--text-primary)' }}
+                        >
+                          {dayNumber}
+                        </span>
+                        
+                        {/* Indicators Dots */}
+                        <div className="flex gap-1 justify-center w-full h-1.5">
+                          {hasJournal && (
+                            <span 
+                              className="w-1.5 h-1.5 rounded-full" 
+                              style={{ background: 'var(--accent-saffron)' }}
+                              title="Journal Entry"
+                            />
+                          )}
+                          {hasTodos && (
+                            <span 
+                              className="w-1.5 h-1.5 rounded-full" 
+                              style={{ background: 'var(--accent-moss)' }}
+                              title="Checklist Tasks"
+                            />
+                          )}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             </motion.div>
           )}

@@ -7,7 +7,7 @@ export function QueryProvider({ children }: { children: ReactNode }) {
     () => new QueryClient({
       defaultOptions: {
         queries: {
-          staleTime: 1000 * 60 * 60 * 6, // 6 hours — daily content
+          staleTime: 1000 * 60 * 60 * 6, // 6 hours - daily content
           retry: false,                   // fallback chain handles retries internally
           refetchOnWindowFocus: false,
         },

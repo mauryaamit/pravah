@@ -57,7 +57,7 @@ export default function BargadPage() {
           <h1 className="font-serif text-3xl flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
             🌳 Bargad <span className="font-devanagari text-xl ml-1" style={{ color: 'var(--room-bargad)' }}>बरगद</span>
           </h1>
-          <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>Your Sankalps — deep goals. Set. Commit. Watch them grow.</p>
+          <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>Your Sankalps - deep goals. Set. Commit. Watch them grow.</p>
         </div>
 
         {/* Sankalps list */}
@@ -68,7 +68,7 @@ export default function BargadPage() {
             <div className="card-base p-8 text-center space-y-3">
               <div className="text-4xl">🌱</div>
               <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>No Sankalps yet.</p>
-              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>A Sankalp is not a goal — it is who you are becoming.</p>
+              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>A Sankalp is not a goal - it is who you are becoming.</p>
             </div>
           ) : (
             enrichedSankalps.map((s, i) => (

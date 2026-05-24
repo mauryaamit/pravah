@@ -23,7 +23,7 @@ export function speak(text: string, options: Partial<TTSOptions> = {}): SpeechSy
 
   const config = {
     lang: 'hi-IN' as const,
-    rate: 0.75,    // Slower than default — contemplative pace
+    rate: 0.75,    // Slower than default - contemplative pace
     pitch: 0.85,   // Lower pitch = more bass, authoritative
     volume: 1.0,
     ...options,
@@ -36,7 +36,7 @@ export function speak(text: string, options: Partial<TTSOptions> = {}): SpeechSy
   utterance.pitch = config.pitch;
   utterance.volume = config.volume;
 
-  // Prefer Indian voices — search available voices
+  // Prefer Indian voices - search available voices
   const voices = window.speechSynthesis.getVoices();
 
   // Priority order for Indian voices:

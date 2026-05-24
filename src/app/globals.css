@@ -1,5 +1,5 @@
 /* ============================================================
-   PRAVAH — globals.css
+   PRAVAH - globals.css
    Root stylesheet. CSS variables, font loading, scrollbars, resets.
    ============================================================ */
 
@@ -11,7 +11,7 @@
 @tailwind utilities;
 
 /* ============================================================
-   THEME 1: CREAM (default) — Warm parchment minimalism
+   THEME 1: CREAM (default) - Warm parchment minimalism
    ============================================================ */
 :root,
 [data-theme="cream"] {
@@ -46,7 +46,7 @@
 }
 
 /* ============================================================
-   THEME 2: VAN GOGH — Painterly blues and yellows
+   THEME 2: VAN GOGH - Painterly blues and yellows
    ============================================================ */
 [data-theme="vangogh"] {
   --bg-primary:    #F2EDD5;
@@ -79,7 +79,7 @@
 }
 
 /* ============================================================
-   THEME 3: RAINY LIBRARY — Warm browns, candlelight, paper
+   THEME 3: RAINY LIBRARY - Warm browns, candlelight, paper
    ============================================================ */
 [data-theme="rainy"] {
   --bg-primary:    #1A1208;
@@ -112,7 +112,7 @@
 }
 
 /* ============================================================
-   THEME 4: FOREST — Moss greens, earth, watercolor peace
+   THEME 4: FOREST - Moss greens, earth, watercolor peace
    ============================================================ */
 [data-theme="forest"] {
   --bg-primary:    #F0F4EC;
@@ -361,4 +361,54 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ============================================================
+   DAILY PRACTICE CONTRAST Polish
+   ============================================================ */
+
+.journal-card, .practice-card, .input-card {
+  border: 1.5px solid rgba(92, 74, 42, 0.35) !important;
+  background: rgba(245, 240, 232, 0.92) !important;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+
+[data-theme="night"] .journal-card,
+[data-theme="night"] .practice-card,
+[data-theme="night"] .input-card {
+  border: 1.5px solid rgba(212, 184, 150, 0.30) !important;
+  background: rgba(30, 26, 23, 0.90) !important;
+}
+
+.journal-card:focus-within,
+.practice-card:focus-within {
+  border-color: rgba(196, 135, 58, 0.60) !important;
+  box-shadow: 0 0 0 3px rgba(196, 135, 58, 0.08) !important;
+}
+
+.gratitude-input {
+  border-bottom: 1.5px solid rgba(92, 74, 42, 0.30) !important;
+}
+.gratitude-input:focus {
+  border-bottom-color: var(--accent-saffron) !important;
+}
+
+[data-theme="night"] .gratitude-input {
+  border-bottom: 1.5px solid rgba(212, 184, 150, 0.25) !important;
+}
+[data-theme="night"] .gratitude-input:focus {
+  border-bottom-color: var(--accent-saffron) !important;
+}
+
+/* Section labels must pass 7:1 contrast - use #5C4A2A in day mode, #D4B896 in night mode */
+.section-label, .section-label-text {
+  color: #5C4A2A !important;
+  font-size: 11px !important;
+  letter-spacing: 0.14em !important;
+  font-weight: 600 !important;
+}
+
+[data-theme="night"] .section-label,
+[data-theme="night"] .section-label-text {
+  color: #D4B896 !important;
 }

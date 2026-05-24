@@ -7,10 +7,10 @@ import RoomShell from '@/components/layout/RoomShell';
 export default function AppLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex h-screen overflow-hidden" style={{ background: 'var(--bg-primary)' }}>
-      {/* Desktop sidebar — fixed, 252px expanded, 64px collapsed */}
+      {/* Desktop sidebar - fixed, 252px expanded, 64px collapsed */}
       <Sidebar />
 
-      {/* Main area — on desktop, offset by sidebar width via CSS var set by Sidebar */}
+      {/* Main area - on desktop, offset by sidebar width via CSS var set by Sidebar */}
       <div
         className="flex-1 flex flex-col overflow-hidden min-w-0 lg:ml-[var(--sidebar-width)] transition-[margin-left] duration-200 ease-in-out"
         id="app-main"

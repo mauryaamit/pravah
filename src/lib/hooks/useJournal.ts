@@ -40,8 +40,8 @@ export function useJournal(selectedDate: string) {
           content: data.content || '',
           mood: data.mood || 3,
           gratitude: data.gratitude || ['', '', ''],
-          learned: data.learned || '',
-          intention: data.intention || '',
+          learned: data.todayILearned || data.learned || '',
+          intention: data.tomorrowsIntention || data.intention || '',
           word_count: data.word_count || 0,
         });
       } else {
@@ -66,8 +66,8 @@ export function useJournal(selectedDate: string) {
           content: data.content || '',
           mood: data.mood || 3,
           gratitude: data.gratitude || ['', '', ''],
-          learned: data.learned || '',
-          intention: data.intention || '',
+          learned: data.todayILearned || data.learned || '',
+          intention: data.tomorrowsIntention || data.intention || '',
           word_count: data.word_count || 0,
         };
       });
@@ -99,7 +99,11 @@ export function useJournal(selectedDate: string) {
     if (todayEntry) existed = true;
 
     await setDoc(docRef, {
-      ...data,
+      content: data.content,
+      mood: data.mood,
+      gratitude: data.gratitude,
+      todayILearned: data.learned,
+      tomorrowsIntention: data.intention,
       word_count: wordCount,
       updatedAt: serverTimestamp(),
     }, { merge: true });
