@@ -6,9 +6,10 @@
 /* ---- Base reading prose (Merriweather for English) ---- */
 .prose-reading {
   font-family: 'Merriweather', Georgia, serif;
-  font-size: 1.25rem;
+  font-size: calc(1.25rem * var(--font-size-multiplier-body)) !important;
   font-weight: 300;
   line-height: var(--reading-line-height, 1.95);
+  transition: font-size 200ms ease;
   letter-spacing: 0.01em;
   color: var(--text-secondary);
   max-width: 68ch;
@@ -21,9 +22,10 @@
 /* ---- Story / long-form prose ---- */
 .prose-story {
   font-family: 'Merriweather', Georgia, serif;
-  font-size: 1.25rem;
+  font-size: calc(1.25rem * var(--font-size-multiplier-body)) !important;
   font-weight: 300;
   line-height: 2.0;
+  transition: font-size 200ms ease;
   letter-spacing: 0.01em;
   color: var(--text-secondary);
   max-width: 68ch;
@@ -43,9 +45,10 @@
 /* ---- Biography prose ---- */
 .prose-biography {
   font-family: 'Merriweather', Georgia, serif;
-  font-size: 1.2rem;
+  font-size: calc(1.2rem * var(--font-size-multiplier-body)) !important;
   font-weight: 300;
   line-height: 1.95;
+  transition: font-size 200ms ease;
   color: var(--text-secondary);
   max-width: 68ch;
 }
@@ -54,8 +57,9 @@
 /* ---- Poetry prose (English) ---- */
 .prose-poetry {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 1.45rem;
+  font-size: calc(1.45rem * var(--font-size-multiplier-body)) !important;
   line-height: 2.1;
+  transition: font-size 200ms ease;
   letter-spacing: 0.015em;
   color: var(--text-primary);
   white-space: pre-line;
@@ -71,9 +75,10 @@
 /* ---- Hindi / Devanagari prose ---- */
 .prose-devanagari {
   font-family: 'Noto Serif Devanagari', serif;
-  font-size: 1.35rem;
+  font-size: calc(1.35rem * var(--font-size-multiplier-body)) !important;
   font-weight: 400;
   line-height: 2.2;
+  transition: font-size 200ms ease;
   letter-spacing: 0.02em;
   color: var(--text-primary);
   white-space: pre-line;
@@ -85,9 +90,10 @@
 /* ---- Roman Urdu / Transliterated ---- */
 .prose-roman {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 1.4rem;
+  font-size: calc(1.4rem * var(--font-size-multiplier-body)) !important;
   font-style: italic;
   line-height: 2.0;
+  transition: font-size 200ms ease;
   letter-spacing: 0.01em;
   color: var(--text-primary);
   white-space: pre-line;
@@ -108,9 +114,10 @@
 /* ---- Philosophy / deep thought ---- */
 .prose-philosophy {
   font-family: 'Merriweather', Georgia, serif;
-  font-size: 1.2rem;
+  font-size: calc(1.2rem * var(--font-size-multiplier-body)) !important;
   font-weight: 300;
   line-height: 1.95;
+  transition: font-size 200ms ease;
   color: var(--text-secondary);
   max-width: 68ch;
 }
@@ -131,9 +138,10 @@
 /* ---- Journal editor ---- */
 .journal-editor {
   font-family: 'Merriweather', Georgia, serif;
-  font-size: 1.25rem;
+  font-size: calc(1.25rem * var(--font-size-multiplier-body)) !important;
   font-weight: 300;
   line-height: 1.9;
+  transition: font-size 200ms ease;
   letter-spacing: 0.01em;
   color: var(--text-primary);
   caret-color: var(--accent-saffron);

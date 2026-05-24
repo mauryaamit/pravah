@@ -16,6 +16,8 @@ export interface UserPreferences {
   ttsSpeed: number; // 0.7 | 1.0 | 1.25 | 1.5
   backgroundPainting: 'starry-night' | 'water-lilies' | 'wanderer-fog' | 'great-wave' | 'tree-of-life';
   backgroundOpacity: number; // 0 to 0.25
+  fontSizeHeading: 'xs' | 's' | 'm' | 'l' | 'xl';
+  fontSizeBody: 'xs' | 's' | 'm' | 'l' | 'xl';
 }
 
 export const DEFAULT_PREFERENCES: UserPreferences = {
@@ -27,4 +29,6 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   ttsSpeed: 1.0,
   backgroundPainting: 'starry-night',
   backgroundOpacity: 0.07,
+  fontSizeHeading: 'm',
+  fontSizeBody: 'm',
 };

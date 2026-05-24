@@ -6,6 +6,10 @@ import { BACKGROUND_PAINTINGS } from '@/lib/constants/paintings';
 import { useTheme } from '@/components/providers/ThemeProvider';
 import { useAudio } from '@/components/providers/AudioProvider';
 
+const STEPS = ['xs', 's', 'm', 'l', 'xl'] as const;
+const STEP_LABELS = { xs: 'XS', s: 'S', m: 'M', l: 'L', xl: 'XL' } as const;
+const STEP_MULTIPLIERS = { xs: 0.85, s: 0.92, m: 1.0, l: 1.12, xl: 1.25 } as const;
+
 interface SettingsModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -17,6 +21,9 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
   const { isMuted, toggleMute, enableAudio } = useAudio();
 
   if (!user) return null;
+
+  const headingSize = preferences.fontSizeHeading || 'm';
+  const bodySize = preferences.fontSizeBody || 'm';
 
   return (
     <AnimatePresence>
@@ -37,7 +44,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 10 }}
             transition={{ type: 'spring', duration: 0.4 }}
-            className="relative w-full max-w-md overflow-hidden rounded-2xl border flex flex-col z-10 max-h-[85vh]"
+            className="relative w-full max-w-md sm:max-w-xl overflow-hidden rounded-2xl border flex flex-col z-10 max-h-[85vh]"
             style={{
               background: 'var(--bg-secondary)',
               borderColor: 'var(--border-default)',
@@ -210,6 +217,169 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                     >
                       🌲 Nature (Forest)
                     </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Reading Size Settings */}
+              <div className="space-y-4">
+                <h3 className="text-xs uppercase tracking-wider font-semibold text-text-faint" style={{ color: 'var(--text-faint)' }}>
+                  Reading Size
+                </h3>
+
+                <div className="flex flex-col sm:flex-row gap-6">
+                  {/* Control 1 — Heading Size */}
+                  <div className="space-y-2 flex-1">
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="font-medium" style={{ color: 'var(--text-secondary)' }}>Headings</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 justify-between">
+                      <button
+                        onClick={() => {
+                          const idx = STEPS.indexOf(headingSize);
+                          if (idx > 0) updatePreferences({ fontSizeHeading: STEPS[idx - 1] });
+                        }}
+                        disabled={headingSize === 'xs'}
+                        className="w-11 h-11 rounded-xl flex items-center justify-center border font-semibold text-lg transition-all flex-shrink-0 disabled:opacity-30 disabled:cursor-not-allowed select-none min-h-[44px] min-w-[44px]"
+                        style={{
+                          borderColor: 'var(--border-default)',
+                          color: 'var(--text-secondary)',
+                          backgroundColor: 'var(--bg-primary)',
+                        }}
+                      >
+                        −
+                      </button>
+
+                      <div className="flex items-center gap-1 flex-1 justify-center">
+                        {STEPS.map(step => {
+                          const isSelected = headingSize === step;
+                          return (
+                            <button
+                              key={step}
+                              onClick={() => updatePreferences({ fontSizeHeading: step })}
+                              className="w-7 h-7 rounded-lg text-[10px] font-bold transition-all border flex items-center justify-center select-none font-medium"
+                              style={{
+                                backgroundColor: isSelected ? 'var(--accent-saffron)' : 'transparent',
+                                borderColor: isSelected ? 'var(--accent-saffron)' : 'var(--border-default)',
+                                color: isSelected ? 'white' : 'var(--text-muted)',
+                              }}
+                            >
+                              {STEP_LABELS[step]}
+                            </button>
+                          );
+                        })}
+                      </div>
+
+                      <button
+                        onClick={() => {
+                          const idx = STEPS.indexOf(headingSize);
+                          if (idx < STEPS.length - 1) updatePreferences({ fontSizeHeading: STEPS[idx + 1] });
+                        }}
+                        disabled={headingSize === 'xl'}
+                        className="w-11 h-11 rounded-xl flex items-center justify-center border font-semibold text-lg transition-all flex-shrink-0 disabled:opacity-30 disabled:cursor-not-allowed select-none min-h-[44px] min-w-[44px]"
+                        style={{
+                          borderColor: 'var(--border-default)',
+                          color: 'var(--text-secondary)',
+                          backgroundColor: 'var(--bg-primary)',
+                        }}
+                      >
+                        +
+                      </button>
+                    </div>
+
+                    {/* Preview heading */}
+                    <div
+                      className="h-14 rounded-xl flex items-center justify-center border overflow-hidden p-2 text-center"
+                      style={{ backgroundColor: 'var(--bg-primary)', borderColor: 'var(--border-default)' }}
+                    >
+                      <span
+                        className="font-serif leading-none"
+                        style={{
+                          fontSize: `${1.5 * STEP_MULTIPLIERS[headingSize]}rem`,
+                          transition: 'font-size 200ms ease',
+                          color: 'var(--text-primary)',
+                        }}
+                      >
+                        Pravah
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Control 2 — Body Text Size */}
+                  <div className="space-y-2 flex-1">
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="font-medium" style={{ color: 'var(--text-secondary)' }}>Body Text</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 justify-between">
+                      <button
+                        onClick={() => {
+                          const idx = STEPS.indexOf(bodySize);
+                          if (idx > 0) updatePreferences({ fontSizeBody: STEPS[idx - 1] });
+                        }}
+                        disabled={bodySize === 'xs'}
+                        className="w-11 h-11 rounded-xl flex items-center justify-center border font-semibold text-lg transition-all flex-shrink-0 disabled:opacity-30 disabled:cursor-not-allowed select-none min-h-[44px] min-w-[44px]"
+                        style={{
+                          borderColor: 'var(--border-default)',
+                          color: 'var(--text-secondary)',
+                          backgroundColor: 'var(--bg-primary)',
+                        }}
+                      >
+                        −
+                      </button>
+
+                      <div className="flex items-center gap-1 flex-1 justify-center">
+                        {STEPS.map(step => {
+                          const isSelected = bodySize === step;
+                          return (
+                            <button
+                              key={step}
+                              onClick={() => updatePreferences({ fontSizeBody: step })}
+                              className="w-7 h-7 rounded-lg text-[10px] font-bold transition-all border flex items-center justify-center select-none font-medium"
+                              style={{
+                                backgroundColor: isSelected ? 'var(--accent-saffron)' : 'transparent',
+                                borderColor: isSelected ? 'var(--accent-saffron)' : 'var(--border-default)',
+                                color: isSelected ? 'white' : 'var(--text-muted)',
+                              }}
+                            >
+                              {STEP_LABELS[step]}
+                            </button>
+                          );
+                        })}
+                      </div>
+
+                      <button
+                        onClick={() => {
+                          const idx = STEPS.indexOf(bodySize);
+                          if (idx < STEPS.length - 1) updatePreferences({ fontSizeBody: STEPS[idx + 1] });
+                        }}
+                        disabled={bodySize === 'xl'}
+                        className="w-11 h-11 rounded-xl flex items-center justify-center border font-semibold text-lg transition-all flex-shrink-0 disabled:opacity-30 disabled:cursor-not-allowed select-none min-h-[44px] min-w-[44px]"
+                        style={{
+                          borderColor: 'var(--border-default)',
+                          color: 'var(--text-secondary)',
+                          backgroundColor: 'var(--bg-primary)',
+                        }}
+                      >
+                        +
+                      </button>
+                    </div>
+
+                    {/* Preview body */}
+                    <div
+                      className="h-14 rounded-xl flex items-center justify-center border overflow-hidden p-2 text-center"
+                      style={{ backgroundColor: 'var(--bg-primary)', borderColor: 'var(--border-default)' }}
+                    >
+                      <span
+                        className="leading-tight text-center"
+                        style={{
+                          fontSize: `${0.9 * STEP_MULTIPLIERS[bodySize]}rem`,
+                          transition: 'font-size 200ms ease',
+                          color: 'var(--text-secondary)',
+                        }}
+                      >
+                        A curious mind is a free mind.
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>

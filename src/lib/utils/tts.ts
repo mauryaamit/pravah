@@ -17,6 +17,9 @@ const LANG_MAP: Record<string, string> = {
   'ur-PK': 'ur-PK',
 };
 
+// Set to hold active utterances and prevent garbage collection
+const activeUtterances = new Set<SpeechSynthesisUtterance>();
+
 export function speak(text: string, options: Partial<TTSOptions> = {}): SpeechSynthesisUtterance | null {
   if (typeof window === 'undefined' || !window.speechSynthesis) return null;
   window.speechSynthesis.cancel();
@@ -51,6 +54,14 @@ export function speak(text: string, options: Partial<TTSOptions> = {}): SpeechSy
 
   if (preferredVoice) utterance.voice = preferredVoice;
 
+  // Prevent Garbage Collection of active utterance by keeping a strong reference
+  activeUtterances.add(utterance);
+  const cleanUp = () => {
+    activeUtterances.delete(utterance);
+  };
+  utterance.addEventListener('end', cleanUp);
+  utterance.addEventListener('error', cleanUp);
+
   window.speechSynthesis.speak(utterance);
   return utterance;
 }
@@ -58,6 +69,7 @@ export function speak(text: string, options: Partial<TTSOptions> = {}): SpeechSy
 export function stopSpeaking(): void {
   if (typeof window === 'undefined') return;
   window.speechSynthesis.cancel();
+  activeUtterances.clear();
 }
 
 export function pauseSpeaking(): void {

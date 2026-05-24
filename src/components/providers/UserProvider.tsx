@@ -57,7 +57,11 @@ export function UserProvider({ children }: { children: ReactNode }) {
                 preferences: data.preferences || DEFAULT_PREFERENCES,
               });
               if (data.preferences) {
-                setPreferences({ ...DEFAULT_PREFERENCES, ...data.preferences });
+                const nextPrefs = { ...DEFAULT_PREFERENCES, ...data.preferences };
+                setPreferences(nextPrefs);
+                try {
+                  localStorage.setItem('pravah-preferences', JSON.stringify(nextPrefs));
+                } catch {}
               }
             }
             setIsLoading(false);
@@ -87,6 +91,25 @@ export function UserProvider({ children }: { children: ReactNode }) {
     return unsubAuth;
   }, []);
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      const stored = localStorage.getItem('pravah-preferences');
+      if (stored) {
+        setPreferences(prev => ({ ...prev, ...JSON.parse(stored) }));
+      }
+    } catch {}
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const multipliers = { xs: 0.85, s: 0.92, m: 1.0, l: 1.12, xl: 1.25 };
+    const headingMult = multipliers[preferences.fontSizeHeading || 'm'];
+    const bodyMult = multipliers[preferences.fontSizeBody || 'm'];
+    document.documentElement.style.setProperty('--font-size-multiplier-heading', String(headingMult));
+    document.documentElement.style.setProperty('--font-size-multiplier-body', String(bodyMult));
+  }, [preferences.fontSizeHeading, preferences.fontSizeBody]);
+
   const setUser = useCallback((u: User | null) => {
     setUserState(u);
     if (u?.preferences) setPreferences({ ...DEFAULT_PREFERENCES, ...u.preferences });
@@ -95,6 +118,9 @@ export function UserProvider({ children }: { children: ReactNode }) {
   const updatePreferences = useCallback(async (prefs: Partial<UserPreferences>) => {
     const next = { ...preferences, ...prefs };
     setPreferences(next);
+    try {
+      localStorage.setItem('pravah-preferences', JSON.stringify(next));
+    } catch {}
     
     if (user && db) {
       try {

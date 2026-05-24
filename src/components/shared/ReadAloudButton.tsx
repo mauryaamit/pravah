@@ -1,7 +1,8 @@
 'use client';
-import { useState, useEffect, useCallback } from 'react';
-import { Volume2, Pause, Square, Play } from 'lucide-react';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { Volume2, Pause, Play } from 'lucide-react';
 import { speak, stopSpeaking, isSpeaking as checkIsSpeaking } from '@/lib/utils/tts';
+import { useUser } from '@/components/providers/UserProvider';
 
 type Size = 'sm' | 'md' | 'lg';
 type Variant = 'icon' | 'pill';
@@ -32,20 +33,57 @@ export default function ReadAloudButton({
   label,
   defaultPreset = 'normal',
 }: ReadAloudButtonProps) {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentPreset, setCurrentPreset] = useState<typeof PRESETS[number]['id']>(defaultPreset);
+  // Safely attempt to read user settings from UserProvider context
+  let userPrefs: any = null;
+  try {
+    userPrefs = useUser();
+  } catch (e) {
+    // Fail silently if used outside UserProvider
+  }
 
+  const globalSpeed = userPrefs?.preferences?.ttsSpeed; // 0.7 | 1.0 | 1.25 | 1.5
+  const initialPreset = 
+    globalSpeed === 0.7 ? 'slow' :
+    globalSpeed === 1.0 ? 'normal' :
+    globalSpeed === 1.25 ? 'fast' :
+    globalSpeed === 1.5 ? 'swift' :
+    defaultPreset;
+
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentPreset, setCurrentPreset] = useState<typeof PRESETS[number]['id']>(initialPreset);
+  const [showSpeedControls, setShowSpeedControls] = useState(false);
+  const [touchTimer, setTouchTimer] = useState<ReturnType<typeof setTimeout> | null>(null);
+  const [isLongPress, setIsLongPress] = useState(false);
+
+  const containerRef = useRef<HTMLDivElement>(null);
   const resolvedLang = lang === 'en' ? 'en-IN' : lang === 'hi' ? 'hi-IN' : lang === 'ur' ? 'ur-PK' : lang;
 
-  // Poll for speaking state to handle automatic completion
+  // Keep preset in sync with user's settings if updated globally
+  useEffect(() => {
+    if (globalSpeed) {
+      const presetFromGlobal = 
+        globalSpeed === 0.7 ? 'slow' :
+        globalSpeed === 1.0 ? 'normal' :
+        globalSpeed === 1.25 ? 'fast' :
+        globalSpeed === 1.5 ? 'swift' :
+        defaultPreset;
+      setCurrentPreset(presetFromGlobal);
+    }
+  }, [globalSpeed, defaultPreset]);
+
+  // Poll for speaking state to handle automatic completion,
+  // but only check after a grace period of 1.5 seconds to let the engine initialize.
   useEffect(() => {
     let interval: ReturnType<typeof setInterval>;
     if (isPlaying) {
+      const startTime = Date.now();
       interval = setInterval(() => {
-        if (!checkIsSpeaking()) {
-          setIsPlaying(false);
+        if (Date.now() - startTime > 1500) {
+          if (!checkIsSpeaking()) {
+            setIsPlaying(false);
+          }
         }
-      }, 250);
+      }, 500);
     }
     return () => clearInterval(interval);
   }, [isPlaying]);
@@ -56,6 +94,24 @@ export default function ReadAloudButton({
       stopSpeaking();
     };
   }, []);
+
+  // Click/tap outside listener to dismiss the speed controls popover
+  useEffect(() => {
+    if (!showSpeedControls) return;
+
+    const handleDismiss = (e: MouseEvent | TouchEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setShowSpeedControls(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleDismiss);
+    document.addEventListener('touchstart', handleDismiss);
+    return () => {
+      document.removeEventListener('mousedown', handleDismiss);
+      document.removeEventListener('touchstart', handleDismiss);
+    };
+  }, [showSpeedControls]);
 
   const play = useCallback((presetId = currentPreset) => {
     const preset = PRESETS.find(p => p.id === presetId) || PRESETS[1];
@@ -69,8 +125,9 @@ export default function ReadAloudButton({
     });
 
     if (utterance) {
-      utterance.onend = () => setIsPlaying(false);
-      utterance.onerror = () => setIsPlaying(false);
+      utterance.addEventListener('start', () => setIsPlaying(true));
+      utterance.addEventListener('end', () => setIsPlaying(false));
+      utterance.addEventListener('error', () => setIsPlaying(false));
     }
   }, [text, resolvedLang, currentPreset]);
 
@@ -88,6 +145,32 @@ export default function ReadAloudButton({
     if (isPlaying) {
       play(presetId);
     }
+    setShowSpeedControls(false);
+  };
+
+  // Touch handlers for mobile long press (600ms) to display speed controls
+  const handleTouchStart = () => {
+    setIsLongPress(false);
+    const timer = setTimeout(() => {
+      setShowSpeedControls(true);
+      setIsLongPress(true);
+    }, 600);
+    setTouchTimer(timer);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchTimer) {
+      clearTimeout(touchTimer);
+      setTouchTimer(null);
+    }
+    if (isLongPress) {
+      e.preventDefault(); // Block the default click event triggering
+    }
+  };
+
+  const handleContextMenu = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setShowSpeedControls(prev => !prev);
   };
 
   // Button sizes
@@ -95,7 +178,7 @@ export default function ReadAloudButton({
   const iconSize = size === 'sm' ? 14 : size === 'md' ? 18 : 22;
 
   return (
-    <div className={`relative flex flex-col items-center gap-2 flex-shrink-0 ${className}`}>
+    <div ref={containerRef} className={`relative flex flex-col items-center gap-2 flex-shrink-0 ${className}`}>
       {/* Self-contained keyframes for the pulse ring */}
       <style jsx global>{`
         @keyframes tts-pulse-ring {
@@ -116,6 +199,9 @@ export default function ReadAloudButton({
       {variant === 'pill' ? (
         <button
           onClick={handleToggle}
+          onContextMenu={handleContextMenu}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
           className="flex items-center gap-2 px-4 py-2 rounded-full border text-xs font-semibold uppercase tracking-wider transition-all duration-200"
           style={{
             background: isPlaying
@@ -132,6 +218,9 @@ export default function ReadAloudButton({
       ) : (
         <button
           onClick={handleToggle}
+          onContextMenu={handleContextMenu}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
           className={`flex items-center justify-center rounded-full border transition-all duration-200 hover:scale-105 active:scale-95 ${btnSizeClass} ${
             isPlaying ? 'tts-playing-pulse' : ''
           }`}
@@ -149,12 +238,14 @@ export default function ReadAloudButton({
         </button>
       )}
 
-      {/* Speed Presets display when playing */}
-      {isPlaying && (
-        <div className="flex gap-1 p-0.5 rounded-lg border bg-secondary shadow-sm transition-all"
+      {/* Speed Presets display absolute popover below */}
+      {showSpeedControls && (
+        <div className="absolute top-full mt-2 flex gap-1 p-1 rounded-lg border bg-secondary shadow-lg z-20"
              style={{
                background: 'var(--bg-secondary)',
                borderColor: 'var(--border-default)',
+               minWidth: '120px',
+               justifyContent: 'center',
              }}>
           {PRESETS.map(p => {
             const isSel = currentPreset === p.id;
@@ -168,7 +259,7 @@ export default function ReadAloudButton({
                   color: isSel ? '#ffffff' : 'var(--text-secondary)',
                 }}
               >
-                {p.label.split(' ')[0]} {/* Show icon only to keep it small */}
+                {p.label.split(' ')[0]}
               </button>
             );
           })}

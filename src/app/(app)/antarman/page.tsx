@@ -301,8 +301,6 @@ export default function AntarmanPage() {
                 <div className="card-base practice-card p-4">
                   <div className="flex justify-between items-center mb-3">
                     <p className="text-xs uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>How are you feeling?</p>
-                    {/* Inline tts for prompt of the day */}
-                    <ReadAloudButton text={`Today's writing prompt: ${prompt}`} lang="en-IN" size="sm" />
                   </div>
                   <MoodPulse value={mood} onChange={m => handleInputChange(setMood, m)} />
                 </div>
@@ -318,14 +316,6 @@ export default function AntarmanPage() {
                       {wordCount} words
                     </span>
                   </div>
-                  
-                  {/* Floating Speaker Icon in read/focus mode (or editor corner) */}
-                  <ReadAloudButton 
-                    text={content} 
-                    lang="en-IN" 
-                    size="sm" 
-                    className="absolute top-4 right-4 z-10" 
-                  />
 
                   <div
                     ref={editorRef}
