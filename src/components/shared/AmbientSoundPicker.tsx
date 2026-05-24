@@ -19,10 +19,10 @@ export const AMBIENT_MODES: AmbientMode[] = [
   { id: 'rain',      label: 'Soft Rain',       emoji: '🌧',  description: 'Reflective, cozy',    url: 'https://assets.mixkit.co/active_storage/sfx/2515/2515-preview.mp3' },
   { id: 'forest',    label: 'Forest',           emoji: '🌿',  description: 'Alive, gentle',       url: 'https://assets.mixkit.co/active_storage/sfx/2516/2516-preview.mp3' },
   { id: 'vinyl',     label: 'Vinyl Crackle',    emoji: '🎵',  description: 'Nostalgic, warm',     url: 'https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3' },
-  { id: 'river',     label: 'Flowing River',    emoji: '💧',  description: 'Meditative, clean',   url: 'https://assets.mixkit.co/active_storage/sfx/2519/2519-preview.mp3' },
-  { id: 'cafe',      label: 'Cafe',             emoji: '☕',  description: 'Alert, social',       url: 'https://assets.mixkit.co/active_storage/sfx/2521/2521-preview.mp3' },
-  { id: 'library',   label: 'Library',          emoji: '📚',  description: 'Focused, quiet',      url: 'https://assets.mixkit.co/active_storage/sfx/2520/2520-preview.mp3' },
-  { id: 'bowls',     label: 'Tibetan Bowls',    emoji: '🔔',  description: 'Sacred, deep',        url: 'https://assets.mixkit.co/active_storage/sfx/209/209-preview.mp3' },
+  { id: 'river',     label: 'Flowing River',    emoji: '💧',  description: 'Meditative, clean',   url: 'https://moodist.app/audio/nature/river.mp3' },
+  { id: 'cafe',      label: 'Cafe',             emoji: '☕',  description: 'Alert, social',       url: 'https://moodist.app/audio/places/cafe.mp3' },
+  { id: 'library',   label: 'Library',          emoji: '📚',  description: 'Focused, quiet',      url: 'https://moodist.app/audio/places/library.mp3' },
+  { id: 'bowls',     label: 'Tibetan Bowls',    emoji: '🔔',  description: 'Sacred, deep',        url: 'https://moodist.app/audio/things/singing-bowl.mp3' },
   { id: 'fireplace', label: 'Fireplace',        emoji: '🔥',  description: 'Intimate, slow',      url: 'https://assets.mixkit.co/active_storage/sfx/2517/2517-preview.mp3' },
 ];
 
@@ -80,7 +80,7 @@ export default function AmbientSoundPicker() {
             initial="initial"
             animate="animate"
             exit="exit"
-            className="absolute right-0 top-full mt-2 z-50 rounded-2xl overflow-hidden"
+            className="absolute -right-20 sm:right-0 top-full mt-2 z-50 rounded-2xl overflow-hidden"
             style={{
               background: 'var(--bg-secondary)',
               border: '1px solid var(--border-default)',
