@@ -128,7 +128,7 @@ export default function SutrPage() {
                   className="sutr-room-entry flex flex-col md:flex-row md:items-start gap-4 border-b transition-colors hover:bg-stone-50/30 dark:hover:bg-stone-950/10 px-3 rounded-xl"
                   style={{ borderColor: 'var(--border-default)' }}
                 >
-                  <div className="w-full md:w-1/3 flex-shrink-0">
+                  <div className="w-full md:w-1/3 flex-shrink-0 mb-2 md:mb-0">
                     <span className="sutr-room-name font-semibold text-base block" style={{ color: '#3D3560' }}>
                       {room.name}
                     </span>
@@ -300,9 +300,15 @@ export default function SutrPage() {
           }
           .sutr-room-description {
             color: var(--text-secondary) !important;
-            font-size: clamp(1.05rem, 1.6vw, 1.125rem) !important; /* Increased font size for readability */
+            font-size: 1.1rem !important; /* Fallback static size to prevent Webview clamp bugs */
             line-height: 1.85;
             opacity: 1 !important;
+            display: block !important;
+          }
+          @media (max-width: 768px) {
+            .sutr-room-description {
+              font-size: 1.0rem !important;
+            }
           }
           .sutr-room-dimension {
             color: var(--accent-saffron) !important;
@@ -341,35 +347,36 @@ export default function SutrPage() {
               margin: 32px auto !important;
             }
             .sutr-room-entry {
+              display: block !important; /* Prevent WebKit/Blink layout collapse bugs inside flex on mobile viewports */
               padding: 14px 8px !important;
             }
           }
 
           /* ── System Dark Mode Override ── */
           @media (prefers-color-scheme: dark) {
-            /* Only apply when the active theme is not one of the explicit light themes */
-            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-page {
+            /* Force dark mode variables globally if system prefers dark to resolve contrast issues */
+            .sutr-page {
               background: #1A1208 !important;
             }
-            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-body,
-            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-pullquote,
-            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-room-description,
-            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-closing-text {
+            .sutr-body,
+            .sutr-pullquote,
+            .sutr-room-description,
+            .sutr-closing-text {
               color: #E8DDD0 !important;
             }
-            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-heading,
-            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-room-name,
-            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-principle-title {
+            .sutr-heading,
+            .sutr-room-name,
+            .sutr-principle-title {
               color: #F5EFE6 !important;
             }
-            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-room-dimension,
-            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-section-label {
+            .sutr-room-dimension,
+            .sutr-section-label {
               color: #D4943A !important;
             }
-            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-room-entry {
+            .sutr-room-entry {
               border-color: rgba(232, 217, 184, 0.15) !important;
             }
-            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-divider {
+            .sutr-divider {
               background: rgba(232, 217, 184, 0.15) !important;
             }
           }
