@@ -354,29 +354,29 @@ export default function SutrPage() {
 
           /* ── System Dark Mode Override ── */
           @media (prefers-color-scheme: dark) {
-            /* Force dark mode variables globally if system prefers dark to resolve contrast issues */
-            .sutr-page {
+            /* Only apply when the active theme is not one of the explicit light themes */
+            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-page {
               background: #1A1208 !important;
             }
-            .sutr-body,
-            .sutr-pullquote,
-            .sutr-room-description,
-            .sutr-closing-text {
+            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-body,
+            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-pullquote,
+            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-room-description,
+            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-closing-text {
               color: #E8DDD0 !important;
             }
-            .sutr-heading,
-            .sutr-room-name,
-            .sutr-principle-title {
+            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-heading,
+            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-room-name,
+            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-principle-title {
               color: #F5EFE6 !important;
             }
-            .sutr-room-dimension,
-            .sutr-section-label {
+            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-room-dimension,
+            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-section-label {
               color: #D4943A !important;
             }
-            .sutr-room-entry {
+            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-room-entry {
               border-color: rgba(232, 217, 184, 0.15) !important;
             }
-            .sutr-divider {
+            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-divider {
               background: rgba(232, 217, 184, 0.15) !important;
             }
           }
