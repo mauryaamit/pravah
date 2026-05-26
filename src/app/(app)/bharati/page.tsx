@@ -11,7 +11,7 @@ const INDIA_FEATURES = [
     title: 'The First Cities',
     titleHindi: 'प्रथम नगर',
     subtitle: 'How the Indus Valley Civilization built the world\'s most advanced urban culture - and then vanished',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Mohenjo-daro_Sindh.jpg/600px-Mohenjo-daro_Sindh.jpg',
+    imageUrl: '/images/bharati/indus-valley.png',
     category: 'Ancient History',
     content: `In 1921, archaeologists began excavating a mound on the banks of the Ravi River in Punjab. What they found beneath the earth upended everything the world believed about the ancient history of South Asia, and revealed a civilization of extraordinary sophistication that had been completely forgotten for 4,000 years.
 
@@ -37,7 +37,7 @@ It is, in some ways, the most mysterious major civilization in history. We know 
     title: 'India\'s Gift to Mathematics',
     titleHindi: 'गणित को भारत की देन',
     subtitle: 'From zero to infinity: how Indian mathematicians built the foundation of modern science',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Aryabhata-portrait.jpg/440px-Aryabhata-portrait.jpg',
+    imageUrl: '/images/bharati/mathematics.png',
     category: 'History of Science',
     content: `The number you use to count, calculate, and make sense of the world - the base-10 positional number system, with zero as a placeholder - is Indian. This is not a minor contribution. Without positional notation, mathematics as we know it is impossible. Try doing long multiplication in Roman numerals. It is not just difficult. It is practically impossible for numbers beyond a few hundred. The Roman Empire built aqueducts and roads without being able to calculate efficiently. The Indian system made modern science possible.
 
@@ -117,7 +117,7 @@ export default function BharatiPage() {
                   src={selected.imageUrl}
                   alt={selected.title}
                   className="absolute inset-0 w-full h-full object-cover"
-                  onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                  onError={e => { const el = e.target as HTMLImageElement; el.src = '/images/bharati/indus-valley.png'; }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-5">

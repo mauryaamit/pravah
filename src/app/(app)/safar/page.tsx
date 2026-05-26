@@ -12,7 +12,7 @@ const DESTINATIONS = [
     hindi: 'वाराणसी',
     country: 'India',
     tagline: 'The oldest living city on Earth',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Varanasi_Ghats.jpg/800px-Varanasi_Ghats.jpg',
+    imageUrl: '/images/safar/varanasi.png',
     intro: 'Varanasi - also called Kashi, the City of Light - has been continuously inhabited for at least 3,000 years, making it one of the oldest surviving cities in the world. It sits on the western bank of the Ganges in Uttar Pradesh, and every morning, thousands of pilgrims descend its 88 ghats to bathe in water they believe flows directly from Shiva\'s hair.',
     deepContent: `Varanasi is the kind of city that defeats language. Every writer who has tried to describe it has eventually resorted to contradiction: it is simultaneously the most alive and the most death-haunted city in India, perhaps in the world. The burning ghats of Manikarnika and Harishchandra burn 24 hours a day, 365 days a year - the pyres are never extinguished. The smoke drifts over the ghats where pilgrims bathe. Life and death are not separated here into hospitals and crematoriums, into neat institutional spaces. They are side by side on the same steps.
 
@@ -35,7 +35,7 @@ What makes Varanasi irreplaceable is its function as a lens: it shows you India 
     hindi: 'पटागोनिया',
     country: 'Argentina / Chile',
     tagline: 'Where the world runs out',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Fitz_Roy.jpg/800px-Fitz_Roy.jpg',
+    imageUrl: '/images/safar/patagonia.png',
     intro: 'At the southern tip of South America, Patagonia is one of the most spectacularly empty landscapes on Earth - a region of glaciers, torres (towers of rock), pampas, and wind so constant and powerful that trees grow bent permanently sideways. It is the place the world runs out, before Antarctica begins.',
     deepContent: `Patagonia covers approximately 1 million square kilometers across southern Argentina and Chile - an area roughly the size of Egypt - and has a population of about 2 million people. Most of that population is in a few coastal cities. The interior - the vast pampas (grasslands), the Andes foothills, the great wind-blasted plateaus - is emptier than anywhere in Europe and emptier than most of Asia.
 
@@ -58,7 +58,7 @@ Patagonia is one of the places where the encounter between human civilization an
     hindi: 'क्योतो',
     country: 'Japan',
     tagline: 'The city that remembered how to be beautiful',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Kinkaku-ji_during_autumn.jpg/800px-Kinkaku-ji_during_autumn.jpg',
+    imageUrl: '/images/safar/kyoto.png',
     intro: 'For over a thousand years, Kyoto was the capital of Japan - the seat of the Emperor, the center of Buddhist and Shinto practice, the birthplace of Japanese aesthetic culture. Today it is the city that most carefully preserved what Japan was before the 20th century changed everything.',
     deepContent: `Kyoto was Japan's imperial capital from 794 CE to 1869 CE - a period of over a thousand years during which it accumulated temples, shrines, gardens, palaces, and cultural traditions of extraordinary density. When Japan modernized rapidly in the Meiji era, and when World War II destroyed most of Japan's cities, Kyoto survived largely intact. The reasons are disputed - one persistent story is that American Secretary of War Henry Stimson, who had visited Kyoto on his honeymoon, personally intervened to remove it from the nuclear targeting list. Whatever the reason, Kyoto's architectural heritage survived.
 
@@ -127,7 +127,7 @@ export default function SafarPage() {
                   src={selected.imageUrl}
                   alt={selected.name}
                   className="absolute inset-0 w-full h-full object-cover"
-                  onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                  onError={e => { const el = e.target as HTMLImageElement; el.src = '/images/safar/varanasi.png'; }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-5">

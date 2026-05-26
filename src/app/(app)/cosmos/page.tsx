@@ -23,7 +23,7 @@ const COSMIC_OBJECTS: CosmicObject[] = [
     id: 'pillars',
     name: 'The Pillars of Creation',
     nameHindi: 'सृष्टि के स्तंभ',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Pillars_of_creation_2014_HST_WFC3-UVIS_full-res_denoised.jpg/600px-Pillars_of_creation_2014_HST_WFC3-UVIS_full-res_denoised.jpg',
+    imageUrl: '/images/cosmos/pillars.png',
     category: 'Stellar Nursery',
     intro: 'In the Eagle Nebula, 6,500 light-years away, columns of interstellar gas and dust tower seven light-years tall - and inside them, new stars are being born this very moment.',
     deepDive: `The Pillars of Creation are perhaps the most iconic astronomical image ever captured. First photographed by the Hubble Space Telescope in 1995, then re-imaged in stunning detail in 2014 with Hubble's upgraded cameras, and again in 2022 with the James Webb Space Telescope in infrared light, they have appeared in textbooks, posters, and collective human imagination for three decades.
@@ -45,7 +45,7 @@ The James Webb Space Telescope's 2022 infrared image of the pillars revealed som
     id: 'blackhole',
     name: 'Black Holes',
     nameHindi: 'कृष्ण विवर',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Black_hole_-_Messier_87_crop_max_res.jpg/600px-Black_hole_-_Messier_87_crop_max_res.jpg',
+    imageUrl: '/images/cosmos/blackhole.png',
     category: 'Spacetime Phenomenon',
     intro: 'A region of spacetime where gravity is so extreme that nothing - not even light - can escape. At the center lies a singularity where our known physics breaks down completely.',
     deepDive: `A black hole is not a hole. It is an object - an extraordinarily dense object - whose gravity is so intense that its escape velocity exceeds the speed of light. Since nothing can travel faster than light, nothing can escape. Not matter. Not radiation. Not information. Not time.
@@ -67,7 +67,7 @@ Stephen Hawking discovered in 1974 that black holes are not entirely black - the
     id: 'milkyway',
     name: 'Our Milky Way Galaxy',
     nameHindi: 'आकाशगंगा',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/ESO-_The_Milky_Way_panorama.jpg/800px-ESO-_The_Milky_Way_panorama.jpg',
+    imageUrl: '/images/cosmos/milkyway.png',
     category: 'Galaxy',
     intro: 'A barred spiral galaxy containing 100-400 billion stars, 100,000 light-years across. We live in one of its minor spiral arms, 26,000 light-years from the center.',
     deepDive: `The Milky Way is our home galaxy - the gravitationally bound collection of stars, gas, dust, and dark matter within which our Solar System resides. It contains between 100 billion and 400 billion stars. Recent estimates suggest it may contain over a trillion, depending on how you count the dim, small red dwarfs that are difficult to detect from Earth.
@@ -184,7 +184,7 @@ export default function CosmosPage() {
                   className="absolute inset-0 w-full h-full object-cover"
                   onError={e => {
                     const el = e.target as HTMLImageElement;
-                    el.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Hubble_ultra_deep_field.jpg/600px-Hubble_ultra_deep_field.jpg';
+                    el.src = '/images/cosmos/milkyway.png';
                   }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />

@@ -35,7 +35,7 @@ const PEOPLE: Person[] = [
     died: '7 January 1943',
     nationality: 'Serbian-American',
     domain: 'Inventor, Electrical Engineer, Futurist',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/N.Tesla.JPG/440px-N.Tesla.JPG',
+    imageUrl: '/images/vibhav/tesla.png',
     tagline: 'The man who lit the world - and died alone.',
     biography: `Nikola Tesla was born on a stormy night in July 1856 in Smiljan, a small village in what is now Croatia. His mother, Djouka Mandic, was herself an inventor of small household appliances. His father was a Serbian Orthodox priest. From childhood, Tesla displayed extraordinary mental abilities - he could perform integral calculus in his head, which so astonished his teachers that they accused him of cheating.
 
@@ -82,7 +82,7 @@ Tesla also believed intensely in celibacy as a source of creative power. He neve
     died: '30 January 1948',
     nationality: 'Indian',
     domain: 'Political Leader, Philosopher, Father of the Nation',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Mahatma-Gandhi%2C_studio%2C_1931.jpg/440px-Mahatma-Gandhi%2C_studio%2C_1931.jpg',
+    imageUrl: '/images/vibhav/gandhi.png',
     tagline: 'The man who fought an empire with a spinning wheel.',
     biography: `Mohandas Karamchand Gandhi was born in Porbandar, a coastal town in Gujarat, on October 2, 1869. His family were Vaishnavite Hindus of the Bania caste - merchants by tradition, vegetarians by conviction. His mother, Putlibai, was deeply religious and her influence stayed with Gandhi all his life.
 
@@ -127,7 +127,7 @@ His idea of Swaraj went beyond political independence. True freedom, he said, wa
     died: '17 December 1273',
     nationality: 'Persian (born in Balkh, now Afghanistan)',
     domain: 'Poet, Theologian, Sufi Master',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Rumi.jpg/440px-Rumi.jpg',
+    imageUrl: '/images/vibhav/rumi.png',
     tagline: 'The 13th century mystic who became the bestselling poet in America.',
     biography: `Jalal ad-Din Muhammad Rumi was born in 1207 in Balkh, a city in what is now Afghanistan, into a family of Islamic scholars. His father, Baha ud-Din Walad, was a theologian and mystic who fled westward with his family as the Mongol invasions swept through Central Asia. After years of wandering - through Nishapur (where they met the great poet Attar), through Baghdad, through Mecca on pilgrimage - the family settled in Konya, in what is now Turkey, around 1228.
 
@@ -168,7 +168,7 @@ He saw God in beauty, in music, in the turning of dervishes, in the cry of a flu
     died: '4 July 1934',
     nationality: 'Polish-French',
     domain: 'Physicist, Chemist, Pioneer of Radioactivity',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Marie_Curie_c._1920s.jpg/440px-Marie_Curie_c._1920s.jpg',
+    imageUrl: '/images/vibhav/curie.png',
     tagline: 'The first person to win two Nobel Prizes - one of only four ever.',
     biography: `Maria Sklodowska was born on November 7, 1867 in Warsaw, then under Russian control. Polish girls could not attend university - education was surveilled by Russian authorities, who feared an educated Polish population would resist occupation. So Maria and her sister Bronya made a pact: Maria would work as a governess to support Bronya through medical school in Paris; then Bronya would support Maria in return.
 
@@ -212,7 +212,7 @@ She was deeply secular and scientific in her worldview, but not without wonder. 
     died: '27 July 2015',
     nationality: 'Indian',
     domain: 'Aerospace Scientist, President of India, Teacher',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/A._P._J._Abdul_Kalam.jpg/440px-A._P._J._Abdul_Kalam.jpg',
+    imageUrl: '/images/vibhav/kalam.png',
     tagline: 'The Missile Man of India who chose to teach children rather than attend state banquets.',
     biography: `Avul Pakir Jainulabdeen Abdul Kalam was born on October 15, 1931 in Rameswaram, a small island town in Tamil Nadu. His father, Jainulabdeen, was a boat owner and imam of a local mosque. The family was poor. Kalam sold newspapers as a child to help with household expenses. He was fascinated by birds and by flight - watching the seabirds over Rameswaram harbor made him dream of aircraft.
 
@@ -257,7 +257,7 @@ His book Wings of Fire - part autobiography, part inspirational manual - has sol
     died: '18 April 1955',
     nationality: 'German-American',
     domain: 'Theoretical Physicist',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Albert_Einstein_Head.jpg/440px-Albert_Einstein_Head.jpg',
+    imageUrl: '/images/vibhav/einstein.jpg',
     tagline: 'He reimagined space, time, matter, and energy in a single year at 26.',
     biography: `Albert Einstein was born on March 14, 1879 in Ulm, Kingdom of Württemberg, Germany. He was a late talker - his parents worried he might have a cognitive disability. He did not speak fluently until age four or five. He disliked the rote memorization that German schools demanded. He felt alienated in formal education from the beginning.
 
@@ -357,7 +357,7 @@ export default function VibhavPage() {
                   src={selected.imageUrl}
                   alt={selected.name}
                   className="w-full h-full object-cover object-top"
-                  onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                  onError={e => { const el = e.target as HTMLImageElement; el.src = '/images/vibhav/tesla.png'; }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-5">

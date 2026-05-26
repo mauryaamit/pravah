@@ -14,7 +14,7 @@ const ART_PIECES = [
     title: 'The Starry Night',
     artist: 'Vincent van Gogh',
     year: '1889',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/800px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg',
+    imageUrl: '/paintings/starry-night.jpg',
     story: `Vincent van Gogh painted The Starry Night in June 1889, while he was voluntarily committed to the Saint-Paul-de-Mausole asylum in Saint-Rémy-de-Provence, a year before his death. He painted it from memory and imagination - the village in the painting is not Saint-Rémy but an idealized version of his childhood village in the Netherlands. The church spire is characteristically Dutch, not French. He was painting home while confined far from it.
 
 The painting was not considered his masterpiece during his lifetime. Van Gogh preferred other works. He wrote to his brother Theo that the starry night canvas was a "failure." He died believing his work had value but not knowing the extent of its impact. The Starry Night was sold after his death, passed through several collections, and arrived at the Museum of Modern Art in New York in 1941, where it has been since.
@@ -30,7 +30,7 @@ There is something deeply poignant about The Starry Night's history: made by a m
     title: 'The Great Wave off Kanagawa',
     artist: 'Katsushika Hokusai',
     year: 'c. 1831',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/The_Great_Wave_off_Kanagawa.jpg/800px-The_Great_Wave_off_Kanagawa.jpg',
+    imageUrl: '/paintings/great-wave.jpg',
     story: `Katsushika Hokusai was 70 years old when he published The Great Wave off Kanagawa as part of his series "Thirty-six Views of Mount Fuji." He had been a printmaker for over 50 years by that point - he had spent his entire adult life making images. And yet the works for which he is remembered worldwide were made in his seventies and eighties.
 
 He wrote, at age 75: "Since the age of six, I have had a mania for drawing the forms of things. By the time I was fifty, I had published an infinity of designs, but all I produced before the age of seventy is not worth taking into account. At the age of seventy-three I partly understood the structure of animals, plants, birds, fishes, and insects. Consequently when I am eighty I shall have made still more progress; at ninety I shall have penetrated to the essence of things; at one hundred I shall have reached a magnificent stage; and when I am one hundred and ten, everything I do, be it a dot or a line, will be alive." He died at 88.
@@ -153,7 +153,7 @@ export default function AnandPage() {
                     src={selectedArt.imageUrl}
                     alt={selectedArt.title}
                     className="absolute inset-0 w-full h-full object-cover"
-                    onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                    onError={e => { const el = e.target as HTMLImageElement; el.src = '/paintings/starry-night.jpg'; }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-5 flex justify-between items-end">

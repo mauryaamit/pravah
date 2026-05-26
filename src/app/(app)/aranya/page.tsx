@@ -10,7 +10,7 @@ const NATURE_FEATURES = [
     id: 'mycorrhizal',
     title: 'The Wood Wide Web',
     titleHindi: 'जंगल का इंटरनेट',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Mycorrhizal_network.jpg/600px-Mycorrhizal_network.jpg',
+    imageUrl: '/images/aranya/mycorrhizal.png',
     category: 'Forest Intelligence',
     intro: 'Beneath every forest floor lies a vast network of fungal threads connecting trees, allowing them to share nutrients, send chemical warnings, and care for their seedlings. Trees, it turns out, are not solitary competitors. They are communities.',
     fullContent: `In 1997, the forest ecologist Suzanne Simard published a paper in Nature that changed how biologists think about forests. She demonstrated, using radioactive carbon tracers, that trees in a forest were exchanging carbon through the fungal networks in the soil - and that the exchange was not random. Old, large trees (which she called "mother trees" or "hub trees") were sending significantly more carbon to the seedlings growing near them than to random plants. The forest was not competing. It was cooperating.
@@ -38,7 +38,7 @@ The Jain concept of parasparopagraho jivanam - "all life is interdependent" - wh
     id: 'migration',
     title: 'The Mystery of Migration',
     titleHindi: 'प्रवास का रहस्य',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Monarch_Butterfly_Danaus_plexippus_Feeding_Down.jpg/600px-Monarch_Butterfly_Danaus_plexippus_Feeding_Down.jpg',
+    imageUrl: '/images/aranya/migration.png',
     category: 'Animal Navigation',
     intro: 'Every year, hundreds of millions of animals navigate across continents with precision that embarrasses our best technology. How? The answers involve quantum mechanics, magnetic fields, star maps, smell, and biological clocks.',
     fullContent: `Every autumn, millions of Monarch butterflies across North America - insects with brains the size of a pinhead - fly up to 4,500 kilometers from Canada and the northeastern United States to a cluster of oyamel fir trees in the mountains of central Mexico. They have never made this journey before. Their parents and grandparents made it, but each individual Monarch lives only six to eight months, and the migration generation (which lives longer, up to eight months, specifically to complete the journey) is typically four generations removed from the last migration generation.
@@ -64,7 +64,7 @@ Migration is one of the most powerful arguments against the idea that consciousn
     id: 'bioluminescence',
     title: 'The Ocean\'s Living Light',
     titleHindi: 'समुद्र का जीवित प्रकाश',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Bioluminescent_dinoflagellate_-_bioluminescence.jpg/600px-Bioluminescent_dinoflagellate_-_bioluminescence.jpg',
+    imageUrl: '/images/aranya/bioluminescence.png',
     category: 'Marine Biology',
     intro: 'Deep in the ocean, where no sunlight reaches, 90% of creatures make their own light. The dark ocean is not dark at all - it glitters, pulses, flashes, and glows with a living luminescence that has been evolving for 500 million years.',
     fullContent: `Bioluminescence - the production and emission of light by living organisms - is among the most widespread phenomena in nature. It has evolved independently over 40 separate times in different lineages. It is found in fireflies, fungi, earthworms, jellyfish, squid, fish, bacteria, plankton, and hundreds of other species. In the ocean, below 200 meters where sunlight cannot penetrate, an estimated 90% of creatures are capable of producing light.
@@ -136,7 +136,7 @@ export default function AranyaPage() {
                   src={selected.imageUrl}
                   alt={selected.title}
                   className="absolute inset-0 w-full h-full object-cover"
-                  onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                  onError={e => { const el = e.target as HTMLImageElement; el.src = '/images/aranya/mycorrhizal.png'; }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-5">
