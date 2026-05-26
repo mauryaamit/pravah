@@ -84,38 +84,76 @@ export default function MobileNav() {
                 <h2 className="font-serif text-xl" style={{ color: 'var(--text-primary)' }}>All Rooms</h2>
                 <button onClick={() => setDrawerOpen(false)} style={{ color: 'var(--text-muted)' }}>✕</button>
               </div>
-              <div className="grid grid-cols-3 gap-3 px-4 pb-24">
-                {ROOMS.map(room => {
-                  const isActive = room.id === activeRoomId;
+              <div className="px-4 pb-24">
+                {/* Standalone Sutr room */}
+                {(() => {
+                  const sutr = ROOMS.find(r => r.id === 'sutr');
+                  if (!sutr) return null;
+                  const isActive = activeRoomId === 'sutr';
                   return (
                     <Link
-                      key={room.id}
-                      href={room.route}
+                      href={sutr.route}
                       onClick={() => setDrawerOpen(false)}
+                      className="block mb-4"
                     >
                       <div
-                        className="flex flex-col items-center gap-2 p-3 rounded-xl text-center transition-all"
+                        className="flex items-center gap-4 p-4 rounded-xl transition-all"
                         style={{
                           background: isActive
-                            ? `color-mix(in srgb, ${room.colorHex} 15%, transparent)`
+                            ? `color-mix(in srgb, ${sutr.colorHex} 15%, transparent)`
                             : 'var(--bg-tertiary)',
-                          border: `1px solid ${isActive ? room.colorHex : 'var(--border-default)'}`,
+                          border: `1px solid ${isActive ? sutr.colorHex : 'var(--border-default)'}`,
                         }}
                       >
-                        <span className="text-2xl">{room.emoji}</span>
-                        <span className="text-xs font-medium" style={{ color: isActive ? room.colorHex : 'var(--text-primary)' }}>
-                          {room.name}
-                        </span>
-                        <span
-                          className="text-xs font-devanagari"
-                          style={{ color: 'var(--text-muted)' }}
-                        >
-                          {room.nameHindi}
-                        </span>
+                        <span className="text-3xl">{sutr.emoji}</span>
+                        <div className="flex-1 text-left">
+                          <span className="block text-base font-semibold" style={{ color: isActive ? sutr.colorHex : 'var(--text-primary)' }}>
+                            {sutr.name} — {sutr.nameHindi}
+                          </span>
+                          <span className="block text-xs" style={{ color: 'var(--text-muted)' }}>
+                            {sutr.description}
+                          </span>
+                        </div>
                       </div>
                     </Link>
                   );
-                })}
+                })()}
+
+                <div className="border-b mb-4" style={{ borderColor: 'var(--border-default)' }} />
+
+                <div className="grid grid-cols-3 gap-3">
+                  {ROOMS.filter(r => r.id !== 'sutr').map(room => {
+                    const isActive = room.id === activeRoomId;
+                    return (
+                      <Link
+                        key={room.id}
+                        href={room.route}
+                        onClick={() => setDrawerOpen(false)}
+                      >
+                        <div
+                          className="flex flex-col items-center gap-2 p-3 rounded-xl text-center transition-all h-full justify-between"
+                          style={{
+                            background: isActive
+                              ? `color-mix(in srgb, ${room.colorHex} 15%, transparent)`
+                              : 'var(--bg-tertiary)',
+                            border: `1px solid ${isActive ? room.colorHex : 'var(--border-default)'}`,
+                          }}
+                        >
+                          <span className="text-2xl">{room.emoji}</span>
+                          <span className="text-xs font-medium line-clamp-1" style={{ color: isActive ? room.colorHex : 'var(--text-primary)' }}>
+                            {room.name}
+                          </span>
+                          <span
+                            className="text-xs font-devanagari line-clamp-1"
+                            style={{ color: 'var(--text-muted)' }}
+                          >
+                            {room.nameHindi}
+                          </span>
+                        </div>
+                      </Link>
+                    );
+                  })}
+                </div>
               </div>
             </motion.div>
           </>

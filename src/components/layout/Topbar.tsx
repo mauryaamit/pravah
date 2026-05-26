@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Volume2, VolumeX, Settings } from 'lucide-react';
+import { Volume2, VolumeX, Settings, HelpCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ROOMS } from '@/lib/constants/rooms';
 import { useAudio } from '@/components/providers/AudioProvider';
@@ -86,6 +86,16 @@ export default function Topbar() {
 
         {/* Theme toggle - opens downward since we're at the top of screen */}
         <ThemeToggle direction="down" />
+
+        {/* Shortcuts trigger */}
+        <button
+          onClick={() => window.dispatchEvent(new CustomEvent('pravah-open-shortcuts'))}
+          className="p-2 rounded-lg transition-colors"
+          style={{ color: 'var(--text-muted)' }}
+          title="Keyboard Shortcuts (?)"
+        >
+          <HelpCircle size={17} />
+        </button>
 
         {/* Settings gear toggle */}
         <button

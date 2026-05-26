@@ -17,6 +17,9 @@ export interface Room {
 }
 
 export const ROOMS: Room[] = [
+  // STANDALONE / GATEWAY
+  { id: 'sutr',        name: 'Sutr',         nameHi: 'सूत्र',       nameHindi: 'सूत्र',      emoji: '📖', description: 'Philosophical gateway to Pravah',            route: '/sutr',         colorVar: '--room-sutr',         colorHex: '#3D3560', cluster: 'sutr' as any },
+
   // DAILY
   { id: 'aarambh',     name: 'Aarambh',     nameHi: 'आरंभ',       nameHindi: 'आरंभ',      emoji: '🌅', description: 'Daily start - mood, intention, mantra',       route: '/aarambh',      colorVar: '--room-aarambh',      colorHex: '#C4873A', cluster: 'daily' },
   { id: 'agni',        name: 'Agni',         nameHi: 'अग्नि',      nameHindi: 'अग्नि',     emoji: '🔥', description: 'Habit forge - streak and micro-wins',          route: '/agni',         colorVar: '--room-agni',         colorHex: '#C25B3A', cluster: 'daily' },

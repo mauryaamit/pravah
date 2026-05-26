@@ -169,6 +169,147 @@ export default function AarambhPage() {
   const dayOfYear = getDayOfYear();
   const today = formatHindiDate();
 
+  // Moon phase calculation
+  const getMoonPhase = () => {
+    const refNewMoon = new Date('2024-01-11T11:57:00Z').getTime();
+    const now = new Date().getTime();
+    const diffMs = now - refNewMoon;
+    const synodicPeriod = 29.530588853 * 24 * 60 * 60 * 1000;
+    const cyclePosition = (diffMs % synodicPeriod) / synodicPeriod; // 0 to 1
+    
+    if (cyclePosition < 0.03 || cyclePosition > 0.97) return { emoji: '🌑', name: 'New Moon (Amavasya)' };
+    if (cyclePosition < 0.22) return { emoji: '🌒', name: 'Waxing Crescent' };
+    if (cyclePosition < 0.28) return { emoji: '🌓', name: 'First Quarter' };
+    if (cyclePosition < 0.47) return { emoji: '🌔', name: 'Waxing Gibbous' };
+    if (cyclePosition < 0.53) return { emoji: '🌕', name: 'Full Moon (Purnima)' };
+    if (cyclePosition < 0.72) return { emoji: '🌖', name: 'Waning Gibbous' };
+    if (cyclePosition < 0.78) return { emoji: '🌗', name: 'Last Quarter' };
+    return { emoji: '🌘', name: 'Waning Crescent' };
+  };
+
+  const getIndianSeason = () => {
+    const date = new Date();
+    const m = date.getMonth();
+    const d = date.getDate();
+    const dayOfYearApprox = m * 30 + d;
+    
+    if (dayOfYearApprox >= 45 && dayOfYearApprox < 105) {
+      return { name: 'Vasanta', hindi: 'वसन्त', description: 'Spring & Renewal' };
+    } else if (dayOfYearApprox >= 105 && dayOfYearApprox < 165) {
+      return { name: 'Grishma', hindi: 'ग्रीष्म', description: 'Summer & Intensity' };
+    } else if (dayOfYearApprox >= 165 && dayOfYearApprox < 225) {
+      return { name: 'Varsha', hindi: 'वर्षा', description: 'Monsoon & Rebirth' };
+    } else if (dayOfYearApprox >= 225 && dayOfYearApprox < 285) {
+      return { name: 'Sharad', hindi: 'शरद', description: 'Autumn & Clarity' };
+    } else if (dayOfYearApprox >= 285 && dayOfYearApprox < 345) {
+      return { name: 'Hemanta', hindi: 'हेमन्त', description: 'Pre-Winter & Harvest' };
+    } else {
+      return { name: 'Shishira', hindi: 'शिशिर', description: 'Winter & Reflection' };
+    }
+  };
+
+  const getPoeticGreeting = () => {
+    const now = new Date();
+    const day = now.getDay(); // 0 = Sun, 1 = Mon, etc.
+    const hour = now.getHours();
+    const month = now.getMonth(); // 0 = Jan, 5 = June, 8 = Sept
+    
+    if (month >= 5 && month <= 8) {
+      return "The monsoon is generous with second chances.";
+    }
+    if (day === 1 && hour >= 5 && hour < 12) {
+      return "A new week is an unwritten page. Begin gently.";
+    }
+    if (day === 5 && hour >= 17) {
+      return "The week has shaped you. Rest in what you've learned.";
+    }
+    
+    const fallbacks = [
+      "Find your center in the stillness between thoughts.",
+      "Walk slowly. The destination is already here.",
+      "Every breath is an invitation to begin again.",
+      "Look closely; the ordinary is full of wonders.",
+      "What you seek is also seeking you.",
+      "Let the mind settle, like silt in quiet water.",
+      "You are a guest in this moment. Receive it well."
+    ];
+    return fallbacks[dayOfYear % fallbacks.length];
+  };
+
+  const moonPhase = getMoonPhase();
+  const season = getIndianSeason();
+  const poeticGreeting = getPoeticGreeting();
+
+  const SPARKS = [
+    { room: 'Sukoon (Poetry)', route: '/sukoon', text: '“Hazaron khwahishen aisi ke har khwahish pe dam nikle...” — Mirza Ghalib' },
+    { room: 'Bodh (Mental Models)', route: '/bodh', text: '“First Principles: Boil things down to their fundamental truths and reason up from there.”' },
+    { room: 'Darshan (Philosophy)', route: '/darshan', text: '“We suffer more often in imagination than in reality.” — Seneca' },
+    { room: 'Srot (Deep Reads)', route: '/srot', text: '“In a world of constant speed, slow reading is the ultimate act of cognitive rebellion.”' },
+    { room: 'Samvaad (Word of the Day)', route: '/samvaad', text: '“Saudade: The bittersweet feeling of longing for someone or something that is absent.”' },
+    { room: 'Riyaz (Music)', route: '/riyaz', text: '“Raga Yaman is sung at dusk, painting a landscape of peaceful devotion and quiet grace.”' },
+    { room: 'Cosmos (Universe)', route: '/cosmos', text: '“We are a way for the cosmos to know itself. The nitrogen in our DNA was made in the hearts of collapsing stars.” — Carl Sagan' },
+    { room: 'Neelakurinji (Wonders)', route: '/neelakurinji', text: '“The Mpemba Effect: Under certain conditions, warm water freezes faster than cold water.”' },
+    { room: 'Kathakar (Stories)', route: '/kathakar', text: '“A story is a container for truth. It allows us to experience another life without leaving our own.”' },
+    { room: 'Vibhav (People)', route: '/vibhav', text: '“Pandit Ravi Shankar did not just play music; he built a bridge of sound between East and West.”' },
+  ];
+
+  // Quick Entry States
+  const [quickEntry, setQuickEntry] = useState('');
+  const [quickEntryStatus, setQuickEntryStatus] = useState<'idle' | 'saving' | 'saved'>('idle');
+  const quickEntryTimer = useRef<ReturnType<typeof setTimeout>>();
+
+  // Load today's quick entry (Free Write content)
+  useEffect(() => {
+    if (!user || !db) return;
+    const todayStr = toDateString(new Date());
+    const docRef = doc(db, `users/${user.id}/journalEntries`, todayStr);
+    const unsub = onSnapshot(docRef, (docSnap) => {
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        if (data.mode === 'freewrite' || !data.mode) {
+          if (document.activeElement?.id !== 'quick-entry-input') {
+            setQuickEntry(data.content || '');
+          }
+        }
+      }
+    }, (err) => {
+      console.error("Failed to load quick entry:", err);
+    });
+    return () => {
+      unsub();
+      clearTimeout(quickEntryTimer.current);
+    };
+  }, [user]);
+
+  const saveQuickEntry = async (text: string) => {
+    if (!user || !db) return;
+    const todayStr = toDateString(new Date());
+    const docRef = doc(db, `users/${user.id}/journalEntries`, todayStr);
+    setQuickEntryStatus('saving');
+    const wc = text.trim().split(/\s+/).filter(Boolean).length;
+    try {
+      await setDoc(docRef, {
+        content: text,
+        word_count: wc,
+        mode: 'freewrite',
+        updatedAt: serverTimestamp(),
+      }, { merge: true });
+      setQuickEntryStatus('saved');
+    } catch (err) {
+      console.error('Failed to save quick entry:', err);
+      setQuickEntryStatus('idle');
+    }
+  };
+
+  const handleQuickEntryChange = (text: string) => {
+    setQuickEntry(text);
+    setQuickEntryStatus('saving');
+    clearTimeout(quickEntryTimer.current);
+    quickEntryTimer.current = setTimeout(() => {
+      saveQuickEntry(text);
+    }, 1500);
+  };
+
   // Record visit for identity system
   useEffect(() => {
     recordRoomVisit('aarambh');
@@ -287,11 +428,20 @@ export default function AarambhPage() {
             <h1 className="font-serif text-3xl sm:text-4xl" style={{ color: 'var(--text-primary)' }}>
               {greeting.hi}, {user?.name || 'friend'}.
             </h1>
-            <p className="text-sm mt-1.5 font-devanagari" style={{ color: 'var(--text-muted)' }}>
-              {today}
+            <p className="text-sm font-serif italic max-w-md mx-auto mt-2 text-text-secondary" style={{ color: 'var(--text-secondary)' }}>
+              &ldquo;{poeticGreeting}&rdquo;
+            </p>
+            <p className="text-sm mt-2.5 font-devanagari flex flex-wrap items-center justify-center gap-2" style={{ color: 'var(--text-muted)' }}>
+              <span>{today}</span>
+              <span>•</span>
+              <span title="Current Moon Phase" className="flex items-center gap-0.5">{moonPhase.emoji} {moonPhase.name}</span>
+              <span>•</span>
+              <span className="font-semibold text-amber-700/80 dark:text-amber-500/80" title="Indian Season (Ritu)">
+                {season.hindi} ({season.name} - {season.description})
+              </span>
             </p>
             {streakData?.current_streak > 0 && (
-              <p className="text-xs mt-1" style={{ color: 'var(--text-faint)' }}>
+              <p className="text-xs mt-1.5" style={{ color: 'var(--text-faint)' }}>
                 Day {streakData.current_streak} of your practice
               </p>
             )}
@@ -349,6 +499,58 @@ export default function AarambhPage() {
               Suggested: &ldquo;Today I choose presence over perfection.&rdquo;
             </p>
           )}
+        </motion.section>
+
+        {/* Quick Entry */}
+        <motion.section
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, delay: 0.40, ease: [0.22, 0.1, 0.36, 1] }}
+          className="card-base p-6 space-y-3"
+        >
+          <div className="flex justify-between items-center">
+            <h2 className="section-label">Quick Entry (Free Write)</h2>
+            {quickEntryStatus === 'saving' && <span className="text-[10px] text-amber-600 font-semibold uppercase tracking-wider">Saving...</span>}
+            {quickEntryStatus === 'saved' && <span className="text-[10px] text-emerald-600 font-semibold uppercase tracking-wider">Saved to Journal ✓</span>}
+          </div>
+          <textarea
+            id="quick-entry-input"
+            value={quickEntry}
+            onChange={e => handleQuickEntryChange(e.target.value)}
+            placeholder="One thought before you begin..."
+            rows={2}
+            className="w-full text-sm p-3 rounded-xl bg-bg-tertiary border border-border-default outline-none resize-none font-serif leading-relaxed text-text-primary focus:border-accent-saffron/40"
+            style={{ backgroundColor: 'var(--bg-tertiary)', color: 'var(--text-primary)', borderColor: 'var(--border-default)' }}
+          />
+        </motion.section>
+
+        {/* Today's Spark */}
+        <motion.section
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, delay: 0.42, ease: [0.22, 0.1, 0.36, 1] }}
+        >
+          <Link href={SPARKS[dayOfYear % SPARKS.length].route}>
+            <div
+              className="card-base p-5 border-l-4 transition-all hover:-translate-y-0.5 cursor-pointer relative overflow-hidden group"
+              style={{
+                borderColor: 'var(--accent-saffron)',
+                background: 'color-mix(in srgb, var(--accent-saffron) 3%, var(--bg-secondary))'
+              }}
+            >
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-[10px] font-semibold tracking-wider uppercase text-amber-700/80 dark:text-amber-500/80">
+                  ✦ Today&apos;s Spark: {SPARKS[dayOfYear % SPARKS.length].room}
+                </span>
+                <span className="text-xs transition-transform group-hover:translate-x-1" style={{ color: 'var(--accent-saffron)' }}>
+                  Enter Room →
+                </span>
+              </div>
+              <p className="font-serif italic text-base leading-relaxed" style={{ color: 'var(--text-primary)' }}>
+                {SPARKS[dayOfYear % SPARKS.length].text}
+              </p>
+            </div>
+          </Link>
         </motion.section>
 
         {/* Daily Discovery (the soul of the app) */}

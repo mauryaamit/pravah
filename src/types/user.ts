@@ -18,6 +18,8 @@ export interface UserPreferences {
   backgroundOpacity: number; // 0 to 0.25
   fontSizeHeading: 'xs' | 's' | 'm' | 'l' | 'xl';
   fontSizeBody: 'xs' | 's' | 'm' | 'l' | 'xl';
+  remindersEnabled?: boolean;
+  reminderTime?: string;
 }
 
 export const DEFAULT_PREFERENCES: UserPreferences = {
@@ -31,4 +33,6 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   backgroundOpacity: 0.07,
   fontSizeHeading: 'm',
   fontSizeBody: 'm',
+  remindersEnabled: false,
+  reminderTime: '21:00',
 };

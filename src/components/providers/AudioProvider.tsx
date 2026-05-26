@@ -21,7 +21,12 @@ import { createContext, useContext, useCallback, type ReactNode } from 'react';
 const AudioContext = createContext<AudioContextValue | null>(null);
 
 export function AudioProvider({ children }: { children: ReactNode }) {
-  const ambientRef = useRef<HTMLAudioElement | null>(null);
+  const currentAudioRef = useRef<HTMLAudioElement | null>(null);
+  const fadeOutAudioRef = useRef<HTMLAudioElement | null>(null);
+  const fadeInIntervalRef = useRef<any>(null);
+  const fadeOutIntervalRef = useRef<any>(null);
+  const targetVolumeRef = useRef(0.1);
+
   const [currentRoom, setCurrentRoom] = useState('aarambh');
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
@@ -34,60 +39,155 @@ export function AudioProvider({ children }: { children: ReactNode }) {
     const muted = localStorage.getItem('pravah-audio-muted');
     if (muted === 'false') { setIsMuted(false); setAudioEnabled(true); }
     const vol = localStorage.getItem('pravah-audio-volume');
-    if (vol) setVolumeState(parseFloat(vol));
+    if (vol) {
+      const parsed = parseFloat(vol);
+      setVolumeState(parsed);
+      targetVolumeRef.current = parsed;
+    }
     const ambient = localStorage.getItem('pravah-ambient-mode');
     if (ambient && ambient !== 'null') setAmbientModeState(ambient);
   }, []);
 
-  // When ambient mode or volume changes, update audio
+  // Sync target volume ref
   useEffect(() => {
-    if (!audioEnabled || isMuted) {
-      ambientRef.current?.pause();
+    targetVolumeRef.current = volume;
+  }, [volume]);
+
+  const clearFadeIntervals = () => {
+    if (fadeInIntervalRef.current) {
+      clearInterval(fadeInIntervalRef.current);
+      fadeInIntervalRef.current = null;
+    }
+    if (fadeOutIntervalRef.current) {
+      clearInterval(fadeOutIntervalRef.current);
+      fadeOutIntervalRef.current = null;
+    }
+  };
+
+  // Clean up on unmount
+  useEffect(() => {
+    return () => {
+      clearFadeIntervals();
+      if (currentAudioRef.current) {
+        currentAudioRef.current.pause();
+      }
+      if (fadeOutAudioRef.current) {
+        fadeOutAudioRef.current.pause();
+      }
+    };
+  }, []);
+
+  // When ambient mode, audioEnabled or isMuted changes, update audio with overlapping cross-fade
+  useEffect(() => {
+    if (!audioEnabled || isMuted || !ambientMode) {
+      clearFadeIntervals();
+      if (currentAudioRef.current) {
+        currentAudioRef.current.pause();
+        currentAudioRef.current = null;
+      }
+      if (fadeOutAudioRef.current) {
+        fadeOutAudioRef.current.pause();
+        fadeOutAudioRef.current = null;
+      }
       setIsPlaying(false);
       return;
     }
-    if (!ambientMode) {
-      ambientRef.current?.pause();
-      setIsPlaying(false);
-      return;
-    }
+
     const mode = AMBIENT_MODES.find(m => m.id === ambientMode);
     if (!mode) return;
 
-    const current = ambientRef.current;
+    const current = currentAudioRef.current;
     if (current && current.src.includes(encodeURIComponent(mode.url.split('/').pop() || ''))) {
-      // Same track - just update volume
-      current.volume = volume;
+      // Same track - just update volume immediately if not fading
+      if (!fadeInIntervalRef.current) {
+        current.volume = volume;
+      }
       return;
     }
 
-    // New track - crossfade
+    // New track - crossfade!
+    clearFadeIntervals();
+
+    // 1. Fade out current track
     if (current) {
-      current.pause();
+      if (fadeOutAudioRef.current) {
+        fadeOutAudioRef.current.pause();
+      }
+      fadeOutAudioRef.current = current;
+      
+      let fadeOutVolume = current.volume;
+      const step = fadeOutVolume / 10;
+      fadeOutIntervalRef.current = setInterval(() => {
+        if (fadeOutAudioRef.current) {
+          fadeOutVolume = Math.max(0, fadeOutVolume - step);
+          fadeOutAudioRef.current.volume = fadeOutVolume;
+          if (fadeOutVolume <= 0) {
+            fadeOutAudioRef.current.pause();
+            fadeOutAudioRef.current = null;
+            if (fadeOutIntervalRef.current) {
+              clearInterval(fadeOutIntervalRef.current);
+              fadeOutIntervalRef.current = null;
+            }
+          }
+        } else {
+          if (fadeOutIntervalRef.current) {
+            clearInterval(fadeOutIntervalRef.current);
+            fadeOutIntervalRef.current = null;
+          }
+        }
+      }, 30);
     }
+
+    // 2. Play and fade in new track
     const audio = new Audio(mode.url);
     audio.loop = true;
     audio.volume = 0;
+    currentAudioRef.current = audio;
+
     audio.play()
       .then(() => {
         setIsPlaying(true);
-        ambientRef.current = audio;
-        // Fade in
-        let v = 0;
-        const fadeIn = setInterval(() => {
-          v = Math.min(v + 0.005, volume);
-          audio.volume = v;
-          if (v >= volume) clearInterval(fadeIn);
-        }, 80);
+        let currentVol = 0;
+        const target = targetVolumeRef.current;
+        const step = target / 10;
+        fadeInIntervalRef.current = setInterval(() => {
+          if (currentAudioRef.current === audio) {
+            currentVol = Math.min(targetVolumeRef.current, currentVol + step);
+            audio.volume = currentVol;
+            if (currentVol >= targetVolumeRef.current) {
+              audio.volume = targetVolumeRef.current;
+              if (fadeInIntervalRef.current) {
+                clearInterval(fadeInIntervalRef.current);
+                fadeInIntervalRef.current = null;
+              }
+            }
+          } else {
+            if (fadeInIntervalRef.current) {
+              clearInterval(fadeInIntervalRef.current);
+              fadeInIntervalRef.current = null;
+            }
+          }
+        }, 30);
       })
-      .catch(() => {});
-  }, [ambientMode, audioEnabled, isMuted, volume]);
+      .catch((err) => {
+        console.error('Ambient audio play failed:', err);
+      });
+
+  }, [ambientMode, audioEnabled, isMuted]);
 
   const setAmbientMode = useCallback((mode: string | null) => {
     setAmbientModeState(mode);
     localStorage.setItem('pravah-ambient-mode', String(mode));
     if (!mode) {
-      ambientRef.current?.pause();
+      clearFadeIntervals();
+      if (currentAudioRef.current) {
+        currentAudioRef.current.pause();
+        currentAudioRef.current = null;
+      }
+      if (fadeOutAudioRef.current) {
+        fadeOutAudioRef.current.pause();
+        fadeOutAudioRef.current = null;
+      }
       setIsPlaying(false);
     }
   }, []);
@@ -107,12 +207,18 @@ export function AudioProvider({ children }: { children: ReactNode }) {
     const next = !isMuted;
     setIsMuted(next);
     localStorage.setItem('pravah-audio-muted', String(next));
-    if (ambientRef.current) {
-      if (next) {
-        ambientRef.current.pause();
-        setIsPlaying(false);
-      } else if (audioEnabled) {
-        ambientRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+    if (next) {
+      clearFadeIntervals();
+      if (currentAudioRef.current) {
+        currentAudioRef.current.pause();
+      }
+      if (fadeOutAudioRef.current) {
+        fadeOutAudioRef.current.pause();
+      }
+      setIsPlaying(false);
+    } else if (audioEnabled) {
+      if (currentAudioRef.current) {
+        currentAudioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
       }
     }
   }, [isMuted, audioEnabled]);
@@ -120,7 +226,9 @@ export function AudioProvider({ children }: { children: ReactNode }) {
   const setVolume = useCallback((v: number) => {
     setVolumeState(v);
     localStorage.setItem('pravah-audio-volume', String(v));
-    if (ambientRef.current) ambientRef.current.volume = v;
+    if (currentAudioRef.current && !fadeInIntervalRef.current) {
+      currentAudioRef.current.volume = v;
+    }
   }, []);
 
   return (

@@ -5,6 +5,7 @@ import { FADE_UP, STAGGER_CONTAINER, STAGGER_ITEM } from '@/lib/utils/motion';
 import PageTransition from '@/components/layout/PageTransition';
 import { getDayOfYear } from '@/lib/utils/date';
 import ReadAloudButton from '@/components/shared/ReadAloudButton';
+import FocusMode from '@/components/shared/FocusMode';
 
 const STORIES = [
   {
@@ -143,13 +144,12 @@ He was not sure, at the end, which he preferred. But he was sure of this: that t
 
 Attention, it turned out, was the whole art. Color had been a gift. Its loss had revealed the gift beneath the gift.`,
   },
-];
-
-export default function KathakarPage() {
+];export default function KathakarPage() {
   const dayOfYear = getDayOfYear();
   const todayStory = STORIES[dayOfYear % STORIES.length];
   const [selected, setSelected] = useState(todayStory);
   const [showFull, setShowFull] = useState(false);
+  const [isFocusOpen, setIsFocusOpen] = useState(false);
 
   const paragraphs = selected.content.split('\n\n');
   const previewParas = paragraphs.slice(0, 4);
@@ -196,7 +196,7 @@ export default function KathakarPage() {
           >
             {/* Story header */}
             <div className="card-base p-6 space-y-3 relative" style={{ background: 'color-mix(in srgb, var(--accent-saffron) 5%, var(--bg-secondary))' }}>
-              <div className="absolute top-6 right-6">
+              <div className="absolute top-6 right-6 flex items-center gap-2">
                 <ReadAloudButton
                   text={`${selected.title}. ${selected.titleHindi}. ${selected.preview}. ${selected.content}`}
                   lang="en-IN"
@@ -204,18 +204,25 @@ export default function KathakarPage() {
                   variant="pill"
                   label="Listen Story"
                 />
+                <button
+                  onClick={() => setIsFocusOpen(true)}
+                  className="px-4 py-1.5 rounded-full text-xs font-medium border transition-all hover:bg-bg-tertiary flex items-center gap-1.5"
+                  style={{ borderColor: 'var(--border-default)', color: 'var(--text-muted)' }}
+                >
+                  Focus
+                </button>
               </div>
-              <div className="flex items-center justify-between gap-3 pr-32">
+              <div className="flex items-center justify-between gap-3 pr-36">
                 <span className="text-xs px-2.5 py-1 rounded-full" style={{ background: 'var(--bg-tertiary)', color: 'var(--text-muted)' }}>
                   {selected.genre}
                 </span>
                 <span className="text-xs" style={{ color: 'var(--text-faint)' }}>{selected.readTime} read</span>
               </div>
-              <div className="pr-32">
+              <div className="pr-36">
                 <h2 className="font-serif text-2xl leading-tight" style={{ color: 'var(--text-primary)' }}>{selected.title}</h2>
                 <p className="font-devanagari text-base mt-1" style={{ color: 'var(--text-muted)' }}>{selected.titleHindi}</p>
               </div>
-              <p className="font-serif italic text-base leading-relaxed pr-32" style={{ color: 'var(--text-secondary)' }}>
+              <p className="font-serif italic text-base leading-relaxed pr-36" style={{ color: 'var(--text-secondary)' }}>
                 {selected.preview}
               </p>
             </div>
@@ -270,6 +277,19 @@ export default function KathakarPage() {
             </div>
           </motion.div>
         </AnimatePresence>
+
+        {/* Focus Mode Component */}
+        <FocusMode
+          isOpen={isFocusOpen}
+          onClose={() => setIsFocusOpen(false)}
+          title={selected.title}
+          author={selected.genre}
+          textToSpeak={selected.content}
+        >
+          {selected.content.split('\n\n').map((para, idx) => (
+            <p key={idx} className="mb-6">{para.startsWith('---') ? '· · ·' : para}</p>
+          ))}
+        </FocusMode>
       </div>
     </PageTransition>
   );

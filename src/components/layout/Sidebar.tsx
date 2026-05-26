@@ -8,7 +8,7 @@ import {
   CloudRain, Waves, Zap, Music2,
   Lightbulb, Brain, Telescope, Landmark, MessageSquare, Library,
   Globe2, Sparkles, PlaneTakeoff, Leaf, Flag,
-  ScrollText, UserRound, BookMarked, Heart,
+  ScrollText, UserRound, BookMarked, Heart, BookOpen,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ROOMS, ROOMS_BY_CLUSTER, CLUSTER_LABELS, type RoomCluster } from '@/lib/constants/rooms';
@@ -147,6 +147,98 @@ export default function Sidebar() {
 
           {/* Nav clusters */}
           <nav className="flex-1 overflow-y-auto py-2 no-scrollbar relative">
+            {/* Standalone Sutr room */}
+            {(() => {
+              const sutrRoom = ROOMS.find(r => r.id === 'sutr');
+              if (!sutrRoom) return null;
+              const isActive = activeRoomId === 'sutr' || pendingRoom === 'sutr';
+              return (
+                <Link
+                  href={sutrRoom.route}
+                  prefetch={true}
+                  onClick={() => setPendingRoom(sutrRoom.id)}
+                  className="block mb-1"
+                  title={collapsed ? `${sutrRoom.name} - ${sutrRoom.nameHindi}` : undefined}
+                >
+                  <div
+                    className="relative flex items-center gap-3 transition-all duration-150"
+                    style={{
+                      margin: collapsed ? '3px 8px' : '1px 8px',
+                      width: collapsed ? 40 : undefined,
+                      height: collapsed ? 40 : undefined,
+                      padding: collapsed ? '0' : '7px 10px',
+                      borderRadius: 10,
+                      justifyContent: collapsed ? 'center' : undefined,
+                      alignItems: collapsed ? 'center' : undefined,
+                      background: isActive
+                        ? `color-mix(in srgb, ${sutrRoom.colorHex} 14%, var(--bg-tertiary))`
+                        : 'transparent',
+                    }}
+                    onMouseEnter={e => {
+                      if (!isActive) (e.currentTarget as HTMLElement).style.background = 'var(--bg-tertiary)';
+                    }}
+                    onMouseLeave={e => {
+                      if (!isActive) (e.currentTarget as HTMLElement).style.background = 'transparent';
+                    }}
+                  >
+                    {isActive && (
+                      <div
+                        className="absolute left-0 top-1 bottom-1 w-[3px] rounded-r-full"
+                        style={{ background: sutrRoom.colorHex }}
+                      />
+                    )}
+                    <div className="relative flex-shrink-0">
+                      <BookOpen
+                        size={collapsed ? 16 : 15}
+                        strokeWidth={isActive ? 2.2 : 1.7}
+                        style={{ color: isActive ? sutrRoom.colorHex : 'var(--text-muted)' }}
+                      />
+                      {collapsed && isActive && (
+                        <div
+                          className="absolute bottom-1 right-1 rounded-full"
+                          style={{
+                            width: '3px',
+                            height: '3px',
+                            backgroundColor: sutrRoom.colorHex
+                          }}
+                        />
+                      )}
+                    </div>
+                    <AnimatePresence>
+                      {!collapsed && (
+                        <motion.div
+                          initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                          className="flex-1 min-w-0"
+                        >
+                          <div
+                            className="leading-tight truncate"
+                            style={{
+                              color: 'var(--text-primary)',
+                              fontSize: '16px',
+                              fontWeight: 500,
+                            }}
+                          >
+                            {sutrRoom.name}
+                          </div>
+                          <div
+                            className="truncate font-devanagari leading-tight"
+                            style={{
+                              color: 'var(--text-secondary)',
+                              fontSize: '12px',
+                            }}
+                          >
+                            {sutrRoom.nameHindi}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </Link>
+              );
+            })()}
+
+            {!collapsed && <div className="border-b mx-4 my-2" style={{ borderColor: 'var(--border-default)' }} />}
+
             {(Object.keys(CLUSTER_LABELS) as RoomCluster[]).map(cluster => {
               const isOpen = openClusters.includes(cluster) || collapsed;
               const rooms = ROOMS_BY_CLUSTER[cluster];

@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useHabits } from '@/lib/hooks/useHabits';
 import { useStreak } from '@/lib/hooks/useStreak';
@@ -20,19 +20,47 @@ const NEUROSCIENCE_TIPS = [
   'Repetition changes the physical highway of the brain. What you practice, you literally become.',
 ];
 
+const CATEGORIES = [
+  { id: 'Mind', label: 'Mind', emoji: '🧠', color: '#3A5A8A' },
+  { id: 'Body', label: 'Body', emoji: '🏃', color: '#4A7C59' },
+  { id: 'Spirit', label: 'Spirit', emoji: '✨', color: '#8B4A7C' },
+  { id: 'Craft', label: 'Craft', emoji: '🛠️', color: '#A67C52' },
+  { id: 'Rest', label: 'Rest', emoji: '🛌', color: '#3A8A8A' },
+] as const;
+
 export default function AgniPage() {
   const [selectedDate, setSelectedDate] = useState(() => toDateString(new Date()));
   const [showPastHistory, setShowPastHistory] = useState(false);
   const [newHabitName, setNewHabitName] = useState('');
   const [newHabitFeeling, setNewHabitFeeling] = useState('');
+  const [newHabitCategory, setNewHabitCategory] = useState<'Mind' | 'Body' | 'Spirit' | 'Craft' | 'Rest'>('Mind');
   const [showAdd, setShowAdd] = useState(false);
   const [celebrated, setCelebrated] = useState<string | null>(null);
+  const [activeFilter, setActiveFilter] = useState<string>('All');
 
   const dayOfYear = getDayOfYear();
   const tip = NEUROSCIENCE_TIPS[dayOfYear % NEUROSCIENCE_TIPS.length];
 
-  const { habits = [], weeklyCompletions = {}, loading: isLoading, addHabit, completeHabit, deleteHabit } = useHabits();
+  const { habits = [], weeklyCompletions = {}, completionNotes = {}, loading: isLoading, addHabit, completeHabit, deleteHabit } = useHabits();
   const { streak: streakData } = useStreak();
+
+  const noteTimers = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
+  const [localNotes, setLocalNotes] = useState<Record<string, string>>({});
+
+  // Sync localNotes state when selection date or loaded database notes change
+  useEffect(() => {
+    if (completionNotes[selectedDate]) {
+      setLocalNotes(completionNotes[selectedDate]);
+    } else {
+      setLocalNotes({});
+    }
+  }, [completionNotes, selectedDate]);
+
+  useEffect(() => {
+    return () => {
+      Object.values(noteTimers.current).forEach(clearTimeout);
+    };
+  }, []);
 
   const isCompleted = (habitId: string) => {
     return (weeklyCompletions[selectedDate] || []).includes(habitId);
@@ -41,14 +69,23 @@ export default function AgniPage() {
   const handleCompleteHabit = async (id: string) => {
     setCelebrated(id);
     setTimeout(() => setCelebrated(null), 1500);
-    await completeHabit(id, selectedDate);
+    await completeHabit(id, selectedDate, localNotes[id] || '');
+  };
+
+  const handleNoteChange = (habitId: string, noteText: string) => {
+    setLocalNotes(prev => ({ ...prev, [habitId]: noteText }));
+    clearTimeout(noteTimers.current[habitId]);
+    noteTimers.current[habitId] = setTimeout(() => {
+      completeHabit(habitId, selectedDate, noteText);
+    }, 1500);
   };
 
   const handleAddHabit = async () => {
     if (!newHabitName.trim()) return;
-    await addHabit(newHabitName, newHabitFeeling);
+    await addHabit(newHabitName, newHabitFeeling, newHabitCategory);
     setNewHabitName('');
     setNewHabitFeeling('');
+    setNewHabitCategory('Mind');
     setShowAdd(false);
   };
 
@@ -56,6 +93,7 @@ export default function AgniPage() {
     await deleteHabit(id);
   };
 
+  const filteredHabits = habits.filter(h => activeFilter === 'All' || h.category === activeFilter);
   const completedCount = habits.filter(h => isCompleted(h.id)).length;
   const total = habits.length;
   const progress = total > 0 ? completedCount / total : 0;
@@ -188,78 +226,153 @@ export default function AgniPage() {
           </motion.div>
         )}
 
+        {/* ─── Category Filter Header ─── */}
+        <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar pt-2">
+          <button
+            onClick={() => setActiveFilter('All')}
+            className="px-3 py-1.5 rounded-xl text-xs font-semibold transition-all border flex-shrink-0"
+            style={{
+              backgroundColor: activeFilter === 'All' ? 'var(--room-current)' : 'var(--bg-tertiary)',
+              borderColor: activeFilter === 'All' ? 'var(--room-current)' : 'var(--border-default)',
+              color: activeFilter === 'All' ? 'white' : 'var(--text-muted)',
+            }}
+          >
+            All
+          </button>
+          {CATEGORIES.map(cat => (
+            <button
+              key={cat.id}
+              onClick={() => setActiveFilter(cat.id)}
+              className="px-3 py-1.5 rounded-xl text-xs font-semibold transition-all border flex items-center gap-1.5 flex-shrink-0"
+              style={{
+                backgroundColor: activeFilter === cat.id ? 'var(--room-current)' : 'var(--bg-tertiary)',
+                borderColor: activeFilter === cat.id ? 'var(--room-current)' : 'var(--border-default)',
+                color: activeFilter === cat.id ? 'white' : 'var(--text-muted)',
+              }}
+            >
+              <span>{cat.emoji}</span>
+              <span>{cat.label}</span>
+            </button>
+          ))}
+        </div>
+
         {/* ─── Habit List ─── */}
         <section className="space-y-3">
           {isLoading ? (
             Array.from({ length: 3 }).map((_, i) => (
               <div key={i} className="skeleton h-16 rounded-xl" />
             ))
-          ) : habits.length === 0 ? (
+          ) : filteredHabits.length === 0 ? (
             <div className="card-base p-8 text-center space-y-2">
               <div className="text-4xl">🌱</div>
-              <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>No habits yet.</p>
+              <p className="font-medium" style={{ color: 'var(--text-secondary)' }}>No habits under this category.</p>
               <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Add your first habit below to start the fire.</p>
             </div>
           ) : (
-            habits.map((habit, i) => (
-              <motion.div
-                key={habit.id}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.05 }}
-                className={cn(
-                  'card-base p-4 flex items-center gap-4 transition-all group',
-                  celebrated === habit.id ? 'animate-check-bounce' : ''
-                )}
-                style={{
-                  background: isCompleted(habit.id)
-                    ? 'color-mix(in srgb, #4A7C59 8%, var(--bg-secondary))'
-                    : undefined,
-                  borderColor: isCompleted(habit.id)
-                    ? 'color-mix(in srgb, #4A7C59 30%, transparent)'
-                    : undefined,
-                }}
-              >
-                {/* Complete button */}
-                <button
-                  onClick={() => !isCompleted(habit.id) && handleCompleteHabit(habit.id)}
-                  disabled={isCompleted(habit.id)}
-                  className="flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all"
+            filteredHabits.map((habit, i) => {
+              const catInfo = CATEGORIES.find(c => c.id === habit.category) || CATEGORIES[0];
+              return (
+                <motion.div
+                  key={habit.id}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                  className={cn(
+                    'card-base p-4 flex flex-col justify-between transition-all group border-l-4',
+                    celebrated === habit.id ? 'animate-check-bounce' : ''
+                  )}
                   style={{
-                    borderColor: isCompleted(habit.id) ? '#4A7C59' : 'var(--border-strong)',
-                    background: isCompleted(habit.id) ? '#4A7C59' : 'transparent',
-                    color: 'white',
-                    cursor: isCompleted(habit.id) ? 'default' : 'pointer',
+                    borderLeftColor: catInfo.color,
+                    background: isCompleted(habit.id)
+                      ? 'color-mix(in srgb, #4A7C59 8%, var(--bg-secondary))'
+                      : undefined,
+                    borderColor: isCompleted(habit.id)
+                      ? 'color-mix(in srgb, #4A7C59 30%, transparent)'
+                      : undefined,
                   }}
                 >
-                  {isCompleted(habit.id) && <Check size={14} />}
-                </button>
-                <div className="flex-1 min-w-0">
-                  <div
-                    className="font-medium text-base"
-                    style={{
-                      color: isCompleted(habit.id) ? 'var(--text-muted)' : 'var(--text-primary)',
-                      textDecoration: isCompleted(habit.id) ? 'line-through' : 'none',
-                    }}
-                  >
-                    {habit.name}
+                  <div className="flex items-center gap-4 w-full">
+                    {/* Complete button */}
+                    <button
+                      onClick={() => !isCompleted(habit.id) && handleCompleteHabit(habit.id)}
+                      disabled={isCompleted(habit.id)}
+                      className="flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all"
+                      style={{
+                        borderColor: isCompleted(habit.id) ? '#4A7C59' : 'var(--border-strong)',
+                        background: isCompleted(habit.id) ? '#4A7C59' : 'transparent',
+                        color: 'white',
+                        cursor: isCompleted(habit.id) ? 'default' : 'pointer',
+                      }}
+                    >
+                      {isCompleted(habit.id) && <Check size={14} />}
+                    </button>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span
+                          className="font-medium text-base truncate"
+                          style={{
+                            color: isCompleted(habit.id) ? 'var(--text-muted)' : 'var(--text-primary)',
+                            textDecoration: isCompleted(habit.id) ? 'line-through' : 'none',
+                          }}
+                        >
+                          {habit.name}
+                        </span>
+                        <span
+                          className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider border"
+                          style={{
+                            backgroundColor: 'var(--bg-tertiary)',
+                            borderColor: catInfo.color,
+                            color: catInfo.color,
+                          }}
+                        >
+                          {catInfo.emoji} {catInfo.label}
+                        </span>
+                      </div>
+                      
+                      {habit.feeling && (
+                        <div className="text-xs mt-0.5" style={{ color: 'var(--text-faint)' }}>
+                          Feeling: {habit.feeling}
+                        </div>
+                      )}
+
+                      {/* Streak counters */}
+                      {(habit.currentStreak > 0 || habit.bestStreak > 0) && (
+                        <div className="flex items-center gap-1 text-[10px] font-semibold text-amber-700/80 dark:text-amber-500/80 mt-1">
+                          <Flame size={10} className="fill-current animate-flicker" />
+                          <span>{habit.currentStreak} day streak (best {habit.bestStreak})</span>
+                        </div>
+                      )}
+                    </div>
+                    {/* Delete */}
+                    <button
+                      onClick={() => handleDeleteHabit(habit.id)}
+                      className="flex-shrink-0 p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                      style={{ color: 'var(--text-faint)' }}
+                    >
+                      <Trash2 size={14} />
+                    </button>
                   </div>
-                  {habit.feeling && (
-                    <div className="text-xs mt-0.5" style={{ color: 'var(--text-faint)' }}>
-                      Feeling: {habit.feeling}
+
+                  {/* Completion Note Logging */}
+                  {isCompleted(habit.id) && (
+                    <div className="mt-2.5 pl-12 flex items-center gap-2 w-full">
+                      <span className="text-[10px] text-text-faint italic font-semibold">Note:</span>
+                      <input
+                        type="text"
+                        value={localNotes[habit.id] || ''}
+                        onChange={(e) => handleNoteChange(habit.id, e.target.value)}
+                        placeholder="Add a log note (e.g., Felt energized, did 15 min)..."
+                        className="text-xs px-3 py-1.5 rounded-xl bg-bg-tertiary outline-none border border-border-default text-text-secondary focus:border-accent-saffron/40 flex-1 max-w-md"
+                        style={{
+                          backgroundColor: 'var(--bg-tertiary)',
+                          borderColor: 'var(--border-default)',
+                        }}
+                      />
                     </div>
                   )}
-                </div>
-                {/* Delete */}
-                <button
-                  onClick={() => handleDeleteHabit(habit.id)}
-                  className="flex-shrink-0 p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
-                  style={{ color: 'var(--text-faint)' }}
-                >
-                  <Trash2 size={14} />
-                </button>
-              </motion.div>
-            ))
+                </motion.div>
+              );
+            })
           )}
         </section>
 
@@ -273,6 +386,7 @@ export default function AgniPage() {
               className="card-base p-5 space-y-4 overflow-hidden"
             >
               <h3 className="font-medium" style={{ color: 'var(--text-primary)' }}>New Habit</h3>
+              
               <input
                 type="text"
                 value={newHabitName}
@@ -281,6 +395,7 @@ export default function AgniPage() {
                 className="w-full px-4 py-2.5 rounded-xl text-sm outline-none"
                 style={{ background: 'var(--bg-tertiary)', border: '1px solid var(--border-default)', color: 'var(--text-primary)' }}
               />
+
               <input
                 type="text"
                 value={newHabitFeeling}
@@ -289,9 +404,36 @@ export default function AgniPage() {
                 className="w-full px-4 py-2.5 rounded-xl text-sm outline-none"
                 style={{ background: 'var(--bg-tertiary)', border: '1px solid var(--border-default)', color: 'var(--text-primary)' }}
               />
-              <div className="flex gap-3">
+
+              {/* Category picker */}
+              <div className="space-y-1.5">
+                <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Category</span>
+                <div className="grid grid-cols-5 gap-1.5">
+                  {CATEGORIES.map(cat => {
+                    const isSelected = newHabitCategory === cat.id;
+                    return (
+                      <button
+                        key={cat.id}
+                        type="button"
+                        onClick={() => setNewHabitCategory(cat.id)}
+                        className="p-2 rounded-xl text-center border transition-all text-xs flex flex-col items-center gap-1"
+                        style={{
+                          backgroundColor: isSelected ? 'color-mix(in srgb, var(--room-current) 12%, var(--bg-tertiary))' : 'var(--bg-tertiary)',
+                          borderColor: isSelected ? 'var(--room-current)' : 'var(--border-default)',
+                          color: isSelected ? 'var(--text-primary)' : 'var(--text-muted)',
+                        }}
+                      >
+                        <span className="text-base">{cat.emoji}</span>
+                        <span className="text-[9px] font-semibold">{cat.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="flex gap-3 pt-2">
                 <button
-                  onClick={() => { setShowAdd(false); setNewHabitName(''); setNewHabitFeeling(''); }}
+                  onClick={() => { setShowAdd(false); setNewHabitName(''); setNewHabitFeeling(''); setNewHabitCategory('Mind'); }}
                   className="flex-1 py-2.5 rounded-xl text-sm"
                   style={{ background: 'var(--bg-tertiary)', color: 'var(--text-secondary)', border: '1px solid var(--border-default)' }}
                 >

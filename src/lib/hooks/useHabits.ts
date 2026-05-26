@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase/client';
-import { collection, query, onSnapshot, doc, setDoc, addDoc, deleteDoc, where, serverTimestamp, arrayUnion } from 'firebase/firestore';
+import { collection, query, onSnapshot, doc, setDoc, addDoc, deleteDoc, where, serverTimestamp, arrayUnion, getDoc } from 'firebase/firestore';
 import { useAuth } from './useAuth';
 import { useStreak } from './useStreak';
 import { toDateString } from '@/lib/utils/date';
@@ -9,6 +9,9 @@ export interface Habit {
   id: string;
   name: string;
   feeling: string;
+  category: 'Mind' | 'Body' | 'Spirit' | 'Craft' | 'Rest';
+  currentStreak: number;
+  bestStreak: number;
   completedToday: boolean;
   is_active: boolean;
 }
@@ -18,6 +21,7 @@ export function useHabits() {
   const { addRewireScore, updateStreak } = useStreak();
   const [habits, setHabits] = useState<Habit[]>([]);
   const [weeklyCompletions, setWeeklyCompletions] = useState<Record<string, string[]>>({});
+  const [completionNotes, setCompletionNotes] = useState<Record<string, Record<string, string>>>({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -28,7 +32,7 @@ export function useHabits() {
 
     const todayStr = toDateString(new Date());
 
-    // Calculate start and end of current week (Monday to Sunday)
+    // Calculate start date for completions listener (past 30 days)
     const today = new Date();
     const thirtyDaysAgo = new Date(today);
     thirtyDaysAgo.setDate(today.getDate() - 30);
@@ -37,7 +41,7 @@ export function useHabits() {
     // Listen to habits
     const habitsQuery = query(collection(db, `users/${user.uid}/habits`));
     
-    // Listen to completions (covers past 30 days)
+    // Listen to completions
     const completionsQuery = query(
       collection(db, `users/${user.uid}/habitCompletions`),
       where('date', '>=', startStr)
@@ -45,6 +49,7 @@ export function useHabits() {
 
     let rawHabits: any[] = [];
     let completionsMap: Record<string, string[]> = {};
+    let notesMap: Record<string, Record<string, string>> = {};
 
     const updateState = () => {
       const todayCompletions = new Set(completionsMap[todayStr] || []);
@@ -52,6 +57,9 @@ export function useHabits() {
         id: h.id,
         name: h.name,
         feeling: h.feeling,
+        category: h.category || 'Mind',
+        currentStreak: h.currentStreak || 0,
+        bestStreak: h.bestStreak || 0,
         is_active: h.is_active !== false,
         completedToday: todayCompletions.has(h.id),
       }));
@@ -69,16 +77,20 @@ export function useHabits() {
 
     const unsubCompletions = onSnapshot(completionsQuery, (snap) => {
       const map: Record<string, string[]> = {};
+      const notes: Record<string, Record<string, string>> = {};
       snap.docs.forEach(d => {
         const data = d.data();
         const date = data.date || d.id;
         const completed = data.completedHabits || [];
         if (date) {
           map[date] = completed;
+          notes[date] = data.notes || {};
         }
       });
       completionsMap = map;
+      notesMap = notes;
       setWeeklyCompletions(map);
+      setCompletionNotes(notes);
       updateState();
     }, (err) => {
       console.error('Stream completions error:', err);
@@ -90,32 +102,74 @@ export function useHabits() {
     };
   }, [user]);
 
-  const addHabit = async (name: string, feeling: string, frequency: string = 'daily') => {
+  const addHabit = async (name: string, feeling: string, category: string = 'Mind', frequency: string = 'daily') => {
     if (!user || !db) return;
     const colRef = collection(db, `users/${user.uid}/habits`);
     await addDoc(colRef, {
       name,
       feeling,
+      category,
       frequency,
       is_active: true,
+      currentStreak: 0,
+      bestStreak: 0,
       createdAt: serverTimestamp(),
     });
   };
 
-  const completeHabit = async (habitId: string, dateStr?: string) => {
+  const completeHabit = async (habitId: string, dateStr?: string, note?: string) => {
     if (!user || !db) return;
     const targetDate = dateStr || toDateString(new Date());
     const docRef = doc(db, `users/${user.uid}/habitCompletions`, targetDate);
     
     // Save completion as arrayUnion under today/selected date
-    await setDoc(docRef, {
+    const updateObj: any = {
       completedHabits: arrayUnion(habitId),
       date: targetDate,
       updatedAt: serverTimestamp(),
-    }, { merge: true });
+    };
+    if (note !== undefined) {
+      updateObj[`notes.${habitId}`] = note;
+    }
+    
+    await setDoc(docRef, updateObj, { merge: true });
+
+    // Update individual habit streak count if completing today
+    const todayStr = toDateString(new Date());
+    if (targetDate === todayStr) {
+      const habitRef = doc(db, `users/${user.uid}/habits`, habitId);
+      try {
+        const habitSnap = await getDoc(habitRef);
+        if (habitSnap.exists()) {
+          const hData = habitSnap.data();
+          const lastCompleted = hData.lastCompletedDate || '';
+          let current = hData.currentStreak || 0;
+          const best = hData.bestStreak || 0;
+
+          const yesterday = new Date();
+          yesterday.setDate(yesterday.getDate() - 1);
+          const yesterdayStr = toDateString(yesterday);
+
+          if (lastCompleted === yesterdayStr) {
+            current += 1;
+          } else if (lastCompleted !== todayStr) {
+            current = 1;
+          }
+
+          const newBest = Math.max(current, best);
+          await setDoc(habitRef, {
+            currentStreak: current,
+            bestStreak: newBest,
+            lastCompletedDate: todayStr,
+          }, { merge: true });
+        }
+      } catch (err) {
+        console.error('Failed to update habit streaks:', err);
+      }
+    }
 
     // Award +3 rewire score and update active streak if completing today
-    if (targetDate === toDateString(new Date())) {
+    if (targetDate === todayStr) {
       await addRewireScore(3);
       await updateStreak();
     }
@@ -127,5 +181,5 @@ export function useHabits() {
     await deleteDoc(docRef);
   };
 
-  return { habits, weeklyCompletions, loading, addHabit, completeHabit, deleteHabit };
+  return { habits, weeklyCompletions, completionNotes, loading, addHabit, completeHabit, deleteHabit };
 }

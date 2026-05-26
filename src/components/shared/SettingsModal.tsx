@@ -1,10 +1,14 @@
 'use client';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, LogOut, Settings, Languages, MessageSquare, Volume2, User as UserIcon, Palette, VolumeX } from 'lucide-react';
+import { X, LogOut, Settings, Languages, MessageSquare, Volume2, User as UserIcon, Palette, VolumeX, Bell, Download, ShieldAlert } from 'lucide-react';
 import { useUser } from '@/components/providers/UserProvider';
 import { BACKGROUND_PAINTINGS } from '@/lib/constants/paintings';
 import { useTheme } from '@/components/providers/ThemeProvider';
 import { useAudio } from '@/components/providers/AudioProvider';
+import { db } from '@/lib/firebase/client';
+import { collection, getDocs, query, orderBy } from 'firebase/firestore';
+import { jsPDF } from 'jspdf';
 
 const STEPS = ['xs', 's', 'm', 'l', 'xl'] as const;
 const STEP_LABELS = { xs: 'XS', s: 'S', m: 'M', l: 'L', xl: 'XL' } as const;
@@ -20,10 +24,308 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
   const { theme, setTheme } = useTheme();
   const { isMuted, toggleMute, enableAudio } = useAudio();
 
+  const [exportingJournal, setExportingJournal] = useState(false);
+  const [exportingHabits, setExportingHabits] = useState(false);
+  const [exportingAnthology, setExportingAnthology] = useState(false);
+
   if (!user) return null;
 
   const headingSize = preferences.fontSizeHeading || 'm';
   const bodySize = preferences.fontSizeBody || 'm';
+
+  const exportJournalPDF = async () => {
+    if (exportingJournal) return;
+    setExportingJournal(true);
+    try {
+      const colRef = collection(db!, `users/${user.id}/journalEntries`);
+      const q = query(colRef, orderBy('updatedAt', 'desc'));
+      const snap = await getDocs(q);
+      if (snap.empty) {
+        alert('No journal entries found to export.');
+        return;
+      }
+      
+      const doc = new jsPDF();
+      doc.setFont("Helvetica", "normal");
+      
+      doc.setFontSize(22);
+      doc.text("Pravah - Journal Archive", 20, 20);
+      doc.setFontSize(10);
+      doc.text(`Exported on ${new Date().toLocaleDateString()} for ${user.name}`, 20, 28);
+      doc.line(20, 32, 190, 32);
+      
+      let y = 45;
+      
+      snap.docs.forEach((entryDoc) => {
+        const data = entryDoc.data();
+        const date = entryDoc.id;
+        const content = data.content || '';
+        const mood = data.mood || 3;
+        const gratitude = data.gratitude || [];
+        const learned = data.todayILearned || data.learned || '';
+        const intention = data.tomorrowsIntention || data.intention || '';
+        const tags = data.tags || [];
+        const mode = data.mode || 'daily';
+        
+        if (y > 240) {
+          doc.addPage();
+          y = 20;
+        }
+        
+        doc.setFont("Helvetica", "bold");
+        doc.setFontSize(13);
+        doc.text(`${date} (${mode.toUpperCase()})`, 20, y);
+        
+        doc.setFont("Helvetica", "normal");
+        doc.setFontSize(10);
+        doc.text(`Mood: ${mood}/5`, 140, y);
+        
+        y += 8;
+        
+        if (tags.length > 0) {
+          doc.setFont("Helvetica", "italic");
+          doc.text(`Tags: ${tags.join(', ')}`, 20, y);
+          y += 6;
+        }
+        
+        if (content) {
+          doc.setFont("Helvetica", "normal");
+          doc.setFontSize(10.5);
+          const splitContent = doc.splitTextToSize(content, 170);
+          doc.text(splitContent, 20, y);
+          y += splitContent.length * 5 + 4;
+        }
+        
+        const gratitudeItems = gratitude.filter(Boolean);
+        if (gratitudeItems.length > 0) {
+          if (y > 250) { doc.addPage(); y = 20; }
+          doc.setFont("Helvetica", "bold");
+          doc.setFontSize(10);
+          doc.text("Gratitude:", 20, y);
+          y += 5;
+          doc.setFont("Helvetica", "normal");
+          gratitudeItems.forEach((item: string) => {
+            doc.text(`- ${item}`, 25, y);
+            y += 5;
+          });
+          y += 2;
+        }
+        
+        if (learned) {
+          if (y > 250) { doc.addPage(); y = 20; }
+          doc.setFont("Helvetica", "bold");
+          doc.text("Today I Learned:", 20, y);
+          y += 5;
+          doc.setFont("Helvetica", "normal");
+          const splitLearned = doc.splitTextToSize(learned, 170);
+          doc.text(splitLearned, 20, y);
+          y += splitLearned.length * 5 + 4;
+        }
+        
+        if (intention) {
+          if (y > 250) { doc.addPage(); y = 20; }
+          doc.setFont("Helvetica", "bold");
+          doc.text("Tomorrow's Intention:", 20, y);
+          y += 5;
+          doc.setFont("Helvetica", "normal");
+          const splitIntention = doc.splitTextToSize(intention, 170);
+          doc.text(splitIntention, 20, y);
+          y += splitIntention.length * 5 + 4;
+        }
+        
+        y += 10;
+        doc.line(20, y - 5, 190, y - 5);
+        y += 5;
+      });
+      
+      doc.save(`pravah_journal_${user.name.toLowerCase().replace(/\s+/g, '_')}.pdf`);
+    } catch (err) {
+      console.error('Failed to export journal:', err);
+      alert('Failed to generate PDF export.');
+    } finally {
+      setExportingJournal(false);
+    }
+  };
+
+  const exportHabitsCSV = async () => {
+    if (exportingHabits) return;
+    setExportingHabits(true);
+    try {
+      const habitsRef = collection(db!, `users/${user.id}/habits`);
+      const habitsSnap = await getDocs(habitsRef);
+      if (habitsSnap.empty) {
+        alert('No habits found to export.');
+        return;
+      }
+      
+      const completionsRef = collection(db!, `users/${user.id}/habitCompletions`);
+      const completionsSnap = await getDocs(completionsRef);
+      
+      const completionsList = completionsSnap.docs.map(doc => {
+        const data = doc.data();
+        return {
+          date: doc.id,
+          completedHabits: data.completedHabits || [],
+          notes: data.notes || {},
+        };
+      });
+      
+      let csvContent = "Habit ID,Name,Feeling,Category,Current Streak,Best Streak,Is Active,Completion Date,Completion Note\n";
+      
+      habitsSnap.docs.forEach(habitDoc => {
+        const hData = habitDoc.data();
+        const habitId = habitDoc.id;
+        const name = hData.name || '';
+        const feeling = hData.feeling || '';
+        const category = hData.category || '';
+        const currentStreak = hData.currentStreak || 0;
+        const bestStreak = hData.bestStreak || 0;
+        const isActive = hData.is_active !== false;
+        
+        let hasCompletions = false;
+        completionsList.forEach(comp => {
+          if (comp.completedHabits.includes(habitId)) {
+            hasCompletions = true;
+            const note = comp.notes[habitId] || '';
+            const escapedName = `"${name.replace(/"/g, '""')}"`;
+            const escapedFeeling = `"${feeling.replace(/"/g, '""')}"`;
+            const escapedNote = `"${note.replace(/"/g, '""')}"`;
+            csvContent += `${habitId},${escapedName},${escapedFeeling},${category},${currentStreak},${bestStreak},${isActive},${comp.date},${escapedNote}\n`;
+          }
+        });
+        
+        if (!hasCompletions) {
+          const escapedName = `"${name.replace(/"/g, '""')}"`;
+          const escapedFeeling = `"${feeling.replace(/"/g, '""')}"`;
+          csvContent += `${habitId},${escapedName},${escapedFeeling},${category},${currentStreak},${bestStreak},${isActive},N/A,N/A\n`;
+        }
+      });
+      
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", `pravah_habits_${user.name.toLowerCase().replace(/\s+/g, '_')}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (err) {
+      console.error('Failed to export habits CSV:', err);
+      alert('Failed to generate CSV export.');
+    } finally {
+      setExportingHabits(false);
+    }
+  };
+
+  const exportAnthologyPDF = async () => {
+    if (exportingAnthology) return;
+    setExportingAnthology(true);
+    try {
+      const colRef = collection(db!, `users/${user.id}/anthology`);
+      const snap = await getDocs(colRef);
+      if (snap.empty) {
+        alert('No saved poems in your anthology to export.');
+        return;
+      }
+      
+      const { POEMS } = await import('@/lib/constants/poems');
+      
+      const doc = new jsPDF();
+      doc.setFont("Helvetica", "normal");
+      
+      doc.setFontSize(22);
+      doc.text("Pravah - Poetry Anthology", 20, 20);
+      doc.setFontSize(10);
+      doc.text(`Exported on ${new Date().toLocaleDateString()} for ${user.name}`, 20, 28);
+      doc.line(20, 32, 190, 32);
+      
+      let y = 45;
+      
+      snap.docs.forEach((aDoc) => {
+        const poemId = aDoc.id;
+        const poem = POEMS.find((p: { id: string }) => p.id === poemId);
+        if (!poem) return;
+        
+        if (y > 230) {
+          doc.addPage();
+          y = 20;
+        }
+        
+        doc.setFont("Helvetica", "bold");
+        doc.setFontSize(13);
+        doc.text(poem.title, 20, y);
+        doc.setFont("Helvetica", "normal");
+        doc.setFontSize(10.5);
+        doc.text(`by ${poem.author} (${poem.period})`, 20, y + 6);
+        
+        doc.setFontSize(9.5);
+        doc.text(poem.tradition, 140, y);
+        
+        y += 14;
+        
+        doc.setFont("Helvetica", "normal");
+        doc.setFontSize(10);
+        
+        const romanLines = poem.roman || [];
+        if (y + romanLines.length * 5.5 > 270) {
+          doc.addPage();
+          y = 20;
+        }
+        
+        romanLines.forEach((line: string) => {
+          doc.text(line, 20, y);
+          y += 5.5;
+        });
+        
+        y += 6;
+        
+        const enLines = poem.en || [];
+        if (enLines.length > 0) {
+          if (y + enLines.length * 5.5 > 270) {
+            doc.addPage();
+            y = 20;
+          }
+          doc.setFont("Helvetica", "italic");
+          doc.text("English Translation:", 20, y);
+          y += 6;
+          doc.setFont("Helvetica", "normal");
+          enLines.forEach((line: string) => {
+            doc.text(line, 20, y);
+            y += 5.5;
+          });
+        }
+        
+        if (poem.commentary) {
+          if (y > 230) { doc.addPage(); y = 20; }
+          y += 4;
+          doc.setFont("Helvetica", "bold");
+          doc.text("Commentary:", 20, y);
+          y += 5;
+          doc.setFont("Helvetica", "normal");
+          const splitComm = doc.splitTextToSize(poem.commentary, 170);
+          
+          if (y + splitComm.length * 5 > 270) {
+            doc.addPage();
+            y = 20;
+          }
+          
+          doc.text(splitComm, 20, y);
+          y += splitComm.length * 5 + 4;
+        }
+        
+        y += 10;
+        doc.line(20, y - 5, 190, y - 5);
+        y += 5;
+      });
+      
+      doc.save(`pravah_anthology_${user.name.toLowerCase().replace(/\s+/g, '_')}.pdf`);
+    } catch (err) {
+      console.error('Failed to export anthology:', err);
+      alert('Failed to generate PDF export.');
+    } finally {
+      setExportingAnthology(false);
+    }
+  };
 
   return (
     <AnimatePresence>
@@ -491,6 +793,104 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                     }}
                   >
                     {!isMuted ? '🔈 Sound On (Unmuted)' : '🔇 Sound Off (Muted)'}
+                  </button>
+                </div>
+              </div>
+
+              {/* Reminders & Notifications Section */}
+              <div className="space-y-4 pt-2 border-t" style={{ borderColor: 'var(--border-default)' }}>
+                <div className="flex items-center gap-2">
+                  <Bell size={16} className="text-text-muted" style={{ color: 'var(--accent-saffron)' }} />
+                  <h3 className="text-xs uppercase tracking-wider font-semibold text-text-faint" style={{ color: 'var(--text-faint)' }}>
+                    Daily Practice Reminders
+                  </h3>
+                </div>
+                
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="text-xs font-medium block" style={{ color: 'var(--text-secondary)' }}>Reflection Reminders</span>
+                    <span className="text-[10px]" style={{ color: 'var(--text-muted)' }}>Receive daily nudges to complete practices</span>
+                  </div>
+                  <button
+                    onClick={() => updatePreferences({ remindersEnabled: !preferences.remindersEnabled })}
+                    className="px-3 py-1.5 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all border min-h-[36px]"
+                    style={{
+                      backgroundColor: preferences.remindersEnabled ? 'color-mix(in srgb, var(--accent-saffron) 12%, var(--bg-tertiary))' : 'transparent',
+                      borderColor: preferences.remindersEnabled ? 'var(--accent-saffron)' : 'var(--border-default)',
+                      color: preferences.remindersEnabled ? 'var(--accent-saffron)' : 'var(--text-muted)',
+                    }}
+                  >
+                    {preferences.remindersEnabled ? 'Enabled' : 'Disabled'}
+                  </button>
+                </div>
+                
+                {preferences.remindersEnabled && (
+                  <div className="flex items-center justify-between gap-4 pl-4 border-l-2" style={{ borderColor: 'var(--accent-saffron)' }}>
+                    <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>Daily Reminder Time</span>
+                    <input
+                      type="time"
+                      value={preferences.reminderTime || '21:00'}
+                      onChange={e => updatePreferences({ reminderTime: e.target.value })}
+                      className="px-3 py-1.5 rounded-xl text-xs bg-bg-tertiary border border-border-default outline-none text-text-primary focus:border-accent-saffron"
+                      style={{
+                        backgroundColor: 'var(--bg-tertiary)',
+                        borderColor: 'var(--border-default)',
+                        color: 'var(--text-primary)',
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
+
+              {/* Data Export Section */}
+              <div className="space-y-4 pt-2 border-t" style={{ borderColor: 'var(--border-default)' }}>
+                <div className="flex items-center gap-2">
+                  <Download size={16} className="text-text-muted" style={{ color: 'var(--accent-saffron)' }} />
+                  <h3 className="text-xs uppercase tracking-wider font-semibold text-text-faint" style={{ color: 'var(--text-faint)' }}>
+                    Export Sanctuary Data
+                  </h3>
+                </div>
+                
+                <p className="text-[10px] leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+                  Download a local archive of your journals, habits and poetry anthology. Hindi text renders in transliterated Roman script in PDF formats.
+                </p>
+                
+                <div className="grid grid-cols-3 gap-2">
+                  <button
+                    onClick={exportJournalPDF}
+                    disabled={exportingJournal}
+                    className="px-2.5 py-2.5 rounded-xl text-[10px] font-semibold uppercase tracking-wider transition-all border text-center hover:bg-bg-tertiary disabled:opacity-50"
+                    style={{
+                      borderColor: 'var(--border-default)',
+                      color: 'var(--text-secondary)',
+                      backgroundColor: 'var(--bg-tertiary)',
+                    }}
+                  >
+                    {exportingJournal ? '📓 Exporting...' : '📓 Journal (PDF)'}
+                  </button>
+                  <button
+                    onClick={exportHabitsCSV}
+                    disabled={exportingHabits}
+                    className="px-2.5 py-2.5 rounded-xl text-[10px] font-semibold uppercase tracking-wider transition-all border text-center hover:bg-bg-tertiary disabled:opacity-50"
+                    style={{
+                      borderColor: 'var(--border-default)',
+                      color: 'var(--text-secondary)',
+                      backgroundColor: 'var(--bg-tertiary)',
+                    }}
+                  >
+                    {exportingHabits ? '🔥 Exporting...' : '🔥 Habits (CSV)'}
+                  </button>
+                  <button
+                    onClick={exportAnthologyPDF}
+                    disabled={exportingAnthology}
+                    className="px-2.5 py-2.5 rounded-xl text-[10px] font-semibold uppercase tracking-wider transition-all border text-center hover:bg-bg-tertiary disabled:opacity-50"
+                    style={{
+                      borderColor: 'var(--border-default)',
+                      color: 'var(--text-secondary)',
+                      backgroundColor: 'var(--bg-tertiary)',
+                    }}
+                  >
+                    {exportingAnthology ? '🌧️ Exporting...' : '🌧️ Anthology (PDF)'}
                   </button>
                 </div>
               </div>

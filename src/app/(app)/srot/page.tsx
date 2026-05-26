@@ -5,6 +5,7 @@ import { FADE_UP, STAGGER_CONTAINER, STAGGER_ITEM } from '@/lib/utils/motion';
 import PageTransition from '@/components/layout/PageTransition';
 import { getDayOfYear } from '@/lib/utils/date';
 import ReadAloudButton from '@/components/shared/ReadAloudButton';
+import FocusMode from '@/components/shared/FocusMode';
 
 const ARTICLES = [
   {
@@ -108,6 +109,7 @@ export default function SrotPage() {
   const todayArticle = ARTICLES[dayOfYear % ARTICLES.length];
   const [selected, setSelected] = useState(todayArticle);
   const [showFull, setShowFull] = useState(false);
+  const [isFocusOpen, setIsFocusOpen] = useState(false);
 
   const preview = selected.content.split('\n\n').slice(0, 2).join('\n\n');
 
@@ -153,7 +155,7 @@ export default function SrotPage() {
           >
             {/* Header */}
             <div className="space-y-2 relative">
-              <div className="absolute top-0 right-0">
+              <div className="absolute top-0 right-0 flex items-center gap-2">
                 <ReadAloudButton
                   text={`${selected.title}. ${selected.subtitle}. ${selected.content}`}
                   lang="en-IN"
@@ -161,6 +163,13 @@ export default function SrotPage() {
                   variant="pill"
                   label="Listen Article"
                 />
+                <button
+                  onClick={() => setIsFocusOpen(true)}
+                  className="px-4 py-1.5 rounded-full text-xs font-medium border transition-all hover:bg-bg-tertiary flex items-center gap-1.5"
+                  style={{ borderColor: 'var(--border-default)', color: 'var(--text-muted)' }}
+                >
+                  Focus
+                </button>
               </div>
               <div className="flex items-center gap-3">
                 <span className="text-xs px-2.5 py-1 rounded-full font-medium" style={{ background: 'var(--bg-tertiary)', color: 'var(--text-muted)' }}>
@@ -168,8 +177,8 @@ export default function SrotPage() {
                 </span>
                 <span className="text-xs" style={{ color: 'var(--text-faint)' }}>{selected.readTime} read</span>
               </div>
-              <h2 className="font-serif text-2xl leading-tight pr-32" style={{ color: 'var(--text-primary)' }}>{selected.title}</h2>
-              <p className="text-base font-serif italic pr-32" style={{ color: 'var(--text-muted)' }}>{selected.subtitle}</p>
+              <h2 className="font-serif text-2xl leading-tight pr-36" style={{ color: 'var(--text-primary)' }}>{selected.title}</h2>
+              <p className="text-base font-serif italic pr-36" style={{ color: 'var(--text-muted)' }}>{selected.subtitle}</p>
             </div>
 
             {/* Content */}
@@ -208,6 +217,19 @@ export default function SrotPage() {
             </div>
           </motion.div>
         </AnimatePresence>
+
+        {/* Focus Mode Component */}
+        <FocusMode
+          isOpen={isFocusOpen}
+          onClose={() => setIsFocusOpen(false)}
+          title={selected.title}
+          author={selected.subtitle}
+          textToSpeak={selected.content}
+        >
+          {selected.content.split('\n\n').map((para, idx) => (
+            <p key={idx} className="mb-6">{para}</p>
+          ))}
+        </FocusMode>
       </div>
     </PageTransition>
   );

@@ -8,12 +8,24 @@ const PUBLIC_PATHS = ['/login', '/signup', '/onboarding'];
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const token = request.cookies.get('pravah-token')?.value;
+  const createdAtStr = request.cookies.get('pravah-created-at')?.value;
+  const visitedSutr = request.cookies.get('pravah-visited-sutr')?.value === 'true';
+
+  // Helper to check if user is a first-time user (created within last 60 seconds)
+  const isFirstTimeUser = () => {
+    if (!createdAtStr) return false;
+    const createdAt = parseInt(createdAtStr, 10);
+    return !isNaN(createdAt) && Math.abs(Date.now() - createdAt) < 60 * 1000;
+  };
 
   // Allow public routes
   const isPublic = PUBLIC_PATHS.some(p => pathname === p || pathname.startsWith(p + '/'));
   if (isPublic) {
     // Redirect authenticated users away from login and signup
     if (token && (pathname === '/login' || pathname === '/signup')) {
+      if (isFirstTimeUser() && !visitedSutr) {
+        return NextResponse.redirect(new URL('/sutr', request.url));
+      }
       return NextResponse.redirect(new URL('/aarambh', request.url));
     }
     return NextResponse.next();
@@ -25,6 +37,11 @@ export function middleware(request: NextRequest) {
     // Preserve the intended destination for post-login redirect
     loginUrl.searchParams.set('from', pathname);
     return NextResponse.redirect(loginUrl);
+  }
+
+  // Auto-redirect first-time users to /sutr if they visit any protected page (except /sutr itself)
+  if (pathname !== '/sutr' && isFirstTimeUser() && !visitedSutr) {
+    return NextResponse.redirect(new URL('/sutr', request.url));
   }
 
   return NextResponse.next();

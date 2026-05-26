@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase/client';
 import { collection, query, onSnapshot, doc, addDoc, deleteDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { useAuth } from './useAuth';
+import { toDateString } from '@/lib/utils/date';
 
 export interface Sankalp {
   id: string;
@@ -73,5 +74,15 @@ export function useSankalps() {
     await deleteDoc(docRef);
   };
 
-  return { sankalps, loading, addSankalp, completeSankalp, deleteSankalp };
+  const addSankalpLog = async (sankalpId: string, note: string) => {
+    if (!user || !db) return;
+    const colRef = collection(db, `users/${user.uid}/sankalps/${sankalpId}/logs`);
+    await addDoc(colRef, {
+      note,
+      date: toDateString(new Date()),
+      createdAt: serverTimestamp(),
+    });
+  };
+
+  return { user, sankalps, loading, addSankalp, completeSankalp, deleteSankalp, addSankalpLog };
 }

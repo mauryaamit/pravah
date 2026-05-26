@@ -13,6 +13,8 @@ export interface JournalEntry {
   learned: string;
   intention: string;
   word_count: number;
+  mode: string;
+  tags: string[];
 }
 
 export function useJournal(selectedDate: string) {
@@ -43,6 +45,8 @@ export function useJournal(selectedDate: string) {
           learned: data.todayILearned || data.learned || '',
           intention: data.tomorrowsIntention || data.intention || '',
           word_count: data.word_count || 0,
+          mode: data.mode || 'daily',
+          tags: data.tags || [],
         });
       } else {
         setTodayEntry(null);
@@ -69,6 +73,8 @@ export function useJournal(selectedDate: string) {
           learned: data.todayILearned || data.learned || '',
           intention: data.tomorrowsIntention || data.intention || '',
           word_count: data.word_count || 0,
+          mode: data.mode || 'daily',
+          tags: data.tags || [],
         };
       });
       setAllEntries(list);
@@ -88,6 +94,8 @@ export function useJournal(selectedDate: string) {
     gratitude: string[];
     learned: string;
     intention: string;
+    mode?: string;
+    tags?: string[];
   }) => {
     if (!user || !db) return;
     const docRef = doc(db, `users/${user.uid}/journalEntries`, selectedDate);
@@ -105,6 +113,8 @@ export function useJournal(selectedDate: string) {
       todayILearned: data.learned,
       tomorrowsIntention: data.intention,
       word_count: wordCount,
+      mode: data.mode || todayEntry?.mode || 'daily',
+      tags: data.tags || todayEntry?.tags || [],
       updatedAt: serverTimestamp(),
     }, { merge: true });
 

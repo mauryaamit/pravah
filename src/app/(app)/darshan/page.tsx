@@ -5,6 +5,7 @@ import { FADE_UP, STAGGER_CONTAINER, STAGGER_ITEM } from '@/lib/utils/motion';
 import PageTransition from '@/components/layout/PageTransition';
 import { getDayOfYear } from '@/lib/utils/date';
 import ReadAloudButton from '@/components/shared/ReadAloudButton';
+import FocusMode from '@/components/shared/FocusMode';
 
 const PHILOSOPHIES = [
   {
@@ -129,11 +130,11 @@ What is extraordinary about the Meditations is their honesty. Marcus was emperor
 He faced the Antonine Plague (which killed millions, including his predecessor Lucius Verus), wars on multiple frontiers, the betrayal of friends, and the knowledge that his son Commodus - who would inherit the empire - was unstable and cruel. He met all of this without losing either his commitment to duty or his philosophical clarity. He is the closest historical equivalent to the Stoic ideal of the sage.`
   }
 ];
-
 export default function DarshanPage() {
   const dayOfYear = getDayOfYear();
   const [expanded, setExpanded] = useState<string | null>(PHILOSOPHIES[dayOfYear % PHILOSOPHIES.length].id);
   const philosopher = PHILOSOPHER_OF_DAY[dayOfYear % PHILOSOPHER_OF_DAY.length];
+  const [focusData, setFocusData] = useState<{ title: string; subtitle?: string; content: string } | null>(null);
 
   return (
     <PageTransition>
@@ -166,15 +167,23 @@ export default function DarshanPage() {
                   <h2 className="font-serif text-xl" style={{ color: 'var(--text-primary)' }}>{philosopher.name}</h2>
                   <p className="text-xs" style={{ color: 'var(--text-faint)' }}>{philosopher.period} · {philosopher.nationality}</p>
                 </div>
-                <ReadAloudButton
-                  text={`${philosopher.name}. ${philosopher.bio}`}
-                  lang="en-IN"
-                  size="sm"
-                  variant="pill"
-                  label="Listen Bio"
-                />
-              </div>
-              <div className="space-y-2 pt-1">
+                <div className="flex items-center gap-2">
+                  <ReadAloudButton
+                    text={`${philosopher.name}. ${philosopher.bio}`}
+                    lang="en-IN"
+                    size="sm"
+                    variant="pill"
+                    label="Listen Bio"
+                  />
+                  <button
+                    onClick={() => setFocusData({ title: philosopher.name, subtitle: philosopher.period, content: philosopher.bio })}
+                    className="px-2.5 py-1 rounded-full text-xs font-medium border transition-all hover:bg-bg-tertiary"
+                    style={{ borderColor: 'var(--border-default)', color: 'var(--text-muted)' }}
+                  >
+                    Focus
+                  </button>
+                </div>
+              </div>              <div className="space-y-2 pt-1">
                 {philosopher.bio.split('\n\n').map((para, i) => (
                   <p key={i} className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)', lineHeight: 1.8 }}>
                     {para}
@@ -207,13 +216,19 @@ export default function DarshanPage() {
                       </div>
                       <p className="mt-2 font-serif italic text-sm" style={{ color: phil.color }}>"{phil.tagline}"</p>
                     </button>
-
                     <div className="flex items-center gap-2 flex-shrink-0 mt-1" onClick={e => e.stopPropagation()}>
                       <ReadAloudButton
                         text={`${phil.name}. ${phil.tagline}. ${phil.core}`}
                         lang={phil.id === 'advaita' || phil.id === 'buddhism' ? 'hi-IN' : 'en-IN'}
                         size="sm"
                       />
+                      <button
+                        onClick={() => setFocusData({ title: phil.name, subtitle: phil.tagline, content: phil.core })}
+                        className="px-2.5 py-1 rounded-full text-xs font-medium border transition-all hover:bg-bg-tertiary"
+                        style={{ borderColor: 'var(--border-default)', color: 'var(--text-muted)' }}
+                      >
+                        Focus
+                      </button>
                       <button
                         onClick={() => setExpanded(expanded === phil.id ? null : phil.id)}
                         className="p-1 rounded-full hover:bg-secondary transition-all"
@@ -280,6 +295,19 @@ export default function DarshanPage() {
             Philosophy is not about having answers. It is about having better questions.
           </p>
         </div>
+
+        {/* Focus Mode Component */}
+        <FocusMode
+          isOpen={focusData !== null}
+          onClose={() => setFocusData(null)}
+          title={focusData?.title || ''}
+          author={focusData?.subtitle || ''}
+          textToSpeak={focusData?.content || ''}
+        >
+          {focusData?.content.split('\n\n').map((para, idx) => (
+            <p key={idx} className="mb-6">{para}</p>
+          ))}
+        </FocusMode>
       </div>
     </PageTransition>
   );

@@ -1,15 +1,20 @@
-'use client';
-import { useState } from 'react';
+﻿'use client';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FADE_UP, STAGGER_CONTAINER, STAGGER_ITEM } from '@/lib/utils/motion';
 import PageTransition from '@/components/layout/PageTransition';
 import { getDayOfYear } from '@/lib/utils/date';
 import ReadAloudButton from '@/components/shared/ReadAloudButton';
-import { Copy, Check } from 'lucide-react';
+import { Copy, Check, Heart, BookOpen, Share2 } from 'lucide-react';
+import { db } from '@/lib/firebase/client';
+import { doc, setDoc, deleteDoc, collection, onSnapshot } from 'firebase/firestore';
+import { useAuth } from '@/lib/hooks/useAuth';
+import FocusMode from '@/components/shared/FocusMode';
+import { POEMS } from '@/lib/constants/poems';
 
 type Script = 'hi' | 'roman' | 'en';
 
-interface Poem {
+export interface Poem {
   id: string;
   title: string;
   titleHi: string;
@@ -21,704 +26,43 @@ interface Poem {
   roman: string[];
   en: string[];
   authorBio: string;
-  commentary: string;
 }
 
-const POEMS: Poem[] = [
-  {
-    id: 'ghalib-khwahish',
-    title: 'Hazaron Khwahishen',
-    titleHi: 'हज़ारों ख़्वाहिशें',
-    author: 'Mirza Ghalib',
-    authorHi: 'मिर्ज़ा ग़ालिब',
-    period: '1797 - 1869',
-    tradition: 'Urdu Ghazal',
-    hi: [
-      'हज़ारों ख़्वाहिशें ऐसी कि हर ख़्वाहिश पे दम निकले',
-      'बहुत निकले मेरे अरमान लेकिन फिर भी कम निकले',
-      '',
-      'डरे क्यों मेरा क़ातिल, क्या रहेगा उसकी गर्दन पर',
-      'वो ख़ून जो चश्म-ए-तर से उम्र भर यूँ दम-ब-दम निकले',
-      '',
-      'निकलना ख़ुल्द से आदम का सुनते आए हैं लेकिन',
-      'बहुत बे-आबरू होकर तेरे कूचे से हम निकले',
-      '',
-      'भरम खुल जाए ज़ालिम तेरे क़ामत की दराज़ी का',
-      'अगर इस तुर्रा-ए-पुर-पेच-ओ-ख़म का पेच-ओ-ख़म निकले',
-      '',
-      'मगर लिखवाए कोई उसको ख़त तो हम से लिखवाए',
-      'हुई सुबह और घर से काम-धंधे पर हम निकले',
-      '',
-      'हुई इस दौर में मंसूब मुझसे बादा-आशामी',
-      'फिर आया वो ज़माना जो जहाँ में जाम-ए-जम निकले',
-      '',
-      'हुई जिनसे तवक़्क़ो ख़स्तगी की दाद पाने की',
-      'वो हम से भी ज़्यादा ख़स्ता-ए-तेग़-ए-सितम निकले',
-      '',
-      'मुहब्बत में नहीं है फ़र्क़ जीने और मरने का',
-      'उसी को देख कर जीते हैं जिस काफ़िर पे दम निकले',
-      '',
-      'ज़रा कर जोर सीने पर कि तीर-ए-पुर-सितम निकले',
-      'जो वो निकले तो दिल निकले, जो दिल निकले तो दम निकले',
-      '',
-      'ख़ुदा के वास्ते पर्दा न काबे का उठा ज़ालिम',
-      'कहीं ऐसा न हो याँ भी वही काफ़िर सनम निकले',
-      '',
-      'कहाँ मयख़ाने का दरवाज़ा ग़ालिब और कहाँ वाइज़',
-      'पर इतना जानते हैं कल वो जाता था कि हम निकले',
-    ],
-    roman: [
-      'Hazaron khwahishen aisi ki har khwahish pe dam nikle',
-      'Bahut nikle mere armaan lekin phir bhi kam nikle',
-      '',
-      'Dare kyun mera qatil, kya rahega uski gardan par',
-      'Wo khoon jo chashm-e-tar se umar bhar yun dam-ba-dam nikle',
-      '',
-      'Nikalna khuld se Adam ka sunte aaye hain lekin',
-      'Bahut be-aabroo hokar tere kuche se hum nikle',
-      '',
-      'Bharam khul jaaye zalim tere qamat ki daraazi ka',
-      'Agar is turra-e-pur-pech-o-kham ka pech-o-kham nikle',
-      '',
-      'Magar likhwaaye koi usko khat to hum se likhwaaye',
-      'Hui subah aur ghar se kaam-dhande par hum nikle',
-      '',
-      'Hui is daur mein mansub mujhse baada-aashaami',
-      'Phir aaya wo zamaana jo jahaan mein jaam-e-jam nikle',
-      '',
-      'Hui jinse tawaqqu khastagi ki daad paane ki',
-      'Wo hum se bhi zyaada khasta-e-tegh-e-sitam nikle',
-      '',
-      'Mohabbat mein nahin hai farq jeene aur marne ka',
-      'Usi ko dekh kar jeete hain jis kafir pe dam nikle',
-      '',
-      'Zara kar zor seene par ki teer-e-pur-sitam nikle',
-      'Jo wo nikle to dil nikle, jo dil nikle to dam nikle',
-      '',
-      'Khuda ke waste parda na kaabe ka utha zalim',
-      'Kahin aisa na ho yaan bhi wahi kafir sanam nikle',
-      '',
-      'Kahan maikhaane ka darwaza Ghalib aur kahan waiz',
-      'Par itna jaante hain kal wo jaata tha ki hum nikle',
-    ],
-    en: [
-      'A thousand desires, each one enough to consume a life -',
-      'so many longings rose in me, yet felt too few to satisfy.',
-      '',
-      'Why should my killer fear? What will cling to his neck?',
-      'Only the blood that dripped from these weeping eyes, breath by breath, a lifetime long.',
-      '',
-      'We have heard of Adam\'s exile from paradise, but',
-      'I left your lane so stripped of honor - Adam had it easier than me.',
-      '',
-      'The illusion of your tall stature would shatter, tyrant,',
-      'if only the curl of that adorned lock were to unwind.',
-      '',
-      'If someone were to write a letter to her, let them come to me,',
-      'Morning came, and I left the house for the world\'s business.',
-      '',
-      'In this age, wine-drinking became associated with me,',
-      'and that era returned when the cup of Jamshid passed through the world.',
-      '',
-      'Those from whom I expected sympathy for my wounds -',
-      'turned out more ravaged themselves by the sword of oppression.',
-      '',
-      'In love, there is no difference between living and dying -',
-      'I live only by looking at the very infidel for whom I\'d give my life.',
-      '',
-      'Press hard upon the chest and let the arrow of cruelty emerge -',
-      'if the arrow leaves, the heart leaves; if the heart leaves, life leaves.',
-      '',
-      'For God\'s sake, tyrant, do not lift the veil from the Kaaba -',
-      'lest the same infidel idol be found within too.',
-      '',
-      'How far the tavern door is from the preacher\'s pulpit, Ghalib -',
-      'yet this much I know: yesterday he was heading there as I was leaving.',
-    ],
-    authorBio: `Mirza Asadullah Khan Ghalib was born on December 27, 1797 in Agra, into a family of Turkish origin that had served the Mughal court. His father died in battle when Ghalib was four, and his uncle, who adopted him, died when Ghalib was eight. He grew up largely without parental guidance - which perhaps explains both the freedom and the melancholy that infuse his poetry.
-
-Ghalib moved to Delhi as a young man and married at thirteen - an arranged match that produced children, most of whom died in infancy. Delhi was the center of Urdu literary culture, and Ghalib positioned himself at its heart, challenging established poets, sometimes with arrogance, sometimes with genius. He was not universally loved during his lifetime - his Persian verse was considered too obscure, his Urdu too difficult, his personal conduct too unconventional.
-
-He lived through some of the most catastrophic events of Indian history: the decline of the Mughal Empire, the Revolt of 1857, the British reprisals that turned Delhi into a ghost city. His letters from this period are among the greatest documents of personal grief in Indian literature. He wrote of walking through Delhi's ruined streets, recognizing the faces of executed friends in those who'd been hanged.
-
-Yet his poetry somehow transcends the specific and reaches the universal. His ghazals on love, loss, wine, God, and the absurdity of existence have never stopped being read, sung, and quoted. Lata Mangeshkar sang his words. Gulzar has written about him for decades. He is the gold standard of Urdu poetry.`,
-    commentary: `"Hazaron Khwahishen" is perhaps Ghalib's most celebrated ghazal. The opening couplet sets the entire emotional territory: the poet is not lamenting that he has few desires - he is lamenting that even his infinite desires feel insufficient. This is not complaint. This is a portrait of the human condition: we are creatures of such immense longing that the world, no matter how generously it gives, cannot satisfy us.
-
-The ghazal's power lies in its telescoping between the cosmic and the personal. Adam's exile from paradise becomes the speaker's exit from the beloved's lane. The blood on the killer's hands becomes the evidence of years of weeping. The tavern - perennial symbol of spiritual intoxication in Sufi poetry - becomes the site of an almost comic encounter between the speaker and the pious preacher.
-
-The final couplet is vintage Ghalib: the speaker and the preacher were both heading to the tavern - just from different directions. The hypocrisy is not accusatory but rueful, and the humor is quietly devastating. No one was where they claimed to be. Including Ghalib himself.
-
-The radif - the repeated word "nikle" (emerged/left) - creates the ghazal's rhythm and gives it its cumulative weight. Everything emerges: desires, blood, dignity, arrows, hearts, life itself. The poem is about the things that leave us, and that somehow, in leaving, define us.`,
-  },
-  {
-    id: 'faiz-mohabbat',
-    title: 'Mujhse Pehli Si Mohabbat',
-    titleHi: 'मुझसे पहली सी मोहब्बत',
-    author: 'Faiz Ahmed Faiz',
-    authorHi: 'फ़ैज़ अहमद फ़ैज़',
-    period: '1911 - 1984',
-    tradition: 'Urdu Nazm / Progressive Poetry',
-    hi: [
-      'मुझसे पहली-सी मोहब्बत मेरी महबूब न माँग',
-      '',
-      'मैंने समझा था कि तू है तो दरख़्शाँ है हयात',
-      'तेरा ग़म है तो ग़म-ए-दहर का झगड़ा क्या है',
-      'तेरी सूरत से है आलम में बहारों को सबात',
-      'तेरी आँखों के सिवा दुनिया में रक्खा क्या है',
-      '',
-      'तू जो मिल जाए तो तक़दीर नगूँ हो जाए',
-      'यूँ न था, मैंने फ़क़त चाहा था यूँ हो जाए',
-      '',
-      'और भी दुख हैं ज़माने में मोहब्बत के सिवा',
-      'राहतें और भी हैं वस्ल की राहत के सिवा',
-      '',
-      'अनगिनत सदियों के तारीक बहीमाना तिलिस्म',
-      'रेशम-ओ-अतलस-ओ-कमख़्वाब में बुनवाए हुए',
-      'जा-ब-जा बिकते हुए कूचा-ओ-बाज़ार में जिस्म',
-      'ख़ाक में लिथड़े हुए, ख़ून में नहलाए हुए',
-      '',
-      'जिस्म निकले हुए अमराज़ की भट्टियों से',
-      'पीप बहती हुई गलते हुए नासूरों से',
-      'लौट जाती है उधर को भी नज़र क्या कीजे',
-      'अब भी दिलकश है तेरा हुस्न मगर क्या कीजे',
-      '',
-      'और भी दुख हैं ज़माने में मोहब्बत के सिवा',
-      'राहतें और भी हैं वस्ल की राहत के सिवा',
-      '',
-      'मुझसे पहली-सी मोहब्बत मेरी महबूब न माँग',
-    ],
-    roman: [
-      'Mujhse pehli-si mohabbat meri mehboob na maang',
-      '',
-      'Maine samjha tha ki tu hai to darakhshan hai hayat',
-      'Tera gham hai to gham-e-dahr ka jhagda kya hai',
-      'Teri soorat se hai aalam mein bahaaron ko sabat',
-      'Teri aankhon ke siwa duniya mein rakha kya hai',
-      '',
-      'Tu jo mil jaaye to taqdeer nigoon ho jaaye',
-      'Yun na tha, maine faqat chaha tha yun ho jaaye',
-      '',
-      'Aur bhi dukh hain zamaane mein mohabbat ke siwa',
-      'Rahaten aur bhi hain vasl ki raahat ke siwa',
-      '',
-      'Anginaat sadiyon ke taarik bahimaana tilism',
-      'Resham-o-atlas-o-kamkhwab mein bunwaye hue',
-      'Ja-ba-ja bikte hue koocha-o-bazaar mein jism',
-      'Khaak mein lithde hue, khoon mein nahlaaye hue',
-      '',
-      'Jism nikle hue amraaz ki bhattiyoon se',
-      'Pip bahti hui galte hue naasooron se',
-      'Laut jaati hai udhar ko bhi nazar kya keejiye',
-      'Ab bhi dilkash hai tera husn magar kya keejiye',
-      '',
-      'Aur bhi dukh hain zamaane mein mohabbat ke siwa',
-      'Rahaten aur bhi hain vasl ki raahat ke siwa',
-      '',
-      'Mujhse pehli-si mohabbat meri mehboob na maang',
-    ],
-    en: [
-      'Do not ask me, my love, for that first love again.',
-      '',
-      'I thought: if you exist, then life itself is radiant -',
-      'if your sorrow is here, what quarrel have I with the world\'s grief?',
-      'Your face alone gives the seasons their permanence.',
-      'What does the world hold, besides your eyes?',
-      '',
-      'If you came to me, fate itself would bow its head -',
-      'so I had thought: but I had only wished it so.',
-      '',
-      'There are other sorrows in the world, beyond love.',
-      'There are other comforts, beyond the comfort of union.',
-      '',
-      'Countless centuries of dark, brutal enchantments,',
-      'woven into silk and satin and brocade -',
-      'bodies sold in every lane and marketplace,',
-      'smeared with dust and bathed in blood.',
-      '',
-      'Bodies emerged from the furnaces of disease,',
-      'pus running from festering wounds -',
-      'My gaze returns that way, helplessly.',
-      'Your beauty is still lovely - but what can I do?',
-      '',
-      'There are other sorrows in the world, beyond love.',
-      'There are other comforts, beyond the comfort of union.',
-      '',
-      'Do not ask me, my love, for that first love again.',
-    ],
-    authorBio: `Faiz Ahmed Faiz was born in Sialkot in 1911, attended the Government College of Lahore (where he later taught English literature), and became the greatest Urdu poet of the 20th century - the one who most completely married lyric beauty with political commitment. He was a communist, a journalist, a union organizer, a prisoner, and an exile.
-
-He was imprisoned by the Pakistani government in 1951 on charges of planning a coup - charges that were never proven and were likely fabricated. He spent four years in prison, where he continued writing some of his finest poetry. Naqsh-e-Faryadi and Dast-e-Saba are his prison collections. They are among the most beautiful poetry written behind bars since Antonio Gramsci.
-
-Faiz won the Lenin Peace Prize in 1962 - the Soviet Nobel equivalent. He was nominated for the Nobel Prize in Literature multiple times. He lived in exile in Beirut for years after the Zia ul-Haq dictatorship made Pakistan too dangerous.
-
-His poetry exists in a strange space: it is intensely romantic and simultaneously political. In the best Faiz poems, the beloved and the revolution are the same figure. Love becomes a form of political commitment; political commitment becomes a form of love. This is not propaganda - it is the lyrical transformation of political feeling into something that transcends politics.`,
-    commentary: `"Mujhse Pehli Si Mohabbat" is Faiz's most famous poem - and arguably the pivotal poem of Urdu modernism. It begins as a love poem and transforms, mid-poem, into something far larger.
-
-The beloved is real - Faiz is asking her not to demand his first, purely personal love. But the reason he cannot give it is not that he loves her less. It is that the world has entered the room. The bodies in the marketplace, the disease in the streets, the centuries of exploitation woven into silk - he cannot pretend these don't exist and love the way he once loved.
-
-This is a poem about the impossible position of a certain kind of political consciousness: when you are aware of collective suffering, the luxury of purely personal happiness becomes complicated. It doesn't disappear - "your beauty is still lovely" - but it is shadowed, complicated, enlarged.
-
-The poem's genius is that it is not a manifesto. It is a lament. The speaker is not claiming moral superiority. He is mourning what consciousness costs. He is saying: I wish I could love you simply, but I can't anymore. The world is too present.`,
-  },
-  {
-    id: 'kabir-maya',
-    title: 'Maya Maha Thagini',
-    titleHi: 'माया महा ठगिनी',
-    author: 'Kabir Das',
-    authorHi: 'कबीर दास',
-    period: '1440 - 1518 (approximate)',
-    tradition: 'Bhakti Sant Poetry',
-    hi: [
-      'माया महा ठगिनी हम जानी।',
-      'तिरगुन फाँसी लिए कर डोलै बोलै मधुरी बानी।।',
-      '',
-      'केशव के कमला ह्वै बैठी, शिव के भवन भवानी।',
-      'पंडा के मूरत ह्वै बैठी, तीरथ ह्वै गैल पानी।।',
-      '',
-      'योगी के जोगन ह्वै बैठी, राजा के घर रानी।',
-      'काहू के हीरा ह्वै बैठी, काहू के कौड़ी कानी।।',
-      '',
-      'भगतन के भगती ह्वै बैठी, ब्रह्मा के ब्रह्मानी।',
-      'कहत कबीर सुनो भाई साधो, यह सब अकथ कहानी।।',
-    ],
-    roman: [
-      'Maya maha thagini hum jaani.',
-      'Trigun phasi liye kar dolai bolai madhuri baani.',
-      '',
-      'Keshav ke kamla hwai baithi, Shiv ke bhavan Bhavani.',
-      'Panda ke moorat hwai baithi, teerath hwai gail paani.',
-      '',
-      'Yogi ke joganh hwai baithi, raja ke ghar raani.',
-      'Kaahu ke heera hwai baithi, kaahu ke kaudi kaani.',
-      '',
-      'Bhagatan ke bhagti hwai baithi, Brahma ke brahmaani.',
-      'Kahat Kabir suno bhai sadho, yah sab akath kahaani.',
-    ],
-    en: [
-      'Maya - illusion - I have known her now: the great deceiver.',
-      'She carries ropes of the three qualities, speaks in honeyed words.',
-      '',
-      'For Vishnu she became Lakshmi; for Shiva she became Bhavani.',
-      'For the priest she became the idol; for the pilgrim she became sacred water.',
-      '',
-      'For the yogi she became his practice; for the king she became his queen.',
-      'For some she is a diamond; for some she is a worthless shell.',
-      '',
-      'For the devotee she became devotion itself; for Brahma she became Brahma\'s wife.',
-      'Says Kabir: listen, brothers, seekers - this is a story impossible to tell completely.',
-    ],
-    authorBio: `Kabir Das was born around 1440 in Varanasi - though the details of his birth are disputed, as befits a poet who spent his life questioning all forms of inherited identity. He was raised by a Muslim weaver family, though tradition holds he was born to a Brahmin widow who abandoned him. He never learned to read or write. His verses were oral, dictated or composed aloud, gathered by disciples.
-
-He became one of the most radically egalitarian voices in Indian history. He attacked both Hinduism and Islam with equal ferocity - not out of nihilism but out of a fierce conviction that God was beyond all religious institutions. "What are you doing in the mosque, O Mullah? God is not in the mosque," he said. "What are you doing in the temple, O Pandit? God is not in the stone."
-
-His language was Awadhi Hindi, the language of the common people, not Sanskrit or Persian. His audience was the poor, the marginalized, the weaver community he himself belonged to. His metaphors were domestic: the loom, the spinning wheel, the potter's clay. He made philosophy available to anyone who could listen.
-
-He died around 1518 in Maghar - a town that Hindus considered inauspicious, guaranteeing that the dead would be reborn as animals. Kabir moved there deliberately, to make the point that God is not confined by geography, and that fear of inauspicious places is exactly the kind of superstition he had fought all his life. After his death, Hindus and Muslims both claimed him. They reportedly fought over whether to cremate or bury him. Legend says that when they removed his shroud, only flowers remained.`,
-    commentary: `This particular poem belongs to Kabir's most philosophically sophisticated work - the exploration of Maya, the Hindu concept of cosmic illusion. Maya is not simply "the world is an illusion" in a nihilistic sense. It is rather the tendency of the mind to mistake appearance for reality, the temporary for the permanent, the constructed for the essential.
-
-What makes Kabir's treatment remarkable is his catalog: Maya takes every form. She becomes the sacred image for the priest, the holy water for the pilgrim, the beloved for the lover, the discipline for the yogi. Even devotion itself - bhakti - can be a form of Maya: a comfort that blinds rather than reveals. This is radical. Kabir is saying that the very practices meant to transcend illusion can become the most sophisticated forms of it.
-
-The final line's admission - "this is a story impossible to tell completely" - is Kabir at his most honest. He is not offering a solution to Maya. He is offering a recognition: she is everywhere, takes every form, speaks sweetly. The only protection is to have "known" her - to have looked at the mechanism clearly enough to see it as a mechanism. Not to escape it, but to not be entirely fooled.`,
-  },
-  {
-    id: 'bachhan-madhushala',
-    title: 'Madhushala',
-    titleHi: 'मधुशाला',
-    author: 'Harivansh Rai Bachchan',
-    authorHi: 'हरिवंश राय बच्चन',
-    period: '1907 - 2003',
-    tradition: 'Chhayavaad / Hindi Lyric',
-    hi: [
-      'मृदु भावों के अंगूरों की आज बना लाया हाला,',
-      'प्रियतम, अपने ही हाथों से आज पिलाऊँगा प्याला,',
-      'पहले भोग लगा लूँ तेरा फिर प्रसाद जग पाएगा,',
-      'सबसे पहले तेरा स्वागत करती मेरी मधुशाला।।1।।',
-      '',
-      'प्यास तुझे तो, विश्व तपाएगा, मेरा तो भीतर जलता,',
-      'वायु में उड़ जाता, जलधि में लहरें तेरे नाम की उठतीं,',
-      'मेरे तन की, मेरे मन की, मेरे दिल की बात बताई,',
-      'मेरे जीवन में प्रतिदिन तू, छाई मेरी मधुशाला।।2।।',
-      '',
-      'मदिरालय जाने को घर से चलता है पीनेवाला,',
-      'किस पथ से जाऊँ असमंजस में है वह भोलाभाला,',
-      'अलग-अलग पथ बतलाते सब पर मैं यह बतलाता हूँ -',
-      'राह पकड़ तू एक चला चल, पा जाएगा मधुशाला।।3।।',
-      '',
-      'चलने ही चलने में कितना जीवन, हाय, बिता डाला!',
-      'दूर अभी है, पर, देखो, कितना निकट नज़र आला,',
-      'जड़ता से क्या काम हमें, कहो पिपासा क्यों जागी?',
-      'पथिक, शरण में आकर देखे, सब पाएगा मधुशाला।।4।।',
-      '',
-      'मुसलमान औ\' हिन्दू है दो, एक, मगर, उनका प्याला,',
-      'एक, मगर, उनका मदिरालय, एक, मगर, उनकी हाला,',
-      'दोनों रहते एक न जब तक मस्जिद मन्दिर में जाते,',
-      'बैर बढ़ाते मस्जिद मन्दिर, मेल कराती मधुशाला।।5।।',
-      '',
-      'ये भेद नहीं उस प्याले को, उसमें यह भेद नहीं है,',
-      'नहीं पूछती कैसे पीनेवाला, मदिरा मदिरा होती है,',
-      'रहीम, रहीमन, रहमान बोलें, जन्म के पहले ही जान लो,',
-      'एक भाव की है मधुशाला।।6।।',
-      '',
-      'जो घर-बार जलाए, निकला क्षितिज खोजता,',
-      'ऊँचे पर्वत, नीचे पाताल, बीच मेरी मधुशाला,',
-      'पत्थर की मूरत हँसती है, हँसती है बाँसुरी बन,',
-      'सुन-सुन कर यह आने वाला, आता तेरी मधुशाला।।7।।',
-      '',
-      'दो दिन की दुनिया में पीए दिल भर, झूमे, गाए,',
-      'दुख-सुख, हास-रोदन, यह जीवन बिताए,',
-      'बुरा जो लगे तो याद करो मधुशाला का मद को,',
-      'सुख में भी सुख मद में पाए, यही धर्म मधुशाला।।8।।',
-    ],
-    roman: [
-      'Mridu bhaavon ke angooron ki aaj bana laaya haala,',
-      'Priyatam, apne hi haathon se aaj pilaaunga pyaala,',
-      'Pehle bhog laga loon tera phir prasaad jag paayega,',
-      'Sabse pehle tera swaagat karti meri Madhushala.',
-      '',
-      'Pyaas tujhe to, vishwa tapaayega, mera to bheetar jalta,',
-      'Vaayu mein ud jaata, jaldhi mein lehren tere naam ki uthtin,',
-      'Mere tan ki, mere man ki, mere dil ki baat bataayi,',
-      'Mere jeevan mein pratidin tu, chhayi meri Madhushala.',
-      '',
-      'Madiraalay jaane ko ghar se chalta hai peenewala,',
-      'Kis path se jaaoon asamanjas mein hai wo bholabhaala,',
-      'Alag-alag path bataate sab par main yeh batlaata hoon -',
-      'Raah pakaD tu ek chala chal, paa jaayega Madhushala.',
-      '',
-      'Chalte hi chalte mein kitna jeevan, haay, bita Daala!',
-      'Door abhi hai, par, dekho, kitna nikat nazar aala,',
-      'JaDta se kya kaam hamen, kaho pipaasa kyun jaagi?',
-      'Pathik, sharan mein aakar dekhe, sab paayega Madhushala.',
-      '',
-      'Musalman au Hindu hain do, ek, magar, unka pyaala,',
-      'Ek, magar, unka madiraalay, ek, magar, unki haala,',
-      'Donon rahte ek na jab tak masjid mandir mein jaate,',
-      'Bair baDhaate masjid mandir, mel karaati Madhushala.',
-    ],
-    en: [
-      'With gentle feelings as grapes, I have made wine today,',
-      'My love, by my own hands, I will offer you the cup today.',
-      'First let me offer it to you - then the world will receive its blessing,',
-      'The first to welcome you is my tavern - my Madhushala.',
-      '',
-      'Your thirst burns the world; within me too, a fire burns.',
-      'I float in air; in the ocean, waves rise with your name.',
-      'I have told the story of my body, my mind, my heart -',
-      'Every day of my life, you pervade my Madhushala.',
-      '',
-      'The drinker sets out from home to reach the tavern -',
-      'confused and innocent, wondering which path to take.',
-      'Everyone suggests different roads; I say only this:',
-      'Take one path, walk it steadily - you will find Madhushala.',
-      '',
-      'Walking and walking, how much life, alas, has been spent!',
-      'Still distant, and yet - look - how near it seems now.',
-      'What use is stagnation? Tell me, why did this thirst awake?',
-      'Come to its shelter, traveler - Madhushala has everything.',
-      '',
-      'Muslim and Hindu are two - yet their cup is one,',
-      'their tavern is one, their wine is one.',
-      'They cannot live as one in mosque or temple -',
-      'but mosque and temple breed division; Madhushala creates unity.',
-    ],
-    authorBio: `Harivansh Rai Bachchan was born on November 27, 1907 in Allahabad (now Prayagraj). He was educated at Allahabad University and later at Cambridge, where he received his doctorate on W.B. Yeats. He taught English literature at Allahabad University and later became an officer in the Ministry of External Affairs. He is the father of Amitabh Bachchan.
-
-Madhushala - written in 1935 when Bachchan was 27 - is perhaps the most beloved long poem in modern Hindi literature. It consists of 135 stanzas (rubaiyats), each ending with the word "Madhushala" (tavern). The poem was inspired by the Persian tradition of Omar Khayyam's Rubaiyat - wine as a symbol of divine intoxication, the tavern as a metaphor for the spiritual path. But Bachchan transformed this into something distinctly Indian: a philosophy of life, a meditation on unity, a gentle intoxication with existence itself.
-
-He wrote Madhushala in 1935, at a time of profound personal grief. His first wife, Shyama, had died of tuberculosis at a young age. The poem is permeated with loss transfigured into acceptance. The wine is not alcohol - it is life itself, drunk fully.`,
-    commentary: `Madhushala is a philosophical poem disguised as a drinking song. Bachchan borrows from the Persian rubaiyat tradition but fills the form with Indian content - the bhakti tradition's anti-sectarianism, the vedantic sense that all paths lead to the same source, the romantic tradition of wine and the beloved as metaphors for divine intoxication.
-
-The most celebrated stanza is the one about the mosque and the temple: they breed division, but Madhushala unites. Bachchan was writing in 1935, a decade before Partition, and the Hindu-Muslim conflict was already tearing at the fabric of Indian life. His response was not political argument but metaphor: the tavern - belonging to neither religion, serving all equally - is where unity happens.
-
-This is the tradition of the Sufi poets, of Kabir: institutional religion divides; direct experience unites. The wine is the experience. The tavern is where you are willing to set aside your identity and simply drink.`,
-  },
-  {
-    id: 'wordsworth-daffodils',
-    title: 'I Wandered Lonely as a Cloud',
-    titleHi: 'मैं भटका बादलों सा तन्हा',
-    author: 'William Wordsworth',
-    authorHi: 'विलियम वर्ड्सवर्थ',
-    period: '1770 - 1850',
-    tradition: 'Romantic Poetry',
-    hi: [
-      'मैं एक बादल की तरह अकेला भटकता रहा',
-      'जो घाटियों और पहाड़ियों के ऊपर तैरता है,',
-      'जब अचानक मुझे एक भीड़ दिखाई दी,',
-      'सुनहरे डैफोडिल्स का एक झुंड;',
-      'झील के किनारे, पेड़ों के नीचे,',
-      'हवा में लहराते और नृत्य करते हुए।',
-      '',
-      'आकाशगंगा में चमकने और टिमटिमाते',
-      'तारों की तरह निरंतर,',
-      'वे एक कभी न खत्म होने वाली रेखा में फैले थे',
-      'खाड़ी के किनारे-किनारे:',
-      'एक नज़र में मैंने दस हजार देखे,',
-      'अपनी गर्दनें हिलाकर सजीव नृत्य करते हुए।',
-      '',
-      'क्योंकि अक्सर, जब मैं अपने सोफे पर लेटता हूँ',
-      'खाली या विचारशील मुद्रा में,',
-      'वे उस अंतर्मन की आँख पर चमक उठते हैं',
-      'जो एकांत का आनंद है;',
-      'और तब मेरा हृदय प्रसन्नता से भर जाता है,',
-      'और डैफोडिल्स के साथ नृत्य करने लगता है।',
-    ],
-    roman: [
-      'Main ek baadal ki tarah akela bhatakta raha',
-      'Jo ghaatiyon aur pahaadiyon ke oopar tairta hai,',
-      'Jab achaanak mujhe ee bheed dikhaai di,',
-      'Sunehre daffodils ka ek jhund;',
-      'Jheel ke kinaare, pedon ke neeche,',
-      'Hawa mein lehraate aur nritya karte hue.',
-      '',
-      'Aakaashganga mein chamakne aur timtimaate',
-      'Taaron ki tarah nirantar,',
-      'We ek kabhi na khatm hone wali rekha mein phaile the',
-      'Khaadi ke kinaare-kinaare:',
-      'Ek nazar mein maine das hazaar dekhe,',
-      'Apni gardanein hilaakar sajeev nritya karte hue.',
-      '',
-      'Kyunki aksar, jab main apne sofa par leta hoon',
-      'Khaali ya vichaarsheel mudra mein,',
-      'We us antarman ki aankh par chamak uthte hain',
-      'Jo ekaant ka aanand hai;',
-      'Aur tab mera hriday prasannata se bhar jaata hai,',
-      'Aur daffodils ke saath nritya karne lagta hai.',
-    ],
-    en: [
-      'I wandered lonely as a cloud',
-      'That floats on high o\'er vales and hills,',
-      'When all at once I saw a crowd,',
-      'A host, of golden daffodils;',
-      'Beside the lake, beneath the trees,',
-      'Fluttering and dancing in the breeze.',
-      '',
-      'Continuous as the stars that shine',
-      'And twinkle on the milky way,',
-      'They stretched in never-ending line',
-      'Along the margin of a bay:',
-      'Ten thousand saw I at a glance,',
-      'Tossing their heads in sprightly dance.',
-      '',
-      'For oft, when on my couch I lie',
-      'In vacant or in pensive mood,',
-      'They flash upon that inward eye',
-      'Which is the bliss of solitude;',
-      'And then my heart with pleasure fills,',
-      'And dances with the daffodils.',
-    ],
-    authorBio: `William Wordsworth was one of the founders of English Romanticism and served as Britain's Poet Laureate. Along with Samuel Taylor Coleridge, he helped launch the Romantic Age in English literature with the joint publication of Lyrical Ballads in 1798. His poetry is characterized by a deep connection to nature, a belief in the spiritual growth of the individual through communion with the natural world, and a revolutionary use of common, everyday language in poetry.`,
-    commentary: `"I Wandered Lonely as a Cloud" (commonly known as "Daffodils") is Wordsworth's most famous lyric poem. Inspired by a walk he took with his sister Dorothy in the Lake District, the poem captures a moment of intense visual and emotional communion with nature. Wordsworth moves from a state of alienation ("lonely as a cloud") to one of joy and connection when he encounters the golden daffodils. The final stanza illustrates Wordsworth's theory of poetry: that it arises from "emotion recollected in tranquility." The memory of the daffodils becomes a persistent source of joy during moments of solitude and contemplation.`,
-  },
-  {
-    id: 'dickinson-hope',
-    title: 'Hope is the thing with feathers',
-    titleHi: 'आशा वह पंखों वाली चीज़ है',
-    author: 'Emily Dickinson',
-    authorHi: 'एमिली डिकिंसन',
-    period: '1830 - 1886',
-    tradition: 'American Romanticism',
-    hi: [
-      'आशा वह पंखों वाली चीज़ है -',
-      'जो आत्मा में बसेरा करती है -',
-      'और बिना शब्दों की धुन गाती है -',
-      'और कभी नहीं रुकती - बिल्कुल भी नहीं -',
-      '',
-      'और झंझावात में - यह सबसे मीठी लगती है -',
-      'और भयानक होगा वह तूफान -',
-      'जो इस नन्हे पक्षी को विचलित कर सके',
-      'जिसने इतने सारे लोगों को गर्माहट दी -',
-      '',
-      'मैंने इसे सबसे बर्फीले देश में सुना है -',
-      'और सबसे अपरिचित समुद्र पर -',
-      'फिर भी - कभी भी - कठिन परिस्थिति में भी,',
-      'इसने मुझसे एक टुकड़ा भी नहीं माँगा।',
-    ],
-    roman: [
-      'Aasha wah pankhon wali cheez hai -',
-      'Jo aatma mein basera karti hai -',
-      'Aur bina shabdon ki dhun gaati hai -',
-      'Aur kabhi nahin rukti - bilkul bhi nahin -',
-      '',
-      'Aur jhanjhaavaat mein - yeh sabse meethi lagti hai -',
-      'Aur bhayaanak hoga woh toofaan -',
-      'Jo is nanhe pakshi ko vichalit kar sake',
-      'Jisne itne saare logon ko garmaahat di -',
-      '',
-      'Maine ise sabse barfeele desh mein suna hai -',
-      'Aur sabse aparichit samudr par -',
-      'Phir bhi - kabhi bhi - kathin paristhiti mein bhi,',
-      'Isne mujhse ek tukda bhi nahin maanga.',
-    ],
-    en: [
-      '"Hope" is the thing with feathers -',
-      'That perches in the soul -',
-      'And sings the tune without the words -',
-      'And never stops - at all -',
-      '',
-      'And sweetest - in the Gale - is heard -',
-      'And sore must be the storm -',
-      'That could abash the little Bird',
-      'That kept so many warm -',
-      '',
-      'I\'ve heard it in the chillest land -',
-      'And on the strangest Sea -',
-      'Yet - never - in Extremity,',
-      'It asked a crumb - of me.',
-    ],
-    authorBio: `Emily Dickinson is one of the most important and influential American poets. She lived a quiet, reclusive life in Amherst, Massachusetts, and published very few poems during her lifetime. Her unique style features short lines, slant rhymes, unconventional capitalization, and extensive use of dashes. After her death, her sister discovered her hand-bound booklets containing nearly 1,800 poems, which went on to revolutionize modern poetry.`,
-    commentary: `"Hope is the thing with feathers" is a beautifully constructed metaphor comparing hope to a resilient songbird that lives within the human soul. Dickinson explains that hope sings its wordless song constantly, especially during difficult times ("the Gale" and "the storm"). The poem highlights the absolute selflessness of hope; it sings in the coldest, most unfamiliar places of human experience without ever demanding anything in return ("never, in Extremity, / It asked a crumb of me"). It is an enduring meditation on inner resilience and the quiet forces that sustain us.`,
-  },
-  {
-    id: 'frost-woods',
-    title: 'Stopping by Woods on a Snowy Evening',
-    titleHi: 'बर्फ़ीली शाम को जंगल के पास रुकना',
-    author: 'Robert Frost',
-    authorHi: 'रॉबर्ट फ्रॉस्ट',
-    period: '1874 - 1963',
-    tradition: 'Modern American Poetry',
-    hi: [
-      'ये किसके जंगल हैं, शायद मैं जानता हूँ।',
-      'हालाँकि उसका घर गाँव में है;',
-      'वह मुझे यहाँ रुकते नहीं देख पाएगा',
-      'उसके जंगलों को बर्फ से ढकता देखने के लिए।',
-      '',
-      'मेरे छोटे घोड़े को यह अजीब लग रहा होगा',
-      'आस-पास बिना किसी फार्महाउस के रुकना',
-      'जंगल और जमी हुई झील के बीच',
-      'साल की सबसे अंधेरी शाम को।',
-      '',
-      'वह अपने साज की घंटियों को हिलाता है',
-      'यह पूछने के लिए कि क्या कोई गलती हुई है।',
-      'इसके अलावा केवल एक ही आवाज़ आ रही है',
-      'धीमी हवा और गिरते हुए नर्म बर्फ के फाहे की।',
-      '',
-      'जंगल प्यारे, गहरे और घने हैं,',
-      'लेकिन मुझे कई वादे निभाने हैं,',
-      'और सोने से पहले मीलों चलना है,',
-      'और सोने से पहले मीलों चलना है।',
-    ],
-    roman: [
-      'Ye kiske jangal hain, shaayad main jaanta hoon.',
-      'Haalaanki uska ghar gaanv mein hai;',
-      'Wah mujhe yahaan rukte nahin dekh paayega',
-      'Uske jangalon ko barf se dhakta dekhne ke liye.',
-      '',
-      'Mere chhote ghode ko yeh ajeeb lag raha hoga',
-      'Aas-paas bina kisi farmhouse ke rukna',
-      'Jangal aur jami hui jheel ke beech',
-      'Saal ki sabse andheri shaam ko.',
-      '',
-      'Wah apne saaj ki ghantiyon ko hilaata hai',
-      'Yeh poochhne ke liye ki kya koi galti hui hai.',
-      'Iske alaawa keval ek hi aawaaz aari hai',
-      'Dheemi hawa aur girte hue narm barf ke phaahe ki.',
-      '',
-      'Jangal pyaare, gahare aur ghane hain,',
-      'Lekin mujhe kai waade nibhaane hain,',
-      'Aur sone se pehle meelon chalna hai,',
-      'Aur sone se pehle meelon chalna hai.',
-    ],
-    en: [
-      'Whose woods these are I think I know.',
-      'His house is in the village though;',
-      'He will not see me stopping here',
-      'To watch his woods fill up with snow.',
-      '',
-      'My little horse must think it queer',
-      'To stop without a farmhouse near',
-      'Between the woods and frozen lake',
-      'The darkest evening of the year.',
-      '',
-      'He gives his harness bells a shake',
-      'To ask if there is some mistake.',
-      'The only other sound\'s the sweep',
-      'Of easy wind and downy flake.',
-      '',
-      'The woods are lovely, dark and deep,',
-      'But I have promises to keep,',
-      'And miles to go before I sleep,',
-      'And miles to go before I sleep.',
-    ],
-    authorBio: `Robert Frost was an American poet highly regarded for his realistic depictions of rural life and his command of American colloquial speech. He was awarded four Pulitzer Prizes for Poetry and became one of the nation's most public literary figures. His work frequently uses natural landscapes, particularly those of New England, to explore complex philosophical themes of choice, solitude, and duty.`,
-    commentary: `"Stopping by Woods on a Snowy Evening" is one of Frost's most widely analyzed and beloved poems. Written in a simple rubaiyat-like stanza form (AABA), it describes a brief pause a traveler takes in a snowy forest. The poem sets up a tension between the quiet, seductive beauty of nature and death ("The woods are lovely, dark and deep") and the social responsibilities of life ("But I have promises to keep"). The famous final repetition, "And miles to go before I sleep / And miles to go before I sleep," transforms a simple statement of distance into a metaphor for the journey of life and the inevitability of death.`,
-  },
-  {
-    id: 'gibran-love',
-    title: 'On Love',
-    titleHi: 'प्रेम पर',
-    author: 'Kahlil Gibran',
-    authorHi: 'खलील जिब्रान',
-    period: '1883 - 1931',
-    tradition: 'Symbolist / Mystical Prose Poetry',
-    hi: [
-      'जब प्रेम आपको इशारा करे, तो उसके पीछे हो लें,',
-      'भले ही उसके रास्ते कठिन और दुर्गम हों।',
-      'और जब उसके पंख आपको समेट लें, तो उसके सामने झुक जाएं,',
-      'भले ही उसके पंखों के बीच छिपी तलवार आपको घायल कर दे।',
-      'और जब वह आपसे बात करे, तो उस पर विश्वास करें,',
-      'भले ही उसकी आवाज़ आपके सपनों को वैसे ही छिन्न-भिन्न कर दे जैसे उत्तरी हवा बगीचे को उजाड़ देती है।',
-      '',
-      'क्योंकि जैसे प्रेम आपको ताज पहनाता है, वैसे ही वह सूली पर भी चढ़ाएगा। जैसे वह आपकी वृद्धि के लिए है, वैसे ही वह आपकी छंटाई के लिए भी है।',
-      'जैसे वह आपकी ऊंचाई तक चढ़ता है और धूप में कांपती आपकी सबसे नाजुक शाखाओं को सहलाता है,',
-      'वैसे ही वह आपकी जड़ों तक उतरेगा और मिट्टी से उनके जुड़ाव को हिलाकर रख देगा।',
-      '',
-      'अनाज के गट्ठर की तरह वह आपको अपने पास इकट्ठा करता है।',
-      'वह आपको नग्न करने के लिए पीटता है।',
-      'वह आपको भूसे से मुक्त करने के लिए छानता है।',
-      'वह आपको सफेदी तक पीसता है।',
-      'वह आपको तब तक गूंथता है जब तक आप कोमल न हो जाएं;',
-      'और फिर वह आपको अपनी पवित्र अग्नि को सौंपता है, ताकि आप ईश्वर की पवित्र दावत के लिए पवित्र रोटी बन सकें।',
-    ],
-    roman: [
-      'Jab prem aapko ishaara kare, to uske peeche ho lein,',
-      'Bhale hi uske raaste kathin aur durgam hon.',
-      'Aur jab uske pankh aapko samet lein, to uske saamne jhuk jaayein,',
-      'Bhale hi uske pankhon ke beech chhipi talwaar aapko ghaayal kar de.',
-      'Aur jab wah aapse baat kare, to us par vishwaas karein,',
-      'Bhale hi uski aawaaz aapke sapnon ko waise hi chhinn-bhinn kar de jaise uttari hawa bageeche ko ujaad deti hai.',
-      '',
-      'Kyunki jaise prem aapko taaj pehnaata hai, waise hi wah sooli par bhi chadhaayega. Jaise wah aapki vriddhi ke liye hai, waise hi wah aapki chhantaai ke liye bhi hai.',
-      'Jaise wah aapki oonchaai tak chadhta hai aur dhoop mein kaanpti aapki sabse naajuk shaakhaon ko sehlaata hai,',
-      'Waise hi wah aapki jadon tak utrega aur mitti se unke judaav ko hilaakar rakh dega.',
-      '',
-      'Anaaj ke gatthar ki tarah wah aapko apne paas ikattha karta hai.',
-      'Wah aapko nagna karne ke liye peetta hai.',
-      'Wah aapko bhoose se mukt karne ke liye chhaanta hai.',
-      'Wah aapko safedi tak peesta hai.',
-      'Wah aapko tab tak goonthta hai jag tak aap komal na ho jaayein;',
-      'Aur phir wah aapko apni pavitra agni ko saunpta hai, taaki aap eeshwar ki pavitra daavat ke liye pavitra roti ben sakein.',
-    ],
-    en: [
-      'When love beckons to you, follow him,',
-      'Though his ways are hard and steep.',
-      'And when his wings enfold you yield to him,',
-      'Though the sword hidden among his pinions may wound you.',
-      'And when he speaks to you believe in him,',
-      'Though his voice may shatter your dreams as the north wind lays waste the garden.',
-      '',
-      'For even as love crowns you so shall he crucify you. Even as he is for your growth so is he for your pruning.',
-      'Even as he ascends to your height and caresses your tenderest branches that quiver in the sun,',
-      'So shall he descend to your roots and shake them in their clinging to the earth.',
-      '',
-      'Like sheaves of corn he gathers you unto himself.',
-      'He threshes you to make you naked.',
-      'He sifts you to free you from your husks.',
-      'He grinds you to whiteness.',
-      'He kneads you until you are pliant;',
-      'And then he assigns you to his sacred fire, that you may become sacred bread for God\'s sacred feast.',
-    ],
-    authorBio: `Kahlil Gibran was a Lebanese-American writer, poet, and visual artist. He is best known for his 1923 book The Prophet, a collection of philosophical essays written in poetic English prose. Gibran's works deal with deep spiritual themes of love, freedom, pain, and death, blending Eastern mysticism with Western romanticism. He remains one of the best-selling poets of all time.`,
-    commentary: `"On Love" is one of the opening chapters of Gibran's masterpiece, The Prophet. Through the voice of Almustafa, Gibran offers a profound, un-romanticized view of love. Love is not merely a source of pleasure; it is a rigorous spiritual fire that demands complete surrender and purification. Gibran uses agrarian metaphors - harvesting, threshing, grinding, kneading, and baking - to describe how love breaks down the ego and reorganizes the self. Love's ultimate purpose is to bring the individual into alignment with the divine.`,
-  },
-];
-
 export default function SukoonPage() {
+  const { user } = useAuth();
   const [script, setScript] = useState<Script>('hi');
   const dayOfYear = getDayOfYear();
   const [activePoem, setActivePoem] = useState(POEMS[dayOfYear % POEMS.length]);
   const [expandedPoem, setExpandedPoem] = useState<string | null>(activePoem.id);
   const [openTranslations, setOpenTranslations] = useState<Record<string, boolean>>({});
   const [copiedIndex, setCopiedIndex] = useState<string | null>(null);
+
+  // Anthology & Focus Mode states
+  const [anthologyIds, setAnthologyIds] = useState<Set<string>>(new Set());
+  const [onlyAnthology, setOnlyAnthology] = useState(false);
+  const [focusPoem, setFocusPoem] = useState<Poem | null>(null);
+
+  useEffect(() => {
+    if (!user || !db) return;
+    const q = collection(db, `users/${user.uid}/anthology`);
+    const unsub = onSnapshot(q, (snap) => {
+      const ids = new Set(snap.docs.map(d => d.id));
+      setAnthologyIds(ids);
+    }, (err) => {
+      console.error('Failed to load anthology:', err);
+    });
+    return unsub;
+  }, [user]);
+
+  const toggleAnthology = async (poemId: string) => {
+    if (!user || !db) return;
+    const docRef = doc(db, `users/${user.uid}/anthology`, poemId);
+    if (anthologyIds.has(poemId)) {
+      await deleteDoc(docRef);
+    } else {
+      await setDoc(docRef, { saved: true, savedAt: new Date() });
+    }
+  };
 
   const groupLinesIntoCouplets = (linesList: string[]) => {
     const result: string[][] = [];
@@ -751,6 +95,8 @@ export default function SukoonPage() {
 
   const linesForActive = script === 'hi' ? activePoem.hi : script === 'roman' ? activePoem.roman : activePoem.en;
 
+  const visiblePoems = onlyAnthology ? POEMS.filter(p => anthologyIds.has(p.id)) : POEMS;
+
   return (
     <PageTransition>
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 space-y-6">
@@ -764,60 +110,94 @@ export default function SukoonPage() {
             Let the words land slowly.
           </p>
 
-          {/* Script toggle */}
-          <div className="flex gap-2 pt-1">
-            {(['hi', 'roman', 'en'] as Script[]).map(s => (
-              <button
-                key={s}
-                onClick={() => setScript(s)}
-                className="px-4 py-1.5 rounded-full text-xs font-medium transition-all"
-                style={{
-                  background: script === s ? 'var(--accent-saffron)' : 'var(--bg-tertiary)',
-                  color: script === s ? 'white' : 'var(--text-muted)',
-                }}
-              >
-                {s === 'hi' ? 'हिन्दी' : s === 'roman' ? 'Roman' : 'English'}
-              </button>
-            ))}
+          {/* Toggles */}
+          <div className="flex flex-wrap gap-4 items-center justify-between pt-2 border-t border-b py-2" style={{ borderColor: 'var(--border-default)' }}>
+            {/* Script toggle */}
+            <div className="flex gap-2">
+              {(['hi', 'roman', 'en'] as Script[]).map(s => (
+                <button
+                  key={s}
+                  onClick={() => setScript(s)}
+                  className="px-4 py-1.5 rounded-full text-xs font-medium transition-all"
+                  style={{
+                    background: script === s ? 'var(--accent-saffron)' : 'var(--bg-tertiary)',
+                    color: script === s ? 'white' : 'var(--text-muted)',
+                  }}
+                >
+                  {s === 'hi' ? 'हिन्दी' : s === 'roman' ? 'Roman' : 'English'}
+                </button>
+              ))}
+            </div>
+
+            {/* Anthology filter */}
+            <button
+              onClick={() => setOnlyAnthology(!onlyAnthology)}
+              className="px-4 py-1.5 rounded-full text-xs font-medium transition-all flex items-center gap-1.5 border"
+              style={{
+                borderColor: onlyAnthology ? 'var(--accent-saffron)' : 'var(--border-default)',
+                background: onlyAnthology ? 'color-mix(in srgb, var(--accent-saffron) 10%, var(--bg-tertiary))' : 'var(--bg-tertiary)',
+                color: onlyAnthology ? 'var(--accent-saffron)' : 'var(--text-muted)',
+              }}
+            >
+              <Heart size={12} className={onlyAnthology ? 'fill-current' : ''} />
+              My Anthology ({anthologyIds.size})
+            </button>
           </div>
         </motion.div>
 
-        {/* Today's poem - highlighted */}
-        <motion.div
-          variants={FADE_UP}
-          initial="initial"
-          animate="animate"
-          className="card-base p-1 relative overflow-hidden"
-          style={{ border: '1px solid var(--accent-saffron)', background: 'color-mix(in srgb, var(--accent-saffron) 4%, var(--bg-secondary))' }}
-        >
-          {activePoem.id === 'ghalib-khwahish' && (
-            <div 
-              className="absolute inset-0 bg-cover bg-center pointer-events-none z-0" 
-              style={{ backgroundImage: "url('/paintings/starry-night.jpg')", opacity: 0.08 }} 
-            />
-          )}
-          <div className="p-4 relative z-10">
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-xs font-semibold" style={{ color: 'var(--accent-saffron)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-                Today's Poem
-              </span>
-              <div className="flex items-center gap-2" onClick={e => e.stopPropagation()}>
-                <ReadAloudButton
-                  text={linesForActive.filter(l => l.trim()).join('\n')}
-                  lang={script === 'en' ? 'en-IN' : 'hi-IN'}
-                  size="sm"
-                />
-                <span className="text-xs" style={{ color: 'var(--text-faint)' }}>{activePoem.tradition}</span>
+        {/* Poem of the Week - highlighted */}
+        {!onlyAnthology && (
+          <motion.div
+            variants={FADE_UP}
+            initial="initial"
+            animate="animate"
+            className="card-base p-1 relative overflow-hidden"
+            style={{ border: '1px solid var(--accent-saffron)', background: 'color-mix(in srgb, var(--accent-saffron) 4%, var(--bg-secondary))' }}
+          >
+            {activePoem.id === 'ghalib-khwahish' && (
+              <div 
+                className="absolute inset-0 bg-cover bg-center pointer-events-none z-0" 
+                style={{ backgroundImage: "url('/paintings/starry-night.jpg')", opacity: 0.08 }} 
+              />
+            )}
+            <div className="p-4 relative z-10">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-xs font-semibold" style={{ color: 'var(--accent-saffron)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+                  Poem of the Week
+                </span>
+                <div className="flex items-center gap-2" onClick={e => e.stopPropagation()}>
+                  <ReadAloudButton
+                    text={linesForActive.filter(l => l.trim()).join('\n')}
+                    lang={script === 'en' ? 'en-IN' : 'hi-IN'}
+                    size="sm"
+                  />
+                  <button
+                    onClick={() => setFocusPoem(activePoem)}
+                    className="px-2.5 py-1 rounded-full text-xs font-medium border transition-all hover:bg-bg-tertiary flex items-center gap-1"
+                    style={{ borderColor: 'var(--border-default)', color: 'var(--text-muted)', background: 'var(--bg-primary)' }}
+                  >
+                    Focus
+                  </button>
+                  <button
+                    onClick={() => toggleAnthology(activePoem.id)}
+                    className="p-1 rounded-full border transition-all hover:bg-bg-tertiary flex items-center justify-center w-7 h-7"
+                    style={{ borderColor: 'var(--border-default)', color: anthologyIds.has(activePoem.id) ? 'var(--accent-saffron)' : 'var(--text-muted)', background: 'var(--bg-primary)' }}
+                    title={anthologyIds.has(activePoem.id) ? "Remove from Anthology" : "Save to Anthology"}
+                  >
+                    <Heart size={14} className={anthologyIds.has(activePoem.id) ? 'fill-current' : ''} />
+                  </button>
+                  <span className="text-xs pl-2" style={{ color: 'var(--text-faint)' }}>{activePoem.tradition}</span>
+                </div>
               </div>
+              <h2 className="font-serif text-xl cursor-pointer" style={{ color: 'var(--text-primary)' }} onClick={() => setExpandedPoem(expandedPoem === activePoem.id ? null : activePoem.id)}>
+                {script === 'hi' ? activePoem.titleHi : activePoem.title}
+              </h2>
+              <p className="text-sm mt-0.5" style={{ color: activePoem.id === 'ghalib-khwahish' ? 'var(--accent-saffron)' : 'var(--text-muted)' }}>
+                {script === 'hi' ? activePoem.authorHi : activePoem.author} · {activePoem.period}
+              </p>
             </div>
-            <h2 className="font-serif text-xl cursor-pointer" style={{ color: 'var(--text-primary)' }} onClick={() => setExpandedPoem(expandedPoem === activePoem.id ? null : activePoem.id)}>
-              {script === 'hi' ? activePoem.titleHi : activePoem.title}
-            </h2>
-            <p className="text-sm mt-0.5" style={{ color: activePoem.id === 'ghalib-khwahish' ? 'var(--accent-saffron)' : 'var(--text-muted)' }}>
-              {script === 'hi' ? activePoem.authorHi : activePoem.author} · {activePoem.period}
-            </p>
-          </div>
-        </motion.div>
+          </motion.div>
+        )}
 
         {/* All poems */}
         <motion.div
@@ -826,7 +206,7 @@ export default function SukoonPage() {
           animate="animate"
           className="space-y-4"
         >
-          {POEMS.map(poem => {
+          {visiblePoems.map(poem => {
             const lines = script === 'hi' ? poem.hi : script === 'roman' ? poem.roman : poem.en;
             const isExpanded = expandedPoem === poem.id;
 
@@ -894,6 +274,21 @@ export default function SukoonPage() {
                         lang={script === 'en' ? 'en-IN' : 'hi-IN'}
                         size="sm"
                       />
+                      <button
+                        onClick={() => setFocusPoem(poem)}
+                        className="px-2.5 py-1 rounded-full text-xs font-medium border transition-all hover:bg-bg-tertiary flex items-center gap-1"
+                        style={{ borderColor: 'var(--border-default)', color: 'var(--text-muted)' }}
+                      >
+                        Focus
+                      </button>
+                      <button
+                        onClick={() => toggleAnthology(poem.id)}
+                        className="p-1.5 rounded-full border transition-all hover:bg-bg-tertiary flex items-center justify-center w-7 h-7"
+                        style={{ borderColor: 'var(--border-default)', color: anthologyIds.has(poem.id) ? 'var(--accent-saffron)' : 'var(--text-muted)' }}
+                        title={anthologyIds.has(poem.id) ? "Remove from Anthology" : "Save to Anthology"}
+                      >
+                        <Heart size={14} className={anthologyIds.has(poem.id) ? 'fill-current' : ''} />
+                      </button>
                       <button
                         onClick={() => setExpandedPoem(isExpanded ? null : poem.id)}
                         className="p-1 rounded-full hover:bg-secondary transition-all"
@@ -1060,6 +455,39 @@ export default function SukoonPage() {
             Poetry is not decoration. It is a different form of thinking.
           </p>
         </motion.div>
+        {/* Focus Mode Component */}
+        <FocusMode
+          isOpen={focusPoem !== null}
+          onClose={() => setFocusPoem(null)}
+          title={focusPoem ? (script === 'hi' ? focusPoem.titleHi : focusPoem.title) : ''}
+          author={focusPoem ? (script === 'hi' ? focusPoem.authorHi : focusPoem.author) : ''}
+          textToSpeak={focusPoem ? (script === 'hi' ? focusPoem.hi : script === 'roman' ? focusPoem.roman : focusPoem.en).filter(l => l.trim()).join('\n') : ''}
+        >
+          {focusPoem && (
+            <div className="space-y-6 text-center">
+              {focusPoem.id === 'ghalib-khwahish' ? (
+                groupLinesIntoCouplets(script === 'hi' ? focusPoem.hi : script === 'roman' ? focusPoem.roman : focusPoem.en).map((sher, idx) => (
+                  <div key={idx} className="space-y-2">
+                    {sher.map((line, lIdx) => (
+                      <p key={lIdx} className="text-xl sm:text-2xl font-serif leading-relaxed italic">{line}</p>
+                    ))}
+                    {idx < groupLinesIntoCouplets(focusPoem.hi).length - 1 && (
+                      <div className="py-4 text-stone-400 select-none">· · ·</div>
+                    )}
+                  </div>
+                ))
+              ) : (
+                (script === 'hi' ? focusPoem.hi : script === 'roman' ? focusPoem.roman : focusPoem.en).map((line, idx) => (
+                  line === '' ? (
+                    <div key={idx} className="h-6" />
+                  ) : (
+                    <p key={idx} className="text-xl sm:text-2xl font-serif leading-relaxed italic">{line}</p>
+                  )
+                ))
+              )}
+            </div>
+          )}
+        </FocusMode>
       </div>
     </PageTransition>
   );
