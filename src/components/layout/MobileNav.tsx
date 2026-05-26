@@ -108,7 +108,7 @@ export default function MobileNav() {
                         <span className="text-3xl">{sutr.emoji}</span>
                         <div className="flex-1 text-left">
                           <span className="block text-base font-semibold" style={{ color: isActive ? sutr.colorHex : 'var(--text-primary)' }}>
-                            {sutr.name} — {sutr.nameHindi}
+                            {sutr.name}<span className="mx-1 font-sans opacity-70">-</span>{sutr.nameHindi}
                           </span>
                           <span className="block text-xs" style={{ color: 'var(--text-muted)' }}>
                             {sutr.description}

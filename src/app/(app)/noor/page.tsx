@@ -140,11 +140,11 @@ export default function NoorPage() {
                 />
               </div>
               <span className="text-3xl">🌟</span>
-              <div className="pr-32 pl-32">
+              <div className="px-4 md:px-32">
                 <h2 className="font-serif text-2xl leading-tight" style={{ color: 'var(--text-primary)' }}>{selected.title}</h2>
                 <p className="font-devanagari text-base mt-1" style={{ color: 'var(--text-muted)' }}>{selected.titleHindi}</p>
               </div>
-              <p className="font-serif italic text-base pr-32 pl-32" style={{ color: '#D4A853' }}>{selected.intro}</p>
+              <p className="font-serif italic text-base px-4 md:px-32" style={{ color: '#D4A853' }}>{selected.intro}</p>
             </div>
 
             {/* Content */}
