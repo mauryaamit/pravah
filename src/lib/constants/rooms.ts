@@ -1,5 +1,5 @@
 // src/lib/constants/rooms.ts
-// Master room list for PRAVAH - all 23 rooms
+// Master room list for PRAVAH - all 26 rooms
 
 export type RoomCluster = 'daily' | 'inner' | 'knowledge' | 'world' | 'creative';
 
@@ -38,7 +38,10 @@ export const ROOMS: Room[] = [
   { id: 'cosmos',      name: 'Cosmos',       nameHi: 'ब्रह्मांड', nameHindi: 'ब्रह्मांड', emoji: '🌌', description: 'Astrophysics and the infinite universe',        route: '/cosmos',       colorVar: '--room-cosmos',       colorHex: '#3A5A8A', cluster: 'knowledge' },
   { id: 'darshan',     name: 'Darshan',      nameHi: 'दर्शन',      nameHindi: 'दर्शन',     emoji: '🏛️', description: 'Philosophy - all schools of thought',          route: '/darshan',      colorVar: '--room-darshan',      colorHex: '#8A6A3A', cluster: 'knowledge' },
   { id: 'samvaad',     name: 'Samvaad',      nameHi: 'संवाद',      nameHindi: 'संवाद',     emoji: '🗣️', description: 'Word of the day - etymology and usage',       route: '/samvaad',      colorVar: '--room-samvaad',      colorHex: '#3A6A8A', cluster: 'knowledge' },
-  { id: 'srot',        name: 'Srot',         nameHi: 'स्रोत',      nameHindi: 'स्रोत',     emoji: '📚', description: 'One deep read per day',                        route: '/srot',         colorVar: '--room-srot',         colorHex: '#3A6A8A', cluster: 'knowledge' },
+  { id: 'srot',        name: 'Srot',          nameHi: 'स्रोत',      nameHindi: 'स्रोत',     emoji: '📚', description: 'One deep read per day',                        route: '/srot',         colorVar: '--room-srot',         colorHex: '#3A6A8A', cluster: 'knowledge' },
+  { id: 'vani',        name: 'Vani',          nameHi: 'वाणी',       nameHindi: 'वाणी',      emoji: '🪔', description: 'Sanskrit shlokas, dohas, and living folk wisdom', route: '/vani',         colorVar: '--room-vani',         colorHex: '#8B3A3A', cluster: 'knowledge' },
+  { id: 'shabda',      name: 'Shabda',        nameHi: 'शब्द',       nameHindi: 'शब्द',      emoji: '🔤', description: 'Word of the day - English, rare, idioms, GenZ',  route: '/shabda',       colorVar: '--room-shabda',       colorHex: '#2D6B6B', cluster: 'knowledge' },
+  { id: 'ulajhan',     name: 'Ulajhan',       nameHi: 'उलझन',       nameHindi: 'उलझन',     emoji: '🧩', description: 'One paradox per day - fully explained',          route: '/ulajhan',      colorVar: '--room-ulajhan',      colorHex: '#4A3570', cluster: 'knowledge' },
 
   // WORLD
   { id: 'duniya',      name: 'Duniya',       nameHi: 'दुनिया',     nameHindi: 'दुनिया',    emoji: '🌍', description: '3 world stories, explained deeply',             route: '/duniya',       colorVar: '--room-duniya',       colorHex: '#4A7C59', cluster: 'world' },

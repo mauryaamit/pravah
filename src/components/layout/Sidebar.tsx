@@ -9,6 +9,7 @@ import {
   Lightbulb, Brain, Telescope, Landmark, MessageSquare, Library,
   Globe2, Sparkles, PlaneTakeoff, Leaf, Flag,
   ScrollText, UserRound, BookMarked, Heart, BookOpen,
+  Mic2, Type, Puzzle,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ROOMS, ROOMS_BY_CLUSTER, CLUSTER_LABELS, type RoomCluster } from '@/lib/constants/rooms';
@@ -24,6 +25,7 @@ const ROOM_ICONS: Record<string, React.ComponentType<any>> = {
   sukoon: CloudRain, manthan: Waves, noor: Zap, riyaz: Music2,
   bodh: Lightbulb, neurolab: Brain, cosmos: Telescope, darshan: Landmark,
   samvaad: MessageSquare, srot: Library,
+  vani: Mic2, shabda: Type, ulajhan: Puzzle,
   duniya: Globe2, neelakurinji: Sparkles, safar: PlaneTakeoff, aranya: Leaf, bharati: Flag,
   kathakar: ScrollText, vibhav: UserRound, lekhak: BookMarked, anand: Heart,
 };
