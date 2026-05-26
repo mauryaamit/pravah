@@ -31,7 +31,7 @@ export default function SutrPage() {
             ref={addToReveal}
             className="sutr-opening flex flex-col justify-center items-center text-center relative"
           >
-            {/* Background painting — 8% opacity so text wins */}
+            {/* Background painting - 8% opacity so text wins */}
             <div
               className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center"
               style={{
@@ -128,7 +128,7 @@ export default function SutrPage() {
                   className="sutr-room-entry flex flex-col md:flex-row md:items-start gap-4 border-b transition-colors hover:bg-stone-50/30 dark:hover:bg-stone-950/10 px-3 rounded-xl"
                   style={{ borderColor: 'var(--border-default)' }}
                 >
-                  <div className="md:w-1/3 flex-shrink-0">
+                  <div className="w-full md:w-1/3 flex-shrink-0">
                     <span className="sutr-room-name font-semibold text-base block" style={{ color: '#3D3560' }}>
                       {room.name}
                     </span>
@@ -136,7 +136,7 @@ export default function SutrPage() {
                       {room.nameHindi}
                     </span>
                   </div>
-                  <div className="md:w-2/3 space-y-1">
+                  <div className="w-full md:w-2/3 space-y-1">
                     <span className="sutr-room-dimension text-xs uppercase tracking-wider block">
                       {room.oneLiner}
                     </span>
@@ -198,7 +198,7 @@ export default function SutrPage() {
             ref={addToReveal}
             className="sutr-closing flex flex-col justify-center items-center text-center relative"
           >
-            {/* Closing Painting — 8% */}
+            {/* Closing Painting - 8% */}
             <div
               className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center"
               style={{
@@ -326,8 +326,8 @@ export default function SutrPage() {
               padding-bottom: 24px !important;
             }
             .sutr-opening {
-              min-height: 45vh !important;
-              padding: 40px 20px 24px !important;
+              min-height: 50vh !important;
+              padding: 40px 20px 88px !important; /* Increased bottom padding so the card breathes and background is not cut off */
             }
             .sutr-closing {
               min-height: 35vh !important;

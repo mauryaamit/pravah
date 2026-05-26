@@ -13,36 +13,36 @@ export const SUTR_ROOMS: SutrRoomDescription[] = [
     id: 'aarambh',
     name: 'Aarambh',
     nameHindi: 'आरंभ',
-    oneLiner: 'Daily start — mood, intention, mantra',
+    oneLiner: 'Daily start - mood, intention, mantra',
     contemplativeText: 'Begin each morning by aligning your breath, setting your focus, and stepping mindfully into the flow of the day.'
   },
   {
     id: 'agni',
     name: 'Agni',
     nameHindi: 'अग्नि',
-    oneLiner: 'Habit forge — streak and micro-wins',
+    oneLiner: 'Habit forge - streak and micro-wins',
     contemplativeText: 'Feed the fire of action. Track small, deliberate actions that gather heat and transform into lifelong character.'
   },
   {
     id: 'antarman',
     name: 'Antarman',
     nameHindi: 'अन्तर्मन',
-    oneLiner: 'Journal — write, reflect, grow',
+    oneLiner: 'Journal - write, reflect, grow',
     contemplativeText: 'A quiet mirror for your inner thoughts. Empty your mind, trace your feelings, and record your evolution.'
   },
   {
     id: 'bargad',
     name: 'Bargad',
     nameHindi: 'बरगद',
-    oneLiner: 'Your Sankalps — deep long-term goals',
+    oneLiner: 'Your Sankalps - deep long-term goals',
     contemplativeText: 'Plant your deepest commitments under the shade of the banyan tree. Watch your silent vows take root and grow.'
   },
   {
     id: 'sukoon',
     name: 'Sukoon',
     nameHindi: 'सुकून',
-    oneLiner: 'Poetry — Hindi, Roman Urdu, English',
-    contemplativeText: 'Lose yourself in the cadence of timeless verses. Let the rhythm of words soothe your weary spirit.'
+    oneLiner: 'Poetry - Hindi, Roman Urdu, English',
+    contemplativeText: 'Lose yourself in the cadence of timeless verses. Let the rhythm of words soothe your spirit.'
   },
   {
     id: 'manthan',
@@ -55,14 +55,14 @@ export const SUTR_ROOMS: SutrRoomDescription[] = [
     id: 'noor',
     name: 'Noor',
     nameHindi: 'नूर',
-    oneLiner: 'Daily fire — transformation, not motivation',
+    oneLiner: 'Daily fire - transformation, not motivation',
     contemplativeText: 'A spark of quiet light to illuminate your path. Seek the wisdom that demands internal shift over superficial action.'
   },
   {
     id: 'riyaz',
     name: 'Riyaz',
     nameHindi: 'रियाज़',
-    oneLiner: 'Music and arts — the practice of beauty',
+    oneLiner: 'Music and arts - the practice of beauty',
     contemplativeText: 'Immerse yourself in ragas, scales, and the deep practice of harmony. Dedicate your attention to crafting pure aesthetic grace.'
   },
   {
@@ -90,14 +90,14 @@ export const SUTR_ROOMS: SutrRoomDescription[] = [
     id: 'darshan',
     name: 'Darshan',
     nameHindi: 'दर्शन',
-    oneLiner: 'Philosophy — all schools of thought',
+    oneLiner: 'Philosophy - all schools of thought',
     contemplativeText: 'From ancient Vedic seers to modern existentialists, trace the human struggle to answer: What is the good life?'
   },
   {
     id: 'samvaad',
     name: 'Samvaad',
     nameHindi: 'संवाद',
-    oneLiner: 'Word of the day — etymology and usage',
+    oneLiner: 'Word of the day - etymology and usage',
     contemplativeText: 'Discover the secret lineage of words. Dive into the origins of language and unlock deep cultural meaning.'
   },
   {
@@ -118,7 +118,7 @@ export const SUTR_ROOMS: SutrRoomDescription[] = [
     id: 'neelakurinji',
     name: 'Neelakurinji',
     nameHindi: 'नीलकुरिंजी',
-    oneLiner: 'Wonder room — daily surprise',
+    oneLiner: 'Wonder room - daily surprise',
     contemplativeText: 'A bloom of pure curiosity. Encounter the Mpemba effect, Fibonacci sequences, or strange optical coincidences in nature.'
   },
   {
@@ -132,14 +132,14 @@ export const SUTR_ROOMS: SutrRoomDescription[] = [
     id: 'aranya',
     name: 'Aranya',
     nameHindi: 'अरण्य',
-    oneLiner: 'Nature room — flora, fauna, Earth',
+    oneLiner: 'Nature room - flora, fauna, Earth',
     contemplativeText: 'Rekindle your connection with the soil. Listen to the silent communications of trees and the whispers of wild forests.'
   },
   {
     id: 'bharati',
     name: 'Bharati',
     nameHindi: 'भारती',
-    oneLiner: 'Discover India — history, culture, wonder',
+    oneLiner: 'Discover India - history, culture, wonder',
     contemplativeText: 'Journey through the ancient Indus engineering, standard metrics, and philosophical arts of the subcontinent.'
   },
   {
@@ -153,21 +153,21 @@ export const SUTR_ROOMS: SutrRoomDescription[] = [
     id: 'vibhav',
     name: 'Vibhav',
     nameHindi: 'विभाव',
-    oneLiner: 'Person of the day — their life, their way',
+    oneLiner: 'Person of the day - their life, their way',
     contemplativeText: 'Deconstruct the struggles, routines, and characters of historical icons who forged unique ways of living.'
   },
   {
     id: 'lekhak',
     name: 'Lekhak',
     nameHindi: 'लेखक',
-    oneLiner: 'Writer of the day — literature universe',
+    oneLiner: 'Writer of the day - literature universe',
     contemplativeText: 'Unveil the inner processes, draft histories, and stylistic visions of the world’s most profound authors.'
   },
   {
     id: 'anand',
     name: 'Anand',
     nameHindi: 'आनंद',
-    oneLiner: 'Joy room — humor, illusions, wonder, delight',
+    oneLiner: 'Joy room - humor, illusions, wonder, delight',
     contemplativeText: 'Celebrate the simple pleasure of lighthearted delight. Relax with gentle humor, paradoxes, and optical play.'
   },
   {
@@ -181,14 +181,14 @@ export const SUTR_ROOMS: SutrRoomDescription[] = [
     id: 'shabda',
     name: 'Shabda',
     nameHindi: 'शब्द',
-    oneLiner: 'Word of the day — English, rare, idioms, GenZ',
+    oneLiner: 'Word of the day - English, rare, idioms, GenZ',
     contemplativeText: 'Expand the boundaries of your world through language. Explore etymology, beautiful untranslatable words, and contemporary slang.'
   },
   {
     id: 'paradox',
     name: 'Paradox',
     nameHindi: 'विरोधाभास',
-    oneLiner: 'One paradox per day — fully explained',
+    oneLiner: 'One paradox per day - fully explained',
     contemplativeText: 'Sit with the ultimate contradictions of human thought. Challenge your logic, unravel cognitive puzzles, and expand your perspective.'
   }
 ];
