@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { db } from '@/lib/firebase/client';
 import { doc, onSnapshot, setDoc, serverTimestamp } from 'firebase/firestore';
 import { toDateString } from '@/lib/utils/date';
@@ -23,6 +23,51 @@ import { getTimeGreeting, getDayOfYear, formatHindiDate } from '@/lib/utils/date
 import { ROOMS } from '@/lib/constants/rooms';
 import { cn } from '@/lib/utils/cn';
 import { STAGGER_CONTAINER, STAGGER_ITEM, SLOW_REVEAL } from '@/lib/utils/motion';
+
+// ── Devanagari name transliteration (Latin → Devanagari approximation)
+const DEVANAGARI_MAP: Record<string, string> = {
+  a: 'अ', A: 'आ', aa: 'आ', i: 'इ', I: 'ई', ii: 'ई',
+  u: 'उ', U: 'ऊ', uu: 'ऊ', e: 'ए', ai: 'ऐ', o: 'ओ', au: 'औ',
+  b: 'ब', c: 'क', ch: 'च', d: 'द', f: 'फ', g: 'ग', h: 'ह',
+  j: 'ज', k: 'क', l: 'ल', m: 'म', n: 'न', p: 'प', q: 'क',
+  r: 'र', s: 'स', sh: 'श', t: 'त', th: 'थ', v: 'व', w: 'व',
+  x: 'क्ष', y: 'य', z: 'ज़',
+};
+
+// Common name mappings for accurate transliteration
+const NAME_MAP: Record<string, string> = {
+  amit: 'अमित', amita: 'अमिता', anita: 'अनिता', arun: 'अरुण',
+  aryan: 'आर्यन', arjun: 'अर्जुन', asha: 'आशा', ayaan: 'अयान',
+  deepak: 'दीपक', dev: 'देव', divya: 'दिव्या', gaurav: 'गौरव',
+  ishaan: 'ईशान', kavya: 'काव्या', kiran: 'किरण', krishna: 'कृष्ण',
+  manav: 'मानव', meera: 'मीरा', mohan: 'मोहन', naina: 'नैना',
+  naveen: 'नवीन', neha: 'नेहा', nikhil: 'निखिल', nina: 'नीना',
+  pooja: 'पूजा', puja: 'पूजा', priya: 'प्रिया', rahul: 'राहुल',
+  raj: 'राज', rajesh: 'राजेश', ravi: 'रवि', riya: 'रिया',
+  rohit: 'रोहित', sachin: 'सचिन', sahil: 'साहिल', samir: 'समीर',
+  sanjay: 'संजय', sara: 'सारा', sarah: 'सारा', shiv: 'शिव',
+  shreya: 'श्रेया', shruti: 'श्रुति', siddharth: 'सिद्धार्थ',
+  simran: 'सिमरन', sneha: 'स्नेहा', soham: 'सोहम', suresh: 'सुरेश',
+  tanvi: 'तन्वी', tarun: 'तरुण', tanya: 'तान्या', uday: 'उदय',
+  vikas: 'विकास', vikram: 'विक्रम', vinay: 'विलय', vishal: 'विशाल',
+  yash: 'यश', zara: 'ज़ारा',
+};
+
+function getDevanagariName(name?: string): React.ReactNode {
+  if (!name || typeof name !== 'string') return 'मित्र';
+  const lower = name.trim().toLowerCase();
+  const devName = NAME_MAP[lower];
+  if (devName) {
+    return (
+      <span>
+        <span className="font-devanagari">{devName}</span>
+        <span className="text-[0.8em] opacity-70 ml-1.5 not-italic" style={{ fontFamily: 'DM Sans, sans-serif' }}>({name})</span>
+      </span>
+    );
+  }
+  // Fallback: just show name as-is (no Devanagari for unknown names)
+  return name;
+}
 
 const FALLBACK_MANTRAS = [
   { hi: 'जो बीत गई सो बात गई', en: 'What has passed, let it pass.' },
@@ -105,7 +150,7 @@ export default function AarambhPage() {
 
     const speakGuidance = (phrase: string, pitch: number, rate: number) => {
       if (isVoiceMutedRef.current) return;
-      speak(phrase, { rate, pitch, lang: 'en-IN', volume: 0.9 });
+      speak(phrase, { rate, pitch, lang: 'en-IN', volume: 0.9, preferWarm: true });
     };
 
     const run = async () => {
@@ -116,7 +161,7 @@ export default function AarambhPage() {
         // 1. INHALE — 4 seconds
         setPhase('inhale');
         setElapsedSeconds(0);
-        speakGuidance("Breathe in...", 0.75, 0.55);
+        speakGuidance("Breathe in...", 0.72, 0.52);
 
         for (let s = 1; s <= 4; s++) {
           await wait(1000);
@@ -127,7 +172,7 @@ export default function AarambhPage() {
         // 2. HOLD — 4 seconds
         setPhase('hold');
         setElapsedSeconds(0);
-        speakGuidance("Hold...", 0.70, 0.5);
+        speakGuidance("Hold...", 0.72, 0.52);
 
         for (let s = 1; s <= 4; s++) {
           await wait(1000);
@@ -138,7 +183,7 @@ export default function AarambhPage() {
         // 3. EXHALE — 4 seconds
         setPhase('exhale');
         setElapsedSeconds(0);
-        speakGuidance("Release...", 0.68, 0.5);
+        speakGuidance("Let go...", 0.72, 0.52);
 
         for (let s = 1; s <= 4; s++) {
           await wait(1000);
@@ -241,16 +286,16 @@ export default function AarambhPage() {
   const poeticGreeting = getPoeticGreeting();
 
   const SPARKS = [
-    { room: 'Sukoon (Poetry)', route: '/sukoon', text: '“Hazaron khwahishen aisi ke har khwahish pe dam nikle...” — Mirza Ghalib' },
-    { room: 'Bodh (Mental Models)', route: '/bodh', text: '“First Principles: Boil things down to their fundamental truths and reason up from there.”' },
-    { room: 'Darshan (Philosophy)', route: '/darshan', text: '“We suffer more often in imagination than in reality.” — Seneca' },
-    { room: 'Srot (Deep Reads)', route: '/srot', text: '“In a world of constant speed, slow reading is the ultimate act of cognitive rebellion.”' },
-    { room: 'Samvaad (Word of the Day)', route: '/samvaad', text: '“Saudade: The bittersweet feeling of longing for someone or something that is absent.”' },
-    { room: 'Riyaz (Music)', route: '/riyaz', text: '“Raga Yaman is sung at dusk, painting a landscape of peaceful devotion and quiet grace.”' },
-    { room: 'Cosmos (Universe)', route: '/cosmos', text: '“We are a way for the cosmos to know itself. The nitrogen in our DNA was made in the hearts of collapsing stars.” — Carl Sagan' },
-    { room: 'Neelakurinji (Wonders)', route: '/neelakurinji', text: '“The Mpemba Effect: Under certain conditions, warm water freezes faster than cold water.”' },
-    { room: 'Kathakar (Stories)', route: '/kathakar', text: '“A story is a container for truth. It allows us to experience another life without leaving our own.”' },
-    { room: 'Vibhav (People)', route: '/vibhav', text: '“Pandit Ravi Shankar did not just play music; he built a bridge of sound between East and West.”' },
+    { room: 'Sukoon (Poetry)', route: '/sukoon', text: '\u201CHazaron khwahishen aisi ke har khwahish pe dam nikle...\u201D \u2014 Mirza Ghalib' },
+    { room: 'Bodh (Mental Models)', route: '/bodh', text: '\u201CFirst Principles: Boil things down to their fundamental truths and reason up from there.\u201D' },
+    { room: 'Darshan (Philosophy)', route: '/darshan', text: '\u201CWe suffer more often in imagination than in reality.\u201D \u2014 Seneca' },
+    { room: 'Srot (Deep Reads)', route: '/srot', text: '\u201CIn a world of constant speed, slow reading is the ultimate act of cognitive rebellion.\u201D' },
+    { room: 'Samvaad (Word of the Day)', route: '/samvaad', text: '\u201CSaudade: The bittersweet feeling of longing for someone or something that is absent.\u201D' },
+    { room: 'Riyaz (Music)', route: '/riyaz', text: '\u201CRaga Yaman is sung at dusk, painting a landscape of peaceful devotion and quiet grace.\u201D' },
+    { room: 'Cosmos (Universe)', route: '/cosmos', text: '\u201CWe are a way for the cosmos to know itself. The nitrogen in our DNA was made in the hearts of collapsing stars.\u201D \u2014 Carl Sagan' },
+    { room: 'Neelakurinji (Wonders)', route: '/neelakurinji', text: '\u201CThe Mpemba Effect: Under certain conditions, warm water freezes faster than cold water.\u201D' },
+    { room: 'Kathakar (Stories)', route: '/kathakar', text: '\u201CA story is a container for truth. It allows us to experience another life without leaving our own.\u201D' },
+    { room: 'Vibhav (People)', route: '/vibhav', text: '\u201CPandit Ravi Shankar did not just play music; he built a bridge of sound between East and West.\u201D' },
   ];
 
   // Quick Entry States
@@ -426,7 +471,7 @@ export default function AarambhPage() {
           <BreathingOrb size={130} mood={mood} onClick={() => setShowBreathing(true)} />
           <div>
             <h1 className="font-serif text-3xl sm:text-4xl" style={{ color: 'var(--text-primary)' }}>
-              {greeting.hi}, {user?.name || 'friend'}.
+              {greeting.hi}, {getDevanagariName(user?.name)}.
             </h1>
             <p className="text-sm font-serif italic max-w-md mx-auto mt-2 text-text-secondary" style={{ color: 'var(--text-secondary)' }}>
               &ldquo;{poeticGreeting}&rdquo;
@@ -539,15 +584,20 @@ export default function AarambhPage() {
               }}
             >
               <div className="flex justify-between items-center mb-2">
-                <span className="text-[10px] font-semibold tracking-wider uppercase text-amber-700/80 dark:text-amber-500/80">
-                  ✦ Today&apos;s Spark: {SPARKS[dayOfYear % SPARKS.length].room}
+                <span 
+                  className="text-[10px] font-semibold tracking-wider uppercase text-amber-700/80 dark:text-amber-500/80"
+                  style={{ fontFamily: 'var(--font-devanagari)' }}
+                >
+                  आज • TODAY&apos;S SPARK: {SPARKS[dayOfYear % SPARKS.length].room}
                 </span>
                 <span className="text-xs transition-transform group-hover:translate-x-1" style={{ color: 'var(--accent-saffron)' }}>
-                  Enter Room →
+                  Enter Room {'\u2192'}
                 </span>
               </div>
               <p className="font-serif italic text-base leading-relaxed" style={{ color: 'var(--text-primary)' }}>
-                {SPARKS[dayOfYear % SPARKS.length].text}
+                <span style={{ fontFamily: 'var(--font-serif)', quotes: 'auto' }}>
+                  {SPARKS[dayOfYear % SPARKS.length].text}
+                </span>
               </p>
             </div>
           </Link>
@@ -632,9 +682,12 @@ export default function AarambhPage() {
           <p
             className={cn(
               "relative z-10",
-              script === 'devanagari' ? 'mantra-devanagari font-devanagari' : 'mantra-text font-serif italic'
+              script === 'devanagari' ? 'mantra-devanagari' : 'mantra-text font-serif italic'
             )}
-            style={{ color: 'var(--text-primary)' }}
+            style={{ 
+              color: 'var(--text-primary)',
+              fontFamily: script === 'devanagari' ? 'var(--font-devanagari)' : undefined
+            }}
           >
             {script === 'devanagari' ? (mantra.hi || mantra.body) : (mantra.en || mantra.body)}
           </p>
@@ -735,7 +788,7 @@ export default function AarambhPage() {
                   >
                     {phase === 'inhale' ? 'Breathe in...' :
                      phase === 'hold' ? 'Hold...' :
-                     phase === 'exhale' ? 'Release...' :
+                     phase === 'exhale' ? 'Let go...' :
                      'Breathe with me'}
                   </motion.p>
                 </AnimatePresence>

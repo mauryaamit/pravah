@@ -6,6 +6,7 @@ export interface TTSOptions {
   rate: number;    // default 0.75 (slow, contemplative)
   pitch: number;   // default 0.85 (more bass)
   volume: number;  // 1.0
+  preferWarm?: boolean; // prefer female UK/Indian English for breathing guidance
 }
 
 const LANG_MAP: Record<string, string> = {
@@ -29,6 +30,7 @@ export function speak(text: string, options: Partial<TTSOptions> = {}): SpeechSy
     rate: 0.75,    // Slower than default - contemplative pace
     pitch: 0.85,   // Lower pitch = more bass, authoritative
     volume: 1.0,
+    preferWarm: false,
     ...options,
   };
 
@@ -41,18 +43,38 @@ export function speak(text: string, options: Partial<TTSOptions> = {}): SpeechSy
 
   // Filter voices by requested language first, if available
   const voices = window.speechSynthesis.getVoices();
-  const matchingVoices = voices.filter(v => v.lang.toLowerCase() === resolvedLang.toLowerCase() || v.lang.toLowerCase().replace('_', '-').startsWith(resolvedLang.toLowerCase().split('-')[0]));
 
-  const preferredVoice =
-    matchingVoices.find(v => v.name.includes('Google')) ||
-    matchingVoices[0] ||
-    voices.find(v => v.lang === resolvedLang && v.name.includes('Google')) ||
-    voices.find(v => v.lang === resolvedLang) ||
-    voices.find(v => v.lang.startsWith(resolvedLang.split('-')[0]) && v.name.includes('Google')) ||
-    voices.find(v => v.lang.startsWith(resolvedLang.split('-')[0])) ||
-    voices.find(v => v.name.includes('Google')) ||
-    voices[0] ||
-    null;
+  let preferredVoice: SpeechSynthesisVoice | null = null;
+
+  if (config.preferWarm) {
+    // For breathing guidance: prefer warm female voices
+    // Priority: Google UK English Female > Indian English Female > en-IN > Google en
+    preferredVoice =
+      voices.find(v => v.name === 'Google UK English Female') ||
+      voices.find(v => v.lang.startsWith('en-IN') && v.name.toLowerCase().includes('female')) ||
+      voices.find(v => v.lang.startsWith('en-IN') && v.name.includes('Google')) ||
+      voices.find(v => v.lang.startsWith('en-IN')) ||
+      voices.find(v => v.name.toLowerCase().includes('female') && v.lang.startsWith('en')) ||
+      voices.find(v => v.name.includes('Google') && v.lang.startsWith('en')) ||
+      voices[0] ||
+      null;
+  } else {
+    const matchingVoices = voices.filter(v =>
+      v.lang.toLowerCase() === resolvedLang.toLowerCase() ||
+      v.lang.toLowerCase().replace('_', '-').startsWith(resolvedLang.toLowerCase().split('-')[0])
+    );
+
+    preferredVoice =
+      matchingVoices.find(v => v.name.includes('Google')) ||
+      matchingVoices[0] ||
+      voices.find(v => v.lang === resolvedLang && v.name.includes('Google')) ||
+      voices.find(v => v.lang === resolvedLang) ||
+      voices.find(v => v.lang.startsWith(resolvedLang.split('-')[0]) && v.name.includes('Google')) ||
+      voices.find(v => v.lang.startsWith(resolvedLang.split('-')[0])) ||
+      voices.find(v => v.name.includes('Google')) ||
+      voices[0] ||
+      null;
+  }
 
   if (preferredVoice) utterance.voice = preferredVoice;
 

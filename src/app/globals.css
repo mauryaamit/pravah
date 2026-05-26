@@ -3,8 +3,23 @@
    Root stylesheet. CSS variables, font loading, scrollbars, resets.
    ============================================================ */
 
-/* ---- Fonts via Google Fonts CDN ---- */
+/* ---- Fonts via Google Fonts CDN & Local Fallbacks ---- */
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Noto+Serif+Devanagari:wght@400;500;600;700&display=swap');
+
+@font-face {
+  font-family: 'Noto Serif Devanagari';
+  src: url('/fonts/NotoSerifDevanagari-Variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
+  unicode-range: U+0900-097F; /* Devanagari Unicode block */
+}
+
+[lang="hi"],
+.devanagari,
+.font-devanagari,
+.hindi-text {
+  font-family: var(--font-devanagari) !important;
+}
 
 @tailwind base;
 @tailwind components;
@@ -13,6 +28,7 @@
 :root {
   --font-size-multiplier-heading: 1.0;
   --font-size-multiplier-body: 1.0;
+  --font-devanagari: 'Noto Serif Devanagari', serif;
 }
 
 /* ============================================================
@@ -488,3 +504,123 @@ h1:not([class*="text-"]), h2:not([class*="text-"]), h3:not([class*="text-"]) {
 [data-theme="night"] .section-label-text {
   color: #D4B896 !important;
 }
+
+/* ============================================================
+   FIX 3 — GLOBAL CONTRAST: Text must always win
+   Applied across all rooms and themes.
+   ============================================================ */
+
+/* ── Core CSS Variables: Push text darker in cream (day) mode ── */
+:root,
+[data-theme="cream"] {
+  --text-primary:   #1E1810;   /* near-black warm — headings, key text */
+  --text-secondary: #3D3325;   /* medium warm brown — body, descriptions */
+  --text-muted:     #6B5A47;   /* warm readable — timestamps, labels */
+  --text-faint:     #9E8270;   /* subtle — decorative labels, hints */
+}
+
+[data-theme="vangogh"] {
+  --text-primary:   #1A2035;
+  --text-secondary: #2D3A52;
+  --text-muted:     #5A6880;
+}
+
+/* ── Sidebar group labels ── */
+.sidebar-group-label {
+  color: #5C4A2A !important;
+  opacity: 1 !important;
+}
+[data-theme="rainy"] .sidebar-group-label,
+.dark .sidebar-group-label {
+  color: #C4A878 !important;
+}
+
+/* ── Sidebar room Hindi subtitle ── */
+.sidebar-room-hindi {
+  color: #6B5A47 !important;
+  opacity: 1 !important;
+}
+[data-theme="rainy"] .sidebar-room-hindi,
+.dark .sidebar-room-hindi {
+  color: #9E8270 !important;
+}
+
+/* ── Card body text everywhere ── */
+.card-body,
+.card-content,
+.room-description {
+  color: var(--text-secondary) !important;
+  opacity: 1 !important;
+}
+
+/* ── Card meta: dates, timestamps, source labels ── */
+.card-meta,
+.card-date,
+.read-time {
+  color: #6B5A47 !important;
+  opacity: 1 !important;
+}
+[data-theme="rainy"] .card-meta,
+[data-theme="rainy"] .card-date,
+[data-theme="rainy"] .read-time,
+.dark .card-meta,
+.dark .card-date,
+.dark .read-time {
+  color: #9E8270 !important;
+}
+
+/* ── Input placeholders — currently nearly invisible ── */
+::placeholder {
+  color: #8A7560 !important;
+  opacity: 1 !important;
+}
+[data-theme="rainy"] ::placeholder,
+.dark ::placeholder {
+  color: #7A6A56 !important;
+  opacity: 1 !important;
+}
+
+/* ── Tab labels (Write / Reflect / Calendar in Antarman) ── */
+.tab-label {
+  color: #5C4A2A;
+  opacity: 0.75;
+  transition: color 150ms ease, opacity 150ms ease;
+}
+.tab-label.active,
+.tab-label[aria-selected="true"],
+[aria-selected="true"] .tab-label {
+  color: #1E1810 !important;
+  opacity: 1 !important;
+  font-weight: 600;
+}
+[data-theme="rainy"] .tab-label {
+  color: #C4A878;
+  opacity: 0.75;
+}
+[data-theme="rainy"] .tab-label.active,
+[data-theme="rainy"] .tab-label[aria-selected="true"] {
+  color: #F0E8DE !important;
+}
+
+/* ── Globally fix stone-* text colors that wash out on cream background ── */
+/* stone-500 on cream = ~4:1 contrast, not enough. Override globally. */
+.text-stone-500 { color: #6B5A47 !important; }
+.text-stone-400 { color: #7A6858 !important; }
+.text-stone-600 { color: #3D3325 !important; }
+.text-stone-700 { color: #2C2416 !important; }
+
+/* Preserve stone in dark themes where they work fine */
+[data-theme="rainy"] .text-stone-500 { color: #9E8270 !important; }
+[data-theme="rainy"] .text-stone-400 { color: #8A7460 !important; }
+[data-theme="rainy"] .text-stone-600 { color: #C4A878 !important; }
+[data-theme="rainy"] .text-stone-700 { color: #D4B896 !important; }
+
+/* ── No opacity washing ── */
+.opacity-70, .opacity-75, .opacity-80 {
+  /* Only apply non-opacity override to text elements, not images */
+}
+p.opacity-70, p.opacity-75, span.opacity-70, span.opacity-75,
+li.opacity-70, li.opacity-75 {
+  opacity: 1 !important;
+}
+
