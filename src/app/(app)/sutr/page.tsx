@@ -31,11 +31,11 @@ export default function SutrPage() {
             ref={addToReveal}
             className="sutr-opening flex flex-col justify-center items-center text-center relative"
           >
-            {/* Background painting — 4% opacity so text wins */}
+            {/* Background painting — 8% opacity so text wins */}
             <div
               className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center"
               style={{
-                opacity: 0.04,
+                opacity: 0.08,
                 backgroundImage: 'url("/paintings/wanderer-fog.png")',
                 backgroundSize: 'contain',
                 backgroundPosition: 'center',
@@ -114,7 +114,7 @@ export default function SutrPage() {
           <section ref={addToReveal} className="sutr-section space-y-8">
             <div className="text-center space-y-3">
               <h2 className="sutr-heading text-2xl sm:text-3xl font-serif" style={{ color: '#3D3560' }}>
-                The Twenty-Five Rooms
+                The Twenty-Six Rooms
               </h2>
               <p className="sutr-section-label text-xs uppercase tracking-widest">
                 Walk through the portals of the sanctuary
@@ -198,11 +198,11 @@ export default function SutrPage() {
             ref={addToReveal}
             className="sutr-closing flex flex-col justify-center items-center text-center relative"
           >
-            {/* Closing Painting — 4% */}
+            {/* Closing Painting — 8% */}
             <div
               className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center"
               style={{
-                opacity: 0.04,
+                opacity: 0.08,
                 backgroundImage: 'url("/paintings/tree-of-life.png")',
                 backgroundSize: 'contain',
                 backgroundPosition: 'center',
@@ -272,77 +272,106 @@ export default function SutrPage() {
             min-height: 50vh;
           }
 
-          /* ── Sutr Text: Day Mode ── */
+          /* ── Sutr Text: Dynamic / Adaptive Colors ── */
           .sutr-body {
-            color: #2C2416 !important;
+            color: var(--text-secondary) !important;
             font-size: clamp(1.125rem, 2vw, 1.25rem);
             line-height: 1.95;
             opacity: 1 !important;
             margin-bottom: 0;
           }
           .sutr-heading {
-            color: #1A1410 !important;
+            color: var(--text-primary) !important;
             opacity: 1 !important;
           }
           .sutr-section-label {
-            color: #C4873A !important;
+            color: var(--accent-saffron) !important;
             opacity: 1 !important;
           }
           .sutr-pullquote {
-            color: #2C2416 !important;
+            color: var(--text-primary) !important;
             font-size: clamp(1.1875rem, 2vw, 1.3125rem) !important;
             opacity: 1 !important;
           }
           .sutr-room-name {
-            color: #1A1410 !important;
+            color: var(--text-primary) !important;
             font-size: 1.125rem !important;
             opacity: 1 !important;
           }
           .sutr-room-description {
-            color: #3D3325 !important;
-            font-size: 1.0rem;
+            color: var(--text-secondary) !important;
+            font-size: clamp(1.05rem, 1.6vw, 1.125rem) !important; /* Increased font size for readability */
             line-height: 1.85;
             opacity: 1 !important;
           }
           .sutr-room-dimension {
-            color: #C4873A !important;
+            color: var(--accent-saffron) !important;
             opacity: 1 !important;
           }
           .sutr-principle-title {
-            color: #1A1410 !important;
+            color: var(--text-primary) !important;
             font-size: 0.9375rem !important;
             opacity: 1 !important;
           }
           .sutr-closing-text {
-            color: #2C2416 !important;
+            color: var(--text-secondary) !important;
             font-size: clamp(1.0rem, 2vw, 1.0625rem) !important;
             opacity: 1 !important;
           }
 
-          /* ── Sutr Text: Night / Dark Themes ── */
-          [data-theme="rainy"] .sutr-body,
-          [data-theme="rainy"] .sutr-pullquote,
-          [data-theme="rainy"] .sutr-room-description,
-          [data-theme="rainy"] .sutr-closing-text {
-            color: #E8DDD0 !important;
-          }
-          [data-theme="rainy"] .sutr-heading,
-          [data-theme="rainy"] .sutr-room-name,
-          [data-theme="rainy"] .sutr-principle-title {
-            color: #F5EFE6 !important;
+          /* ── Mobile Spacing Refinements ── */
+          @media (max-width: 768px) {
+            .sutr-page {
+              padding-top: 24px !important;
+              padding-bottom: 24px !important;
+            }
+            .sutr-opening {
+              min-height: 45vh !important;
+              padding: 40px 20px 24px !important;
+            }
+            .sutr-closing {
+              min-height: 35vh !important;
+              padding: 32px 20px 40px !important;
+            }
+            .sutr-section {
+              padding-top: 32px !important;
+              padding-bottom: 0 !important;
+            }
+            .sutr-divider {
+              margin: 32px auto !important;
+            }
+            .sutr-room-entry {
+              padding: 14px 8px !important;
+            }
           }
 
-          /* Tailwind dark: compatibility */
-          .dark .sutr-body,
-          .dark .sutr-pullquote,
-          .dark .sutr-room-description,
-          .dark .sutr-closing-text {
-            color: #E8DDD0 !important;
-          }
-          .dark .sutr-heading,
-          .dark .sutr-room-name,
-          .dark .sutr-principle-title {
-            color: #F5EFE6 !important;
+          /* ── System Dark Mode Override ── */
+          @media (prefers-color-scheme: dark) {
+            /* Only apply when the active theme is not one of the explicit light themes */
+            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-page {
+              background: #1A1208 !important;
+            }
+            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-body,
+            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-pullquote,
+            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-room-description,
+            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-closing-text {
+              color: #E8DDD0 !important;
+            }
+            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-heading,
+            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-room-name,
+            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-principle-title {
+              color: #F5EFE6 !important;
+            }
+            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-room-dimension,
+            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-section-label {
+              color: #D4943A !important;
+            }
+            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-room-entry {
+              border-color: rgba(232, 217, 184, 0.15) !important;
+            }
+            html:not([data-theme="cream"]):not([data-theme="vangogh"]):not([data-theme="forest"]) .sutr-divider {
+              background: rgba(232, 217, 184, 0.15) !important;
+            }
           }
         `}</style>
       </div>
