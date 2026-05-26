@@ -2,6 +2,7 @@
 
 import { getDayOfYear } from '@/lib/utils/date';
 import { WORDS_OF_DAY, PHRASES_OF_DAY, FANCY_WORDS, GENZ_TERMS } from './data';
+import { WORD_HINDI_MEANINGS, PHRASE_HINDI_MEANINGS, FANCY_WORDS_HINDI, GENZ_TERMS_HINDI } from './hindi_meanings';
 import ReadAloudButton from '@/components/shared/ReadAloudButton';
 import PageTransition from '@/components/layout/PageTransition';
 import { BookOpen, HelpCircle } from 'lucide-react';
@@ -48,6 +49,11 @@ export default function ShabdaPage() {
             <p className="text-base italic leading-relaxed pt-1" style={{ color: 'var(--text-secondary)' }}>
               &ldquo;{wordItem.meaning}&rdquo;
             </p>
+            {WORD_HINDI_MEANINGS[wordItem.word] && (
+              <p className="font-devanagari text-sm mt-1.5" style={{ color: '#2D6B6B' }}>
+                अर्थ: {WORD_HINDI_MEANINGS[wordItem.word]}
+              </p>
+            )}
           </div>
 
           {/* Etymology box */}
@@ -105,6 +111,11 @@ export default function ShabdaPage() {
             <p className="text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
               {phraseItem.meaning}
             </p>
+            {PHRASE_HINDI_MEANINGS[phraseItem.phrase] && (
+              <p className="font-devanagari text-sm mt-1.5" style={{ color: '#2D6B6B' }}>
+                अर्थ: {PHRASE_HINDI_MEANINGS[phraseItem.phrase]}
+              </p>
+            )}
           </div>
 
           {/* History Origin */}
@@ -149,6 +160,11 @@ export default function ShabdaPage() {
             <p className="text-base italic leading-relaxed pt-1" style={{ color: 'var(--text-secondary)' }}>
               &ldquo;{fancyItem.meaning}&rdquo;
             </p>
+            {FANCY_WORDS_HINDI[fancyItem.word] && (
+              <p className="font-devanagari text-sm mt-1.5" style={{ color: '#2D6B6B' }}>
+                अर्थ: {FANCY_WORDS_HINDI[fancyItem.word]}
+              </p>
+            )}
           </div>
 
           {/* Why it exists */}
@@ -190,6 +206,11 @@ export default function ShabdaPage() {
             <p className="text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
               <strong>Meaning:</strong> {genZItem.meaning}
             </p>
+            {GENZ_TERMS_HINDI[genZItem.term] && (
+              <p className="font-devanagari text-sm mt-1.5" style={{ color: '#2D6B6B' }}>
+                अर्थ: {GENZ_TERMS_HINDI[genZItem.term]}
+              </p>
+            )}
           </div>
 
           {/* Slang Origin */}

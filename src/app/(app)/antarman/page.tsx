@@ -181,18 +181,24 @@ export default function AntarmanPage() {
       setGratitudeLine3(sectionData.gratitude?.line3 || '');
       setGratitudeReflection(sectionData.gratitude?.reflection || '');
 
-      // Load correct content into Editor div
+      // Load correct content into Editor div if different to preserve cursor position
       if (editorRef.current) {
+        const cur = editorRef.current.innerHTML;
         if (activeSection === 'diary') {
-          editorRef.current.innerHTML = sectionData.diary?.content || '';
+          const val = sectionData.diary?.content || '';
+          if (cur !== val) editorRef.current.innerHTML = val;
         } else if (activeSection === 'journal') {
-          editorRef.current.innerHTML = sectionData.journal?.content || '';
+          const val = sectionData.journal?.content || '';
+          if (cur !== val) editorRef.current.innerHTML = val;
         } else if (activeSection === 'poetry') {
-          editorRef.current.innerHTML = sectionData.poetry?.content || '';
+          const val = sectionData.poetry?.content || '';
+          if (cur !== val) editorRef.current.innerHTML = val;
         } else if (activeSection === 'story') {
-          editorRef.current.innerHTML = sectionData.story?.content || '';
+          const val = sectionData.story?.content || '';
+          if (cur !== val) editorRef.current.innerHTML = val;
         } else if (activeSection === 'gratitude') {
-          editorRef.current.innerHTML = sectionData.gratitude?.reflection || '';
+          const val = sectionData.gratitude?.reflection || '';
+          if (cur !== val) editorRef.current.innerHTML = val;
         }
       }
     }

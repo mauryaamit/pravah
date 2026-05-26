@@ -25,7 +25,7 @@ const ROOM_ICONS: Record<string, React.ComponentType<any>> = {
   sukoon: CloudRain, manthan: Waves, noor: Zap, riyaz: Music2,
   bodh: Lightbulb, neurolab: Brain, cosmos: Telescope, darshan: Landmark,
   samvaad: MessageSquare, srot: Library,
-  vani: Mic2, shabda: Type, ulajhan: Puzzle,
+  vani: Mic2, shabda: Type, paradox: Puzzle,
   duniya: Globe2, neelakurinji: Sparkles, safar: PlaneTakeoff, aranya: Leaf, bharati: Flag,
   kathakar: ScrollText, vibhav: UserRound, lekhak: BookMarked, anand: Heart,
 };

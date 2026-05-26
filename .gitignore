@@ -16,7 +16,7 @@ data/
 *.db-wal
 
 # sounds (user downloads these)
-public/sounds/*.mp3
+# public/sounds/*.mp3
 !public/sounds/.gitkeep
 
 # OS

@@ -41,7 +41,7 @@ export const ROOMS: Room[] = [
   { id: 'srot',        name: 'Srot',          nameHi: 'स्रोत',      nameHindi: 'स्रोत',     emoji: '📚', description: 'One deep read per day',                        route: '/srot',         colorVar: '--room-srot',         colorHex: '#3A6A8A', cluster: 'knowledge' },
   { id: 'vani',        name: 'Vani',          nameHi: 'वाणी',       nameHindi: 'वाणी',      emoji: '🪔', description: 'Sanskrit shlokas, dohas, and living folk wisdom', route: '/vani',         colorVar: '--room-vani',         colorHex: '#8B3A3A', cluster: 'knowledge' },
   { id: 'shabda',      name: 'Shabda',        nameHi: 'शब्द',       nameHindi: 'शब्द',      emoji: '🔤', description: 'Word of the day - English, rare, idioms, GenZ',  route: '/shabda',       colorVar: '--room-shabda',       colorHex: '#2D6B6B', cluster: 'knowledge' },
-  { id: 'ulajhan',     name: 'Ulajhan',       nameHi: 'उलझन',       nameHindi: 'उलझन',     emoji: '🧩', description: 'One paradox per day - fully explained',          route: '/ulajhan',      colorVar: '--room-ulajhan',      colorHex: '#4A3570', cluster: 'knowledge' },
+  { id: 'paradox',     name: 'Paradox',       nameHi: 'विरोधाभास',   nameHindi: 'विरोधाभास', emoji: '🧩', description: 'One paradox per day - fully explained',          route: '/paradox',      colorVar: '--room-paradox',      colorHex: '#4A3570', cluster: 'knowledge' },
 
   // WORLD
   { id: 'duniya',      name: 'Duniya',       nameHi: 'दुनिया',     nameHindi: 'दुनिया',    emoji: '🌍', description: '3 world stories, explained deeply',             route: '/duniya',       colorVar: '--room-duniya',       colorHex: '#4A7C59', cluster: 'world' },

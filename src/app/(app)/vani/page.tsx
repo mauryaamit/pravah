@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { getDayOfYear } from '@/lib/utils/date';
-import { SHLOKAS, DOHAS, CHAUPAIS, LOK_KATHAS } from './data';
+import { SHLOKAS, DOHAS, CHAUPAIS, LOK_KATHAS, HINDI_WORDS } from './data';
 import ReadAloudButton from '@/components/shared/ReadAloudButton';
 import PageTransition from '@/components/layout/PageTransition';
 import { BookOpen, HelpCircle, ArrowLeft, ArrowRight, Languages } from 'lucide-react';
@@ -16,6 +16,7 @@ export default function VaniPage() {
   const dohaItem = DOHAS[dayIndex % DOHAS.length];
   const chaupaiItem = CHAUPAIS[dayIndex % CHAUPAIS.length];
   const lokKathaItem = LOK_KATHAS[dayIndex % LOK_KATHAS.length];
+  const hindiWordItem = HINDI_WORDS[dayIndex % HINDI_WORDS.length];
 
   return (
     <PageTransition>
@@ -193,6 +194,47 @@ export default function VaniPage() {
             <div className="flex justify-end pt-2">
               <ReadAloudButton 
                 text={`${lokKathaItem.saying}. इसका अर्थ है: ${lokKathaItem.meaning_hindi}`} 
+                lang="hi-IN" 
+                variant="pill" 
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* ─── Card 5: Hindi Word of the Day ─── */}
+        <div className="card-base p-6 space-y-4" style={{ borderLeft: '4px solid #8B3A3A' }}>
+          <div className="flex justify-between items-center">
+            <span className="text-xs font-semibold uppercase tracking-widest text-[#8B3A3A] font-serif">आज का शब्द · Hindi Word of the Day</span>
+          </div>
+
+          {/* Word Text */}
+          <div className="py-2 text-center">
+            <p 
+              className="font-devanagari text-3xl leading-loose font-semibold"
+              style={{ color: 'var(--text-primary)' }}
+            >
+              {hindiWordItem.word}
+            </p>
+          </div>
+
+          <div className="border-t pt-4 space-y-3" style={{ borderColor: 'var(--border-subtle)' }}>
+            <div className="space-y-1">
+              <span className="text-[10px] uppercase font-bold text-stone-500 block">अर्थ (Meaning)</span>
+              <p className="font-devanagari text-base" style={{ color: 'var(--text-secondary)' }}>
+                {hindiWordItem.meaning}
+              </p>
+            </div>
+
+            <div className="space-y-1">
+              <span className="text-[10px] uppercase font-bold text-stone-500 block">प्रयोग (Usage)</span>
+              <p className="font-devanagari text-base italic" style={{ color: 'var(--text-muted)' }}>
+                &ldquo;{hindiWordItem.usage}&rdquo;
+              </p>
+            </div>
+
+            <div className="flex justify-end pt-2">
+              <ReadAloudButton 
+                text={`${hindiWordItem.word}. इसका अर्थ है ${hindiWordItem.meaning}. उदाहरण वाक्य: ${hindiWordItem.usage}`} 
                 lang="hi-IN" 
                 variant="pill" 
               />

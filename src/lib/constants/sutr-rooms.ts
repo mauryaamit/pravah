@@ -169,5 +169,26 @@ export const SUTR_ROOMS: SutrRoomDescription[] = [
     nameHindi: 'आनंद',
     oneLiner: 'Joy room — humor, illusions, wonder, delight',
     contemplativeText: 'Celebrate the simple pleasure of lighthearted delight. Relax with gentle humor, paradoxes, and optical play.'
+  },
+  {
+    id: 'vani',
+    name: 'Vani',
+    nameHindi: 'वाणी',
+    oneLiner: 'Sanskrit shlokas, dohas, and living folk wisdom',
+    contemplativeText: 'Connect with the resonance of our ancestors. Listen to the wisdom of Sanskrit shlokas, Kabir’s verses, and regional sayings.'
+  },
+  {
+    id: 'shabda',
+    name: 'Shabda',
+    nameHindi: 'शब्द',
+    oneLiner: 'Word of the day — English, rare, idioms, GenZ',
+    contemplativeText: 'Expand the boundaries of your world through language. Explore etymology, beautiful untranslatable words, and contemporary slang.'
+  },
+  {
+    id: 'paradox',
+    name: 'Paradox',
+    nameHindi: 'विरोधाभास',
+    oneLiner: 'One paradox per day — fully explained',
+    contemplativeText: 'Sit with the ultimate contradictions of human thought. Challenge your logic, unravel cognitive puzzles, and expand your perspective.'
   }
 ];

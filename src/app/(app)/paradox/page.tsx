@@ -7,7 +7,7 @@ import ReadAloudButton from '@/components/shared/ReadAloudButton';
 import PageTransition from '@/components/layout/PageTransition';
 import { ArrowLeft, ArrowRight, BookOpen, Clock, HelpCircle } from 'lucide-react';
 
-export default function UlajhanPage() {
+export default function ParadoxPage() {
   const defaultDayIndex = (getDayOfYear() - 1) % PARADOXES.length;
   const [currentIndex, setCurrentIndex] = useState(defaultDayIndex);
 
@@ -27,8 +27,8 @@ export default function UlajhanPage() {
         
         {/* Header */}
         <div className="border-b pb-4" style={{ borderColor: 'var(--border-default)' }}>
-          <h1 className="font-serif text-3xl" style={{ color: 'var(--text-primary)' }}>Ulajhan</h1>
-          <p className="font-devanagari text-lg" style={{ color: '#4A3570' }}>उलझन — जो मन को उलझाए</p>
+          <h1 className="font-serif text-3xl" style={{ color: 'var(--text-primary)' }}>Paradox</h1>
+          <p className="font-devanagari text-lg" style={{ color: '#4A3570' }}>विरोधाभास — जो मन को उलझाए</p>
           <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>
             Sit with the greatest logical, philosophical, and scientific paradoxes in human history. Explore their origins, implications, and modern parallels.
           </p>
