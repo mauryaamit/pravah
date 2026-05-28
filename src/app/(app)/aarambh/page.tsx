@@ -20,6 +20,7 @@ import ReadAloudButton from '@/components/shared/ReadAloudButton';
 import { useUser } from '@/components/providers/UserProvider';
 import { useMood } from '@/components/providers/MoodProvider';
 import { getTimeGreeting, getDayOfYear, formatHindiDate } from '@/lib/utils/date';
+import { getMoonPhase, getIndianSeason } from '@/lib/utils/astronomy';
 import { ROOMS } from '@/lib/constants/rooms';
 import { cn } from '@/lib/utils/cn';
 import { STAGGER_CONTAINER, STAGGER_ITEM, SLOW_REVEAL } from '@/lib/utils/motion';
@@ -179,6 +180,24 @@ const DAILY_THREADS: { en: string; hi: string }[] = [
 
 export default function AarambhPage() {
   const { user } = useUser();
+  const [unlockedLettersCount, setUnlockedLettersCount] = useState(0);
+
+  useEffect(() => {
+    if (!user || !db) return;
+    const q = collection(db, `users/${user.id}/futureLetters`);
+    const unsub = onSnapshot(q, (snap) => {
+      const nowStr = new Date().toISOString();
+      const unlockedCount = snap.docs.filter(d => {
+        const data = d.data();
+        return data.unlockDate <= nowStr && !data.opened;
+      }).length;
+      setUnlockedLettersCount(unlockedCount);
+    }, (err) => {
+      console.error('Failed to load future letters in Aarambh:', err);
+    });
+    return unsub;
+  }, [user]);
+
   const { mood: moodLevel, profile: moodProfile, setMood: setMoodInProvider } = useMood();
   const [mood, setMood] = useState<number>(moodLevel);
   const [intention, setIntention] = useState('');
@@ -416,44 +435,7 @@ export default function AarambhPage() {
   const dayOfYear = getDayOfYear();
   const today = formatHindiDate();
 
-  // Moon phase calculation
-  const getMoonPhase = () => {
-    const refNewMoon = new Date('2024-01-11T11:57:00Z').getTime();
-    const now = new Date().getTime();
-    const diffMs = now - refNewMoon;
-    const synodicPeriod = 29.530588853 * 24 * 60 * 60 * 1000;
-    const cyclePosition = (diffMs % synodicPeriod) / synodicPeriod; // 0 to 1
-    
-    if (cyclePosition < 0.03 || cyclePosition > 0.97) return { emoji: '🌑', name: 'New Moon (Amavasya)' };
-    if (cyclePosition < 0.22) return { emoji: '🌒', name: 'Waxing Crescent' };
-    if (cyclePosition < 0.28) return { emoji: '🌓', name: 'First Quarter' };
-    if (cyclePosition < 0.47) return { emoji: '🌔', name: 'Waxing Gibbous' };
-    if (cyclePosition < 0.53) return { emoji: '🌕', name: 'Full Moon (Purnima)' };
-    if (cyclePosition < 0.72) return { emoji: '🌖', name: 'Waning Gibbous' };
-    if (cyclePosition < 0.78) return { emoji: '🌗', name: 'Last Quarter' };
-    return { emoji: '🌘', name: 'Waning Crescent' };
-  };
 
-  const getIndianSeason = () => {
-    const date = new Date();
-    const m = date.getMonth();
-    const d = date.getDate();
-    const dayOfYearApprox = m * 30 + d;
-    
-    if (dayOfYearApprox >= 45 && dayOfYearApprox < 105) {
-      return { name: 'Vasanta', hindi: 'वसन्त', description: 'Spring & Renewal' };
-    } else if (dayOfYearApprox >= 105 && dayOfYearApprox < 165) {
-      return { name: 'Grishma', hindi: 'ग्रीष्म', description: 'Summer & Intensity' };
-    } else if (dayOfYearApprox >= 165 && dayOfYearApprox < 225) {
-      return { name: 'Varsha', hindi: 'वर्षा', description: 'Monsoon & Rebirth' };
-    } else if (dayOfYearApprox >= 225 && dayOfYearApprox < 285) {
-      return { name: 'Sharad', hindi: 'शरद', description: 'Autumn & Clarity' };
-    } else if (dayOfYearApprox >= 285 && dayOfYearApprox < 345) {
-      return { name: 'Hemanta', hindi: 'हेमन्त', description: 'Pre-Winter & Harvest' };
-    } else {
-      return { name: 'Shishira', hindi: 'शिशिर', description: 'Winter & Reflection' };
-    }
-  };
 
   const getPoeticGreeting = () => {
     const now = new Date();
@@ -483,8 +465,8 @@ export default function AarambhPage() {
     return fallbacks[dayOfYear % fallbacks.length];
   };
 
-  const moonPhase = getMoonPhase();
-  const season = getIndianSeason();
+  const moonPhase = getMoonPhase(new Date());
+  const season = getIndianSeason(new Date());
   const poeticGreeting = getPoeticGreeting();
 
   const SPARKS = [
@@ -691,11 +673,15 @@ export default function AarambhPage() {
             <p className="text-sm mt-2.5 font-devanagari flex flex-wrap items-center justify-center gap-2" style={{ color: 'var(--text-muted)' }}>
               <span>{today}</span>
               <span>•</span>
-              <span title="Current Moon Phase" className="flex items-center gap-0.5">{moonPhase.emoji} {moonPhase.name}</span>
-              <span>•</span>
-              <span className="font-semibold text-amber-700/80 dark:text-amber-500/80" title="Indian Season (Ritu)">
-                {season.hindi} ({season.name} - {season.description})
-              </span>
+              {script === 'devanagari' ? (
+                <span>
+                  {moonPhase.emoji} {moonPhase.name_hi} · {season.name_hi} - {season.description_hi}
+                </span>
+              ) : (
+                <span>
+                  {moonPhase.emoji} {moonPhase.name} · {season.name_hi} ({season.name} - {season.description})
+                </span>
+              )}
             </p>
             {streakData?.current_streak > 0 && (
               <p className="text-xs mt-1.5" style={{ color: 'var(--text-faint)' }}>
@@ -920,7 +906,7 @@ export default function AarambhPage() {
             >
               <div className="flex justify-between items-center mb-2">
                 <span 
-                  className="text-[10px] font-semibold tracking-wider uppercase text-amber-700/80 dark:text-amber-500/80"
+                  className="text-[10px] font-semibold tracking-wider uppercase text-amber-700/80"
                   style={{ fontFamily: 'var(--font-devanagari)' }}
                 >
                   आज • TODAY&apos;S SPARK: {SPARKS[dayOfYear % SPARKS.length].room}
@@ -1112,6 +1098,36 @@ export default function AarambhPage() {
             <div className="absolute inset-0 z-0 pointer-events-none bg-gradient-to-r from-transparent via-transparent to-[var(--bg-secondary)]" />
             <h2 className="section-label relative z-10 px-1">Today in Pravah</h2>
           </div>
+
+          {unlockedLettersCount > 0 && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="p-4 mx-1 rounded-xl border border-[var(--accent-gold)] bg-[color-mix(in srgb, var(--accent-gold) 6%, var(--bg-secondary))] flex items-center justify-between gap-3 text-sm z-10 relative mb-2"
+              style={{ borderRadius: 16 }}
+            >
+              <div className="flex items-center gap-3">
+                <span className="text-xl">🔓</span>
+                <div className="text-left">
+                  <h4 className="font-serif font-semibold text-[var(--accent-gold)]">
+                    Letter to Future Self Unlocked
+                  </h4>
+                  <p className="text-xs text-[var(--text-muted)]">
+                    You have {unlockedLettersCount} sealed letter{unlockedLettersCount > 1 ? 's' : ''} from the past waiting to be opened.
+                  </p>
+                </div>
+              </div>
+              <Link href="/antarman">
+                <button
+                  type="button"
+                  className="px-4 py-2 rounded-xl text-xs font-semibold text-white bg-[var(--accent-gold)] hover:opacity-90 transition-all flex items-center gap-1.5 whitespace-nowrap"
+                >
+                  ✉️ Open Letter
+                </button>
+              </Link>
+            </motion.div>
+          )}
+
           <motion.div
             variants={STAGGER_CONTAINER}
             initial="initial"

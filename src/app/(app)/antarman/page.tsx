@@ -20,6 +20,8 @@ import { toDateString, getDayOfYear, formatDisplayDate } from '@/lib/utils/date'
 import { cn } from '@/lib/utils/cn';
 import { ResponsiveContainer, LineChart, Line, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import { ROOM_MAP } from '@/lib/constants/rooms';
+import { EMOTION_FAMILIES, EMOTION_FAMILIES_HI } from '@/lib/constants/emotions';
+import { PROMPTS } from '@/lib/constants/prompts';
 
 type Tab = 'write' | 'reflect' | 'calendar' | 'sutra';
 
@@ -71,6 +73,43 @@ const SECTION_DOT_COLORS: Record<AntarmanSection, string> = {
   poetry: '#5B6B8A',
   story: '#8A4A3A',
   gratitude: '#D4A853',
+};
+
+const SENTENCE_STARTERS: Record<AntarmanSection, string[]> = {
+  diary: [
+    "Today began with...",
+    "A moment of surprise was...",
+    "I am feeling quiet because...",
+    "One thing I appreciate is...",
+    "Right now, I am thinking about..."
+  ],
+  journal: [
+    "If I am being completely honest...",
+    "Lately, I've noticed a pattern in...",
+    "The question I keep avoiding is...",
+    "I feel most aligned when...",
+    "What I need to forgive myself for is..."
+  ],
+  poetry: [
+    "In the quiet space of...",
+    "Like a shadow on the wall...",
+    "The wind whispers of...",
+    "A soft light falls upon...",
+    "We are all made of..."
+  ],
+  story: [
+    "The door had been locked for...",
+    "Under the amber glow of the lamp...",
+    "No one expected the storm to...",
+    "He remembered the scent of...",
+    "It was a quiet Tuesday when..."
+  ],
+  gratitude: [
+    "Looking closely, I see...",
+    "These moments are precious because...",
+    "I realize that simple things...",
+    "This warmth reminds me of..."
+  ]
 };
 
 const STOP_WORDS = new Set([
@@ -141,6 +180,25 @@ export default function AntarmanPage() {
   const [gratitudeLine2, setGratitudeLine2] = useState('');
   const [gratitudeLine3, setGratitudeLine3] = useState('');
   const [gratitudeReflection, setGratitudeReflection] = useState('');
+
+  // A1: Inner Weather
+  const [nuancedEmotion, setNuancedEmotion] = useState('');
+  const [scriptPreference, setScriptPreference] = useState<'devanagari' | 'roman'>('roman');
+
+  // A3: Future Self Letters
+  const [futureLetters, setFutureLetters] = useState<any[]>([]);
+  const [letterContent, setLetterContent] = useState('');
+  const [letterInterval, setLetterInterval] = useState<'3m' | '6m' | '1y'>('3m');
+  const [sealingLetter, setSealingLetter] = useState(false);
+  const [revealedLetterId, setRevealedLetterId] = useState<string | null>(null);
+
+  // A4: Prompt Depth
+  const [promptLevel, setPromptLevel] = useState<'surface' | 'depth' | 'excavation'>('surface');
+
+  // A6: Gems
+  const [gems, setGems] = useState<any[]>([]);
+  const [gemButtonPosition, setGemButtonPosition] = useState<{ x: number; y: number } | null>(null);
+  const [selectedText, setSelectedText] = useState('');
 
   // UI state
   const [isFullScreen, setIsFullScreen] = useState(false);
@@ -230,6 +288,103 @@ export default function AntarmanPage() {
     return unsub;
   }, [user]);
 
+  // Real-time listener for future letters
+  useEffect(() => {
+    if (!user || !db) return;
+    const q = collection(db, `users/${user.uid}/futureLetters`);
+    const unsub = onSnapshot(q, (snap) => {
+      const list = snap.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      })) as any[];
+      list.sort((a, b) => {
+        const aTime = a.createdAt?.toDate?.()?.getTime() || a.createdAt?.seconds * 1000 || 0;
+        const bTime = b.createdAt?.toDate?.()?.getTime() || b.createdAt?.seconds * 1000 || 0;
+        return bTime - aTime;
+      });
+      setFutureLetters(list);
+    }, (err) => {
+      console.error('Failed to load future letters:', err);
+    });
+    return unsub;
+  }, [user]);
+
+  // Real-time listener for gems
+  useEffect(() => {
+    if (!user || !db) return;
+    const q = collection(db, `users/${user.uid}/gems`);
+    const unsub = onSnapshot(q, (snap) => {
+      const list = snap.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      })) as any[];
+      list.sort((a, b) => {
+        const aTime = a.createdAt?.toDate?.()?.getTime() || a.createdAt?.seconds * 1000 || 0;
+        const bTime = b.createdAt?.toDate?.()?.getTime() || b.createdAt?.seconds * 1000 || 0;
+        return bTime - aTime;
+      });
+      setGems(list);
+    }, (err) => {
+      console.error('Failed to load gems:', err);
+    });
+    return unsub;
+  }, [user]);
+
+  // Selection change listener for A6 (Gems)
+  useEffect(() => {
+    const handleSelection = () => {
+      const selection = window.getSelection();
+      if (!selection || selection.isCollapsed || !selection.toString().trim()) {
+        setGemButtonPosition(null);
+        setSelectedText('');
+        return;
+      }
+
+      let node = selection.anchorNode;
+      let isInsideEditor = false;
+      while (node) {
+        if (node instanceof HTMLElement && (node.classList.contains('journal-editor') || node.getAttribute('contenteditable') === 'true')) {
+          isInsideEditor = true;
+          break;
+        }
+        node = node.parentNode;
+      }
+
+      if (!isInsideEditor) {
+        setGemButtonPosition(null);
+        setSelectedText('');
+        return;
+      }
+
+      try {
+        const range = selection.getRangeAt(0);
+        const rect = range.getBoundingClientRect();
+        setGemButtonPosition({
+          x: rect.left + rect.width / 2,
+          y: rect.top - 40,
+        });
+        setSelectedText(selection.toString());
+      } catch (e) {
+        // selection range error
+      }
+    };
+
+    document.addEventListener('selectionchange', handleSelection);
+    return () => document.removeEventListener('selectionchange', handleSelection);
+  }, []);
+
+  // Load Prompt Level from localStorage per date
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedLevel = localStorage.getItem(`pravah-prompt-level-${selectedDate}`);
+      if (savedLevel === 'surface' || savedLevel === 'depth' || savedLevel === 'excavation') {
+        setPromptLevel(savedLevel);
+      } else {
+        setPromptLevel('surface');
+      }
+    }
+  }, [selectedDate]);
+
   // Helper to strip HTML tags from editor content
   const stripHtml = (html: string) => {
     if (typeof document === 'undefined') return html.replace(/<[^>]*>/g, '');
@@ -306,6 +461,7 @@ export default function AntarmanPage() {
     if (sectionData) {
       setDiaryContent(sectionData.diary?.content || '');
       setDiaryMood(sectionData.diary?.mood || 3);
+      setNuancedEmotion(sectionData.diary?.nuanced_emotion || '');
       setDiaryGratitude(sectionData.diary?.gratitude || ['', '', '']);
       setDiaryLearned(sectionData.diary?.learned || '');
       setDiaryIntention(sectionData.diary?.intention || '');
@@ -400,6 +556,7 @@ export default function AntarmanPage() {
         await saveSection('diary', {
           content: diaryContent,
           mood: diaryMood,
+          nuanced_emotion: nuancedEmotion || null,
           gratitude: diaryGratitude,
           learned: diaryLearned,
           intention: diaryIntention,
@@ -545,7 +702,11 @@ export default function AntarmanPage() {
   // Prompts and inspiration cycling
   const dayOfYear = getDayOfYear();
   const currentDiaryPrompt = DIARY_PROMPTS[(dayOfYear + promptOffset) % DIARY_PROMPTS.length];
-  const currentJournalPrompt = JOURNAL_PROMPTS[(dayOfYear + promptOffset) % JOURNAL_PROMPTS.length];
+  const currentJournalPrompt = useMemo(() => {
+    const dayIndex = (dayOfYear - 1 + promptOffset) % PROMPTS.length;
+    const promptObj = PROMPTS[dayIndex];
+    return promptObj ? promptObj[promptLevel] : 'Start thinking. Let it unravel.';
+  }, [dayOfYear, promptOffset, promptLevel]);
   const currentPoetryInspiration = POETRY_INSPIRATIONS[(dayOfYear + promptOffset) % POETRY_INSPIRATIONS.length];
   const currentGratitudeClosing = GRATITUDE_CLOSING_LINES[(dayOfYear + promptOffset) % GRATITUDE_CLOSING_LINES.length];
 
@@ -631,6 +792,70 @@ export default function AntarmanPage() {
     });
     return Array.from(tagsSet);
   }, [allEntries]);
+
+  const innerWeatherTrends = useMemo(() => {
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    const emotionCounts: Record<string, number> = {};
+
+    allEntries.forEach(entry => {
+      const entryDate = new Date(entry.dateStr + 'T00:00:00');
+      if (entryDate >= thirtyDaysAgo && entry.diary?.nuanced_emotion) {
+        const emo = entry.diary.nuanced_emotion;
+        emotionCounts[emo] = (emotionCounts[emo] || 0) + 1;
+      }
+    });
+
+    return Object.entries(emotionCounts)
+      .sort((a, b) => b[1] - a[1]);
+  }, [allEntries]);
+
+  const activeSealedLetter = useMemo(() => {
+    const nowStr = new Date().toISOString();
+    return futureLetters.find(l => l.unlockDate > nowStr && !l.opened);
+  }, [futureLetters]);
+
+  const unlockedLetters = useMemo(() => {
+    const nowStr = new Date().toISOString();
+    return futureLetters.filter(l => l.unlockDate <= nowStr && !l.opened);
+  }, [futureLetters]);
+
+  const openedLetters = useMemo(() => {
+    return futureLetters.filter(l => l.opened);
+  }, [futureLetters]);
+
+  const handlePromptLevelChange = (level: 'surface' | 'depth' | 'excavation') => {
+    setPromptLevel(level);
+    localStorage.setItem(`pravah-prompt-level-${selectedDate}`, level);
+  };
+
+  const handleSealLetter = async () => {
+    if (!letterContent.trim() || !user || !db) return;
+    setSealingLetter(true);
+    try {
+      const { addDoc, collection, serverTimestamp } = await import('firebase/firestore');
+      const now = new Date();
+      let unlockDate = new Date();
+      if (letterInterval === '3m') unlockDate.setMonth(now.getMonth() + 3);
+      else if (letterInterval === '6m') unlockDate.setMonth(now.getMonth() + 6);
+      else if (letterInterval === '1y') unlockDate.setFullYear(now.getFullYear() + 1);
+
+      await addDoc(collection(db, `users/${user.uid}/futureLetters`), {
+        content: letterContent,
+        interval: letterInterval,
+        unlockDate: unlockDate.toISOString(),
+        createdAt: serverTimestamp(),
+        opened: false,
+      });
+
+      setLetterContent('');
+      setLetterInterval('3m');
+    } catch (err) {
+      console.error('Failed to seal letter:', err);
+    } finally {
+      setSealingLetter(false);
+    }
+  };
 
   const taggedEntries = useMemo(() => {
     if (!selectedTag) return [];
@@ -866,7 +1091,44 @@ export default function AntarmanPage() {
                       {/* Mood selector card */}
                       <div className="card-base practice-card p-4">
                         <p className="text-xs uppercase tracking-wider mb-3" style={{ color: 'var(--text-muted)' }}>How are you feeling?</p>
-                        <MoodPulse value={diaryMood} onChange={m => handleDiaryInputChange('mood', m)} />
+                        <MoodPulse value={diaryMood} onChange={m => {
+                          handleDiaryInputChange('mood', m);
+                          setNuancedEmotion('');
+                        }} />
+                        
+                        {/* A1: Inner Weather */}
+                        {diaryMood && (
+                          <motion.div 
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            className="flex flex-wrap gap-2 mt-4 pt-3 border-t border-[var(--border-default)]"
+                          >
+                            <p className="text-xs w-full text-[var(--text-muted)] mb-1">Nuanced Emotion:</p>
+                            {((scriptPreference === 'devanagari' ? EMOTION_FAMILIES_HI[diaryMood] : EMOTION_FAMILIES[diaryMood]) || []).map((emo) => {
+                              const isSelected = nuancedEmotion === emo;
+                              return (
+                                <button
+                                  key={emo}
+                                  type="button"
+                                  onClick={() => {
+                                    const next = isSelected ? '' : emo;
+                                    setNuancedEmotion(next);
+                                    setIsDirty(true);
+                                    setSaveStatus('saving');
+                                  }}
+                                  className={cn(
+                                    "px-3 py-1 rounded-full text-xs transition-all border",
+                                    isSelected 
+                                      ? "bg-[var(--accent-saffron)] text-white border-[var(--accent-saffron)] shadow-sm font-medium" 
+                                      : "bg-[var(--bg-secondary)] hover:bg-[var(--bg-tertiary)] text-[var(--text-muted)] border-[var(--border-default)]"
+                                  )}
+                                >
+                                  {emo}
+                                </button>
+                              );
+                            })}
+                          </motion.div>
+                        )}
                       </div>
 
                       {/* Diary Editor */}
@@ -875,7 +1137,16 @@ export default function AntarmanPage() {
                           <span className="font-serif italic text-sm text-[var(--text-muted)]">
                             {formatDisplayDate(selectedDate)}
                           </span>
-                          <span className="text-xs" style={{ color: 'var(--text-faint)' }}>{currentWordCount} words</span>
+                          <div className="flex items-center gap-3">
+                            <button
+                              type="button"
+                              onClick={() => setScriptPreference(prev => prev === 'devanagari' ? 'roman' : 'devanagari')}
+                              className="text-[10px] px-2 py-0.5 rounded-full border border-[var(--border-default)] text-[var(--text-muted)] hover:bg-[var(--bg-tertiary)] transition-all font-semibold uppercase"
+                            >
+                              {scriptPreference === 'devanagari' ? 'हि' : 'EN'}
+                            </button>
+                            <span className="text-xs" style={{ color: 'var(--text-faint)' }}>{currentWordCount} words</span>
+                          </div>
                         </div>
                         
                         {/* Thread Tags Input Row */}
@@ -929,7 +1200,12 @@ export default function AntarmanPage() {
                           &ldquo;{currentDiaryPrompt}&rdquo;
                         </p>
 
-                        <WritingToolbar editorRef={editorRef} onCommand={handleCommand} />
+                        <WritingToolbar 
+                          editorRef={editorRef} 
+                          onCommand={handleCommand} 
+                          scriptPreference={scriptPreference}
+                          onEditorInput={handleEditorInput}
+                        />
                         
                         <div
                           ref={editorRef}
@@ -940,6 +1216,34 @@ export default function AntarmanPage() {
                           onInput={handleEditorInput}
                           style={{ color: 'var(--text-primary)' }}
                         />
+
+                        {currentWordCount === 0 && (
+                          <div className="flex flex-wrap gap-2 py-2 mt-2 border-t border-dashed border-[var(--border-default)]">
+                            <span className="text-xs text-[var(--text-faint)] w-full text-left mb-1">Need a start? Click to insert:</span>
+                            {SENTENCE_STARTERS[activeSection].map((starter, idx) => (
+                              <button
+                                key={idx}
+                                type="button"
+                                onClick={() => {
+                                  if (editorRef.current) {
+                                    editorRef.current.focus();
+                                    editorRef.current.innerHTML = starter;
+                                    const range = document.createRange();
+                                    const sel = window.getSelection();
+                                    range.selectNodeContents(editorRef.current);
+                                    range.collapse(false);
+                                    sel?.removeAllRanges();
+                                    sel?.addRange(range);
+                                    handleEditorInput();
+                                  }
+                                }}
+                                className="px-2.5 py-1 rounded-full text-xs transition-all border border-[var(--border-default)] bg-[var(--bg-primary)] hover:bg-[var(--bg-tertiary)] text-[var(--text-secondary)] font-medium"
+                              >
+                                {starter}
+                              </button>
+                            ))}
+                          </div>
+                        )}
 
                         {/* Linguistic Mirror Display */}
                         {analysisResults && (analysisResults.word || analysisResults.register !== 'Neutral') && (
@@ -1005,35 +1309,258 @@ export default function AntarmanPage() {
                   )}
 
                   {activeSection === 'journal' && (
-                    <div 
-                      className="card-base journal-card p-6 space-y-4"
-                      style={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-hover)' }}
-                    >
-                      <div className="flex justify-between items-center text-xs" style={{ color: 'var(--text-muted)' }}>
-                        <div className="flex items-center gap-2">
-                          <span className="font-serif italic font-semibold">Reflective Journaling</span>
-                          <button onClick={cyclePrompt} className="p-0.5 rounded hover:bg-[var(--bg-tertiary)]" title="Cycle prompt">
-                            <RotateCw size={11} />
-                          </button>
+                    <div className="space-y-4 text-left">
+                      <div 
+                        className="card-base journal-card p-6 space-y-4"
+                        style={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-hover)' }}
+                      >
+                        <div className="flex justify-between items-center text-xs" style={{ color: 'var(--text-muted)' }}>
+                          <div className="flex items-center gap-2">
+                            <span className="font-serif italic font-semibold">Reflective Journaling</span>
+                            <button onClick={cyclePrompt} className="p-0.5 rounded hover:bg-[var(--bg-tertiary)]" title="Cycle prompt">
+                              <RotateCw size={11} />
+                            </button>
+                          </div>
+                          
+                          {/* A4: Prompt Selector & Script Toggle */}
+                          <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-1 border rounded-lg p-0.5 bg-[var(--bg-primary)] border-[var(--border-default)]">
+                              {(['surface', 'depth', 'excavation'] as const).map(level => (
+                                <button
+                                  key={level}
+                                  type="button"
+                                  onClick={() => handlePromptLevelChange(level)}
+                                  className={cn(
+                                    "px-2 py-0.5 rounded text-[9px] uppercase tracking-wider font-semibold transition-all",
+                                    promptLevel === level
+                                      ? "bg-[var(--accent-moss)] text-white"
+                                      : "text-[var(--text-muted)] hover:bg-[var(--bg-tertiary)]"
+                                  )}
+                                >
+                                  {level}
+                                </button>
+                              ))}
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => setScriptPreference(prev => prev === 'devanagari' ? 'roman' : 'devanagari')}
+                              className="text-[10px] px-2 py-0.5 rounded-full border border-[var(--border-default)] text-[var(--text-muted)] hover:bg-[var(--bg-tertiary)] transition-all font-semibold uppercase"
+                            >
+                              {scriptPreference === 'devanagari' ? 'हि' : 'EN'}
+                            </button>
+                            <span>{currentWordCount} words</span>
+                          </div>
                         </div>
-                        <span>{currentWordCount} words</span>
+
+                        <p className="text-sm font-serif italic pl-3 border-l-2 border-[var(--accent-moss)] text-[var(--text-muted)]">
+                          &ldquo;{currentJournalPrompt}&rdquo;
+                        </p>
+
+                        <WritingToolbar 
+                          editorRef={editorRef} 
+                          onCommand={handleCommand} 
+                          scriptPreference={scriptPreference}
+                          onEditorInput={handleEditorInput}
+                        />
+
+                        <div
+                          ref={editorRef}
+                          className="journal-editor w-full min-h-[300px] outline-none leading-[2.0] prose-reading"
+                          contentEditable
+                          suppressContentEditableWarning
+                          data-placeholder="Start thinking. Let it unravel."
+                          onInput={handleEditorInput}
+                          style={{ color: 'var(--text-primary)', fontSize: '18px' }}
+                        />
+
+                        {currentWordCount === 0 && (
+                          <div className="flex flex-wrap gap-2 py-2 mt-2 border-t border-dashed border-[var(--border-default)]">
+                            <span className="text-xs text-[var(--text-faint)] w-full text-left mb-1">Need a start? Click to insert:</span>
+                            {SENTENCE_STARTERS[activeSection].map((starter, idx) => (
+                              <button
+                                key={idx}
+                                type="button"
+                                onClick={() => {
+                                  if (editorRef.current) {
+                                    editorRef.current.focus();
+                                    editorRef.current.innerHTML = starter;
+                                    const range = document.createRange();
+                                    const sel = window.getSelection();
+                                    range.selectNodeContents(editorRef.current);
+                                    range.collapse(false);
+                                    sel?.removeAllRanges();
+                                    sel?.addRange(range);
+                                    handleEditorInput();
+                                  }
+                                }}
+                                className="px-2.5 py-1 rounded-full text-xs transition-all border border-[var(--border-default)] bg-[var(--bg-primary)] hover:bg-[var(--bg-tertiary)] text-[var(--text-secondary)] font-medium"
+                              >
+                                {starter}
+                              </button>
+                            ))}
+                          </div>
+                        )}
                       </div>
 
-                      <p className="text-sm font-serif italic pl-3 border-l-2 border-[var(--accent-moss)] text-[var(--text-muted)]">
-                        &ldquo;{currentJournalPrompt}&rdquo;
-                      </p>
+                      {/* A3: Letter to Future Self reveal panel & creator */}
+                      {revealedLetterId && (
+                        (() => {
+                          const letter = futureLetters.find(l => l.id === revealedLetterId);
+                          if (!letter) return null;
+                          return (
+                            <motion.div
+                              initial={{ opacity: 0, scale: 0.95 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              className="card-base p-6 border-2 border-[var(--accent-gold)] space-y-4 text-left bg-[color-mix(in srgb, var(--accent-gold) 4%, var(--bg-secondary))]"
+                              style={{ borderRadius: 16 }}
+                            >
+                              <h4 className="font-serif text-xl font-semibold flex items-center gap-2 text-[var(--accent-gold)]">
+                                ✉️ A Letter from Your Past Self
+                              </h4>
+                              <p className="text-xs text-[var(--text-faint)]">
+                                Written on {new Date(letter.createdAt?.toDate?.() || letter.createdAt).toLocaleDateString()}
+                              </p>
+                              <div 
+                                className="text-base font-serif italic leading-relaxed whitespace-pre-wrap p-4 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-default)]" 
+                                style={{ color: 'var(--text-primary)' }}
+                              >
+                                {letter.content}
+                              </div>
+                              <button
+                                type="button"
+                                onClick={async () => {
+                                  if (!user || !db) return;
+                                  try {
+                                    const { updateDoc, doc } = await import('firebase/firestore');
+                                    await updateDoc(doc(db, `users/${user.uid}/futureLetters`, letter.id), {
+                                      opened: true
+                                    });
+                                    setRevealedLetterId(null);
+                                  } catch (err) {
+                                    console.error('Failed to mark letter as opened:', err);
+                                  }
+                                }}
+                                className="px-4 py-2 rounded-xl text-xs font-semibold text-white bg-[var(--accent-gold)] hover:opacity-90 transition-all"
+                              >
+                                Archive & Store in Memory
+                              </button>
+                            </motion.div>
+                          );
+                        })()
+                      )}
 
-                      <WritingToolbar editorRef={editorRef} onCommand={handleCommand} />
+                      {unlockedLetters.map(letter => (
+                        <motion.div
+                          key={letter.id}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          className="card-base p-5 border-dashed border-[var(--accent-gold)] animate-pulse flex flex-col sm:flex-row items-center justify-between gap-4 bg-[color-mix(in srgb, var(--accent-gold) 6%, var(--bg-secondary))]"
+                          style={{ borderRadius: 16 }}
+                        >
+                          <div className="text-left space-y-1">
+                            <h4 className="font-serif text-base font-semibold text-[var(--accent-gold)] flex items-center gap-1.5">
+                              <span>🔓</span> An envelope from the past has unlocked
+                            </h4>
+                            <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                              Written {letter.interval === '3m' ? '3 months' : letter.interval === '6m' ? '6 months' : '1 year'} ago.
+                            </p>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => setRevealedLetterId(letter.id)}
+                            className="px-4 py-2 rounded-xl text-xs font-semibold text-white bg-[var(--accent-gold)] hover:opacity-90 transition-all flex items-center gap-1.5"
+                          >
+                            <span>✉️</span> Open Letter
+                          </button>
+                        </motion.div>
+                      ))}
 
-                      <div
-                        ref={editorRef}
-                        className="journal-editor w-full min-h-[300px] outline-none leading-[2.0] prose-reading"
-                        contentEditable
-                        suppressContentEditableWarning
-                        data-placeholder="Start thinking. Let it unravel."
-                        onInput={handleEditorInput}
-                        style={{ color: 'var(--text-primary)', fontSize: '18px' }}
-                      />
+                      {activeSealedLetter && (
+                        <div className="card-base p-5 border border-[var(--border-default)] flex items-center gap-4 bg-[var(--bg-secondary)]" style={{ borderRadius: 16 }}>
+                          <div className="text-2xl text-[var(--text-muted)]">🔒</div>
+                          <div className="text-left space-y-1">
+                            <h4 className="font-serif text-sm font-semibold" style={{ color: 'var(--text-secondary)' }}>
+                              Future Letter Sealed in Vault
+                            </h4>
+                            <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                              Your letter is safe. It will unlock on {new Date(activeSealedLetter.unlockDate).toLocaleDateString()}.
+                            </p>
+                            <p className="text-[10px] italic" style={{ color: 'var(--text-faint)' }}>
+                              &ldquo;Patience is the companion of wisdom.&rdquo;
+                            </p>
+                          </div>
+                        </div>
+                      )}
+
+                      {!activeSealedLetter && !revealedLetterId && (
+                        <div className="card-base p-5 border border-[var(--border-default)] space-y-4 bg-[var(--bg-secondary)] text-left" style={{ borderRadius: 16 }}>
+                          <div>
+                            <h4 className="font-serif text-base font-semibold" style={{ color: 'var(--text-primary)' }}>
+                              Write a Letter to your Future Self
+                            </h4>
+                            <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                              Write down your current thoughts, hopes, or questions. It will be sealed and unlocked after the chosen duration.
+                            </p>
+                          </div>
+                          <textarea
+                            value={letterContent}
+                            onChange={e => setLetterContent(e.target.value)}
+                            placeholder="Dear Future Self, today I am..."
+                            rows={4}
+                            className="w-full bg-[var(--bg-primary)] p-3 rounded-lg border border-[var(--border-default)] outline-none text-sm resize-none"
+                            style={{ color: 'var(--text-primary)' }}
+                          />
+                          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                            <div className="flex items-center gap-2 text-xs">
+                              <span style={{ color: 'var(--text-muted)' }}>Unlock in:</span>
+                              {(['3m', '6m', '1y'] as const).map(interval => (
+                                <button
+                                  key={interval}
+                                  type="button"
+                                  onClick={() => setLetterInterval(interval)}
+                                  className={cn(
+                                    "px-2.5 py-1 rounded-full border transition-all font-semibold",
+                                    letterInterval === interval
+                                      ? "bg-[var(--accent-moss)] text-white border-[var(--accent-moss)]"
+                                      : "bg-transparent border-[var(--border-default)] text-[var(--text-muted)] hover:bg-[var(--bg-tertiary)]"
+                                  )}
+                                >
+                                  {interval === '3m' ? '3 Months' : interval === '6m' ? '6 Months' : '1 Year'}
+                                </button>
+                              ))}
+                            </div>
+                            <button
+                              type="button"
+                              onClick={handleSealLetter}
+                              disabled={sealingLetter || !letterContent.trim()}
+                              className="px-5 py-2 rounded-xl text-xs font-semibold text-white bg-[var(--accent-moss)] hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                            >
+                              {sealingLetter ? 'Sealing...' : 'Seal Letter 🔒'}
+                            </button>
+                          </div>
+                        </div>
+                      )}
+
+                      {openedLetters.length > 0 && (
+                        <div className="card-base p-5 border border-[var(--border-default)] space-y-3 bg-[var(--bg-secondary)] text-left" style={{ borderRadius: 16 }}>
+                          <h4 className="font-serif text-sm font-semibold" style={{ color: 'var(--text-secondary)' }}>
+                            Vault Archives (Opened Letters)
+                          </h4>
+                          <div className="space-y-2 max-h-40 overflow-y-auto no-scrollbar">
+                            {openedLetters.map(letter => (
+                              <div key={letter.id} className="p-3 rounded-lg border border-[var(--border-default)] bg-[var(--bg-primary)] space-y-1">
+                                <div className="flex justify-between items-center text-[10px] text-[var(--text-faint)]">
+                                  <span>Opened on {new Date(letter.unlockDate).toLocaleDateString()}</span>
+                                  <span>Unsealed</span>
+                                </div>
+                                <p className="text-xs font-serif italic leading-relaxed whitespace-pre-wrap" style={{ color: 'var(--text-secondary)' }}>
+                                  {letter.content}
+                                </p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
 
@@ -1044,7 +1571,16 @@ export default function AntarmanPage() {
                           <Sparkles size={12} className="text-indigo-400" />
                           <span className="font-serif italic">Verse & Feeling</span>
                         </div>
-                        <span>{poetryLineCount} lines</span>
+                        <div className="flex items-center gap-3">
+                          <button
+                            type="button"
+                            onClick={() => setScriptPreference(prev => prev === 'devanagari' ? 'roman' : 'devanagari')}
+                            className="text-[10px] px-2 py-0.5 rounded-full border border-[var(--border-default)] text-[var(--text-muted)] hover:bg-[var(--bg-tertiary)] transition-all font-semibold uppercase"
+                          >
+                            {scriptPreference === 'devanagari' ? 'हि' : 'EN'}
+                          </button>
+                          <span>{poetryLineCount} lines</span>
+                        </div>
                       </div>
 
                       {/* Inspiration Line */}
@@ -1069,7 +1605,12 @@ export default function AntarmanPage() {
                       </div>
 
                       <div className="flex justify-center">
-                        <WritingToolbar editorRef={editorRef} onCommand={handleCommand} />
+                        <WritingToolbar 
+                          editorRef={editorRef} 
+                          onCommand={handleCommand} 
+                          scriptPreference={scriptPreference}
+                          onEditorInput={handleEditorInput}
+                        />
                       </div>
 
                       <div
@@ -1081,6 +1622,34 @@ export default function AntarmanPage() {
                         onInput={handleEditorInput}
                         style={{ color: 'var(--text-primary)', fontSize: '19px' }}
                       />
+
+                      {currentWordCount === 0 && (
+                        <div className="flex flex-wrap gap-2 justify-center py-2 mt-2 border-t border-dashed border-[var(--border-default)]">
+                          <span className="text-xs text-[var(--text-faint)] w-full text-center mb-1">Need a start? Click to insert:</span>
+                          {SENTENCE_STARTERS[activeSection].map((starter, idx) => (
+                            <button
+                              key={idx}
+                              type="button"
+                              onClick={() => {
+                                  if (editorRef.current) {
+                                    editorRef.current.focus();
+                                    editorRef.current.innerHTML = starter;
+                                    const range = document.createRange();
+                                    const sel = window.getSelection();
+                                    range.selectNodeContents(editorRef.current);
+                                    range.collapse(false);
+                                    sel?.removeAllRanges();
+                                    sel?.addRange(range);
+                                    handleEditorInput();
+                                  }
+                              }}
+                              className="px-2.5 py-1 rounded-full text-xs transition-all border border-[var(--border-default)] bg-[var(--bg-primary)] hover:bg-[var(--bg-tertiary)] text-[var(--text-secondary)] font-medium"
+                            >
+                              {starter}
+                            </button>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   )}
 
@@ -1093,6 +1662,13 @@ export default function AntarmanPage() {
                           <span>{currentWordCount} words · {currentReadingTime} min read</span>
                         </div>
                         <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => setScriptPreference(prev => prev === 'devanagari' ? 'roman' : 'devanagari')}
+                            className="text-[10px] px-2 py-0.5 rounded-full border border-[var(--border-default)] text-[var(--text-muted)] hover:bg-[var(--bg-tertiary)] transition-all font-semibold uppercase mr-2"
+                          >
+                            {scriptPreference === 'devanagari' ? 'हि' : 'EN'}
+                          </button>
                           {isFullScreen && (
                             <span className="text-xs text-[var(--accent-saffron)] font-serif italic mr-3">
                               {lastSavedText}
@@ -1133,9 +1709,42 @@ export default function AntarmanPage() {
                         style={{ color: 'var(--text-primary)', fontSize: '20px' }}
                       />
 
+                      {currentWordCount === 0 && (
+                        <div className="flex flex-wrap gap-2 justify-center py-2 mt-2 border-t border-dashed border-[var(--border-default)]">
+                          <span className="text-xs text-[var(--text-faint)] w-full text-center mb-1">Need a start? Click to insert:</span>
+                          {SENTENCE_STARTERS[activeSection].map((starter, idx) => (
+                            <button
+                              key={idx}
+                              type="button"
+                              onClick={() => {
+                                if (editorRef.current) {
+                                  editorRef.current.focus();
+                                  editorRef.current.innerHTML = starter;
+                                  const range = document.createRange();
+                                  const sel = window.getSelection();
+                                  range.selectNodeContents(editorRef.current);
+                                  range.collapse(false);
+                                  sel?.removeAllRanges();
+                                  sel?.addRange(range);
+                                  handleEditorInput();
+                                }
+                              }}
+                              className="px-2.5 py-1 rounded-full text-xs transition-all border border-[var(--border-default)] bg-[var(--bg-primary)] hover:bg-[var(--bg-tertiary)] text-[var(--text-secondary)] font-medium"
+                            >
+                              {starter}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+
                       {/* WritingToolbar at bottom for stories */}
                       <div className="flex justify-between items-center pt-4 border-t" style={{ borderColor: 'var(--border-default)' }}>
-                        <WritingToolbar editorRef={editorRef} onCommand={handleCommand} />
+                        <WritingToolbar 
+                          editorRef={editorRef} 
+                          onCommand={handleCommand} 
+                          scriptPreference={scriptPreference}
+                          onEditorInput={handleEditorInput}
+                        />
                         <button
                           type="button"
                           onClick={() => handleCommand('insertHTML', "<p style='text-align:center'>* * *</p>")}
@@ -1216,6 +1825,34 @@ export default function AntarmanPage() {
                           onInput={handleEditorInput}
                           style={{ color: 'var(--text-primary)', borderColor: 'var(--border-default)', fontSize: '16px' }}
                         />
+
+                        {currentWordCount === 0 && (
+                          <div className="flex flex-wrap gap-2 py-2 mt-2 border-t border-dashed border-[var(--border-default)]">
+                            <span className="text-xs text-[var(--text-faint)] w-full text-left mb-1">Need a start? Click to insert:</span>
+                            {SENTENCE_STARTERS[activeSection].map((starter, idx) => (
+                              <button
+                                key={idx}
+                                type="button"
+                                onClick={() => {
+                                  if (editorRef.current) {
+                                    editorRef.current.focus();
+                                    editorRef.current.innerHTML = starter;
+                                    const range = document.createRange();
+                                    const sel = window.getSelection();
+                                    range.selectNodeContents(editorRef.current);
+                                    range.collapse(false);
+                                    sel?.removeAllRanges();
+                                    sel?.addRange(range);
+                                    handleEditorInput();
+                                  }
+                                }}
+                                className="px-2.5 py-1 rounded-full text-xs transition-all border border-[var(--border-default)] bg-[var(--bg-primary)] hover:bg-[var(--bg-tertiary)] text-[var(--text-secondary)] font-medium"
+                              >
+                                {starter}
+                              </button>
+                            ))}
+                          </div>
+                        )}
                       </div>
 
                       {/* Closing Line */}
@@ -1474,6 +2111,68 @@ export default function AntarmanPage() {
                     ))}
                   </div>
                 )}
+              </div>
+
+              {/* A1: Inner Weather & A6: Saved Gems */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                {/* Inner Weather Trends */}
+                <div className="card-base p-5 space-y-3 text-left" style={{ borderRadius: 16 }}>
+                  <h4 className="font-serif text-base font-semibold" style={{ color: 'var(--text-primary)' }}>
+                    Inner Weather Trends (Past 30 Days)
+                  </h4>
+                  {innerWeatherTrends.length === 0 ? (
+                    <p className="text-xs italic" style={{ color: 'var(--text-faint)' }}>
+                      No emotional trend data available yet. Keep writing daily to see your trends.
+                    </p>
+                  ) : (
+                    <p className="text-sm font-serif italic leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                      {innerWeatherTrends.map(([emo, count]) => `${emo} (${count})`).join(', ')}
+                    </p>
+                  )}
+                </div>
+
+                {/* Saved Gems */}
+                <div className="card-base p-5 space-y-3 text-left" style={{ borderRadius: 16 }}>
+                  <h4 className="font-serif text-base font-semibold" style={{ color: 'var(--text-primary)' }}>
+                    Saved Gems
+                  </h4>
+                  {gems.length === 0 ? (
+                    <p className="text-xs italic" style={{ color: 'var(--text-faint)' }}>
+                      No saved gems yet. Highlight any text inside your entries and click &quot;Save Gem&quot; to bookmark it here.
+                    </p>
+                  ) : (
+                    <div className="space-y-2 max-h-48 overflow-y-auto pr-1 no-scrollbar">
+                      {gems.map(gem => (
+                        <div 
+                          key={gem.id} 
+                          className="p-3 rounded-lg border border-[var(--border-default)] bg-[var(--bg-secondary)] text-left space-y-1 relative group"
+                        >
+                          <p className="text-sm font-serif italic leading-relaxed" style={{ color: 'var(--text-primary)' }}>
+                            &ldquo;{gem.text}&rdquo;
+                          </p>
+                          <div className="flex justify-between items-center text-[10px]" style={{ color: 'var(--text-faint)' }}>
+                            <span>{formatDisplayDate(gem.date)}</span>
+                            <button
+                              onClick={async (e) => {
+                                e.stopPropagation();
+                                if (!user || !db) return;
+                                try {
+                                  const { deleteDoc, doc } = await import('firebase/firestore');
+                                  await deleteDoc(doc(db, `users/${user.uid}/gems`, gem.id));
+                                } catch (err) {
+                                  console.error('Failed to delete gem:', err);
+                                }
+                              }}
+                              className="opacity-0 group-hover:opacity-100 hover:text-red-500 transition-all font-semibold"
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             </motion.div>
           )}
@@ -1832,6 +2531,43 @@ export default function AntarmanPage() {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* A6: Floating Gem Selection Button */}
+        {gemButtonPosition && (
+          <div
+            className="fixed z-50 -translate-x-1/2 flex items-center justify-center pointer-events-auto"
+            style={{
+              left: gemButtonPosition.x,
+              top: gemButtonPosition.y,
+            }}
+          >
+            <button
+              onClick={async (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (!user || !db || !selectedText.trim()) return;
+                try {
+                  const { addDoc, collection, serverTimestamp } = await import('firebase/firestore');
+                  await addDoc(collection(db, `users/${user.uid}/gems`), {
+                    text: selectedText,
+                    date: selectedDate,
+                    createdAt: serverTimestamp(),
+                  });
+                  window.getSelection()?.removeAllRanges();
+                  setGemButtonPosition(null);
+                  setSelectedText('');
+                } catch (err) {
+                  console.error('Failed to save gem:', err);
+                }
+              }}
+              className="bg-[var(--accent-saffron)] text-white px-3 py-1.5 rounded-full shadow-lg hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 text-xs font-semibold border border-[var(--accent-saffron)]"
+            >
+              <BookOpen size={12} />
+              <span>Save Gem ✦</span>
+            </button>
+          </div>
+        )}
+
       </div>
     </PageTransition>
   );

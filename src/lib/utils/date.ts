@@ -15,6 +15,11 @@ export function getDayIndex(date: Date = new Date()): number {
   return (diff % 90) + 1;
 }
 
+export function getDayIndexForArray(date: Date, arrayLength: number): number {
+  const diff = differenceInDays(date, EPOCH);
+  return Math.abs(diff % arrayLength);
+}
+
 /**
  * Day of year (1–365/366) for variety across static arrays.
  */

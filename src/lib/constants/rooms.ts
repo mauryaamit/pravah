@@ -31,6 +31,7 @@ export const ROOMS: Room[] = [
   { id: 'manthan',     name: 'Manthan',      nameHi: 'मन्थन',      nameHindi: 'मन्थन',     emoji: '🌀', description: 'Mental models - the thinking tools of every discipline', route: '/manthan', colorVar: '--room-manthan', colorHex: '#6A3A8A', cluster: 'inner' },
   { id: 'noor',        name: 'Noor',         nameHi: 'नूर',         nameHindi: 'नूर',       emoji: '✨', description: 'Daily fire - transformation, not motivation',   route: '/noor',         colorVar: '--room-noor',         colorHex: '#D4A853', cluster: 'inner' },
   { id: 'riyaz',       name: 'Riyaz',        nameHi: 'रियाज़',     nameHindi: 'रियाज़',    emoji: '🎵', description: 'Music and arts - the practice of beauty',      route: '/riyaz',        colorVar: '--room-riyaz',        colorHex: '#8A4A8A', cluster: 'inner' },
+  { id: 'manas',       name: 'Manas',        nameHi: 'मानस',       nameHindi: 'मानस',      emoji: '🧘', description: 'Psychology and the science of human behavior', route: '/manas',        colorVar: '--room-manas',        colorHex: '#3A6A5A', cluster: 'inner' },
 
   // KNOWLEDGE
   { id: 'bodh',        name: 'Bodh',         nameHi: 'बोध',        nameHindi: 'बोध',       emoji: '💡', description: 'Mental models and ideas that change you',      route: '/bodh',         colorVar: '--room-bodh',         colorHex: '#A6893A', cluster: 'knowledge' },

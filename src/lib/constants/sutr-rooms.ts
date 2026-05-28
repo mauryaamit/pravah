@@ -66,6 +66,13 @@ export const SUTR_ROOMS: SutrRoomDescription[] = [
     contemplativeText: 'Immerse yourself in ragas, scales, and the deep practice of harmony. Dedicate your attention to crafting pure aesthetic grace.'
   },
   {
+    id: 'manas',
+    name: 'Manas',
+    nameHindi: 'मानस',
+    oneLiner: 'The science of being human',
+    contemplativeText: 'Deconstruct the biases, social currents, and cognitive illusions that shape your decisions, and discover how to see clearly.'
+  },
+  {
     id: 'bodh',
     name: 'Bodh',
     nameHindi: 'बोध',

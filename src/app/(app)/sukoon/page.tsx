@@ -1,20 +1,25 @@
 'use client';
+
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FADE_UP, STAGGER_CONTAINER, STAGGER_ITEM } from '@/lib/utils/motion';
 import PageTransition from '@/components/layout/PageTransition';
-import { getDayOfYear } from '@/lib/utils/date';
+import { getDayOfYear, toDateString, getDayIndexForArray } from '@/lib/utils/date';
 import ReadAloudButton from '@/components/shared/ReadAloudButton';
 import SutraNoteButton from '@/components/shared/SutraNoteButton';
 import RevisitButton from '@/components/shared/RevisitButton';
+import DayNavigator from '@/components/shared/DayNavigator';
+import { writeCleanupMarker } from '@/lib/firebase/cleanup';
 import { Copy, Check, Heart, BookOpen, Share2 } from 'lucide-react';
 import { db } from '@/lib/firebase/client';
-import { doc, setDoc, deleteDoc, collection, onSnapshot } from 'firebase/firestore';
+import { doc, setDoc, deleteDoc, collection, onSnapshot, getDoc } from 'firebase/firestore';
 import { useAuth } from '@/lib/hooks/useAuth';
 import FocusMode from '@/components/shared/FocusMode';
 import { POEMS } from '@/lib/constants/poems';
 
 type Script = 'hi' | 'roman' | 'en';
+type ResonanceWord = 'moved' | 'puzzling' | 'timeless' | 'tender' | 'searching' | 
+                     'quiet' | 'vast' | 'aching' | 'clarifying' | 'unsettling';
 
 export interface Poem {
   id: string;
@@ -30,26 +35,77 @@ export interface Poem {
   authorBio: string;
 }
 
+const POEM_RESONANCES: Record<string, ResonanceWord[]> = {
+  'ghalib-khwahish': ['searching', 'aching', 'timeless'],
+  'faiz-mohabbat': ['moved', 'aching', 'quiet'],
+  'kabir-maya': ['puzzling', 'clarifying', 'unsettling'],
+  'bachhan-madhushala': ['tender', 'quiet', 'vast'],
+  'wordsworth-daffodils': ['tender', 'quiet', 'vast'],
+  'dickinson-hope': ['tender', 'moved', 'timeless'],
+  'frost-woods': ['quiet', 'vast', 'aching'],
+  'gibran-love': ['moved', 'tender', 'timeless'],
+};
+
+function getResonanceWords(poemId: string): ResonanceWord[] {
+  return POEM_RESONANCES[poemId] ?? ['moved', 'timeless', 'quiet'];
+}
+
 export default function SukoonPage() {
   const { user } = useAuth();
   const [script, setScript] = useState<Script>('hi');
-  const dayOfYear = getDayOfYear();
-  const [activePoem, setActivePoem] = useState(POEMS[dayOfYear % POEMS.length]);
+  const [currentDate, setCurrentDate] = useState<Date>(new Date());
+  
+  const activePoemIndex = getDayIndexForArray(currentDate, POEMS.length);
+  const activePoem = POEMS[activePoemIndex];
+  
   const [expandedPoem, setExpandedPoem] = useState<string | null>(activePoem.id);
   const [openTranslations, setOpenTranslations] = useState<Record<string, boolean>>({});
   const [copiedIndex, setCopiedIndex] = useState<string | null>(null);
 
   // Anthology & Focus Mode states
+  const [anthologyData, setAnthologyData] = useState<Record<string, { saved: boolean, resonance?: string }>>({});
   const [anthologyIds, setAnthologyIds] = useState<Set<string>>(new Set());
   const [onlyAnthology, setOnlyAnthology] = useState(false);
   const [focusPoem, setFocusPoem] = useState<Poem | null>(null);
+  const [selectedResonance, setSelectedResonance] = useState<string | null>(null);
 
+  // Sync expanded state when poem changes
+  useEffect(() => {
+    setExpandedPoem(activePoem.id);
+  }, [activePoem.id]);
+
+  // Load selected resonance for the current date and script language
+  useEffect(() => {
+    if (!user || !db) return;
+    const dateStr = toDateString(currentDate);
+    const poemLang = script;
+    const docRef = doc(db, 'users', user.uid, 'sukoon', 'resonances', dateStr, poemLang);
+    const getRes = async () => {
+      try {
+        const snap = await getDoc(docRef);
+        if (snap.exists()) {
+          setSelectedResonance(snap.data().word);
+        } else {
+          setSelectedResonance(null);
+        }
+      } catch (e) {
+        setSelectedResonance(null);
+      }
+    };
+    getRes();
+  }, [user, currentDate, script]);
+
+  // Sync anthology
   useEffect(() => {
     if (!user || !db) return;
     const q = collection(db, `users/${user.uid}/anthology`);
     const unsub = onSnapshot(q, (snap) => {
-      const ids = new Set(snap.docs.map(d => d.id));
-      setAnthologyIds(ids);
+      const data: Record<string, { saved: boolean, resonance?: string }> = {};
+      snap.docs.forEach(d => {
+        data[d.id] = { saved: true, resonance: d.data().resonance };
+      });
+      setAnthologyData(data);
+      setAnthologyIds(new Set(Object.keys(data)));
     }, (err) => {
       console.error('Failed to load anthology:', err);
     });
@@ -62,7 +118,34 @@ export default function SukoonPage() {
     if (anthologyIds.has(poemId)) {
       await deleteDoc(docRef);
     } else {
-      await setDoc(docRef, { saved: true, savedAt: new Date() });
+      const payload: any = { saved: true, savedAt: new Date() };
+      if (selectedResonance && poemId === activePoem.id) {
+        payload.resonance = selectedResonance;
+      }
+      await setDoc(docRef, payload);
+    }
+  };
+
+  const handleSelectResonance = async (word: string) => {
+    setSelectedResonance(word);
+    if (!user || !db) return;
+    const dateStr = toDateString(currentDate);
+    const poemLang = script;
+
+    const docPath = `users/${user.uid}/sukoon/resonances/${dateStr}/${poemLang}`;
+    const resRef = doc(db, 'users', user.uid, 'sukoon', 'resonances', dateStr, poemLang);
+    await setDoc(resRef, {
+      word,
+      poemTitle: activePoem.title,
+      date: dateStr
+    });
+
+    await writeCleanupMarker(user.uid, docPath, dateStr);
+
+    // If active poem is already saved in the anthology, attach the resonance tag permanently
+    if (anthologyIds.has(activePoem.id)) {
+      const authRef = doc(db, `users/${user.uid}/anthology`, activePoem.id);
+      await setDoc(authRef, { resonance: word }, { merge: true });
     }
   };
 
@@ -96,7 +179,6 @@ export default function SukoonPage() {
   };
 
   const linesForActive = script === 'hi' ? activePoem.hi : script === 'roman' ? activePoem.roman : activePoem.en;
-
   const visiblePoems = onlyAnthology ? POEMS.filter(p => anthologyIds.has(p.id)) : POEMS;
 
   return (
@@ -105,8 +187,13 @@ export default function SukoonPage() {
 
         {/* Header */}
         <motion.div variants={FADE_UP} initial="initial" animate="animate" className="space-y-3">
-          <p className="section-label">Poetry Room</p>
-          <h1 className="font-serif text-2xl" style={{ color: 'var(--text-primary)' }}>सुकून - Sukoon</h1>
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div>
+              <p className="section-label">Poetry Room</p>
+              <h1 className="font-serif text-2xl" style={{ color: 'var(--text-primary)' }}>सुकून - Sukoon</h1>
+            </div>
+            <DayNavigator currentDate={currentDate} onDateChange={setCurrentDate} />
+          </div>
           <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
             Poetry that does not merely rhyme, but lives. Full poems. Deep commentary. 
             Let the words land slowly.
@@ -120,7 +207,7 @@ export default function SukoonPage() {
                 <button
                   key={s}
                   onClick={() => setScript(s)}
-                  className="px-4 py-1.5 rounded-full text-xs font-medium transition-all"
+                  className="px-4 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer"
                   style={{
                     background: script === s ? 'var(--accent-saffron)' : 'var(--bg-tertiary)',
                     color: script === s ? 'white' : 'var(--text-muted)',
@@ -134,7 +221,7 @@ export default function SukoonPage() {
             {/* Anthology filter */}
             <button
               onClick={() => setOnlyAnthology(!onlyAnthology)}
-              className="px-4 py-1.5 rounded-full text-xs font-medium transition-all flex items-center gap-1.5 border"
+              className="px-4 py-1.5 rounded-full text-xs font-medium transition-all flex items-center gap-1.5 border cursor-pointer"
               style={{
                 borderColor: onlyAnthology ? 'var(--accent-saffron)' : 'var(--border-default)',
                 background: onlyAnthology ? 'color-mix(in srgb, var(--accent-saffron) 10%, var(--bg-tertiary))' : 'var(--bg-tertiary)',
@@ -147,7 +234,7 @@ export default function SukoonPage() {
           </div>
         </motion.div>
 
-        {/* Poem of the Week - highlighted */}
+        {/* Poem of the Day - highlighted */}
         {!onlyAnthology && (
           <motion.div
             variants={FADE_UP}
@@ -165,7 +252,7 @@ export default function SukoonPage() {
             <div className="p-4 relative z-10">
               <div className="flex items-center justify-between mb-1">
                 <span className="text-xs font-semibold" style={{ color: 'var(--accent-saffron)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-                  Poem of the Week
+                  Poem of the Day
                 </span>
                 <div className="flex items-center gap-2" onClick={e => e.stopPropagation()}>
                   <ReadAloudButton
@@ -187,14 +274,14 @@ export default function SukoonPage() {
                   />
                   <button
                     onClick={() => setFocusPoem(activePoem)}
-                    className="px-2.5 py-1 rounded-full text-xs font-medium border transition-all hover:bg-bg-tertiary flex items-center gap-1"
+                    className="px-2.5 py-1 rounded-full text-xs font-medium border transition-all hover:bg-bg-tertiary flex items-center gap-1 cursor-pointer"
                     style={{ borderColor: 'var(--border-default)', color: 'var(--text-muted)', background: 'var(--bg-primary)' }}
                   >
                     Focus
                   </button>
                   <button
                     onClick={() => toggleAnthology(activePoem.id)}
-                    className="p-1 rounded-full border transition-all hover:bg-bg-tertiary flex items-center justify-center w-7 h-7"
+                    className="p-1 rounded-full border transition-all hover:bg-bg-tertiary flex items-center justify-center w-7 h-7 cursor-pointer"
                     style={{ borderColor: 'var(--border-default)', color: anthologyIds.has(activePoem.id) ? 'var(--accent-saffron)' : 'var(--text-muted)', background: 'var(--bg-primary)' }}
                     title={anthologyIds.has(activePoem.id) ? "Remove from Anthology" : "Save to Anthology"}
                   >
@@ -209,11 +296,34 @@ export default function SukoonPage() {
               <p className="text-sm mt-0.5" style={{ color: activePoem.id === 'ghalib-khwahish' ? 'var(--accent-saffron)' : 'var(--text-muted)' }}>
                 {script === 'hi' ? activePoem.authorHi : activePoem.author} · {activePoem.period}
               </p>
+
+              {/* Resonance Word Tagging */}
+              <div className="flex gap-2 items-center mt-4 border-t pt-3" style={{ borderColor: 'var(--border-default)' }}>
+                <span className="text-[11px]" style={{ color: 'var(--text-faint)' }}>Resonance:</span>
+                {getResonanceWords(activePoem.id).map(word => {
+                  const isSelected = selectedResonance === word;
+                  return (
+                    <button
+                      key={word}
+                      onClick={() => handleSelectResonance(word)}
+                      className="px-3 py-0.5 rounded-full text-[11px] transition-all border font-serif italic cursor-pointer"
+                      style={{
+                        borderColor: isSelected ? 'var(--accent-saffron)' : 'var(--border-default)',
+                        background: isSelected ? 'color-mix(in srgb, var(--accent-saffron) 15%, var(--bg-secondary))' : 'transparent',
+                        color: isSelected ? 'var(--accent-saffron)' : 'var(--text-muted)',
+                        opacity: selectedResonance && !isSelected ? 0.4 : 1
+                      }}
+                    >
+                      {word}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </motion.div>
         )}
 
-        {/* All poems */}
+        {/* All poems / Anthology view */}
         <motion.div
           variants={STAGGER_CONTAINER}
           initial="initial"
@@ -223,6 +333,7 @@ export default function SukoonPage() {
           {visiblePoems.map(poem => {
             const lines = script === 'hi' ? poem.hi : script === 'roman' ? poem.roman : poem.en;
             const isExpanded = expandedPoem === poem.id;
+            const poemResonance = anthologyData[poem.id]?.resonance;
 
             return (
               <motion.div
@@ -246,13 +357,23 @@ export default function SukoonPage() {
                   <div className="flex items-start justify-between gap-3 p-5">
                     <button
                       onClick={() => setExpandedPoem(isExpanded ? null : poem.id)}
-                      className="flex-1 text-left space-y-2"
+                      className="flex-1 text-left space-y-2 cursor-pointer"
                     >
                       <div>
-                        <h3 className="font-serif text-lg" style={{ color: 'var(--text-primary)' }}>
+                        <h3 className="font-serif text-lg flex items-center flex-wrap gap-2" style={{ color: 'var(--text-primary)' }}>
                           {script === 'hi' ? poem.titleHi : poem.title}
+                          {poemResonance && (
+                            <span className="inline-block text-[9px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full border"
+                                  style={{ 
+                                    color: 'var(--accent-saffron)', 
+                                    borderColor: 'color-mix(in srgb, var(--accent-saffron) 30%, transparent)',
+                                    background: 'color-mix(in srgb, var(--accent-saffron) 8%, transparent)' 
+                                  }}>
+                              {poemResonance}
+                            </span>
+                          )}
                         </h3>
-                        <p className="text-sm mt-0.5 animate-pulse-slow" style={{ 
+                        <p className="text-sm mt-0.5" style={{ 
                           color: poem.id === 'ghalib-khwahish' ? 'var(--accent-saffron)' : 'var(--text-muted)',
                           fontSize: poem.id === 'ghalib-khwahish' ? '16px' : '14px',
                           fontWeight: poem.id === 'ghalib-khwahish' ? '600' : 'normal'
@@ -275,7 +396,7 @@ export default function SukoonPage() {
 
                       {/* Preview - first 2 non-empty lines */}
                       {!isExpanded && (
-                        <p className={`text-sm leading-relaxed ${script === 'hi' ? 'font-devanagari' : 'font-serif italic'}`}
+                        <p className={`text-sm leading-relaxed ${script === 'hi' ? 'font-devanagari font-medium' : 'font-serif italic'}`}
                           style={{ color: 'var(--text-muted)' }}>
                           {lines.filter(l => l.trim()).slice(0, 2).join(' / ')}…
                         </p>
@@ -302,14 +423,14 @@ export default function SukoonPage() {
                       />
                       <button
                         onClick={() => setFocusPoem(poem)}
-                        className="px-2.5 py-1 rounded-full text-xs font-medium border transition-all hover:bg-bg-tertiary flex items-center gap-1"
+                        className="px-2.5 py-1 rounded-full text-xs font-medium border transition-all hover:bg-bg-tertiary flex items-center gap-1 cursor-pointer"
                         style={{ borderColor: 'var(--border-default)', color: 'var(--text-muted)' }}
                       >
                         Focus
                       </button>
                       <button
                         onClick={() => toggleAnthology(poem.id)}
-                        className="p-1.5 rounded-full border transition-all hover:bg-bg-tertiary flex items-center justify-center w-7 h-7"
+                        className="p-1.5 rounded-full border transition-all hover:bg-bg-tertiary flex items-center justify-center w-7 h-7 cursor-pointer"
                         style={{ borderColor: 'var(--border-default)', color: anthologyIds.has(poem.id) ? 'var(--accent-saffron)' : 'var(--text-muted)' }}
                         title={anthologyIds.has(poem.id) ? "Remove from Anthology" : "Save to Anthology"}
                       >
@@ -317,7 +438,7 @@ export default function SukoonPage() {
                       </button>
                       <button
                         onClick={() => setExpandedPoem(isExpanded ? null : poem.id)}
-                        className="p-1 rounded-full hover:bg-secondary transition-all"
+                        className="p-1 rounded-full hover:bg-secondary transition-all cursor-pointer"
                       >
                         <motion.div
                           animate={{ rotate: isExpanded ? 180 : 0 }}
@@ -373,7 +494,7 @@ export default function SukoonPage() {
                                       
                                       <button
                                         onClick={() => handleCopySher(key, sherText, poem.author)}
-                                        className="p-1.5 rounded-lg border text-muted hover:text-primary hover:border-strong transition-all flex-shrink-0"
+                                        className="p-1.5 rounded-lg border text-muted hover:text-primary hover:border-strong transition-all flex-shrink-0 cursor-pointer"
                                         title="Copy this couplet"
                                         style={{ background: 'var(--bg-tertiary)', borderColor: 'var(--border-default)' }}
                                       >
@@ -385,7 +506,7 @@ export default function SukoonPage() {
                                       <div className="pt-1">
                                         <button
                                           onClick={() => toggleTranslation(key)}
-                                          className="text-xs font-semibold uppercase tracking-wider transition-all hover:opacity-80"
+                                          className="text-xs font-semibold uppercase tracking-wider transition-all hover:opacity-80 cursor-pointer"
                                           style={{ color: 'var(--accent-saffron)' }}
                                         >
                                           {showTranslation ? 'Hide Translation' : 'View Translation'}
@@ -481,6 +602,7 @@ export default function SukoonPage() {
             Poetry is not decoration. It is a different form of thinking.
           </p>
         </motion.div>
+
         {/* Focus Mode Component */}
         <FocusMode
           isOpen={focusPoem !== null}

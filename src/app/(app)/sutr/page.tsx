@@ -111,7 +111,7 @@ export default function SutrPage() {
           <div className="sutr-divider mx-auto" style={{ background: 'var(--border-default)', height: '1px' }} />
 
           {/* ══════════ SECTION 4: THE ROOMS ══════════ */}
-          <section ref={addToReveal} className="sutr-section space-y-8">
+          <section className="sutr-section space-y-8">
             <div className="text-center space-y-3">
               <h2 className="sutr-heading text-2xl sm:text-3xl font-serif" style={{ color: '#3D3560' }}>
                 The Twenty-Six Rooms
@@ -125,7 +125,7 @@ export default function SutrPage() {
               {SUTR_ROOMS.map((room) => (
                 <div
                   key={room.id}
-                  className="sutr-room-entry flex flex-col md:flex-row md:items-start gap-4 border-b transition-colors hover:bg-stone-50/30 dark:hover:bg-stone-950/10 px-3 rounded-xl"
+                  className="sutr-room-entry flex flex-col md:flex-row md:items-start gap-4 border-b transition-colors hover:bg-stone-50/30 px-3 rounded-xl"
                   style={{ borderColor: 'var(--border-default)' }}
                 >
                   <div className="w-full md:w-1/3 flex-shrink-0 mb-2 md:mb-0">

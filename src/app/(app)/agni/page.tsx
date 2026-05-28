@@ -477,7 +477,7 @@ export default function AgniPage() {
 
                         {/* Streak counters */}
                         {(habit.currentStreak > 0 || habit.bestStreak > 0) && (
-                          <div className="flex items-center gap-1 text-[10px] font-semibold text-amber-700/80 dark:text-amber-500/80 mt-1">
+                          <div className="flex items-center gap-1 text-[10px] font-semibold text-amber-700/80 mt-1">
                             <Flame size={10} className="fill-current animate-flicker" />
                             <span>{habit.currentStreak} day streak (best {habit.bestStreak})</span>
                           </div>

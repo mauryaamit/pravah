@@ -9,6 +9,7 @@ export type AntarmanSection = 'diary' | 'journal' | 'poetry' | 'story' | 'gratit
 export interface DiaryData {
   content: string; // HTML (from contentEditable)
   mood: number; // 1-5
+  nuanced_emotion?: string | null; // Nuanced emotion (e.g. content, grateful, heavy)
   gratitude: [string, string, string];
   learned: string;
   intention: string;

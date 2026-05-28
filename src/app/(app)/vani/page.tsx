@@ -1,24 +1,146 @@
 'use client';
 
 import { useState } from 'react';
-import { getDayOfYear } from '@/lib/utils/date';
+import { getDayIndexForArray } from '@/lib/utils/date';
 import { SHLOKAS, DOHAS, CHAUPAIS, LOK_KATHAS, HINDI_WORDS } from './data';
 import ReadAloudButton from '@/components/shared/ReadAloudButton';
 import SutraNoteButton from '@/components/shared/SutraNoteButton';
 import RevisitButton from '@/components/shared/RevisitButton';
+import DayNavigator from '@/components/shared/DayNavigator';
 import PageTransition from '@/components/layout/PageTransition';
-import { BookOpen, HelpCircle, ArrowLeft, ArrowRight, Languages } from 'lucide-react';
+import { Languages } from 'lucide-react';
+
+interface EtymologyNote {
+  word: string;
+  root: string;
+  meaning: string;
+  explanation: string;
+}
+
+const ETYMO_NOTES: Record<string, EtymologyNote> = {
+  "karma": {
+    word: "कर्म (Karma)",
+    root: "कृ (kṛ)",
+    meaning: "to do, to act",
+    explanation: "Derived from the root 'kṛ', karma represents any action, deed, or work. In Sanskrit philosophy, it refers to the physical or mental actions that shape our destiny and bind our consciousness."
+  },
+  "dharma": {
+    word: "धर्म (Dharma)",
+    root: "धृ (dhṛ)",
+    meaning: "to uphold, to sustain",
+    explanation: "From the root 'dhṛ', dharma is that which holds together, sustains, or upholds the cosmic order, righteousness, duty, and the essential nature of existence."
+  },
+  "yoga": {
+    word: "योग (Yoga)",
+    root: "युज् (yuj)",
+    meaning: "to yoke, to unite",
+    explanation: "From the root 'yuj', yoga means union, harmony, or integration. It is the steady control of the senses and the mind, leading to union with the ultimate reality."
+  },
+  "jnana": {
+    word: "ज्ञान (Jnana)",
+    root: "ज्ञा (jñā)",
+    meaning: "to know, to cognize",
+    explanation: "Derived from the root 'jñā', jnana refers to sacred knowledge, wisdom, or cognitive understanding. It is the realization of the true self and the ultimate truth."
+  },
+  "satya": {
+    word: "सत्य (Satya)",
+    root: "अस् (as)",
+    meaning: "to be, to exist",
+    explanation: "From the root 'as' (to exist), satya means truth, reality, or that which is unchangeable. It denotes truthfulness in thought, word, and deed."
+  },
+  "chitta": {
+    word: "चित्त (Chitta)",
+    root: "चित् (cit)",
+    meaning: "to perceive, to consciousness",
+    explanation: "From the root 'cit', chitta is the mind-stuff, memory bank, or individual consciousness. It is the canvas upon which our thoughts and impressions are painted."
+  },
+  "moha": {
+    word: "मोह (Moha)",
+    root: "मुह् (muh)",
+    meaning: "to become bewildered, to lose sense",
+    explanation: "From the root 'muh', moha signifies delusion, infatuation, or attachment. It is the mental cloudiness that prevents one from seeing things as they truly are."
+  },
+  "sukha": {
+    word: "सुख (Sukha)",
+    root: "सु-ख (su-kha)",
+    meaning: "good space, happiness",
+    explanation: "Combining 'su' (good, pleasant) and 'kha' (axle-hole, space), sukha originally meant a smooth-running chariot, representing ease, happiness, and comfort."
+  },
+  "dukkha": {
+    word: "दुःख (Duhkha)",
+    root: "दुष्-ख (duṣ-kha)",
+    meaning: "bad space, suffering",
+    explanation: "Combining 'duṣ' (bad, difficult) and 'kha' (space), duhkha originally referred to a stuck axle-hole, representing friction, discomfort, or suffering."
+  },
+  "prasada": {
+    word: "प्रसाद (Prasada)",
+    root: "सद् (sad) with prefix 'pra'",
+    meaning: "to sit down, to settle, to become clear",
+    explanation: "From the root 'sad' (to sit) with 'pra' (forward), prasada means to settle down, clarify, or become tranquil. It refers to a state of grace or mental clarity."
+  },
+  "manas": {
+    word: "मनस् (Manas)",
+    root: "मन् (man)",
+    meaning: "to think, to contemplate",
+    explanation: "Derived from the root 'man', manas is the coordinating faculty of the mind, the repository of thoughts, desires, and sensory coordination."
+  }
+};
+
+function getEtymologyNote(shloka: string, iast: string): EtymologyNote {
+  const shlokaLower = shloka.toLowerCase();
+  const iastLower = iast.toLowerCase();
+  
+  if (shlokaLower.includes("कर्म") || iastLower.includes("karma")) {
+    return ETYMO_NOTES.karma;
+  }
+  if (shlokaLower.includes("धर्म") || iastLower.includes("dharma")) {
+    return ETYMO_NOTES.dharma;
+  }
+  if (shlokaLower.includes("योग") || iastLower.includes("yoga")) {
+    return ETYMO_NOTES.yoga;
+  }
+  if (shlokaLower.includes("ज्ञान") || iastLower.includes("jñāna") || iastLower.includes("jnana")) {
+    return ETYMO_NOTES.jnana;
+  }
+  if (shlokaLower.includes("सत्य") || iastLower.includes("satya")) {
+    return ETYMO_NOTES.satya;
+  }
+  if (shlokaLower.includes("चित्त") || iastLower.includes("citta")) {
+    return ETYMO_NOTES.chitta;
+  }
+  if (shlokaLower.includes("मोह") || iastLower.includes("moha")) {
+    return ETYMO_NOTES.moha;
+  }
+  if (shlokaLower.includes("सुख") || iastLower.includes("sukha")) {
+    return ETYMO_NOTES.sukha;
+  }
+  if (shlokaLower.includes("दुःख") || iastLower.includes("duḥkha") || iastLower.includes("duhkha")) {
+    return ETYMO_NOTES.dukkha;
+  }
+  if (shlokaLower.includes("प्रसाद") || iastLower.includes("prasāda") || iastLower.includes("prasada")) {
+    return ETYMO_NOTES.prasada;
+  }
+  if (shlokaLower.includes("मन") || iastLower.includes("manas")) {
+    return ETYMO_NOTES.manas;
+  }
+  
+  return ETYMO_NOTES.dharma;
+}
 
 export default function VaniPage() {
+  const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [showIast, setShowIast] = useState(false);
-  const dayIndex = getDayOfYear() - 1;
+  
+  const dayIndex = getDayIndexForArray(currentDate, 1000); // generic high ceiling
 
   // Retrieve item for the day deterministically
-  const shlokaItem = SHLOKAS[dayIndex % SHLOKAS.length];
-  const dohaItem = DOHAS[dayIndex % DOHAS.length];
-  const chaupaiItem = CHAUPAIS[dayIndex % CHAUPAIS.length];
-  const lokKathaItem = LOK_KATHAS[dayIndex % LOK_KATHAS.length];
-  const hindiWordItem = HINDI_WORDS[dayIndex % HINDI_WORDS.length];
+  const shlokaItem = SHLOKAS[getDayIndexForArray(currentDate, SHLOKAS.length)];
+  const dohaItem = DOHAS[getDayIndexForArray(currentDate, DOHAS.length)];
+  const chaupaiItem = CHAUPAIS[getDayIndexForArray(currentDate, CHAUPAIS.length)];
+  const lokKathaItem = LOK_KATHAS[getDayIndexForArray(currentDate, LOK_KATHAS.length)];
+  const hindiWordItem = HINDI_WORDS[getDayIndexForArray(currentDate, HINDI_WORDS.length)];
+
+  const etymon = getEtymologyNote(shlokaItem.shloka, shlokaItem.iast);
 
   return (
     <PageTransition>
@@ -27,11 +149,14 @@ export default function VaniPage() {
         {/* Header */}
         <div className="border-b pb-4" style={{ borderColor: 'var(--border-default)' }}>
           <h1 className="font-serif text-3xl" style={{ color: 'var(--text-primary)' }}>Vani</h1>
-          <p className="font-devanagari text-lg" style={{ color: '#8B3A3A' }}>वाणी — सरस्वती का वरदान</p>
+          <p className="font-devanagari text-lg" style={{ color: '#8B3A3A' }}>वाणी - सरस्वती का वरदान</p>
           <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>
             Daily wisdom from ancient Sanskrit shlokas, Kabir's dohas, Ramcharitmanas verses, and regional folk wisdom.
           </p>
         </div>
+
+        {/* Date Navigator */}
+        <DayNavigator currentDate={currentDate} onDateChange={setCurrentDate} />
 
         {/* ─── Card 1: Shloka ─── */}
         <div className="card-base p-6 space-y-4" style={{ borderLeft: '4px solid #8B3A3A' }}>
@@ -56,7 +181,7 @@ export default function VaniPage() {
               {showIast ? shlokaItem.iast : shlokaItem.shloka}
             </p>
             <p className="text-xs font-serif text-right italic mt-3" style={{ color: 'var(--text-muted)' }}>
-              — {shlokaItem.source}
+              - {shlokaItem.source}
             </p>
           </div>
 
@@ -76,6 +201,19 @@ export default function VaniPage() {
                 {shlokaItem.meaning_english}
               </p>
             </div>
+
+            {/* Root Etymology display */}
+            {etymon && (
+              <div className="mt-4 p-4 rounded-xl border border-dashed text-xs space-y-1.5" style={{ borderColor: 'var(--border-default)', backgroundColor: 'color-mix(in srgb, #8B3A3A 4%, var(--bg-tertiary))' }}>
+                <span className="text-[10px] uppercase font-bold text-[#8B3A3A] block">शब्द व्युत्पत्ति · Root Etymology</span>
+                <p style={{ color: 'var(--text-primary)' }}>
+                  <strong className="font-semibold text-sm">{etymon.word}</strong> from the Sanskrit root <strong className="italic text-[#8B3A3A] font-serif text-sm">{etymon.root}</strong> (meaning &ldquo;{etymon.meaning}&rdquo;).
+                </p>
+                <p className="leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+                  {etymon.explanation}
+                </p>
+              </div>
+            )}
 
             {/* Read Aloud */}
             <div className="flex justify-end items-center gap-1 pt-2">
@@ -116,7 +254,7 @@ export default function VaniPage() {
               {dohaItem.doha}
             </p>
             <p className="text-xs font-serif text-right italic mt-3" style={{ color: 'var(--text-muted)' }}>
-              — {dohaItem.poet}
+              - {dohaItem.poet}
             </p>
           </div>
 
@@ -168,7 +306,7 @@ export default function VaniPage() {
               {chaupaiItem.chaupai}
             </p>
             <p className="text-xs font-serif text-right italic mt-3" style={{ color: 'var(--text-muted)' }}>
-              — श्रीरामचरितमानस ({chaupaiItem.kand})
+              - श्रीरामचरितमानस ({chaupaiItem.kand})
             </p>
           </div>
 

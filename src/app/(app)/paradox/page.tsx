@@ -1,25 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { getDayOfYear } from '@/lib/utils/date';
+import { getDayIndexForArray } from '@/lib/utils/date';
 import { PARADOXES } from './data';
 import ReadAloudButton from '@/components/shared/ReadAloudButton';
+import DayNavigator from '@/components/shared/DayNavigator';
 import PageTransition from '@/components/layout/PageTransition';
-import { ArrowLeft, ArrowRight, BookOpen, Clock, HelpCircle } from 'lucide-react';
+import { Clock } from 'lucide-react';
 
 export default function ParadoxPage() {
-  const defaultDayIndex = (getDayOfYear() - 1) % PARADOXES.length;
-  const [currentIndex, setCurrentIndex] = useState(defaultDayIndex);
-
-  const paradox = PARADOXES[currentIndex];
-
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % PARADOXES.length);
-  };
-
-  const handlePrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + PARADOXES.length) % PARADOXES.length);
-  };
+  const [currentDate, setCurrentDate] = useState<Date>(new Date());
+  const paradoxIndex = getDayIndexForArray(currentDate, PARADOXES.length);
+  const paradox = PARADOXES[paradoxIndex];
 
   return (
     <PageTransition>
@@ -28,36 +20,14 @@ export default function ParadoxPage() {
         {/* Header */}
         <div className="border-b pb-4" style={{ borderColor: 'var(--border-default)' }}>
           <h1 className="font-serif text-3xl" style={{ color: 'var(--text-primary)' }}>Paradox</h1>
-          <p className="font-devanagari text-lg" style={{ color: '#4A3570' }}>विरोधाभास — जो मन को उलझाए</p>
+          <p className="font-devanagari text-lg" style={{ color: '#4A3570' }}>विरोधाभास - जो मन को उलझाए</p>
           <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>
             Sit with the greatest logical, philosophical, and scientific paradoxes in human history. Explore their origins, implications, and modern parallels.
           </p>
         </div>
 
-        {/* Navigation bar */}
-        <div className="flex items-center justify-between p-3 rounded-xl border bg-[var(--bg-secondary)]" style={{ borderColor: 'var(--border-default)' }}>
-          <button 
-            onClick={handlePrev}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-semibold hover:bg-[var(--bg-tertiary)] transition-all"
-            style={{ borderColor: 'var(--border-strong)', color: 'var(--text-secondary)' }}
-          >
-            <ArrowLeft size={14} />
-            Previous
-          </button>
-          
-          <span className="text-xs font-semibold tracking-wider uppercase text-stone-500">
-            Day {currentIndex + 1} of {PARADOXES.length}
-          </span>
-
-          <button 
-            onClick={handleNext}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-semibold hover:bg-[var(--bg-tertiary)] transition-all"
-            style={{ borderColor: 'var(--border-strong)', color: 'var(--text-secondary)' }}
-          >
-            Next
-            <ArrowRight size={14} />
-          </button>
-        </div>
+        {/* Date Navigator */}
+        <DayNavigator currentDate={currentDate} onDateChange={setCurrentDate} />
 
         {/* Paradox Card */}
         <div className="card-base p-6 sm:p-8 space-y-6" style={{ borderLeft: '4px solid #4A3570' }}>

@@ -8,7 +8,7 @@ import ScriptToggle from '@/components/shared/ScriptToggle';
 import { useUser } from '@/components/providers/UserProvider';
 import { useTheme } from '@/components/providers/ThemeProvider';
 
-const TOTAL_STEPS = 5;
+const TOTAL_STEPS = 4;
 
 export default function OnboardingPage() {
   const [step, setStep] = useState(1);
@@ -16,13 +16,13 @@ export default function OnboardingPage() {
   const [script, setScript] = useState<'devanagari' | 'roman'>('devanagari');
   const [welcomed, setWelcomed] = useState(false);
   const { user, updatePreferences } = useUser();
-  const { setTheme, resolvedTheme } = useTheme();
+  const { setTheme } = useTheme();
   const router = useRouter();
 
   const name = user?.name || 'friend';
 
   const finish = async () => {
-    await updatePreferences({ script, theme: resolvedTheme === 'night' ? 'night' : 'day' });
+    await updatePreferences({ script, theme: 'day' });
     setWelcomed(true);
     setTimeout(() => router.push('/aarambh'), 2800);
   };
@@ -145,42 +145,8 @@ export default function OnboardingPage() {
             </div>
           )}
 
-          {/* Step 4: Theme */}
+          {/* Step 4: Ready */}
           {step === 4 && (
-            <div className="space-y-6">
-              <div>
-                <h2 className="font-serif text-2xl mb-2" style={{ color: 'var(--text-primary)' }}>
-                  How do you like your world?
-                </h2>
-              </div>
-              <div className="grid grid-cols-3 gap-3">
-                {[
-                  { value: 'day',    label: 'Day',    emoji: '☀️', desc: 'Warm ivory' },
-                  { value: 'night',  label: 'Night',  emoji: '🌙', desc: 'Deep charcoal' },
-                  { value: 'system', label: 'System', emoji: '◑',  desc: 'Follows OS' },
-                ].map(opt => (
-                  <button
-                    key={opt.value}
-                    onClick={() => setTheme(opt.value as any)}
-                    className="p-4 rounded-xl text-center transition-all"
-                    style={{
-                      background: resolvedTheme === (opt.value === 'system' ? resolvedTheme : opt.value)
-                        ? 'color-mix(in srgb, var(--accent-saffron) 15%, transparent)'
-                        : 'var(--bg-secondary)',
-                      border: `1px solid ${resolvedTheme === (opt.value === 'system' ? resolvedTheme : opt.value) ? 'var(--accent-saffron)' : 'var(--border-default)'}`,
-                    }}
-                  >
-                    <div className="text-2xl mb-1">{opt.emoji}</div>
-                    <div className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>{opt.label}</div>
-                    <div className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>{opt.desc}</div>
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Step 5: Ready */}
-          {step === 5 && (
             <div className="text-center space-y-4">
               <div className="text-5xl">🌿</div>
               <h2 className="font-serif text-3xl" style={{ color: 'var(--text-primary)' }}>

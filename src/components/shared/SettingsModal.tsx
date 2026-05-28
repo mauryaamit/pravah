@@ -474,50 +474,39 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                   <div className="flex justify-between text-xs">
                     <span style={{ color: 'var(--text-secondary)' }}>Sanctuary Theme</span>
                   </div>
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-3 gap-2">
                     <button
                       onClick={() => setTheme('cream')}
-                      className="px-3 py-2.5 rounded-xl text-xs transition-all border text-center font-medium min-h-[44px]"
+                      className="px-2 py-2 rounded-xl text-[10px] transition-all border text-center font-medium min-h-[44px]"
                       style={{
                         backgroundColor: theme === 'cream' ? 'var(--bg-tertiary)' : 'transparent',
                         borderColor: theme === 'cream' ? 'var(--accent-saffron)' : 'var(--border-default)',
                         color: theme === 'cream' ? 'var(--text-primary)' : 'var(--text-muted)',
                       }}
                     >
-                      ☀️ Day (Cream)
-                    </button>
-                    <button
-                      onClick={() => setTheme('rainy')}
-                      className="px-3 py-2.5 rounded-xl text-xs transition-all border text-center font-medium min-h-[44px]"
-                      style={{
-                        backgroundColor: theme === 'rainy' ? 'var(--bg-tertiary)' : 'transparent',
-                        borderColor: theme === 'rainy' ? 'var(--accent-saffron)' : 'var(--border-default)',
-                        color: theme === 'rainy' ? 'var(--text-primary)' : 'var(--text-muted)',
-                      }}
-                    >
-                      🌙 Night (Library)
+                      ☀️ Cream
                     </button>
                     <button
                       onClick={() => setTheme('vangogh')}
-                      className="px-3 py-2.5 rounded-xl text-xs transition-all border text-center font-medium min-h-[44px]"
+                      className="px-2 py-2 rounded-xl text-[10px] transition-all border text-center font-medium min-h-[44px]"
                       style={{
                         backgroundColor: theme === 'vangogh' ? 'var(--bg-tertiary)' : 'transparent',
                         borderColor: theme === 'vangogh' ? 'var(--accent-saffron)' : 'var(--border-default)',
                         color: theme === 'vangogh' ? 'var(--text-primary)' : 'var(--text-muted)',
                       }}
                     >
-                      🎨 Painterly (Van Gogh)
+                      🎨 Van Gogh
                     </button>
                     <button
                       onClick={() => setTheme('forest')}
-                      className="px-3 py-2.5 rounded-xl text-xs transition-all border text-center font-medium min-h-[44px]"
+                      className="px-2 py-2 rounded-xl text-[10px] transition-all border text-center font-medium min-h-[44px]"
                       style={{
                         backgroundColor: theme === 'forest' ? 'var(--bg-tertiary)' : 'transparent',
                         borderColor: theme === 'forest' ? 'var(--accent-saffron)' : 'var(--border-default)',
                         color: theme === 'forest' ? 'var(--text-primary)' : 'var(--text-muted)',
                       }}
                     >
-                      🌲 Nature (Forest)
+                      🌲 Forest
                     </button>
                   </div>
                 </div>

@@ -99,38 +99,7 @@
   --reading-line-height: 2.0;
 }
 
-/* ============================================================
-   THEME 3: RAINY LIBRARY - Warm browns, candlelight, paper
-   ============================================================ */
-[data-theme="rainy"] {
-  --bg-primary:    #1A1208;
-  --bg-secondary:  #241A0E;
-  --bg-tertiary:   #2E2012;
-  --bg-glass:      rgba(26, 18, 8, 0.88);
-  --bg-paper:      #1E160A;
 
-  --text-primary:  #E8D9B8;
-  --text-secondary:#CAAD88;
-  --text-muted:    #8A7454;
-  --text-faint:    #5C4C34;
-
-  --accent-saffron:  #D4943A;
-  --accent-moss:     #6A8A5A;
-  --accent-moonblue: #8A9EC4;
-  --accent-mauve:    #A68AB8;
-  --accent-terra:    #C4885A;
-  --accent-gold:     #E8C878;
-
-  --border-default: rgba(232, 217, 184, 0.10);
-  --border-hover:   rgba(232, 217, 184, 0.20);
-  --border-strong:  rgba(232, 217, 184, 0.35);
-
-  --shadow-sm: 0 1px 4px rgba(0,0,0,0.30);
-  --shadow-md: 0 4px 20px rgba(0,0,0,0.45);
-  --shadow-lg: 0 12px 48px rgba(0,0,0,0.60);
-
-  --reading-line-height: 2.05;
-}
 
 /* ============================================================
    THEME 4: FOREST - Moss greens, earth, watercolor peace
@@ -171,7 +140,6 @@
 :root,
 [data-theme="cream"],
 [data-theme="vangogh"],
-[data-theme="rainy"],
 [data-theme="forest"] {
   --room-aarambh:      #C4873A;
   --room-agni:         #C25B3A;
@@ -198,6 +166,7 @@
   --room-lekhak:       #7A5A8A;
   --room-samvaad:      #4A7C8B;
   --room-bhasha:       #B8860B;
+  --room-manas:        #3A6A5A;
 
   --room-current: var(--room-aarambh);
 
@@ -466,12 +435,6 @@ h1:not([class*="text-"]), h2:not([class*="text-"]), h3:not([class*="text-"]) {
   transition: border-color 200ms ease, box-shadow 200ms ease;
 }
 
-[data-theme="night"] .journal-card,
-[data-theme="night"] .practice-card,
-[data-theme="night"] .input-card {
-  border: 1.5px solid rgba(212, 184, 150, 0.30) !important;
-  background: rgba(30, 26, 23, 0.90) !important;
-}
 
 .journal-card:focus-within,
 .practice-card:focus-within {
@@ -486,12 +449,6 @@ h1:not([class*="text-"]), h2:not([class*="text-"]), h3:not([class*="text-"]) {
   border-bottom-color: var(--accent-saffron) !important;
 }
 
-[data-theme="night"] .gratitude-input {
-  border-bottom: 1.5px solid rgba(212, 184, 150, 0.25) !important;
-}
-[data-theme="night"] .gratitude-input:focus {
-  border-bottom-color: var(--accent-saffron) !important;
-}
 
 /* Section labels must pass 7:1 contrast - use #5C4A2A in day mode, #D4B896 in night mode */
 .section-label, .section-label-text {
@@ -501,10 +458,6 @@ h1:not([class*="text-"]), h2:not([class*="text-"]), h3:not([class*="text-"]) {
   font-weight: 600 !important;
 }
 
-[data-theme="night"] .section-label,
-[data-theme="night"] .section-label-text {
-  color: #D4B896 !important;
-}
 
 /* ============================================================
    FIX 3 — GLOBAL CONTRAST: Text must always win
@@ -531,19 +484,11 @@ h1:not([class*="text-"]), h2:not([class*="text-"]), h3:not([class*="text-"]) {
   color: #5C4A2A !important;
   opacity: 1 !important;
 }
-[data-theme="rainy"] .sidebar-group-label,
-.dark .sidebar-group-label {
-  color: #C4A878 !important;
-}
 
 /* ── Sidebar room Hindi subtitle ── */
 .sidebar-room-hindi {
   color: #6B5A47 !important;
   opacity: 1 !important;
-}
-[data-theme="rainy"] .sidebar-room-hindi,
-.dark .sidebar-room-hindi {
-  color: #9E8270 !important;
 }
 
 /* ── Card body text everywhere ── */
@@ -561,23 +506,10 @@ h1:not([class*="text-"]), h2:not([class*="text-"]), h3:not([class*="text-"]) {
   color: #6B5A47 !important;
   opacity: 1 !important;
 }
-[data-theme="rainy"] .card-meta,
-[data-theme="rainy"] .card-date,
-[data-theme="rainy"] .read-time,
-.dark .card-meta,
-.dark .card-date,
-.dark .read-time {
-  color: #9E8270 !important;
-}
 
 /* ── Input placeholders — currently nearly invisible ── */
 ::placeholder {
   color: #8A7560 !important;
-  opacity: 1 !important;
-}
-[data-theme="rainy"] ::placeholder,
-.dark ::placeholder {
-  color: #7A6A56 !important;
   opacity: 1 !important;
 }
 
@@ -594,14 +526,6 @@ h1:not([class*="text-"]), h2:not([class*="text-"]), h3:not([class*="text-"]) {
   opacity: 1 !important;
   font-weight: 600;
 }
-[data-theme="rainy"] .tab-label {
-  color: #C4A878;
-  opacity: 0.75;
-}
-[data-theme="rainy"] .tab-label.active,
-[data-theme="rainy"] .tab-label[aria-selected="true"] {
-  color: #F0E8DE !important;
-}
 
 /* ── Globally fix stone-* text colors that wash out on cream background ── */
 /* stone-500 on cream = ~4:1 contrast, not enough. Override globally. */
@@ -610,11 +534,6 @@ h1:not([class*="text-"]), h2:not([class*="text-"]), h3:not([class*="text-"]) {
 .text-stone-600 { color: #3D3325 !important; }
 .text-stone-700 { color: #2C2416 !important; }
 
-/* Preserve stone in dark themes where they work fine */
-[data-theme="rainy"] .text-stone-500 { color: #9E8270 !important; }
-[data-theme="rainy"] .text-stone-400 { color: #8A7460 !important; }
-[data-theme="rainy"] .text-stone-600 { color: #C4A878 !important; }
-[data-theme="rainy"] .text-stone-700 { color: #D4B896 !important; }
 
 /* ── No opacity washing ── */
 .opacity-70, .opacity-75, .opacity-80 {
