@@ -5,6 +5,8 @@ import { FADE_UP, STAGGER_CONTAINER, STAGGER_ITEM } from '@/lib/utils/motion';
 import PageTransition from '@/components/layout/PageTransition';
 import { getDayOfYear } from '@/lib/utils/date';
 import ReadAloudButton from '@/components/shared/ReadAloudButton';
+import SutraNoteButton from '@/components/shared/SutraNoteButton';
+import RevisitButton from '@/components/shared/RevisitButton';
 
 const MENTAL_MODELS = [
   {
@@ -121,11 +123,23 @@ export default function BodhPage() {
 
         {/* Today's model highlight */}
         <div className="card-base p-5 space-y-2 relative" style={{ border: '1px solid var(--accent-saffron)', background: 'color-mix(in srgb, var(--accent-saffron) 5%, var(--bg-secondary))' }}>
-          <div className="absolute top-4 right-4">
+          <div className="absolute top-4 right-4 flex items-center gap-1.5">
             <ReadAloudButton
               text={`${todayModel.name}. ${todayModel.tagline}. ${todayModel.core}`}
               lang="en-IN"
               size="sm"
+            />
+            <RevisitButton
+              roomId="bodh"
+              roomName="Bodh"
+              contentTitle={todayModel.name}
+              contentSummary={todayModel.tagline}
+            />
+            <SutraNoteButton
+              roomId="bodh"
+              roomName="Bodh"
+              contentTitle={todayModel.name}
+              className=""
             />
           </div>
           <p className="section-label">Today's Mental Model</p>
@@ -156,6 +170,18 @@ export default function BodhPage() {
                       text={`${model.name}. ${model.tagline}. ${model.core}`}
                       lang="en-IN"
                       size="sm"
+                    />
+                    <RevisitButton
+                      roomId="bodh"
+                      roomName="Bodh"
+                      contentTitle={model.name}
+                      contentSummary={model.tagline}
+                    />
+                    <SutraNoteButton
+                      roomId="bodh"
+                      roomName="Bodh"
+                      contentTitle={model.name}
+                      className=""
                     />
                     <button
                       onClick={() => setExpanded(expanded === model.id ? null : model.id)}

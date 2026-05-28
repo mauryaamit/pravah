@@ -23,6 +23,12 @@ const nextConfig = {
       { protocol: 'https', hostname: 'en.wikipedia.org' },
     ],
   },
+  async redirects() {
+    return [
+      { source: '/shabda', destination: '/bhasha', permanent: true },
+      { source: '/samvaad', destination: '/bhasha', permanent: true },
+    ];
+  },
   async headers() {
     return [
       {

@@ -28,6 +28,137 @@ const CATEGORIES = [
   { id: 'Rest', label: 'Rest', emoji: '🛌', color: '#3A8A8A' },
 ] as const;
 
+// ─── Habit Archaeology helpers ───────────────────────────────────────────────
+
+type HabitLike = {
+  name: string;
+  category?: string;
+  createdAt?: unknown;
+  created_at?: unknown;
+};
+
+/** Returns the age of the habit in whole days, or undefined if no timestamp available. */
+function getHabitAge(habit: HabitLike): number | undefined {
+  const raw = habit.createdAt ?? habit.created_at;
+  if (!raw) return undefined;
+
+  let createdMs: number | undefined;
+
+  if (raw instanceof Date) {
+    createdMs = raw.getTime();
+  } else if (typeof raw === 'string' || typeof raw === 'number') {
+    const parsed = new Date(raw as string | number);
+    if (!isNaN(parsed.getTime())) createdMs = parsed.getTime();
+  } else if (
+    typeof raw === 'object' &&
+    raw !== null &&
+    'toDate' in (raw as object) &&
+    typeof (raw as { toDate: unknown }).toDate === 'function'
+  ) {
+    // Firestore Timestamp
+    createdMs = (raw as { toDate: () => Date }).toDate().getTime();
+  }
+
+  if (createdMs === undefined) return undefined;
+
+  const diffMs = Date.now() - createdMs;
+  return Math.floor(diffMs / (1000 * 60 * 60 * 24));
+}
+
+/** Returns the milestone label string or null if below threshold. */
+function getMilestoneText(days: number): '90 days' | '180 days' | '270 days' | null {
+  if (days < 90) return null;
+  if (days < 180) return '90 days';
+  if (days < 270) return '180 days';
+  return '270 days';
+}
+
+interface ArchaeologyContent {
+  metric: string;
+  reflection: string;
+}
+
+/** Returns quantified metric and a reflective sentence based on habit category/name and age. */
+function getArchaeologyContent(habit: HabitLike, dayCount: number): ArchaeologyContent {
+  const nameLower = habit.name.toLowerCase();
+  const category = habit.category ?? '';
+
+  // ── Metric ──
+  let metric: string;
+
+  if (category === 'Rest') {
+    const hoursGoal = dayCount * 8;
+    metric = `~${hoursGoal.toLocaleString()} hours of sleep aimed for`;
+  } else if (category === 'Mind') {
+    const minPerDay = nameLower.includes('meditation') || nameLower.includes('mindfulness') ? 20 : 15;
+    const totalMin = dayCount * minPerDay;
+    if (totalMin >= 60) {
+      metric = `~${Math.round(totalMin / 60)} hours of ${habit.name.toLowerCase()}`;
+    } else {
+      metric = `~${totalMin} minutes of ${habit.name.toLowerCase()}`;
+    }
+  } else if (category === 'Body') {
+    const minPerDay = nameLower.includes('exercise') || nameLower.includes('workout') ? 30 : 20;
+    const totalMin = dayCount * minPerDay;
+    if (totalMin >= 60) {
+      metric = `~${Math.round(totalMin / 60)} hours of ${habit.name.toLowerCase()}`;
+    } else {
+      metric = `~${totalMin} minutes of ${habit.name.toLowerCase()}`;
+    }
+  } else if (category === 'Spirit') {
+    const totalMin = dayCount * 15;
+    if (totalMin >= 60) {
+      metric = `~${Math.round(totalMin / 60)} hours of ${habit.name.toLowerCase()}`;
+    } else {
+      metric = `~${totalMin} minutes of ${habit.name.toLowerCase()}`;
+    }
+  } else if (category === 'Craft') {
+    const totalMin = dayCount * 25;
+    if (totalMin >= 60) {
+      metric = `~${Math.round(totalMin / 60)} hours of ${habit.name.toLowerCase()}`;
+    } else {
+      metric = `~${totalMin} minutes of ${habit.name.toLowerCase()}`;
+    }
+  } else {
+    metric = `${dayCount} days of ${habit.name.toLowerCase()}`;
+  }
+
+  // ── Reflection ──
+  // Distinguish by milestone tier for depth, then rotate within tier by dayCount % 3
+  const milestone = getMilestoneText(dayCount);
+  const variant = dayCount % 3;
+
+  let reflection: string;
+
+  if (milestone === '270 days') {
+    const pool = [
+      'Nine months is long enough for something entirely new to come into the world. Something has come into the world through you.',
+      'There are people who have never made it this far with anything. You are not those people anymore.',
+      'The habit is no longer something you do. It has become part of the grammar of your days - a quiet subject in every sentence of your life.',
+    ];
+    reflection = pool[variant];
+  } else if (milestone === '180 days') {
+    const pool = [
+      'Six months in, the effort has become invisible - absorbed into the rhythm of who you are. That invisibility is the whole point.',
+      'Most things that are worth doing feel hard for a while, then feel ordinary. You are in the ordinary now. Ordinary is where permanence lives.',
+      'The first ninety days you were building it. The second ninety days it began building you. That is how this works.',
+    ];
+    reflection = pool[variant];
+  } else {
+    // 90 days
+    const pool = [
+      'Ninety days is the point where something stops being a decision and starts being a fact about you. This habit is now a fact about you.',
+      'What you have built here is not a streak. It is a new shape of your time.',
+      'The archaeologist does not celebrate the finding. They sit with it, turn it over, and ask what it means. Sit with this.',
+    ];
+    reflection = pool[variant];
+  }
+
+  return { metric, reflection };
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+
 export default function AgniPage() {
   const [selectedDate, setSelectedDate] = useState(() => toDateString(new Date()));
   const [showPastHistory, setShowPastHistory] = useState(false);
@@ -271,106 +402,146 @@ export default function AgniPage() {
           ) : (
             filteredHabits.map((habit, i) => {
               const catInfo = CATEGORIES.find(c => c.id === habit.category) || CATEGORIES[0];
+
+              // ── Archaeology ──
+              const habitAge = getHabitAge(habit as HabitLike);
+              const milestoneText = habitAge !== undefined ? getMilestoneText(habitAge) : null;
+              const archaeologyContent =
+                milestoneText !== null && habitAge !== undefined
+                  ? getArchaeologyContent(habit as HabitLike, habitAge)
+                  : null;
+
               return (
-                <motion.div
-                  key={habit.id}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                  className={cn(
-                    'card-base p-4 flex flex-col justify-between transition-all group border-l-4',
-                    celebrated === habit.id ? 'animate-check-bounce' : ''
-                  )}
-                  style={{
-                    borderLeftColor: catInfo.color,
-                    background: isCompleted(habit.id)
-                      ? 'color-mix(in srgb, #4A7C59 8%, var(--bg-secondary))'
-                      : undefined,
-                    borderColor: isCompleted(habit.id)
-                      ? 'color-mix(in srgb, #4A7C59 30%, transparent)'
-                      : undefined,
-                  }}
-                >
-                  <div className="flex items-center gap-4 w-full">
-                    {/* Complete button */}
-                    <button
-                      onClick={() => !isCompleted(habit.id) && handleCompleteHabit(habit.id)}
-                      disabled={isCompleted(habit.id)}
-                      className="flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all"
-                      style={{
-                        borderColor: isCompleted(habit.id) ? '#4A7C59' : 'var(--border-strong)',
-                        background: isCompleted(habit.id) ? '#4A7C59' : 'transparent',
-                        color: 'white',
-                        cursor: isCompleted(habit.id) ? 'default' : 'pointer',
-                      }}
-                    >
-                      {isCompleted(habit.id) && <Check size={14} />}
-                    </button>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span
-                          className="font-medium text-base truncate"
-                          style={{
-                            color: isCompleted(habit.id) ? 'var(--text-muted)' : 'var(--text-primary)',
-                            textDecoration: isCompleted(habit.id) ? 'line-through' : 'none',
-                          }}
-                        >
-                          {habit.name}
-                        </span>
-                        <span
-                          className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider border"
+                <div key={habit.id}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.05 }}
+                    className={cn(
+                      'card-base p-4 flex flex-col justify-between transition-all group border-l-4',
+                      celebrated === habit.id ? 'animate-check-bounce' : ''
+                    )}
+                    style={{
+                      borderLeftColor: catInfo.color,
+                      background: isCompleted(habit.id)
+                        ? 'color-mix(in srgb, #4A7C59 8%, var(--bg-secondary))'
+                        : undefined,
+                      borderColor: isCompleted(habit.id)
+                        ? 'color-mix(in srgb, #4A7C59 30%, transparent)'
+                        : undefined,
+                    }}
+                  >
+                    <div className="flex items-center gap-4 w-full">
+                      {/* Complete button */}
+                      <button
+                        onClick={() => !isCompleted(habit.id) && handleCompleteHabit(habit.id)}
+                        disabled={isCompleted(habit.id)}
+                        className="flex-shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all"
+                        style={{
+                          borderColor: isCompleted(habit.id) ? '#4A7C59' : 'var(--border-strong)',
+                          background: isCompleted(habit.id) ? '#4A7C59' : 'transparent',
+                          color: 'white',
+                          cursor: isCompleted(habit.id) ? 'default' : 'pointer',
+                        }}
+                      >
+                        {isCompleted(habit.id) && <Check size={14} />}
+                      </button>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span
+                            className="font-medium text-base truncate"
+                            style={{
+                              color: isCompleted(habit.id) ? 'var(--text-muted)' : 'var(--text-primary)',
+                              textDecoration: isCompleted(habit.id) ? 'line-through' : 'none',
+                            }}
+                          >
+                            {habit.name}
+                          </span>
+                          <span
+                            className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider border"
+                            style={{
+                              backgroundColor: 'var(--bg-tertiary)',
+                              borderColor: catInfo.color,
+                              color: catInfo.color,
+                            }}
+                          >
+                            {catInfo.emoji} {catInfo.label}
+                          </span>
+                        </div>
+                        
+                        {habit.feeling && (
+                          <div className="text-xs mt-0.5" style={{ color: 'var(--text-faint)' }}>
+                            Feeling: {habit.feeling}
+                          </div>
+                        )}
+
+                        {/* Streak counters */}
+                        {(habit.currentStreak > 0 || habit.bestStreak > 0) && (
+                          <div className="flex items-center gap-1 text-[10px] font-semibold text-amber-700/80 dark:text-amber-500/80 mt-1">
+                            <Flame size={10} className="fill-current animate-flicker" />
+                            <span>{habit.currentStreak} day streak (best {habit.bestStreak})</span>
+                          </div>
+                        )}
+                      </div>
+                      {/* Delete */}
+                      <button
+                        onClick={() => handleDeleteHabit(habit.id)}
+                        className="flex-shrink-0 p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                        style={{ color: 'var(--text-faint)' }}
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
+
+                    {/* Completion Note Logging */}
+                    {isCompleted(habit.id) && (
+                      <div className="mt-2.5 pl-12 flex items-center gap-2 w-full">
+                        <span className="text-[10px] text-text-faint italic font-semibold">Note:</span>
+                        <input
+                          type="text"
+                          value={localNotes[habit.id] || ''}
+                          onChange={(e) => handleNoteChange(habit.id, e.target.value)}
+                          placeholder="Add a log note (e.g., Felt energized, did 15 min)..."
+                          className="text-xs px-3 py-1.5 rounded-xl bg-bg-tertiary outline-none border border-border-default text-text-secondary focus:border-accent-saffron/40 flex-1 max-w-md"
                           style={{
                             backgroundColor: 'var(--bg-tertiary)',
-                            borderColor: catInfo.color,
-                            color: catInfo.color,
+                            borderColor: 'var(--border-default)',
                           }}
-                        >
-                          {catInfo.emoji} {catInfo.label}
-                        </span>
+                        />
                       </div>
-                      
-                      {habit.feeling && (
-                        <div className="text-xs mt-0.5" style={{ color: 'var(--text-faint)' }}>
-                          Feeling: {habit.feeling}
-                        </div>
-                      )}
+                    )}
+                  </motion.div>
 
-                      {/* Streak counters */}
-                      {(habit.currentStreak > 0 || habit.bestStreak > 0) && (
-                        <div className="flex items-center gap-1 text-[10px] font-semibold text-amber-700/80 dark:text-amber-500/80 mt-1">
-                          <Flame size={10} className="fill-current animate-flicker" />
-                          <span>{habit.currentStreak} day streak (best {habit.bestStreak})</span>
-                        </div>
-                      )}
-                    </div>
-                    {/* Delete */}
-                    <button
-                      onClick={() => handleDeleteHabit(habit.id)}
-                      className="flex-shrink-0 p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
-                      style={{ color: 'var(--text-faint)' }}
+                  {/* ─── Habit Archaeology Card ─── */}
+                  {archaeologyContent && milestoneText && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.05 + 0.12 }}
+                      className="mt-2 p-4 rounded-xl border-l-2"
+                      style={{
+                        background: 'color-mix(in srgb, #D4A853 6%, var(--bg-tertiary))',
+                        borderLeftColor: '#D4A853',
+                      }}
                     >
-                      <Trash2 size={14} />
-                    </button>
-                  </div>
-
-                  {/* Completion Note Logging */}
-                  {isCompleted(habit.id) && (
-                    <div className="mt-2.5 pl-12 flex items-center gap-2 w-full">
-                      <span className="text-[10px] text-text-faint italic font-semibold">Note:</span>
-                      <input
-                        type="text"
-                        value={localNotes[habit.id] || ''}
-                        onChange={(e) => handleNoteChange(habit.id, e.target.value)}
-                        placeholder="Add a log note (e.g., Felt energized, did 15 min)..."
-                        className="text-xs px-3 py-1.5 rounded-xl bg-bg-tertiary outline-none border border-border-default text-text-secondary focus:border-accent-saffron/40 flex-1 max-w-md"
-                        style={{
-                          backgroundColor: 'var(--bg-tertiary)',
-                          borderColor: 'var(--border-default)',
-                        }}
-                      />
-                    </div>
+                      <p className="section-label mb-2">
+                        Habit Archaeology - {milestoneText}
+                      </p>
+                      <p
+                        className="font-serif text-lg italic mb-2"
+                        style={{ color: '#D4A853' }}
+                      >
+                        {archaeologyContent.metric}
+                      </p>
+                      <p
+                        className="text-sm leading-relaxed"
+                        style={{ color: 'var(--text-muted)' }}
+                      >
+                        {archaeologyContent.reflection}
+                      </p>
+                    </motion.div>
                   )}
-                </motion.div>
+                </div>
               );
             })
           )}

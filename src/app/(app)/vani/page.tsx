@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { getDayOfYear } from '@/lib/utils/date';
 import { SHLOKAS, DOHAS, CHAUPAIS, LOK_KATHAS, HINDI_WORDS } from './data';
 import ReadAloudButton from '@/components/shared/ReadAloudButton';
+import SutraNoteButton from '@/components/shared/SutraNoteButton';
+import RevisitButton from '@/components/shared/RevisitButton';
 import PageTransition from '@/components/layout/PageTransition';
 import { BookOpen, HelpCircle, ArrowLeft, ArrowRight, Languages } from 'lucide-react';
 
@@ -76,11 +78,23 @@ export default function VaniPage() {
             </div>
 
             {/* Read Aloud */}
-            <div className="flex justify-end pt-2">
+            <div className="flex justify-end items-center gap-1 pt-2">
               <ReadAloudButton 
                 text={`${shlokaItem.shloka}. अर्थ: ${shlokaItem.meaning_hindi}`} 
                 lang="hi-IN" 
                 variant="pill" 
+              />
+              <RevisitButton
+                roomId="vani"
+                roomName="Vani"
+                contentTitle="Shloka of the Day"
+                contentSummary={shlokaItem.meaning_hindi}
+              />
+              <SutraNoteButton
+                roomId="vani"
+                roomName="Vani"
+                contentTitle="Shloka of the Day"
+                className=""
               />
             </div>
           </div>
@@ -114,11 +128,23 @@ export default function VaniPage() {
               </p>
             </div>
 
-            <div className="flex justify-end pt-2">
+            <div className="flex justify-end items-center gap-1 pt-2">
               <ReadAloudButton 
                 text={`${dohaItem.doha}. अर्थ: ${dohaItem.meaning_hindi}`} 
                 lang="hi-IN" 
                 variant="pill" 
+              />
+              <RevisitButton
+                roomId="vani"
+                roomName="Vani"
+                contentTitle={`Doha by ${dohaItem.poet}`}
+                contentSummary={dohaItem.meaning_hindi}
+              />
+              <SutraNoteButton
+                roomId="vani"
+                roomName="Vani"
+                contentTitle={`Doha by ${dohaItem.poet}`}
+                className=""
               />
             </div>
           </div>
@@ -154,11 +180,23 @@ export default function VaniPage() {
               </p>
             </div>
 
-            <div className="flex justify-end pt-2">
+            <div className="flex justify-end items-center gap-1 pt-2">
               <ReadAloudButton 
                 text={`${chaupaiItem.chaupai}. अर्थ: ${chaupaiItem.meaning_hindi}`} 
                 lang="hi-IN" 
                 variant="pill" 
+              />
+              <RevisitButton
+                roomId="vani"
+                roomName="Vani"
+                contentTitle={`Chaupai (${chaupaiItem.kand})`}
+                contentSummary={chaupaiItem.meaning_hindi}
+              />
+              <SutraNoteButton
+                roomId="vani"
+                roomName="Vani"
+                contentTitle={`Chaupai (${chaupaiItem.kand})`}
+                className=""
               />
             </div>
           </div>
@@ -191,11 +229,23 @@ export default function VaniPage() {
               </p>
             </div>
 
-            <div className="flex justify-end pt-2">
+            <div className="flex justify-end items-center gap-1 pt-2">
               <ReadAloudButton 
                 text={`${lokKathaItem.saying}. इसका अर्थ है: ${lokKathaItem.meaning_hindi}`} 
                 lang="hi-IN" 
                 variant="pill" 
+              />
+              <RevisitButton
+                roomId="vani"
+                roomName="Vani"
+                contentTitle="Folk Saying"
+                contentSummary={lokKathaItem.meaning_hindi}
+              />
+              <SutraNoteButton
+                roomId="vani"
+                roomName="Vani"
+                contentTitle="Folk Saying"
+                className=""
               />
             </div>
           </div>
@@ -232,11 +282,23 @@ export default function VaniPage() {
               </p>
             </div>
 
-            <div className="flex justify-end pt-2">
+            <div className="flex justify-end items-center gap-1 pt-2">
               <ReadAloudButton 
                 text={`${hindiWordItem.word}. इसका अर्थ है ${hindiWordItem.meaning}. उदाहरण वाक्य: ${hindiWordItem.usage}`} 
                 lang="hi-IN" 
                 variant="pill" 
+              />
+              <RevisitButton
+                roomId="vani"
+                roomName="Vani"
+                contentTitle={`Word of the Day - ${hindiWordItem.word}`}
+                contentSummary={hindiWordItem.meaning}
+              />
+              <SutraNoteButton
+                roomId="vani"
+                roomName="Vani"
+                contentTitle={`Word of the Day - ${hindiWordItem.word}`}
+                className=""
               />
             </div>
           </div>

@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { db } from '@/lib/firebase/client';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { collection, onSnapshot, query, deleteDoc, doc } from 'firebase/firestore';
 import { motion, AnimatePresence, Reorder } from 'framer-motion';
 import { useAuth } from '@/lib/hooks/useAuth';
 import { useTodos } from '@/lib/hooks/useTodos';
@@ -19,8 +19,9 @@ import WritingToolbar from '@/components/shared/WritingToolbar';
 import { toDateString, getDayOfYear, formatDisplayDate } from '@/lib/utils/date';
 import { cn } from '@/lib/utils/cn';
 import { ResponsiveContainer, LineChart, Line, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
+import { ROOM_MAP } from '@/lib/constants/rooms';
 
-type Tab = 'write' | 'reflect' | 'calendar';
+type Tab = 'write' | 'reflect' | 'calendar' | 'sutra';
 
 const DIARY_PROMPTS = [
   'What shaped today?',
@@ -70,6 +71,49 @@ const SECTION_DOT_COLORS: Record<AntarmanSection, string> = {
   poetry: '#5B6B8A',
   story: '#8A4A3A',
   gratitude: '#D4A853',
+};
+
+const STOP_WORDS = new Set([
+  // English stop words
+  'the', 'a', 'an', 'and', 'or', 'but', 'if', 'because', 'as', 'what', 'where', 'how', 'why', 'when',
+  'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'do', 'does', 'did',
+  'i', 'me', 'my', 'myself', 'we', 'us', 'our', 'ours', 'ourselves', 'you', 'your', 'yours', 'yourself', 'yourselves',
+  'he', 'him', 'his', 'himself', 'she', 'her', 'hers', 'herself', 'it', 'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves',
+  'in', 'on', 'at', 'to', 'for', 'with', 'about', 'against', 'between', 'into', 'through', 'during', 'before', 'after',
+  'above', 'below', 'up', 'down', 'from', 'of', 'off', 'over', 'under', 'again', 'further', 'then', 'once', 'here', 'there',
+  'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very', 's', 't', 'can', 'will', 'just', 'should', 'now', 'd', 'll', 'm', 'o', 're', 've', 'y', 'ain', 'aren', 'couldn', 'didn', 'doesn', 'hadn', 'hasn', 'haven', 'isn', 'ma', 'mightn', 'mustn', 'needn', 'shan', 'shouldn', 'wasn', 'weren', 'won', 'wouldn',
+  // HTML tags and entities
+  'p', 'br', 'div', 'span', 'strong', 'em', 'u', 'nbsp', 'amp', 'lt', 'gt',
+  // Hindi transliterated stop words
+  'hai', 'hain', 'tha', 'the', 'thi', 'hoon', 'ho', 'ko', 'se', 'ka', 'ke', 'ki', 'par', 'mein', 'ne', 'bhi', 'aur', 'ya', 'to', 'hi', 'jo', 'kar', 'karna', 'raha', 'rahe', 'rahi', 'is', 'us', 'yeh', 'woh', 'sab', 'kuch', 'hona', 'gaya', 'gaye', 'gayi'
+]);
+
+const SENTIMENT_DICT: Record<string, 'positive' | 'negative' | 'reflective'> = {
+  // Positive words
+  'happy': 'positive', 'good': 'positive', 'love': 'positive', 'joy': 'positive', 'peace': 'positive',
+  'excited': 'positive', 'wonderful': 'positive', 'great': 'positive', 'amazing': 'positive', 'blessed': 'positive',
+  'grateful': 'positive', 'thanks': 'positive', 'smile': 'positive', 'laugh': 'positive', 'light': 'positive',
+  'calm': 'positive', 'hope': 'positive', 'hopeful': 'positive', 'serene': 'positive', 'gentle': 'positive',
+  'kind': 'positive', 'warm': 'positive', 'beautiful': 'positive', 'inspired': 'positive', 'proud': 'positive',
+  'khush': 'positive', 'pyaar': 'positive', 'sundar': 'positive', 'shanti': 'positive', 'sukoon': 'positive',
+  'achha': 'positive', 'anand': 'positive', 'accha': 'positive', 'shubh': 'positive', 'aasha': 'positive',
+
+  // Negative words
+  'sad': 'negative', 'bad': 'negative', 'angry': 'negative', 'hurt': 'negative', 'pain': 'negative',
+  'grief': 'negative', 'worry': 'negative', 'anxious': 'negative', 'fear': 'negative', 'scared': 'negative',
+  'tired': 'negative', 'exhausted': 'negative', 'stressed': 'negative', 'frustrated': 'negative', 'hate': 'negative',
+  'lonely': 'negative', 'cry': 'negative', 'tears': 'negative', 'dark': 'negative', 'heavy': 'negative',
+  'doubt': 'negative', 'guilt': 'negative', 'shame': 'negative', 'hard': 'negative', 'difficult': 'negative',
+  'dukh': 'negative', 'dard': 'negative', 'gussa': 'negative', 'chinta': 'negative', 'darr': 'negative',
+  'thaka': 'negative', 'bura': 'negative', 'akela': 'negative', 'pareshan': 'negative', 'nirash': 'negative',
+
+  // Reflective words
+  'think': 'reflective', 'thinking': 'reflective', 'ponder': 'reflective', 'wonder': 'reflective', 'reflect': 'reflective',
+  'mind': 'reflective', 'thought': 'reflective', 'thoughts': 'reflective', 'learn': 'reflective', 'learned': 'reflective',
+  'grow': 'reflective', 'understand': 'reflective', 'insight': 'reflective', 'realize': 'reflective', 'change': 'reflective',
+  'quiet': 'reflective', 'silent': 'reflective', 'silence': 'reflective', 'still': 'reflective', 'space': 'reflective',
+  'soch': 'reflective', 'samajh': 'reflective', 'sikh': 'reflective', 'man': 'reflective', 'dhyaan': 'reflective',
+  'vichaar': 'reflective', 'shunya': 'reflective', 'gehra': 'reflective', 'ekant': 'reflective', 'maun': 'reflective'
 };
 
 export default function AntarmanPage() {
@@ -126,6 +170,14 @@ export default function AntarmanPage() {
 
   const [datesWithTodos, setDatesWithTodos] = useState<Set<string>>(new Set());
 
+  // Sutra Notes and Thread Tags states
+  const [sutraNotes, setSutraNotes] = useState<any[]>([]);
+  const [selectedRoomFilter, setSelectedRoomFilter] = useState<string | null>(null);
+  const [diaryTags, setDiaryTags] = useState<string[]>([]);
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [allEntries, setAllEntries] = useState<any[]>([]);
+  const [analysisResults, setAnalysisResults] = useState<{ word: string; register: string } | null>(null);
+
   // Real-time listener for dates with todos
   useEffect(() => {
     if (!user || !db) return;
@@ -138,6 +190,96 @@ export default function AntarmanPage() {
     });
     return unsub;
   }, [user]);
+
+  // Real-time listener for Sutra Notes
+  useEffect(() => {
+    if (!user || !db) return;
+    const q = collection(db, `users/${user.uid}/sutraNotes`);
+    const unsub = onSnapshot(q, (snap) => {
+      const notes = snap.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      })) as any[];
+      
+      // Client-side sort by createdAt desc
+      notes.sort((a, b) => {
+        const aTime = a.createdAt?.toDate?.()?.getTime() || a.createdAt?.seconds * 1000 || 0;
+        const bTime = b.createdAt?.toDate?.()?.getTime() || b.createdAt?.seconds * 1000 || 0;
+        return bTime - aTime;
+      });
+      setSutraNotes(notes);
+    }, (err) => {
+      console.error('Failed to load sutra notes:', err);
+    });
+    return unsub;
+  }, [user]);
+
+  // Real-time listener for all journal entries (for tag lists and highlights)
+  useEffect(() => {
+    if (!user || !db) return;
+    const q = collection(db, `users/${user.uid}/antarman`);
+    const unsub = onSnapshot(q, (snap) => {
+      const entries = snap.docs.map(doc => ({
+        dateStr: doc.id,
+        ...doc.data()
+      })) as any[];
+      setAllEntries(entries);
+    }, (err) => {
+      console.error('Failed to load all journal entries:', err);
+    });
+    return unsub;
+  }, [user]);
+
+  // Helper to strip HTML tags from editor content
+  const stripHtml = (html: string) => {
+    if (typeof document === 'undefined') return html.replace(/<[^>]*>/g, '');
+    const tmp = document.createElement('DIV');
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || '';
+  };
+
+  // Run client-side word count & emotional register analysis
+  const runLinguisticAnalysis = useCallback((content: string) => {
+    if (!content) {
+      setAnalysisResults(null);
+      return;
+    }
+    const cleanText = stripHtml(content).toLowerCase();
+    const words = cleanText.match(/[\p{L}\p{N}]+/gu) || [];
+    const filteredWords = words.filter(w => w.length >= 2 && !STOP_WORDS.has(w));
+    
+    let maxWord = '';
+    let maxCount = 0;
+    const freqMap: Record<string, number> = {};
+    filteredWords.forEach(w => {
+      freqMap[w] = (freqMap[w] || 0) + 1;
+      if (freqMap[w] > maxCount) {
+        maxCount = freqMap[w];
+        maxWord = w;
+      }
+    });
+
+    let posCount = 0;
+    let negCount = 0;
+    let refCount = 0;
+    words.forEach(w => {
+      if (SENTIMENT_DICT[w]) {
+        if (SENTIMENT_DICT[w] === 'positive') posCount++;
+        else if (SENTIMENT_DICT[w] === 'negative') negCount++;
+        else if (SENTIMENT_DICT[w] === 'reflective') refCount++;
+      }
+    });
+
+    let register = 'Neutral';
+    const maxVal = Math.max(posCount, negCount, refCount);
+    if (maxVal > 0) {
+      if (posCount === maxVal) register = 'Serene/Positive';
+      else if (negCount === maxVal) register = 'Heavy/Stressed';
+      else if (refCount === maxVal) register = 'Contemplative';
+    }
+
+    setAnalysisResults({ word: maxWord, register });
+  }, []);
 
   // Full-screen body class handling
   useEffect(() => {
@@ -167,6 +309,8 @@ export default function AntarmanPage() {
       setDiaryGratitude(sectionData.diary?.gratitude || ['', '', '']);
       setDiaryLearned(sectionData.diary?.learned || '');
       setDiaryIntention(sectionData.diary?.intention || '');
+      setDiaryTags(sectionData.diary?.tags || []);
+      runLinguisticAnalysis(sectionData.diary?.content || '');
 
       setJournalContent(sectionData.journal?.content || '');
 
@@ -259,7 +403,9 @@ export default function AntarmanPage() {
           gratitude: diaryGratitude,
           learned: diaryLearned,
           intention: diaryIntention,
+          tags: diaryTags,
         });
+        runLinguisticAnalysis(diaryContent);
       } else if (activeSection === 'journal') {
         await saveSection('journal', { content: journalContent });
       } else if (activeSection === 'poetry') {
@@ -292,12 +438,21 @@ export default function AntarmanPage() {
     return () => clearTimeout(saveTimer.current);
   }, [
     isDirty, activeSection,
-    diaryContent, diaryMood, diaryGratitude, diaryLearned, diaryIntention,
+    diaryContent, diaryMood, diaryGratitude, diaryLearned, diaryIntention, diaryTags,
     journalContent,
     poetryContent, poetryTitle,
     storyContent, storyTitle,
     gratitudeLine1, gratitudeLine2, gratitudeLine3, gratitudeReflection
   ]);
+
+  const handleDeleteNote = async (noteId: string) => {
+    if (!user || !db) return;
+    try {
+      await deleteDoc(doc(db, `users/${user.uid}/sutraNotes`, noteId));
+    } catch (err) {
+      console.error('Failed to delete sutra note:', err);
+    }
+  };
 
   // Tab, section, date changes flush saving
   const handleTabChange = async (newTab: Tab) => {
@@ -464,6 +619,32 @@ export default function AntarmanPage() {
   };
 
   const calendarDays = getCalendarDays();
+
+  const uniqueTags = useMemo(() => {
+    const tagsSet = new Set<string>();
+    allEntries.forEach(entry => {
+      if (entry.diary?.tags && Array.isArray(entry.diary.tags)) {
+        entry.diary.tags.forEach((tag: string) => {
+          if (tag) tagsSet.add(tag);
+        });
+      }
+    });
+    return Array.from(tagsSet);
+  }, [allEntries]);
+
+  const taggedEntries = useMemo(() => {
+    if (!selectedTag) return [];
+    return allEntries.filter(entry => entry.diary?.tags?.includes(selectedTag) && entry.diary?.content);
+  }, [allEntries, selectedTag]);
+
+  const sutraRooms = useMemo(() => {
+    return Array.from(new Set(sutraNotes.map(n => n.roomId)));
+  }, [sutraNotes]);
+
+  const filteredSutraNotes = useMemo(() => {
+    if (!selectedRoomFilter) return sutraNotes;
+    return sutraNotes.filter(n => n.roomId === selectedRoomFilter);
+  }, [sutraNotes, selectedRoomFilter]);
   const monthNames = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
@@ -591,7 +772,7 @@ export default function AntarmanPage() {
         {/* ─── Tabs ─── */}
         {!isFullScreen && (
           <div className="flex gap-1 p-1 rounded-xl max-w-md" style={{ background: 'var(--bg-secondary)' }}>
-            {(['write', 'reflect', 'calendar'] as Tab[]).map(t => (
+            {(['write', 'reflect', 'calendar', 'sutra'] as Tab[]).map(t => (
               <button
                 key={t}
                 onClick={() => handleTabChange(t)}
@@ -697,6 +878,53 @@ export default function AntarmanPage() {
                           <span className="text-xs" style={{ color: 'var(--text-faint)' }}>{currentWordCount} words</span>
                         </div>
                         
+                        {/* Thread Tags Input Row */}
+                        <div className="flex flex-wrap items-center gap-2 py-1 text-xs" style={{ color: 'var(--text-muted)' }}>
+                          <span className="font-medium text-[var(--text-faint)]">Threads:</span>
+                          {diaryTags.map((tag, idx) => (
+                            <span 
+                              key={idx} 
+                              className="px-2 py-0.5 rounded-full flex items-center gap-1 bg-[color-mix(in srgb, var(--accent-moss) 8%, var(--bg-tertiary))]"
+                              style={{ color: 'var(--accent-moss)' }}
+                            >
+                              #{tag}
+                              <button 
+                                onClick={() => {
+                                  const nextTags = diaryTags.filter((_, i) => i !== idx);
+                                  setDiaryTags(nextTags);
+                                  setIsDirty(true);
+                                  setSaveStatus('saving');
+                                }}
+                                className="hover:text-[var(--text-primary)] font-bold ml-0.5"
+                              >
+                                ×
+                              </button>
+                            </span>
+                          ))}
+                          <input
+                            type="text"
+                            placeholder="Add a thread..."
+                            className="bg-transparent border-none outline-none font-serif placeholder:italic min-w-[100px]"
+                            style={{ color: 'var(--text-primary)' }}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter' || e.key === ',') {
+                                e.preventDefault();
+                                const val = e.currentTarget.value.trim().replace(/\s+/g, '');
+                                if (val) {
+                                  const cleanTag = val.replace(/[^a-zA-Z0-9\u0900-\u097F-]/g, '');
+                                  if (cleanTag && !diaryTags.includes(cleanTag)) {
+                                    const nextTags = [...diaryTags, cleanTag];
+                                    setDiaryTags(nextTags);
+                                    setIsDirty(true);
+                                    setSaveStatus('saving');
+                                  }
+                                }
+                                e.currentTarget.value = '';
+                              }
+                            }}
+                          />
+                        </div>
+                        
                         <p className="text-sm font-serif italic mb-2 border-l-2 pl-3" style={{ color: 'var(--text-secondary)', borderColor: 'var(--accent-saffron)' }}>
                           &ldquo;{currentDiaryPrompt}&rdquo;
                         </p>
@@ -712,6 +940,22 @@ export default function AntarmanPage() {
                           onInput={handleEditorInput}
                           style={{ color: 'var(--text-primary)' }}
                         />
+
+                        {/* Linguistic Mirror Display */}
+                        {analysisResults && (analysisResults.word || analysisResults.register !== 'Neutral') && (
+                          <div className="flex items-center gap-4 mt-2 text-xs border-t pt-2" style={{ borderColor: 'var(--border-default)', color: 'var(--text-faint)' }}>
+                            {analysisResults.word && (
+                              <span>
+                                Dominant word: <strong className="font-serif italic" style={{ color: 'var(--text-secondary)' }}>{analysisResults.word}</strong>
+                              </span>
+                            )}
+                            {analysisResults.register !== 'Neutral' && (
+                              <span>
+                                Emotional Register: <strong style={{ color: 'var(--text-secondary)' }}>{analysisResults.register}</strong>
+                              </span>
+                            )}
+                          </div>
+                        )}
                       </div>
 
                       {/* Gratitude input cards */}
@@ -1290,6 +1534,34 @@ export default function AntarmanPage() {
                   </div>
                 ) : (
                   <>
+                    {/* Unique Thread Tags Pills */}
+                    {uniqueTags.length > 0 && (
+                      <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-2 border-b border-dashed" style={{ borderColor: 'var(--border-default)' }}>
+                        <span className="text-xs font-semibold whitespace-nowrap" style={{ color: 'var(--text-faint)' }}>
+                          Threads:
+                        </span>
+                        {uniqueTags.map(tag => {
+                          const isSelected = selectedTag === tag;
+                          return (
+                            <button
+                              key={tag}
+                              onClick={() => setSelectedTag(isSelected ? null : tag)}
+                              className="px-2.5 py-1 rounded-full text-[11px] font-medium transition-all whitespace-nowrap border"
+                              style={{
+                                background: isSelected 
+                                  ? 'color-mix(in srgb, var(--accent-moss) 12%, var(--bg-tertiary))' 
+                                  : 'transparent',
+                                borderColor: isSelected ? 'var(--accent-moss)' : 'var(--border-default)',
+                                color: isSelected ? 'var(--accent-moss)' : 'var(--text-muted)',
+                              }}
+                            >
+                              #{tag}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
+
                     {/* Normal Calendar Grid Header */}
                     <div className="flex items-center justify-between">
                       <h3 className="font-serif text-lg font-medium" style={{ color: 'var(--text-primary)' }}>
@@ -1326,6 +1598,7 @@ export default function AntarmanPage() {
                         const isSelected = selectedDate === dateStr;
                         const matchSects = allDates[dateStr];
                         const hasTodos = datesWithTodos.has(dateStr);
+                        const hasTag = selectedTag ? (allEntries.find(e => e.dateStr === dateStr)?.diary?.tags?.includes(selectedTag)) : false;
                         
                         return (
                           <button
@@ -1335,10 +1608,14 @@ export default function AntarmanPage() {
                             style={{
                               background: isSelected 
                                 ? 'color-mix(in srgb, var(--room-antarman) 15%, var(--bg-tertiary))' 
-                                : 'transparent',
+                                : hasTag
+                                  ? 'color-mix(in srgb, var(--accent-moss) 12%, var(--bg-tertiary))'
+                                  : 'transparent',
                               borderColor: isSelected 
                                 ? 'var(--room-antarman)' 
-                                : 'transparent',
+                                : hasTag
+                                  ? 'var(--accent-moss)'
+                                  : 'transparent',
                               opacity: isCurrentMonth ? 1 : 0.35,
                             }}
                           >
@@ -1371,7 +1648,185 @@ export default function AntarmanPage() {
                         );
                       })}
                     </div>
+
+                    {/* Tag Excerpts sliding drawer */}
+                    <AnimatePresence>
+                      {selectedTag && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          className="mt-6 p-4 rounded-xl border space-y-3 overflow-hidden text-left"
+                          style={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-default)' }}
+                        >
+                          <div className="flex items-center justify-between">
+                            <h4 className="text-xs font-semibold flex items-center gap-1">
+                              <span style={{ color: 'var(--accent-moss)' }}>#{selectedTag}</span> Thread Excerpts
+                            </h4>
+                            <button 
+                              onClick={() => setSelectedTag(null)}
+                              className="text-[10px] px-2 py-0.5 rounded hover:bg-[var(--bg-tertiary)] border transition-all"
+                              style={{ color: 'var(--text-muted)', borderColor: 'var(--border-default)' }}
+                            >
+                              Clear Filter
+                            </button>
+                          </div>
+
+                          {taggedEntries.length === 0 ? (
+                            <p className="text-xs italic py-2" style={{ color: 'var(--text-faint)' }}>No diary text for this tag.</p>
+                          ) : (
+                            <div className="space-y-3 max-h-56 overflow-y-auto no-scrollbar">
+                              {taggedEntries.map(entry => (
+                                <div 
+                                  key={entry.dateStr}
+                                  className="p-3 rounded-lg border text-[11px] space-y-1 hover:bg-[var(--bg-tertiary)] cursor-pointer transition-all border-l-2"
+                                  style={{ background: 'var(--bg-primary)', borderColor: 'var(--border-default)', borderLeftColor: 'var(--accent-moss)' }}
+                                  onClick={() => handleDateSelect(entry.dateStr)}
+                                >
+                                  <div className="flex justify-between items-center font-semibold mb-1">
+                                    <span style={{ color: 'var(--accent-moss)' }}>{formatDisplayDate(entry.dateStr)}</span>
+                                    <span style={{ color: 'var(--text-faint)' }}>Click to view entry →</span>
+                                  </div>
+                                  <div 
+                                    className="italic line-clamp-3 leading-relaxed"
+                                    style={{ color: 'var(--text-secondary)' }}
+                                    dangerouslySetInnerHTML={{ __html: entry.diary.content.slice(0, 300) + (entry.diary.content.length > 300 ? '...' : '') }}
+                                  />
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </>
+                )}
+              </div>
+            </motion.div>
+          )}
+
+          {/* ─── Sutra Notes Tab ─── */}
+          {tab === 'sutra' && (
+            <motion.div
+              key="sutra"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              className="space-y-4 max-w-2xl mx-auto"
+            >
+              <div className="card-base p-5 space-y-6">
+                <div className="flex justify-between items-center border-b pb-3" style={{ borderColor: 'var(--border-default)' }}>
+                  <div>
+                    <h3 className="font-serif text-lg font-medium" style={{ color: 'var(--text-primary)' }}>
+                      Sutra Notes
+                    </h3>
+                    <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                      Your captured connections across Pravah rooms
+                    </p>
+                  </div>
+                  <span className="text-xs font-semibold px-2 py-0.5 rounded bg-[var(--bg-tertiary)]" style={{ color: 'var(--text-muted)' }}>
+                    {filteredSutraNotes.length} notes
+                  </span>
+                </div>
+
+                {/* Filter Pills */}
+                {sutraRooms.length > 0 && (
+                  <div className="flex gap-2 overflow-x-auto no-scrollbar py-1">
+                    <button
+                      onClick={() => setSelectedRoomFilter(null)}
+                      className="px-3 py-1 rounded-full text-xs font-medium transition-all whitespace-nowrap border"
+                      style={{
+                        background: selectedRoomFilter === null ? 'var(--bg-primary)' : 'transparent',
+                        borderColor: selectedRoomFilter === null ? 'var(--text-primary)' : 'var(--border-default)',
+                        color: selectedRoomFilter === null ? 'var(--text-primary)' : 'var(--text-muted)',
+                      }}
+                    >
+                      All Rooms
+                    </button>
+                    {sutraRooms.map(roomId => {
+                      const roomObj = ROOM_MAP[roomId];
+                      const isSelected = selectedRoomFilter === roomId;
+                      return (
+                        <button
+                          key={roomId}
+                          onClick={() => setSelectedRoomFilter(roomId)}
+                          className="px-3 py-1 rounded-full text-xs font-medium transition-all whitespace-nowrap border flex items-center gap-1"
+                          style={{
+                            background: isSelected ? 'var(--bg-primary)' : 'transparent',
+                            borderColor: isSelected ? (roomObj?.colorHex || 'var(--text-primary)') : 'var(--border-default)',
+                            color: isSelected ? (roomObj?.colorHex || 'var(--text-primary)') : 'var(--text-muted)',
+                          }}
+                        >
+                          <span>{roomObj?.emoji || '✦'}</span>
+                          <span>{roomObj?.name || roomId}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+
+                {/* Notes List */}
+                {filteredSutraNotes.length === 0 ? (
+                  <div className="text-center py-12 space-y-2">
+                    <p className="text-sm font-serif italic" style={{ color: 'var(--text-muted)' }}>
+                      No sutra notes found.
+                    </p>
+                    <p className="text-xs" style={{ color: 'var(--text-faint)' }}>
+                      Click the ✦ button on any content card across Pravah to save a connection here.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-4 max-h-[500px] overflow-y-auto pr-1">
+                    {filteredSutraNotes.map(note => {
+                      const roomObj = ROOM_MAP[note.roomId];
+                      return (
+                        <div
+                          key={note.id}
+                          className="p-4 rounded-xl border relative transition-all hover:scale-[1.01] text-left"
+                          style={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-default)' }}
+                        >
+                          {/* Delete Button */}
+                          <button
+                            onClick={() => handleDeleteNote(note.id)}
+                            className="absolute top-4 right-4 p-1 rounded-md transition-colors hover:bg-[var(--bg-tertiary)]"
+                            style={{ color: 'var(--text-faint)' }}
+                            title="Delete note"
+                          >
+                            <X size={14} />
+                          </button>
+
+                          <div className="space-y-2.5">
+                            {/* Room Badge + Date */}
+                            <div className="flex items-center gap-3 flex-wrap">
+                              <span
+                                className="px-2 py-0.5 rounded text-[10px] font-semibold tracking-wider uppercase flex items-center gap-1"
+                                style={{
+                                  background: `color-mix(in srgb, ${roomObj?.colorHex || 'var(--accent-saffron)'} 8%, var(--bg-tertiary))`,
+                                  color: roomObj?.colorHex || 'var(--accent-saffron)',
+                                }}
+                              >
+                                <span>{roomObj?.emoji || '✦'}</span>
+                                <span>{roomObj?.name || note.roomName}</span>
+                              </span>
+                              <span className="text-[10px]" style={{ color: 'var(--text-faint)' }}>
+                                {note.date ? formatDisplayDate(note.date) : ''}
+                              </span>
+                            </div>
+
+                            {/* Content Title */}
+                            <h4 className="text-xs font-semibold" style={{ color: 'var(--text-secondary)' }}>
+                              Reflecting on: <span className="font-serif italic">&ldquo;{note.contentTitle}&rdquo;</span>
+                            </h4>
+
+                            {/* User Note */}
+                            <p className="text-sm font-serif leading-relaxed pl-2 border-l" style={{ color: 'var(--text-primary)', borderColor: 'var(--border-default)' }}>
+                              {note.userNote}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
                 )}
               </div>
             </motion.div>

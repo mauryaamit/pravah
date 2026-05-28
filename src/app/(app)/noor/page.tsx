@@ -5,6 +5,8 @@ import { FADE_UP } from '@/lib/utils/motion';
 import PageTransition from '@/components/layout/PageTransition';
 import { getDayOfYear } from '@/lib/utils/date';
 import ReadAloudButton from '@/components/shared/ReadAloudButton';
+import SutraNoteButton from '@/components/shared/SutraNoteButton';
+import RevisitButton from '@/components/shared/RevisitButton';
 
 const FLAMES = [
   {
@@ -129,7 +131,7 @@ export default function NoorPage() {
           >
             {/* Header */}
             <div className="card-base p-7 text-center space-y-4 relative" style={{ background: 'color-mix(in srgb, #D4A853 6%, var(--bg-secondary))', border: '1px solid #D4A853' }}>
-              <div className="absolute top-6 right-6">
+              <div className="absolute top-6 right-6 flex items-center gap-1.5">
                 <ReadAloudButton
                   text={`${selected.title}. ${selected.titleHindi}. ${selected.intro}. ${selected.fullText}`}
                   lang="en-IN"
@@ -137,6 +139,18 @@ export default function NoorPage() {
                   variant="pill"
                   label="Listen slow"
                   defaultPreset="slow"
+                />
+                <RevisitButton
+                  roomId="noor"
+                  roomName="Noor"
+                  contentTitle={selected.title}
+                  contentSummary={selected.intro}
+                />
+                <SutraNoteButton
+                  roomId="noor"
+                  roomName="Noor"
+                  contentTitle={selected.title}
+                  className=""
                 />
               </div>
               <span className="text-3xl">🌟</span>

@@ -1,10 +1,12 @@
-﻿'use client';
+'use client';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FADE_UP, STAGGER_CONTAINER, STAGGER_ITEM } from '@/lib/utils/motion';
 import PageTransition from '@/components/layout/PageTransition';
 import { getDayOfYear } from '@/lib/utils/date';
 import ReadAloudButton from '@/components/shared/ReadAloudButton';
+import SutraNoteButton from '@/components/shared/SutraNoteButton';
+import RevisitButton from '@/components/shared/RevisitButton';
 import { Copy, Check, Heart, BookOpen, Share2 } from 'lucide-react';
 import { db } from '@/lib/firebase/client';
 import { doc, setDoc, deleteDoc, collection, onSnapshot } from 'firebase/firestore';
@@ -171,6 +173,18 @@ export default function SukoonPage() {
                     lang={script === 'en' ? 'en-IN' : 'hi-IN'}
                     size="sm"
                   />
+                  <RevisitButton
+                    roomId="sukoon"
+                    roomName="Sukoon"
+                    contentTitle={activePoem.title}
+                    contentSummary={activePoem.author + ' - ' + activePoem.period}
+                  />
+                  <SutraNoteButton
+                    roomId="sukoon"
+                    roomName="Sukoon"
+                    contentTitle={activePoem.title}
+                    className=""
+                  />
                   <button
                     onClick={() => setFocusPoem(activePoem)}
                     className="px-2.5 py-1 rounded-full text-xs font-medium border transition-all hover:bg-bg-tertiary flex items-center gap-1"
@@ -273,6 +287,18 @@ export default function SukoonPage() {
                         text={lines.filter(l => l.trim()).join('\n')}
                         lang={script === 'en' ? 'en-IN' : 'hi-IN'}
                         size="sm"
+                      />
+                      <RevisitButton
+                        roomId="sukoon"
+                        roomName="Sukoon"
+                        contentTitle={poem.title}
+                        contentSummary={poem.author + ' - ' + poem.period}
+                      />
+                      <SutraNoteButton
+                        roomId="sukoon"
+                        roomName="Sukoon"
+                        contentTitle={poem.title}
+                        className=""
                       />
                       <button
                         onClick={() => setFocusPoem(poem)}

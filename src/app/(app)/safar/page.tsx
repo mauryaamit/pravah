@@ -1,166 +1,330 @@
 'use client';
-import { useState } from 'react';
+
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FADE_UP, STAGGER_CONTAINER, STAGGER_ITEM } from '@/lib/utils/motion';
 import PageTransition from '@/components/layout/PageTransition';
 import { getDayOfYear } from '@/lib/utils/date';
+import ReadAloudButton from '@/components/shared/ReadAloudButton';
+import SutraNoteButton from '@/components/shared/SutraNoteButton';
+import RevisitButton from '@/components/shared/RevisitButton';
+import { INDIAN_DESTINATIONS, GLOBAL_DESTINATIONS, SafarDestination } from './data';
+import { ChevronDown, MapPin, Calendar, Compass } from 'lucide-react';
 
-const DESTINATIONS = [
-  {
-    id: 'varanasi',
-    name: 'Varanasi',
-    hindi: 'वाराणसी',
-    country: 'India',
-    tagline: 'The oldest living city on Earth',
-    imageUrl: '/images/safar/varanasi.png',
-    intro: 'Varanasi - also called Kashi, the City of Light - has been continuously inhabited for at least 3,000 years, making it one of the oldest surviving cities in the world. It sits on the western bank of the Ganges in Uttar Pradesh, and every morning, thousands of pilgrims descend its 88 ghats to bathe in water they believe flows directly from Shiva\'s hair.',
-    deepContent: `Varanasi is the kind of city that defeats language. Every writer who has tried to describe it has eventually resorted to contradiction: it is simultaneously the most alive and the most death-haunted city in India, perhaps in the world. The burning ghats of Manikarnika and Harishchandra burn 24 hours a day, 365 days a year - the pyres are never extinguished. The smoke drifts over the ghats where pilgrims bathe. Life and death are not separated here into hospitals and crematoriums, into neat institutional spaces. They are side by side on the same steps.
+interface DestinationCardProps {
+  destination: SafarDestination;
+  accentColor: string;
+  fallbackImage: string;
+  titlePrefix: string;
+  titlePrefixHindi: string;
+}
 
-Hindu theology holds that dying in Kashi grants moksha - liberation from the cycle of rebirth. This is why the elderly and the terminally ill come here to die: not out of despair but out of the deepest possible hope. The Kashi Labh Mukti Bhawan is a guesthouse where people come to die - residents may stay for two weeks; if they haven't died by then, they must leave to make room for others. The rooms are usually full. The management keeps scrupulous records.
+function DestinationCard({
+  destination,
+  accentColor,
+  fallbackImage,
+  titlePrefix,
+  titlePrefixHindi,
+}: DestinationCardProps) {
+  const [imgSrc, setImgSrc] = useState(destination.imageUrl);
+  const [activeSection, setActiveSection] = useState<string | null>(null);
 
-The ghats - the broad stone steps descending to the river - are the heart of Varanasi's social and spiritual life. They are not tourist attractions. They are functional infrastructure of religious practice: the washing of bodies, the carrying of corpses, the doing of puja, the children learning to swim, the sadhus meditating at the water's edge, the boatmen who have been ferrying pilgrims across the Ganges for generations. Every caste, every occupation, every aspect of Hindu life has its designated ghat.
+  // Keep state in sync if destination changes
+  useEffect(() => {
+    setImgSrc(destination.imageUrl);
+    setActiveSection(null);
+  }, [destination]);
 
-The morning boat ride on the Ganges at dawn is, for many visitors, one of the most powerful travel experiences available in India. You watch the city wake up: the lamps floated on the water, the devotional singing rising from the ghats, the mist coming off the river, the sky turning from black to violet to gold. Everything is happening at once. The city is engaged in an act of collective worship that has been performed every morning for 3,000 years.
+  const sections = [
+    { id: 'history', label: 'History & Heritage', content: destination.history },
+    { id: 'cuisine', label: 'Local Flavors & Cuisine', content: destination.cuisine },
+    { id: 'culture_craft', label: 'Culture & Crafts', content: destination.culture_craft },
+    { id: 'architecture', label: 'Architectural Marvels', content: destination.architecture },
+    { id: 'hidden_gem', label: 'The Hidden Gem', content: destination.hidden_gem },
+    { id: 'amazing_facts', label: 'Surprising Facts', content: destination.amazing_facts },
+  ];
 
-Varanasi is also a city of classical learning. The Banaras Hindu University - founded in 1916, one of the largest residential universities in Asia - has been a center of Sanskrit scholarship, philosophy, music, and art for a century. The tradition of Sanskrit scholarship in Varanasi is older still: the city was the center of Brahminic learning for centuries, home to the great grammarians, logicians, and philosophers of the Nyaya school. Pandit Ravi Shankar studied sitar here. Bismillah Khan - the shehnai maestro - was born here and spent his entire life here, never permanently leaving.
+  const toggleSection = (sectionId: string) => {
+    setActiveSection(prev => (prev === sectionId ? null : sectionId));
+  };
 
-The Banaras that persists through the tourist industry and rapid development is simultaneously fragile and astonishingly resilient. The silk weaving tradition - Banarasi saris, considered among the finest in India - is under pressure from cheaper powerloom imitations. The old city's lanes (gallis), some barely wide enough for two people to pass, still house the traditional workshops. The sitar craftsmen, the betel leaf sellers, the ritual sweet makers - they are still there, in the same lanes their grandfathers occupied.
+  const ttsText = `${destination.name} in ${destination.country}. ${destination.tagline}. Why visit: ${destination.why_visit} Emotional resonance: ${destination.emotional_vibe}`;
 
-What makes Varanasi irreplaceable is its function as a lens: it shows you India in concentrated form - its relationship with death, its integration of the sacred and the mundane, its ancient learning, its overcrowding, its beauty, its squalor, its capacity to hold contradictions without resolving them. It is the most Indian of Indian cities, and therefore the most useful for understanding what India is actually made of.`,
-    practicalWonder: 'The Ganga Aarti at the Dashashwamedh Ghat - performed every evening at sunset - involves dozens of priests performing synchronized rituals with fire, flowers, incense, and sacred implements, accompanied by devotional music. It draws thousands of witnesses. It has been performed every evening without interruption for generations.',
-  },
-  {
-    id: 'patagonia',
-    name: 'Patagonia',
-    hindi: 'पटागोनिया',
-    country: 'Argentina / Chile',
-    tagline: 'Where the world runs out',
-    imageUrl: '/images/safar/patagonia.png',
-    intro: 'At the southern tip of South America, Patagonia is one of the most spectacularly empty landscapes on Earth - a region of glaciers, torres (towers of rock), pampas, and wind so constant and powerful that trees grow bent permanently sideways. It is the place the world runs out, before Antarctica begins.',
-    deepContent: `Patagonia covers approximately 1 million square kilometers across southern Argentina and Chile - an area roughly the size of Egypt - and has a population of about 2 million people. Most of that population is in a few coastal cities. The interior - the vast pampas (grasslands), the Andes foothills, the great wind-blasted plateaus - is emptier than anywhere in Europe and emptier than most of Asia.
+  return (
+    <motion.div
+      variants={STAGGER_ITEM}
+      className="card-base overflow-hidden flex flex-col h-full group"
+      style={{
+        border: `1px solid color-mix(in srgb, ${accentColor} 18%, var(--border-default))`,
+        background: 'var(--bg-secondary)',
+      }}
+    >
+      {/* Destination Image Banner */}
+      <div className="h-60 relative w-full overflow-hidden bg-bg-tertiary">
+        <img
+          src={imgSrc}
+          alt={destination.name}
+          onError={() => setImgSrc(fallbackImage)}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+        />
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent pointer-events-none" />
+        
+        {/* Text over Image */}
+        <div className="absolute bottom-4 left-4 right-4 flex flex-col">
+          <div className="flex items-center gap-1.5 text-white/70 text-xs font-semibold uppercase tracking-wider mb-1">
+            <span style={{ color: accentColor }}>{titlePrefixHindi}</span>
+            <span>/</span>
+            <span>{titlePrefix}</span>
+          </div>
+          <h2 className="font-serif text-2xl sm:text-3xl text-white font-medium flex items-baseline gap-2">
+            {destination.name}
+            <span className="font-devanagari text-base font-normal text-white/80">
+              {destination.nameHindi}
+            </span>
+          </h2>
+          <p className="text-white/90 text-sm italic font-serif mt-1">
+            &ldquo;{destination.tagline}&rdquo;
+          </p>
+        </div>
 
-The wind is the fact of Patagonian life. The Roaring Forties - latitude bands in the Southern Hemisphere where strong westerly winds blow almost unimpeded around the globe, not stopped by any significant land mass - produce a wind regime in Patagonia of extraordinary consistency and power. Winds of 100 km/h are not unusual. The trees on the pampas grow at permanent angles, their branches all pointing in the same direction, as if frozen mid-wave. Locals say the wind has a name and a personality. It is not weather. It is character.
+        {/* Location Badge */}
+        <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 flex items-center gap-1 text-[10px] text-white/90 tracking-wide font-semibold">
+          <MapPin size={10} style={{ color: accentColor }} />
+          {destination.country}
+        </div>
 
-The Torres del Paine National Park in Chilean Patagonia is the region's most visited landscape - towers of granite that rise 2,000 meters straight from the pampas, carved by glaciers that are still retreating. The park's hiking trail, the W Circuit, takes 4-5 days and passes through ecosystems that range from wind-blasted steppe to humid forest to the edge of glacial ice fields. The Perito Moreno Glacier - in Argentine Patagonia - is one of the few glaciers in the world that is currently stable (neither advancing nor retreating significantly), and it calves enormous chunks of ice into the lake below with a sound like cannon fire, visible from viewing platforms at close range.
+        {/* Traveler Type Badge */}
+        <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 text-[10px] text-white/90 font-medium tracking-wide">
+          {destination.travelerType}
+        </div>
+      </div>
 
-Charles Darwin visited Patagonia in 1832-1833 aboard the Beagle and was profoundly affected by it. The vast emptiness, the strange fauna (guanacos, rheas, pumas, condors), the indigenous Tehuelche and Kawésqar peoples who had lived there for 10,000 years - all of this contributed to the observations that would eventually lead to the theory of evolution. Darwin wrote: "In calling up images of the past, I find that the plains of Patagonia frequently cross before my eyes; yet these plains are pronounced by all wretched and useless."
+      {/* Main Info Area */}
+      <div className="p-5 flex-1 flex flex-col justify-between space-y-6">
+        <div className="space-y-4">
+          {/* Header row with ReadAloud */}
+          <div className="flex justify-between items-start gap-4">
+            <div>
+              <p className="section-label">Why Visit</p>
+            </div>
+            <div className="flex items-center gap-1">
+              <ReadAloudButton text={ttsText} lang="en-IN" size="sm" />
+              <RevisitButton
+                roomId="safar"
+                roomName="Safar"
+                contentTitle={`${destination.name} - Why Visit`}
+                contentSummary={destination.why_visit.slice(0, 150) + '...'}
+              />
+              <SutraNoteButton
+                roomId="safar"
+                roomName="Safar"
+                contentTitle={`${destination.name} - Why Visit`}
+                className=""
+              />
+            </div>
+          </div>
 
-And yet he found himself unable to stop thinking about them. The emptiness had a quality he couldn't name. The geographer's term for it is "sublime" - the aesthetic experience of immensity that simultaneously diminishes the observer and elevates them. The Romantic painters tried to capture it. The Patagonian landscape does it naturally: you stand at the edge of a glacier, or watch the condors circle the torres at dawn, or simply face the wind on the pampas and feel the full weight of geological time - the ice ages that shaped this landscape, the millions of years before and after human presence - and the ordinary human concerns that fill your normal attention simply fall away.
+          {/* Description paragraphs */}
+          <div className="space-y-3">
+            {destination.why_visit.split('\n\n').map((para, i) => (
+              <p key={i} className="text-sm leading-relaxed text-text-secondary" style={{ lineHeight: 1.8 }}>
+                {para}
+              </p>
+            ))}
+          </div>
 
-The Kawésqar people, who navigated the fjords of southern Chile in bark canoes for thousands of years, are now almost entirely gone - victims of disease, forced sedentarization, and cultural destruction during the colonial period. A few remain in Puerto Edén. The Tehuelche of Argentine Patagonia are more numerous but their traditional way of life - hunting guanaco on the pampas - was destroyed by the introduction of European sheep farming in the 19th century.
+          {/* Accordion list */}
+          <div className="border-t border-border-default mt-6 pt-4 space-y-2">
+            {sections.map(section => {
+              const isOpen = activeSection === section.id;
+              return (
+                <div
+                  key={section.id}
+                  className="rounded-xl overflow-hidden transition-colors border"
+                  style={{
+                    borderColor: isOpen
+                      ? `color-mix(in srgb, ${accentColor} 20%, var(--border-default))`
+                      : 'var(--border-default)',
+                    background: isOpen
+                      ? `color-mix(in srgb, ${accentColor} 3%, var(--bg-tertiary))`
+                      : 'transparent',
+                  }}
+                >
+                  <button
+                    onClick={() => toggleSection(section.id)}
+                    className="w-full text-left px-4 py-3 flex justify-between items-center text-xs font-semibold uppercase tracking-wider select-none"
+                    style={{ color: 'var(--text-primary)' }}
+                  >
+                    <span>{section.label}</span>
+                    <motion.div
+                      animate={{ rotate: isOpen ? 180 : 0 }}
+                      transition={{ duration: 0.2 }}
+                      style={{ color: accentColor }}
+                    >
+                      <ChevronDown size={14} />
+                    </motion.div>
+                  </button>
 
-Patagonia is one of the places where the encounter between human civilization and pure geological scale is most visceral. The Torres del Paine granite was intruded into the existing rock 12 million years ago - before our genus existed. The glaciers are remnants of ice sheets that covered this entire region until 10,000 years ago. The condors overhead have a wingspan of 3 meters and can live 70 years. Everything here is older, larger, and slower than human life. Being there recalibrates your sense of scale.`,
-    practicalWonder: 'In southern Patagonia, the night sky - far from any light pollution - shows the Magellanic Clouds: two irregular dwarf galaxies, visible to the naked eye, satellites of the Milky Way. Named by Magellan\'s crew when they saw them in 1519, they were the first galaxies beyond the Milky Way to be identified.',
-  },
-  {
-    id: 'kyoto',
-    name: 'Kyoto',
-    hindi: 'क्योतो',
-    country: 'Japan',
-    tagline: 'The city that remembered how to be beautiful',
-    imageUrl: '/images/safar/kyoto.png',
-    intro: 'For over a thousand years, Kyoto was the capital of Japan - the seat of the Emperor, the center of Buddhist and Shinto practice, the birthplace of Japanese aesthetic culture. Today it is the city that most carefully preserved what Japan was before the 20th century changed everything.',
-    deepContent: `Kyoto was Japan's imperial capital from 794 CE to 1869 CE - a period of over a thousand years during which it accumulated temples, shrines, gardens, palaces, and cultural traditions of extraordinary density. When Japan modernized rapidly in the Meiji era, and when World War II destroyed most of Japan's cities, Kyoto survived largely intact. The reasons are disputed - one persistent story is that American Secretary of War Henry Stimson, who had visited Kyoto on his honeymoon, personally intervened to remove it from the nuclear targeting list. Whatever the reason, Kyoto's architectural heritage survived.
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.25, ease: 'easeInOut' }}
+                      >
+                        <div className="px-4 pb-4 pt-1 space-y-3 border-t border-dashed border-border-default/40">
+                          {Array.isArray(section.content) ? (
+                            <ul className="list-disc pl-4 space-y-2">
+                              {section.content.map((fact, idx) => (
+                                <li key={idx} className="text-xs leading-relaxed text-text-secondary">
+                                  {fact}
+                                </li>
+                              ))}
+                            </ul>
+                          ) : (
+                            section.content.split('\n\n').map((para, idx) => (
+                              <p key={idx} className="text-xs leading-relaxed text-text-secondary" style={{ lineHeight: 1.75 }}>
+                                {para}
+                              </p>
+                            ))
+                          )}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
+          </div>
+        </div>
 
-The result is a city of 1,400 Buddhist temples, 400 Shinto shrines, 17 UNESCO World Heritage sites, and millions of visitors - packed into a mountain basin in central Japan where the autumn maples turn the hills red and gold in November, and the cherry blossoms transform the city in a week every April. The crowds in peak season are extraordinary. And yet: find the right temple at the right hour, and you will understand why Japanese Buddhism speaks of the possibility of sudden illumination.
+        {/* Card Footer: Best Time & Vibe */}
+        <div className="border-t border-border-default/50 pt-4 flex flex-col gap-3">
+          <div className="flex items-center gap-2 text-xs" style={{ color: 'var(--text-muted)' }}>
+            <Calendar size={12} style={{ color: accentColor }} />
+            <span>Best Time: <strong>{destination.bestTime}</strong></span>
+          </div>
 
-The Zen gardens of Kyoto are among the most studied and imitated landscape designs in history. The karesansui - dry stone garden - at Ryoan-ji consists of fifteen rocks arranged in raked white gravel, with no plants. Its meaning has been debated for centuries. The temple's position on a hill obscures the gravel garden's full extent from any single viewing angle - you can never see all fifteen rocks simultaneously. This is considered intentional. The garden is not a representation of nature. It is a meditation object. You sit in front of it and let the mind come to stillness.
-
-The tea ceremony (chado) reached its definitive form in Kyoto in the 16th century under the tea master Sen no Rikyu, who served Toyotomi Hideyoshi. The ceremony - now widely available to visitors in simplified form in various parts of the city - involves the preparation and consumption of matcha in a prescribed sequence of movements and attention. The point is not the tea. The point is the quality of attention required to perform each gesture correctly: the folding of the napkin, the warming of the bowl, the whisking of the tea. The ceremony is a training in presence, developed by Zen monks who found that paying total attention to simple physical actions could produce the same stillness as formal meditation.
-
-The geisha culture of Kyoto - the geiko (Kyoto dialect for geisha) and maiko (apprentice geisha) of the Gion district - is one of the most misunderstood aspects of Japanese culture in Western perception. Geiko are performers - trained in traditional music, dance, conversation, and the tea ceremony for years before they complete their apprenticeship. The training is extraordinarily demanding: young women who enter the system as maiko at fifteen typically spend five years in intensive study before becoming full geiko. The relationship between geiko and their clients is formal, aesthetic, and professional. It is the Japanese performance tradition, in its most refined form, applied to the art of hospitality.
-
-Kyoto's relationship with time is its most distinctive feature. Other cities rush toward their future. Kyoto seems to have made a collective decision - reinforced by heritage regulations, tourism economics, and cultural pride - to maintain the relationship with its past. This is not simply preservation. It is a different relationship with time: the recognition that the past is not behind us but within us, that what was done with care and intelligence centuries ago still has something to teach, that beauty is not fashion but something more durable.
-
-The philosopher Nishida Kitaro - founder of the Kyoto School of philosophy, the most significant school of Japanese philosophy in the 20th century - wrote about "pure experience" as the starting point of philosophical inquiry. He was teaching at Kyoto Imperial University, walking the canal path now called the Philosopher's Walk every morning, thinking. The Philosopher's Walk is lined with cherry trees. In spring it is one of the most beautiful short walks in the world. Nishida walked it for decades. The canal was there before him. The cherry trees will be there after.`,
-    practicalWonder: 'The Fushimi Inari-Taisha shrine has approximately 10,000 torii gates (traditional orange-red shrine gates) walking up the mountain behind it. Walking the full path through all the gates and back takes about 2-3 hours. The path was built by merchants who dedicated each gate as a prayer for business success. The gates have been accumulating for centuries.',
-  },
-];
+          <div
+            className="p-3 rounded-lg text-xs italic text-center font-serif"
+            style={{
+              background: `color-mix(in srgb, ${accentColor} 5%, var(--bg-tertiary))`,
+              color: 'var(--text-secondary)',
+            }}
+          >
+            &ldquo;{destination.emotional_vibe}&rdquo;
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
 
 export default function SafarPage() {
+  const [offset, setOffset] = useState(0);
+
   const dayOfYear = getDayOfYear();
-  const today = DESTINATIONS[dayOfYear % DESTINATIONS.length];
-  const [selected, setSelected] = useState(today);
-  const [showFull, setShowFull] = useState(false);
+  const effectiveDay = dayOfYear + offset;
+  
+  // Calculate index securely using modulo on arrays
+  const indianIndex = (effectiveDay - 1 + INDIAN_DESTINATIONS.length * 100) % INDIAN_DESTINATIONS.length;
+  const globalIndex = (effectiveDay - 1 + GLOBAL_DESTINATIONS.length * 100) % GLOBAL_DESTINATIONS.length;
+
+  const indianDest = INDIAN_DESTINATIONS[indianIndex];
+  const globalDest = GLOBAL_DESTINATIONS[globalIndex];
 
   return (
     <PageTransition>
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 space-y-6">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 space-y-8">
+        
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+          <motion.div variants={FADE_UP} initial="initial" animate="animate" className="space-y-1.5">
+            <span className="section-label">Travel Room</span>
+            <h1 className="font-serif text-3xl sm:text-4xl" style={{ color: 'var(--text-primary)' }}>
+              सफ़र - Safar
+            </h1>
+            <p className="text-sm max-w-xl text-text-muted" style={{ color: 'var(--text-muted)' }}>
+              Travel is not tourism. It is the discovery that the world is larger than your map of it.
+            </p>
+          </motion.div>
 
-        <motion.div variants={FADE_UP} initial="initial" animate="animate" className="space-y-1">
-          <p className="section-label">Travel Room</p>
-          <h1 className="font-serif text-2xl" style={{ color: 'var(--text-primary)' }}>सफ़र - Safar</h1>
-          <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-            Travel is not tourism. It is the discovery that the world is larger than your map of it.
-          </p>
-        </motion.div>
-
-        <div className="flex gap-2 flex-wrap">
-          {DESTINATIONS.map((d, i) => (
+          {/* Date Navigation */}
+          <motion.div
+            variants={FADE_UP}
+            initial="initial"
+            animate="animate"
+            className="flex items-center gap-1.5 self-start md:self-end"
+          >
             <button
-              key={d.id}
-              onClick={() => { setSelected(d); setShowFull(false); }}
-              className="px-3 py-1.5 rounded-full text-xs font-medium transition-all"
+              onClick={() => setOffset(o => o - 1)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-medium transition-all hover:scale-105 active:scale-95 bg-bg-secondary text-text-secondary border-border-default"
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <polyline points="15 18 9 12 15 6" />
+              </svg>
+              Yesterday
+            </button>
+
+            <button
+              onClick={() => setOffset(0)}
+              className="px-3.5 py-1.5 rounded-full border text-xs font-medium transition-all bg-bg-secondary border-border-default"
               style={{
-                background: selected.id === d.id ? '#5A8A7C' : 'var(--bg-tertiary)',
-                color: selected.id === d.id ? 'white' : 'var(--text-muted)',
-                border: i === dayOfYear % DESTINATIONS.length ? '2px solid #5A8A7C' : '1px solid var(--border-default)',
+                borderColor: offset === 0 ? 'var(--accent-saffron)' : 'var(--border-default)',
+                color: offset === 0 ? 'var(--accent-saffron)' : 'var(--text-muted)',
               }}
             >
-              {d.name}{i === dayOfYear % DESTINATIONS.length ? ' • Today' : ''}
+              {offset === 0 ? 'Today' : offset > 0 ? `+${offset} days` : `${offset} days`}
             </button>
-          ))}
+
+            <button
+              onClick={() => setOffset(o => o + 1)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-medium transition-all hover:scale-105 active:scale-95 bg-bg-secondary text-text-secondary border-border-default"
+            >
+              Tomorrow
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            </button>
+          </motion.div>
         </div>
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={selected.id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.35 }}
-            className="space-y-5"
-          >
-            <div className="card-base overflow-hidden">
-              <div className="relative" style={{ paddingBottom: '55%', background: 'var(--bg-tertiary)' }}>
-                <img
-                  src={selected.imageUrl}
-                  alt={selected.name}
-                  className="absolute inset-0 w-full h-full object-cover"
-                  onError={e => { const el = e.target as HTMLImageElement; el.src = '/images/safar/varanasi.png'; }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-5">
-                  <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: '#7FBFB0' }}>{selected.country}</span>
-                  <h2 className="font-serif text-2xl text-white mt-1">{selected.name}</h2>
-                  <p className="font-devanagari text-sm text-white/60">{selected.hindi}</p>
-                  <p className="font-serif italic text-sm text-white/80 mt-1">"{selected.tagline}"</p>
-                </div>
-              </div>
-              <div className="p-5">
-                <p className="font-serif italic text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{selected.intro}</p>
-              </div>
-            </div>
+        {/* Dual Cards Grid */}
+        <motion.div
+          variants={STAGGER_CONTAINER}
+          initial="initial"
+          animate="animate"
+          className="grid md:grid-cols-2 gap-6 items-stretch"
+        >
+          {/* India Today Card */}
+          <DestinationCard
+            destination={indianDest}
+            accentColor="#C4873A"
+            fallbackImage="/images/safar/varanasi.png"
+            titlePrefix="India Today"
+            titlePrefixHindi="आज का भारत"
+          />
 
-            <div className="card-base p-6 space-y-4">
-              {(showFull ? selected.deepContent : selected.deepContent.split('\n\n').slice(0, 3).join('\n\n')).split('\n\n').map((para, i) => (
-                <p key={i} className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)', lineHeight: 1.9 }}>{para}</p>
-              ))}
-              {!showFull && (
-                <div className="text-center pt-4 border-t" style={{ borderColor: 'var(--border-default)' }}>
-                  <button onClick={() => setShowFull(true)} className="px-6 py-2.5 rounded-full text-sm font-medium" style={{ background: '#5A8A7C', color: 'white' }}>
-                    Continue the Journey →
-                  </button>
-                </div>
-              )}
-            </div>
+          {/* World Today Card */}
+          <DestinationCard
+            destination={globalDest}
+            accentColor="#3A8A8A"
+            fallbackImage="/images/safar/kyoto.png"
+            titlePrefix="World Today"
+            titlePrefixHindi="आज की दुनिया"
+          />
+        </motion.div>
 
-            <div className="card-base p-5" style={{ background: 'color-mix(in srgb, #5A8A7C 8%, var(--bg-secondary))', border: '1px solid #5A8A7C' }}>
-              <p className="section-label mb-2" style={{ color: '#5A8A7C' }}>The Particular Wonder</p>
-              <p className="font-serif italic text-sm leading-relaxed" style={{ color: 'var(--text-primary)' }}>{selected.practicalWonder}</p>
-            </div>
-          </motion.div>
-        </AnimatePresence>
+        {/* Footer info */}
+        <div className="text-center pt-4">
+          <p className="font-serif italic text-xs flex items-center justify-center gap-1.5" style={{ color: 'var(--text-faint)' }}>
+            <Compass size={12} className="animate-spin" style={{ animationDuration: '20s' }} />
+            Two journeys daily. One home, one horizon.
+          </p>
+        </div>
+
       </div>
     </PageTransition>
   );

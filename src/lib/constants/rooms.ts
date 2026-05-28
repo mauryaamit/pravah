@@ -28,7 +28,7 @@ export const ROOMS: Room[] = [
 
   // INNER
   { id: 'sukoon',      name: 'Sukoon',       nameHi: 'सुकून',      nameHindi: 'सुकून',     emoji: '🌧️', description: 'Poetry - Hindi, Roman Urdu, English',         route: '/sukoon',       colorVar: '--room-sukoon',       colorHex: '#5B6B8A', cluster: 'inner' },
-  { id: 'manthan',     name: 'Manthan',      nameHi: 'मन्थन',      nameHindi: 'मन्थन',     emoji: '🌀', description: 'One deep question per day',                   route: '/manthan',      colorVar: '--room-manthan',      colorHex: '#6A3A8A', cluster: 'inner' },
+  { id: 'manthan',     name: 'Manthan',      nameHi: 'मन्थन',      nameHindi: 'मन्थन',     emoji: '🌀', description: 'Mental models - the thinking tools of every discipline', route: '/manthan', colorVar: '--room-manthan', colorHex: '#6A3A8A', cluster: 'inner' },
   { id: 'noor',        name: 'Noor',         nameHi: 'नूर',         nameHindi: 'नूर',       emoji: '✨', description: 'Daily fire - transformation, not motivation',   route: '/noor',         colorVar: '--room-noor',         colorHex: '#D4A853', cluster: 'inner' },
   { id: 'riyaz',       name: 'Riyaz',        nameHi: 'रियाज़',     nameHindi: 'रियाज़',    emoji: '🎵', description: 'Music and arts - the practice of beauty',      route: '/riyaz',        colorVar: '--room-riyaz',        colorHex: '#8A4A8A', cluster: 'inner' },
 
@@ -37,10 +37,9 @@ export const ROOMS: Room[] = [
   { id: 'neurolab',    name: 'NeuroLab',     nameHi: 'न्यूरोलैब', nameHindi: 'न्यूरोलैब', emoji: '🧠', description: 'Daily brain science',                          route: '/neurolab',     colorVar: '--room-neurolab',     colorHex: '#7A3A8A', cluster: 'knowledge' },
   { id: 'cosmos',      name: 'Cosmos',       nameHi: 'ब्रह्मांड', nameHindi: 'ब्रह्मांड', emoji: '🌌', description: 'Astrophysics and the infinite universe',        route: '/cosmos',       colorVar: '--room-cosmos',       colorHex: '#3A5A8A', cluster: 'knowledge' },
   { id: 'darshan',     name: 'Darshan',      nameHi: 'दर्शन',      nameHindi: 'दर्शन',     emoji: '🏛️', description: 'Philosophy - all schools of thought',          route: '/darshan',      colorVar: '--room-darshan',      colorHex: '#8A6A3A', cluster: 'knowledge' },
-  { id: 'samvaad',     name: 'Samvaad',      nameHi: 'संवाद',      nameHindi: 'संवाद',     emoji: '🗣️', description: 'Word of the day - etymology and usage',       route: '/samvaad',      colorVar: '--room-samvaad',      colorHex: '#3A6A8A', cluster: 'knowledge' },
+  { id: 'bhasha',      name: 'Bhasha',        nameHi: 'भाषा',       nameHindi: 'भाषा',      emoji: '🔤', description: 'Language as the shape of thought',               route: '/bhasha',       colorVar: '--room-bhasha',       colorHex: '#B8860B', cluster: 'knowledge' },
   { id: 'srot',        name: 'Srot',          nameHi: 'स्रोत',      nameHindi: 'स्रोत',     emoji: '📚', description: 'One deep read per day',                        route: '/srot',         colorVar: '--room-srot',         colorHex: '#3A6A8A', cluster: 'knowledge' },
   { id: 'vani',        name: 'Vani',          nameHi: 'वाणी',       nameHindi: 'वाणी',      emoji: '🪔', description: 'Sanskrit shlokas, dohas, and living folk wisdom', route: '/vani',         colorVar: '--room-vani',         colorHex: '#8B3A3A', cluster: 'knowledge' },
-  { id: 'shabda',      name: 'Shabda',        nameHi: 'शब्द',       nameHindi: 'शब्द',      emoji: '🔤', description: 'Word of the day - English, rare, idioms, GenZ',  route: '/shabda',       colorVar: '--room-shabda',       colorHex: '#2D6B6B', cluster: 'knowledge' },
   { id: 'paradox',     name: 'Paradox',       nameHi: 'विरोधाभास',   nameHindi: 'विरोधाभास', emoji: '🧩', description: 'One paradox per day - fully explained',          route: '/paradox',      colorVar: '--room-paradox',      colorHex: '#4A3570', cluster: 'knowledge' },
 
   // WORLD

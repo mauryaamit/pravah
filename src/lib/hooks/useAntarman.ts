@@ -12,6 +12,7 @@ export interface DiaryData {
   gratitude: [string, string, string];
   learned: string;
   intention: string;
+  tags?: string[];
   updatedAt?: any;
 }
 export interface JournalData { content: string; updatedAt?: any; }
@@ -29,7 +30,7 @@ export interface AntarmanDocData {
   gratitude?: GratitudeData;
 }
 
-const DEFAULT_DIARY: DiaryData = { content: '', mood: 3, gratitude: ['', '', ''], learned: '', intention: '' };
+const DEFAULT_DIARY: DiaryData = { content: '', mood: 3, gratitude: ['', '', ''], learned: '', intention: '', tags: [] };
 const DEFAULT_JOURNAL: JournalData = { content: '' };
 const DEFAULT_POETRY: PoetryData = { content: '', title: '' };
 const DEFAULT_STORY: StoryData = { content: '', title: '' };

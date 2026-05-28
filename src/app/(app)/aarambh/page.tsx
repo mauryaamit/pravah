@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { db } from '@/lib/firebase/client';
-import { doc, onSnapshot, setDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, onSnapshot, setDoc, serverTimestamp, collection, query, orderBy, limit } from 'firebase/firestore';
 import { toDateString } from '@/lib/utils/date';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
@@ -88,6 +88,95 @@ const FALLBACK_CHALLENGES = [
   'Watch the sky for three minutes without purpose.',
 ];
 
+// 90-day rotating threads that loosely connect all rooms each day
+const DAILY_THREADS: { en: string; hi: string }[] = [
+  { en: 'Impermanence', hi: 'अनित्यता' },
+  { en: 'The courage of beginnings', hi: 'शुरुआत का साहस' },
+  { en: 'What is left unsaid', hi: 'जो अनकहा रह गया' },
+  { en: 'Attention as love', hi: 'ध्यान - प्रेम का एक रूप' },
+  { en: 'The mind that watches itself', hi: 'स्वयं को देखता मन' },
+  { en: 'Roots and routes', hi: 'जड़ें और राहें' },
+  { en: 'What we carry without knowing', hi: 'जो अनजाने बोझ उठाते हैं' },
+  { en: 'Silence before words', hi: 'शब्दों से पहले का मौन' },
+  { en: 'The slow work of becoming', hi: 'धीमे परिवर्तन का काम' },
+  { en: 'Beauty in the overlooked', hi: 'अनदेखे में सौंदर्य' },
+  { en: 'Unlearning', hi: 'भूलना भी एक विद्या है' },
+  { en: 'The body as a teacher', hi: 'शरीर - एक गुरु' },
+  { en: 'Grief and gratitude', hi: 'दुख और कृतज्ञता' },
+  { en: 'What a river knows', hi: 'जो नदी जानती है' },
+  { en: 'The question behind the question', hi: 'प्रश्न के पीछे का प्रश्न' },
+  { en: 'Thresholds', hi: 'दहलीज़ें' },
+  { en: 'Forgiveness as freedom', hi: 'क्षमा - मुक्ति का मार्ग' },
+  { en: 'The intelligence of not knowing', hi: 'न जानने की बुद्धिमत्ता' },
+  { en: 'Ordinary courage', hi: 'रोज़मर्रा का साहस' },
+  { en: 'The space between breaths', hi: 'सांसों के बीच का ठहराव' },
+  { en: 'Belonging', hi: 'अपनापन' },
+  { en: 'What lasts', hi: 'जो टिकता है' },
+  { en: 'Contradiction as truth', hi: 'विरोधाभास में सत्य' },
+  { en: 'The texture of time', hi: 'समय की बुनावट' },
+  { en: 'Wonder without proof', hi: 'बिना प्रमाण के विस्मय' },
+  { en: 'Solitude and solidarity', hi: 'एकांत और एकजुटता' },
+  { en: 'What the ancestors knew', hi: 'पूर्वज जो जानते थे' },
+  { en: 'Beginning again', hi: 'फिर से शुरू करना' },
+  { en: 'The art of staying', hi: 'टिके रहने की कला' },
+  { en: 'Hunger', hi: 'भूख' },
+  { en: 'Language as home', hi: 'भाषा - एक घर' },
+  { en: 'The gift of limits', hi: 'सीमाओं का उपहार' },
+  { en: 'Making and unmaking', hi: 'बनाना और मिटाना' },
+  { en: 'Attention', hi: 'ध्यान' },
+  { en: 'The dignity of small things', hi: 'छोटी चीज़ों की गरिमा' },
+  { en: 'Transitions', hi: 'संक्रमण' },
+  { en: 'What we inherit', hi: 'जो हम विरासत में पाते हैं' },
+  { en: 'Presence', hi: 'उपस्थिति' },
+  { en: 'The long view', hi: 'दीर्घ दृष्टि' },
+  { en: 'Simplicity', hi: 'सादगी' },
+  { en: 'Memory and imagination', hi: 'स्मृति और कल्पना' },
+  { en: 'Patience', hi: 'धैर्य' },
+  { en: 'The stranger within', hi: 'भीतर का अजनबी' },
+  { en: 'What we tend', hi: 'जिसकी हम देखभाल करते हैं' },
+  { en: 'Depth', hi: 'गहराई' },
+  { en: 'The practice of returning', hi: 'लौटने का अभ्यास' },
+  { en: 'Longing', hi: 'तड़प' },
+  { en: 'What remains after everything', hi: 'सब कुछ के बाद जो बचता है' },
+  { en: 'Groundedness', hi: 'ज़मीन से जुड़ाव' },
+  { en: 'The unfinished', hi: 'अधूरापन' },
+  { en: 'Rest as resistance', hi: 'विश्राम - एक प्रतिरोध' },
+  { en: 'Curiosity', hi: 'जिज्ञासा' },
+  { en: 'The shape of a life', hi: 'जीवन का आकार' },
+  { en: 'Letting go', hi: 'छोड़ देना' },
+  { en: 'What water teaches', hi: 'जो पानी सिखाता है' },
+  { en: 'Kindness', hi: 'करुणा' },
+  { en: 'The weight of words', hi: 'शब्दों का बोझ' },
+  { en: 'Connection', hi: 'जुड़ाव' },
+  { en: 'The unspoken agreement', hi: 'अनकहा समझौता' },
+  { en: 'Clarity', hi: 'स्पष्टता' },
+  { en: 'What fire knows', hi: 'जो अग्नि जानती है' },
+  { en: 'Integrity', hi: 'ईमानदारी' },
+  { en: 'The texture of trust', hi: 'विश्वास की बुनावट' },
+  { en: 'Emptiness', hi: 'रिक्तता' },
+  { en: 'The weight of history', hi: 'इतिहास का भार' },
+  { en: 'Flow', hi: 'प्रवाह' },
+  { en: 'What a seed knows', hi: 'जो बीज जानता है' },
+  { en: 'Meaning', hi: 'अर्थ' },
+  { en: 'The act of witnessing', hi: 'साक्षी होने की कला' },
+  { en: 'Resilience', hi: 'लचीलापन' },
+  { en: 'Home', hi: 'घर' },
+  { en: 'The way things end', hi: 'जिस तरह चीज़ें समाप्त होती हैं' },
+  { en: 'Tenderness', hi: 'कोमलता' },
+  { en: 'What we practice in private', hi: 'जो हम चुपचाप अभ्यास करते हैं' },
+  { en: 'Scale', hi: 'परिप्रेक्ष्य' },
+  { en: 'The question we avoid', hi: 'वह प्रश्न जिससे हम बचते हैं' },
+  { en: 'Gratitude', hi: 'कृतज्ञता' },
+  { en: 'The place of no return', hi: 'वापसी के बिना का स्थान' },
+  { en: 'Service', hi: 'सेवा' },
+  { en: 'The knowledge in the hands', hi: 'हाथों में जो ज्ञान है' },
+  { en: 'Devotion', hi: 'समर्पण' },
+  { en: 'The edge of the known', hi: 'ज्ञान की सीमा' },
+  { en: 'Gentleness', hi: 'सौम्यता' },
+  { en: 'What cannot be rushed', hi: 'जिसे जल्दी नहीं किया जा सकता' },
+  { en: 'The shape of enough', hi: 'पर्याप्तता का आकार' },
+];
+
 export default function AarambhPage() {
   const { user } = useUser();
   const { mood: moodLevel, profile: moodProfile, setMood: setMoodInProvider } = useMood();
@@ -97,8 +186,121 @@ export default function AarambhPage() {
   const intentionRef = useRef<HTMLDivElement>(null);
   const intentionTimer = useRef<ReturnType<typeof setTimeout>>();
   const [challengeDone, setChallengeDone] = useState(false);
+  const [glowVisible, setGlowVisible] = useState(false);
   const [showBreathing, setShowBreathing] = useState(false);
   const [script, setScript] = useState<'devanagari' | 'roman'>('devanagari');
+
+  // Evening detection: true after 18:00 IST
+  const isEvening = typeof window !== 'undefined' ? new Date().getHours() >= 18 : false;
+
+  const [sutraConnections, setSutraConnections] = useState<any[]>([]);
+  const [showConnections, setShowConnections] = useState(false);
+  const [revisitItems, setRevisitItems] = useState<any[]>([]);
+
+  // Fetch Weekly Connections (Sundays only, pulling 2 notes from different rooms in past 30 days)
+  useEffect(() => {
+    if (!user || !db) return;
+
+    const getWeekNumber = (date: Date) => {
+      const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+      const pastDaysOfYear = (date.getTime() - firstDayOfYear.getTime()) / 86400000;
+      return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+    };
+
+    const currentWeek = `${new Date().getFullYear()}-W${getWeekNumber(new Date())}`;
+    const isDismissed = localStorage.getItem(`sutra-connections-dismissed-${currentWeek}`) === 'true';
+    const isSunday = new Date().getDay() === 0;
+
+    if (isDismissed || !isSunday) {
+      setShowConnections(false);
+      return;
+    }
+
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+    const notesRef = collection(db, `users/${user.id}/sutraNotes`);
+    const q = query(notesRef, orderBy('createdAt', 'desc'), limit(100));
+
+    const unsub = onSnapshot(q, (snap) => {
+      const notes = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })) as any[];
+      const filtered = notes.filter(n => {
+        if (!n.date) return false;
+        const d = new Date(n.date);
+        return d >= thirtyDaysAgo;
+      });
+
+      if (filtered.length >= 2) {
+        const first = filtered[0];
+        const second = filtered.find(n => n.roomId !== first.roomId);
+        if (second) {
+          setSutraConnections([first, second]);
+          setShowConnections(true);
+        } else {
+          setShowConnections(false);
+        }
+      } else {
+        setShowConnections(false);
+      }
+    }, (err) => {
+      console.error("Failed to load sutra notes for connections:", err);
+    });
+
+    return unsub;
+  }, [user]);
+
+  const handleDismissConnections = () => {
+    const getWeekNumber = (date: Date) => {
+      const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+      const pastDaysOfYear = (date.getTime() - firstDayOfYear.getTime()) / 86400000;
+      return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+    };
+    const currentWeek = `${new Date().getFullYear()}-W${getWeekNumber(new Date())}`;
+    localStorage.setItem(`sutra-connections-dismissed-${currentWeek}`, 'true');
+    setShowConnections(false);
+  };
+
+  // Fetch due Revisit Items
+  useEffect(() => {
+    if (!user || !db) return;
+    const todayStr = toDateString(new Date());
+    const revisitRef = collection(db, `users/${user.id}/revisitItems`);
+    const q = query(revisitRef, orderBy('createdAt', 'desc'), limit(100));
+
+    const unsub = onSnapshot(q, (snap) => {
+      const items = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })) as any[];
+      const dueToday = items.filter(item => {
+        const isDue = item.revisitDates && item.revisitDates.includes(todayStr);
+        const alreadyRevisited = item.revisitedAt && item.revisitedAt.includes(todayStr);
+        return isDue && !alreadyRevisited;
+      }).slice(0, 3);
+
+      setRevisitItems(dueToday);
+    }, (err) => {
+      console.error("Failed to load revisit items:", err);
+    });
+
+    return unsub;
+  }, [user]);
+
+  const handleMarkRevisited = async (itemId: string) => {
+    if (!user || !db) return;
+    const todayStr = toDateString(new Date());
+    const docRef = doc(db, `users/${user.id}/revisitItems`, itemId);
+    try {
+      const item = revisitItems.find(i => i.id === itemId);
+      if (item) {
+        const currentRevisited = item.revisitedAt || [];
+        if (!currentRevisited.includes(todayStr)) {
+          await setDoc(docRef, {
+            revisitedAt: [...currentRevisited, todayStr],
+          }, { merge: true });
+        }
+      }
+    } catch (err) {
+      console.error("Failed to mark item as revisited:", err);
+    }
+  };
 
   // Breathing overlay states
   const [phase, setPhase] = useState<'idle' | 'inhale' | 'hold' | 'exhale'>('idle');
@@ -447,6 +649,16 @@ export default function AarambhPage() {
 
   const challengeText = FALLBACK_CHALLENGES[dayOfYear % FALLBACK_CHALLENGES.length];
   const mantra = mantraData || FALLBACK_MANTRAS[dayOfYear % FALLBACK_MANTRAS.length];
+  const dailyThread = DAILY_THREADS[(dayOfYear - 1) % DAILY_THREADS.length];
+
+  // Glow pulse on challenge completion
+  useEffect(() => {
+    if (challengeDone) {
+      setGlowVisible(true);
+      const t = setTimeout(() => setGlowVisible(false), 900);
+      return () => clearTimeout(t);
+    }
+  }, [challengeDone]);
 
   // Use mood-aware room order from moodProfile
   const quickRoomIds = moodProfile.roomEmphasis.slice(0, 6);
@@ -491,6 +703,28 @@ export default function AarambhPage() {
               </p>
             )}
           </div>
+        </motion.section>
+
+        {/* Today's Thread */}
+        <motion.section
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, delay: 0.15, ease: [0.22, 0.1, 0.36, 1] }}
+          className="flex items-center gap-3 px-1"
+        >
+          <span className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: 'var(--text-faint)' }}>
+            <span className="font-devanagari">आज का धागा</span> / Today's Thread
+          </span>
+          <span className="w-px h-3 bg-current opacity-20" style={{ color: 'var(--text-faint)' }} />
+          <span className="font-serif italic text-base" style={{ color: 'var(--text-secondary)', fontSize: '1.1rem' }}>
+            {script === 'devanagari' ? dailyThread.hi : dailyThread.en}
+          </span>
+          <ReadAloudButton
+            text={`${dailyThread.hi} - ${dailyThread.en}`}
+            lang={script === 'devanagari' ? 'hi-IN' : 'en-IN'}
+            size="sm"
+            variant="icon"
+          />
         </motion.section>
 
         {/* Mood pulse */}
@@ -544,7 +778,108 @@ export default function AarambhPage() {
               Suggested: &ldquo;Today I choose presence over perfection.&rdquo;
             </p>
           )}
+
+          {/* Evening Intention Mirror */}
+          {isEvening && intention && intention.trim().length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+              className="mt-3 p-4 rounded-xl border-l-2"
+              style={{
+                background: 'color-mix(in srgb, var(--accent-saffron) 4%, var(--bg-tertiary))',
+                borderColor: 'var(--accent-saffron)',
+              }}
+            >
+              <p className="text-[10px] font-semibold uppercase tracking-widest mb-2" style={{ color: 'var(--accent-saffron)' }}>
+                शाम का दर्पण / Evening Mirror
+              </p>
+              <p className="font-serif italic text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                &ldquo;{intention}&rdquo;
+              </p>
+              <p className="text-xs mt-2" style={{ color: 'var(--text-faint)' }}>
+                Did you hold this today?
+              </p>
+            </motion.div>
+          )}
         </motion.section>
+
+        {/* Weekly Connections Card */}
+        {showConnections && sutraConnections.length >= 2 && (
+          <motion.section
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.38, ease: [0.22, 0.1, 0.36, 1] }}
+            className="card-base p-6 border-l-4 relative overflow-hidden"
+            style={{
+              borderColor: 'var(--accent-saffron)',
+              background: 'color-mix(in srgb, var(--accent-saffron) 3%, var(--bg-secondary))',
+            }}
+          >
+            {/* Close button */}
+            <button
+              onClick={handleDismissConnections}
+              className="absolute top-4 right-4 text-xs font-semibold text-text-muted hover:text-text-primary transition-colors"
+              title="Dismiss for this week"
+            >
+              ✕
+            </button>
+
+            <div className="space-y-4">
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: 'var(--accent-saffron)' }}>
+                  साप्ताहिक चिंतन / Weekly Connections
+                </p>
+                <h3 className="font-serif text-lg mt-1" style={{ color: 'var(--text-primary)' }}>
+                  सूत्र — Connections
+                </h3>
+                <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                  Two threads of your attention, gathered this week. How do they speak to each other?
+                </p>
+              </div>
+
+              {/* Side-by-side or stacked notes */}
+              <div className="grid sm:grid-cols-2 gap-4">
+                {sutraConnections.map((note, idx) => {
+                  const room = ROOMS.find(r => r.id === note.roomId);
+                  return (
+                    <div
+                      key={note.id || idx}
+                      className="p-4 rounded-xl space-y-2"
+                      style={{
+                        background: 'var(--bg-tertiary)',
+                        border: '1px solid var(--border-default)',
+                      }}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span
+                          className="px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider"
+                          style={{
+                            background: `color-mix(in srgb, ${room?.colorHex || '#999'} 10%, transparent)`,
+                            color: room?.colorHex || 'var(--text-secondary)',
+                          }}
+                        >
+                          {room?.emoji} {room?.name || note.roomName}
+                        </span>
+                        <span className="text-[9px]" style={{ color: 'var(--text-faint)' }}>{note.date}</span>
+                      </div>
+                      <p className="text-xs font-semibold line-clamp-1" style={{ color: 'var(--text-primary)' }}>
+                        {note.contentTitle}
+                      </p>
+                      <p className="text-xs font-serif italic text-text-secondary line-clamp-3">
+                        &ldquo;{note.userNote}&rdquo;
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <p className="text-xs font-serif italic text-center pt-2" style={{ color: 'var(--accent-saffron)' }}>
+                &ldquo;What is left unsaid is often the bridge between two things.&rdquo;
+              </p>
+            </div>
+          </motion.section>
+        )}
 
         {/* Quick Entry */}
         <motion.section
@@ -613,6 +948,70 @@ export default function AarambhPage() {
           <h2 className="section-label px-1">Today&apos;s Discovery</h2>
           <DiscoveryCard />
         </motion.section>
+
+        {/* Spaced Revisit Section */}
+        {revisitItems.length > 0 && (
+          <motion.section
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.48, ease: [0.22, 0.1, 0.36, 1] }}
+            className="space-y-3"
+          >
+            <h2 className="section-label px-1">फिर मिलो — Revisit</h2>
+            <div className="space-y-3">
+              {revisitItems.map((item) => {
+                const room = ROOMS.find(r => r.id === item.roomId);
+                return (
+                  <div
+                    key={item.id}
+                    className="card-base p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
+                    style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-default)' }}
+                  >
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <span
+                          className="px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider"
+                          style={{
+                            background: `color-mix(in srgb, ${room?.colorHex || '#999'} 10%, transparent)`,
+                            color: room?.colorHex || 'var(--text-secondary)',
+                          }}
+                        >
+                          {room?.emoji} {room?.name || item.roomName}
+                        </span>
+                        <span className="text-[10px]" style={{ color: 'var(--text-faint)' }}>Due today</span>
+                      </div>
+                      <h4 className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
+                        {item.contentTitle}
+                      </h4>
+                      <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                        {item.contentSummary}
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-3 self-end sm:self-center">
+                      {room && (
+                        <Link
+                          href={room.route}
+                          className="text-xs font-semibold hover:underline flex items-center gap-1"
+                          style={{ color: room.colorHex }}
+                        >
+                          Visit Room <ArrowRight size={12} />
+                        </Link>
+                      )}
+                      <button
+                        onClick={() => handleMarkRevisited(item.id)}
+                        className="px-3 py-1.5 rounded-full text-xs font-semibold transition-all bg-accent-moss hover:bg-accent-moss/80 text-white"
+                        style={{ background: 'var(--accent-moss)' }}
+                      >
+                        ✓ Revisited
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </motion.section>
+        )}
 
         {/* Micro challenge */}
         <motion.section
@@ -831,6 +1230,26 @@ export default function AarambhPage() {
                 {isVoiceMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
               </button>
             </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Glow pulse overlay */}
+      <AnimatePresence>
+        {glowVisible && (
+          <motion.div
+            initial={{ opacity: 0.15, scale: 0 }}
+            animate={{ opacity: 0, scale: 2 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="fixed inset-0 pointer-events-none z-40 flex items-center justify-center"
+          >
+            <div
+              className="w-[50vw] h-[50vw] max-w-[400px] max-h-[400px] rounded-full"
+              style={{
+                background: 'radial-gradient(circle, #C4873A 0%, transparent 70%)',
+              }}
+            />
           </motion.div>
         )}
       </AnimatePresence>

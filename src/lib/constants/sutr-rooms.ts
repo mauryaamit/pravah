@@ -48,8 +48,8 @@ export const SUTR_ROOMS: SutrRoomDescription[] = [
     id: 'manthan',
     name: 'Manthan',
     nameHindi: 'मन्थन',
-    oneLiner: 'One deep question per day',
-    contemplativeText: 'Churn the depths of your mind. Answer the singular inquiry that cuts through the noise of daily distractions.'
+    oneLiner: 'Mental models - the thinking tools of every discipline',
+    contemplativeText: 'Equip your mind with the frameworks of history\'s greatest thinkers. See the world differently, decide more wisely, and act with greater clarity.'
   },
   {
     id: 'noor',
@@ -94,11 +94,11 @@ export const SUTR_ROOMS: SutrRoomDescription[] = [
     contemplativeText: 'From ancient Vedic seers to modern existentialists, trace the human struggle to answer: What is the good life?'
   },
   {
-    id: 'samvaad',
-    name: 'Samvaad',
-    nameHindi: 'संवाद',
-    oneLiner: 'Word of the day - etymology and usage',
-    contemplativeText: 'Discover the secret lineage of words. Dive into the origins of language and unlock deep cultural meaning.'
+    id: 'bhasha',
+    name: 'Bhasha',
+    nameHindi: 'भाषा',
+    oneLiner: 'Language as the shape of thought',
+    contemplativeText: 'Explore the hidden life of words across English, Hindi, Sanskrit, and Urdu. Discover that every word is a civilization compressed into sound.'
   },
   {
     id: 'srot',
@@ -177,13 +177,7 @@ export const SUTR_ROOMS: SutrRoomDescription[] = [
     oneLiner: 'Sanskrit shlokas, dohas, and living folk wisdom',
     contemplativeText: 'Connect with the resonance of our ancestors. Listen to the wisdom of Sanskrit shlokas, Kabir’s verses, and regional sayings.'
   },
-  {
-    id: 'shabda',
-    name: 'Shabda',
-    nameHindi: 'शब्द',
-    oneLiner: 'Word of the day - English, rare, idioms, GenZ',
-    contemplativeText: 'Expand the boundaries of your world through language. Explore etymology, beautiful untranslatable words, and contemporary slang.'
-  },
+  /* Shabda is now merged into Bhasha */
   {
     id: 'paradox',
     name: 'Paradox',

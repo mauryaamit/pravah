@@ -5,6 +5,8 @@ import { FADE_UP, STAGGER_CONTAINER, STAGGER_ITEM } from '@/lib/utils/motion';
 import PageTransition from '@/components/layout/PageTransition';
 import { getDayOfYear } from '@/lib/utils/date';
 import ReadAloudButton from '@/components/shared/ReadAloudButton';
+import SutraNoteButton from '@/components/shared/SutraNoteButton';
+import RevisitButton from '@/components/shared/RevisitButton';
 import FocusMode from '@/components/shared/FocusMode';
 
 const STORIES = [
@@ -196,13 +198,25 @@ Attention, it turned out, was the whole art. Color had been a gift. Its loss had
           >
             {/* Story header */}
             <div className="card-base p-6 space-y-3 relative" style={{ background: 'color-mix(in srgb, var(--accent-saffron) 5%, var(--bg-secondary))' }}>
-              <div className="absolute top-6 right-6 flex items-center gap-2">
+              <div className="absolute top-6 right-6 flex items-center gap-1.5">
                 <ReadAloudButton
                   text={`${selected.title}. ${selected.titleHindi}. ${selected.preview}. ${selected.content}`}
                   lang="en-IN"
                   size="md"
                   variant="pill"
                   label="Listen Story"
+                />
+                <RevisitButton
+                  roomId="kathakar"
+                  roomName="Kathakar"
+                  contentTitle={selected.title}
+                  contentSummary={selected.preview}
+                />
+                <SutraNoteButton
+                  roomId="kathakar"
+                  roomName="Kathakar"
+                  contentTitle={selected.title}
+                  className=""
                 />
                 <button
                   onClick={() => setIsFocusOpen(true)}
