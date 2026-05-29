@@ -197,5 +197,13 @@ export const SUTR_ROOMS: SutrRoomDescription[] = [
     nameHindi: 'विरोधाभास',
     oneLiner: 'Puzzles that stretch the boundaries of logic',
     contemplativeText: 'One mind-bending paradox per day, fully unpacked. Sit with the ultimate contradictions of physics, logic, and philosophy. Paradox is designed to dismantle your assumptions and remind you of the limits of certainty.'
+  },
+  {
+    id: 'typewriter',
+    name: 'Typewriter',
+    nameHindi: 'टाइपराइटर',
+    oneLiner: 'The internet\'s finest longform essays, fetched fresh every day',
+    contemplativeText: 'The Electric Typewriter is a curated archive of the greatest essays, articles, and longform journalism ever published on the web. Every day, Typewriter surfaces a fresh selection from its vast library — essays that change how you think, articles that challenge what you assume, prose that rewards unhurried reading. No algorithm. No clickbait. Just the finest writing, accompanied by a Pravah Companion that prepares you for the text and stays with you after.'
   }
 ];
+

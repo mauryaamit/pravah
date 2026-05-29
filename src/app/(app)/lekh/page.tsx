@@ -159,7 +159,12 @@ export default function LekhPage() {
                 <div className="space-y-2">
                   <div className="flex justify-between items-center text-[10px] uppercase tracking-wider font-semibold text-[var(--text-muted)]">
                     <span className="text-[#8B4A4A]">{piece.genre}</span>
-                    <span>{piece.estimated_read}</span>
+                    <div className="flex items-center gap-2">
+                      {piece.paywalled && (
+                        <span className="text-[9px] px-1.5 py-0.5 rounded border border-amber-500/40 text-amber-600 bg-amber-50/10">🔒</span>
+                      )}
+                      <span>{piece.estimated_read}</span>
+                    </div>
                   </div>
                   <h3 className="font-serif text-xl font-light text-[var(--text-primary)] leading-tight">
                     {piece.title}
@@ -294,7 +299,7 @@ export default function LekhPage() {
                 </div>
 
                 {/* Read Original Article Button */}
-                <div className="text-center pt-4">
+                <div className="text-center pt-4 space-y-3">
                   <a
                     href={readingPiece.original_url}
                     target="_blank"
@@ -304,6 +309,11 @@ export default function LekhPage() {
                   >
                     मूल लेख पढ़ें · Read Original Article ↗
                   </a>
+                  {readingPiece.paywalled && (
+                    <p className="text-[10px] italic text-[var(--text-faint)] text-center">
+                      🔒 सदस्यता आवश्यक हो सकती है · This article may require a subscription
+                    </p>
+                  )}
                 </div>
 
                 <div className="w-12 h-[1px] mx-auto bg-[var(--border-default)]" />
