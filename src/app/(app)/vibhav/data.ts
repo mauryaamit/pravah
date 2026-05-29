@@ -1,4 +1,5 @@
 export interface Person {
+  summary: string;
   id: string;
   name: string;
   nameHindi: string;
@@ -20,6 +21,7 @@ export interface Person {
 export const PEOPLE: Person[] = [
   {
     id: "tesla_0",
+    summary: `A visionary inventor who dreamed of wireless energy and built the alternating current system that powers our modern world. Tesla's life reveals the boundary between uncompromised genius and the commercial realities of his time, urging us to think in terms of frequency and vibration.`,
     name: "Nikola Tesla",
     nameHindi: "निकोला टेस्ला",
     born: "1856",
@@ -38,6 +40,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "curie_1",
+    summary: `The pioneering physicist and chemist who isolated radium and polonium, becoming the only person to win Nobel Prizes in two different scientific fields. Curie's relentless devotion to understanding the unknown, while refusing to patent her discoveries, stands as a monument to selfless scientific inquiry.`,
     name: "Marie Curie",
     nameHindi: "मैरी क्यूरी",
     born: "1867",
@@ -56,6 +59,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "gandhi_2",
+    summary: `The leader of India's nonviolent independence movement who transformed politics into a moral practice of Satya (Truth) and Ahimsa (Nonviolence). Gandhi's life demonstrates how simple, disciplined daily habits can build the collective strength needed to challenge empires.`,
     name: "Mahatma Gandhi",
     nameHindi: "महात्मा गांधी",
     born: "1869",
@@ -74,6 +78,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "rumi_3",
+    summary: `The 13th-century Persian poet and Sufi mystic whose ecstatic verses explore love as the primary force of the universe. Rumi's writings invite us to dissolve our egos, welcome our emotional wounds as portals for light, and find a direct path to the divine.`,
     name: "Jalal al-Din Rumi",
     nameHindi: "जलाल अद्-दीन रूमी",
     born: "1207",
@@ -92,6 +97,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "kalam_4",
+    summary: `An aerospace scientist who became India's most beloved President, Kalam rose from humble beginnings to lead the nation's space and defense programs. His life of simplicity and dedication stands as a powerful testament to the value of dreaming big and mentoring the youth.`,
     name: "A. P. J. Abdul Kalam",
     nameHindi: "ए. पी. जे. अब्दुल कलाम",
     born: "1931",
@@ -110,6 +116,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "tesla_5",
+    summary: `A visionary inventor who dreamed of wireless energy and built the alternating current system that powers our modern world. Tesla's life reveals the boundary between uncompromised genius and the commercial realities of his time, urging us to think in terms of frequency and vibration.`,
     name: "Nikola Tesla",
     nameHindi: "निकोला टेस्ला",
     born: "1856",
@@ -128,6 +135,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "curie_6",
+    summary: `The pioneering physicist and chemist who isolated radium and polonium, becoming the only person to win Nobel Prizes in two different scientific fields. Curie's relentless devotion to understanding the unknown, while refusing to patent her discoveries, stands as a monument to selfless scientific inquiry.`,
     name: "Marie Curie",
     nameHindi: "मैरी क्यूरी",
     born: "1867",
@@ -146,6 +154,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "gandhi_7",
+    summary: `The leader of India's nonviolent independence movement who transformed politics into a moral practice of Satya (Truth) and Ahimsa (Nonviolence). Gandhi's life demonstrates how simple, disciplined daily habits can build the collective strength needed to challenge empires.`,
     name: "Mahatma Gandhi",
     nameHindi: "महात्मा गांधी",
     born: "1869",
@@ -164,6 +173,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "rumi_8",
+    summary: `The 13th-century Persian poet and Sufi mystic whose ecstatic verses explore love as the primary force of the universe. Rumi's writings invite us to dissolve our egos, welcome our emotional wounds as portals for light, and find a direct path to the divine.`,
     name: "Jalal al-Din Rumi",
     nameHindi: "जलाल अद्-दीन रूमी",
     born: "1207",
@@ -182,6 +192,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "kalam_9",
+    summary: `An aerospace scientist who became India's most beloved President, Kalam rose from humble beginnings to lead the nation's space and defense programs. His life of simplicity and dedication stands as a powerful testament to the value of dreaming big and mentoring the youth.`,
     name: "A. P. J. Abdul Kalam",
     nameHindi: "ए. पी. जे. अब्दुल कलाम",
     born: "1931",
@@ -200,6 +211,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "tesla_10",
+    summary: `A visionary inventor who dreamed of wireless energy and built the alternating current system that powers our modern world. Tesla's life reveals the boundary between uncompromised genius and the commercial realities of his time, urging us to think in terms of frequency and vibration.`,
     name: "Nikola Tesla",
     nameHindi: "निकोला टेस्ला",
     born: "1856",
@@ -218,6 +230,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "curie_11",
+    summary: `The pioneering physicist and chemist who isolated radium and polonium, becoming the only person to win Nobel Prizes in two different scientific fields. Curie's relentless devotion to understanding the unknown, while refusing to patent her discoveries, stands as a monument to selfless scientific inquiry.`,
     name: "Marie Curie",
     nameHindi: "मैरी क्यूरी",
     born: "1867",
@@ -236,6 +249,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "gandhi_12",
+    summary: `The leader of India's nonviolent independence movement who transformed politics into a moral practice of Satya (Truth) and Ahimsa (Nonviolence). Gandhi's life demonstrates how simple, disciplined daily habits can build the collective strength needed to challenge empires.`,
     name: "Mahatma Gandhi",
     nameHindi: "महात्मा गांधी",
     born: "1869",
@@ -254,6 +268,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "rumi_13",
+    summary: `The 13th-century Persian poet and Sufi mystic whose ecstatic verses explore love as the primary force of the universe. Rumi's writings invite us to dissolve our egos, welcome our emotional wounds as portals for light, and find a direct path to the divine.`,
     name: "Jalal al-Din Rumi",
     nameHindi: "जलाल अद्-दीन रूमी",
     born: "1207",
@@ -272,6 +287,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "kalam_14",
+    summary: `An aerospace scientist who became India's most beloved President, Kalam rose from humble beginnings to lead the nation's space and defense programs. His life of simplicity and dedication stands as a powerful testament to the value of dreaming big and mentoring the youth.`,
     name: "A. P. J. Abdul Kalam",
     nameHindi: "ए. पी. जे. अब्दुल कलाम",
     born: "1931",
@@ -290,6 +306,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "tesla_15",
+    summary: `A visionary inventor who dreamed of wireless energy and built the alternating current system that powers our modern world. Tesla's life reveals the boundary between uncompromised genius and the commercial realities of his time, urging us to think in terms of frequency and vibration.`,
     name: "Nikola Tesla",
     nameHindi: "निकोला टेस्ला",
     born: "1856",
@@ -308,6 +325,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "curie_16",
+    summary: `The pioneering physicist and chemist who isolated radium and polonium, becoming the only person to win Nobel Prizes in two different scientific fields. Curie's relentless devotion to understanding the unknown, while refusing to patent her discoveries, stands as a monument to selfless scientific inquiry.`,
     name: "Marie Curie",
     nameHindi: "मैरी क्यूरी",
     born: "1867",
@@ -326,6 +344,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "gandhi_17",
+    summary: `The leader of India's nonviolent independence movement who transformed politics into a moral practice of Satya (Truth) and Ahimsa (Nonviolence). Gandhi's life demonstrates how simple, disciplined daily habits can build the collective strength needed to challenge empires.`,
     name: "Mahatma Gandhi",
     nameHindi: "महात्मा गांधी",
     born: "1869",
@@ -344,6 +363,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "rumi_18",
+    summary: `The 13th-century Persian poet and Sufi mystic whose ecstatic verses explore love as the primary force of the universe. Rumi's writings invite us to dissolve our egos, welcome our emotional wounds as portals for light, and find a direct path to the divine.`,
     name: "Jalal al-Din Rumi",
     nameHindi: "जलाल अद्-दीन रूमी",
     born: "1207",
@@ -362,6 +382,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "kalam_19",
+    summary: `An aerospace scientist who became India's most beloved President, Kalam rose from humble beginnings to lead the nation's space and defense programs. His life of simplicity and dedication stands as a powerful testament to the value of dreaming big and mentoring the youth.`,
     name: "A. P. J. Abdul Kalam",
     nameHindi: "ए. पी. जे. अब्दुल कलाम",
     born: "1931",
@@ -380,6 +401,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "tesla_20",
+    summary: `A visionary inventor who dreamed of wireless energy and built the alternating current system that powers our modern world. Tesla's life reveals the boundary between uncompromised genius and the commercial realities of his time, urging us to think in terms of frequency and vibration.`,
     name: "Nikola Tesla",
     nameHindi: "निकोला टेस्ला",
     born: "1856",
@@ -398,6 +420,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "curie_21",
+    summary: `The pioneering physicist and chemist who isolated radium and polonium, becoming the only person to win Nobel Prizes in two different scientific fields. Curie's relentless devotion to understanding the unknown, while refusing to patent her discoveries, stands as a monument to selfless scientific inquiry.`,
     name: "Marie Curie",
     nameHindi: "मैरी क्यूरी",
     born: "1867",
@@ -416,6 +439,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "gandhi_22",
+    summary: `The leader of India's nonviolent independence movement who transformed politics into a moral practice of Satya (Truth) and Ahimsa (Nonviolence). Gandhi's life demonstrates how simple, disciplined daily habits can build the collective strength needed to challenge empires.`,
     name: "Mahatma Gandhi",
     nameHindi: "महात्मा गांधी",
     born: "1869",
@@ -434,6 +458,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "rumi_23",
+    summary: `The 13th-century Persian poet and Sufi mystic whose ecstatic verses explore love as the primary force of the universe. Rumi's writings invite us to dissolve our egos, welcome our emotional wounds as portals for light, and find a direct path to the divine.`,
     name: "Jalal al-Din Rumi",
     nameHindi: "जलाल अद्-दीन रूमी",
     born: "1207",
@@ -452,6 +477,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "kalam_24",
+    summary: `An aerospace scientist who became India's most beloved President, Kalam rose from humble beginnings to lead the nation's space and defense programs. His life of simplicity and dedication stands as a powerful testament to the value of dreaming big and mentoring the youth.`,
     name: "A. P. J. Abdul Kalam",
     nameHindi: "ए. पी. जे. अब्दुल कलाम",
     born: "1931",
@@ -470,6 +496,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "tesla_25",
+    summary: `A visionary inventor who dreamed of wireless energy and built the alternating current system that powers our modern world. Tesla's life reveals the boundary between uncompromised genius and the commercial realities of his time, urging us to think in terms of frequency and vibration.`,
     name: "Nikola Tesla",
     nameHindi: "निकोला टेस्ला",
     born: "1856",
@@ -488,6 +515,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "curie_26",
+    summary: `The pioneering physicist and chemist who isolated radium and polonium, becoming the only person to win Nobel Prizes in two different scientific fields. Curie's relentless devotion to understanding the unknown, while refusing to patent her discoveries, stands as a monument to selfless scientific inquiry.`,
     name: "Marie Curie",
     nameHindi: "मैरी क्यूरी",
     born: "1867",
@@ -506,6 +534,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "gandhi_27",
+    summary: `The leader of India's nonviolent independence movement who transformed politics into a moral practice of Satya (Truth) and Ahimsa (Nonviolence). Gandhi's life demonstrates how simple, disciplined daily habits can build the collective strength needed to challenge empires.`,
     name: "Mahatma Gandhi",
     nameHindi: "महात्मा गांधी",
     born: "1869",
@@ -524,6 +553,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "rumi_28",
+    summary: `The 13th-century Persian poet and Sufi mystic whose ecstatic verses explore love as the primary force of the universe. Rumi's writings invite us to dissolve our egos, welcome our emotional wounds as portals for light, and find a direct path to the divine.`,
     name: "Jalal al-Din Rumi",
     nameHindi: "जलाल अद्-दीन रूमी",
     born: "1207",
@@ -542,6 +572,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "kalam_29",
+    summary: `An aerospace scientist who became India's most beloved President, Kalam rose from humble beginnings to lead the nation's space and defense programs. His life of simplicity and dedication stands as a powerful testament to the value of dreaming big and mentoring the youth.`,
     name: "A. P. J. Abdul Kalam",
     nameHindi: "ए. पी. जे. अब्दुल कलाम",
     born: "1931",
@@ -560,6 +591,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "tesla_30",
+    summary: `A visionary inventor who dreamed of wireless energy and built the alternating current system that powers our modern world. Tesla's life reveals the boundary between uncompromised genius and the commercial realities of his time, urging us to think in terms of frequency and vibration.`,
     name: "Nikola Tesla",
     nameHindi: "निकोला टेस्ला",
     born: "1856",
@@ -578,6 +610,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "curie_31",
+    summary: `The pioneering physicist and chemist who isolated radium and polonium, becoming the only person to win Nobel Prizes in two different scientific fields. Curie's relentless devotion to understanding the unknown, while refusing to patent her discoveries, stands as a monument to selfless scientific inquiry.`,
     name: "Marie Curie",
     nameHindi: "मैरी क्यूरी",
     born: "1867",
@@ -596,6 +629,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "gandhi_32",
+    summary: `The leader of India's nonviolent independence movement who transformed politics into a moral practice of Satya (Truth) and Ahimsa (Nonviolence). Gandhi's life demonstrates how simple, disciplined daily habits can build the collective strength needed to challenge empires.`,
     name: "Mahatma Gandhi",
     nameHindi: "महात्मा गांधी",
     born: "1869",
@@ -614,6 +648,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "rumi_33",
+    summary: `The 13th-century Persian poet and Sufi mystic whose ecstatic verses explore love as the primary force of the universe. Rumi's writings invite us to dissolve our egos, welcome our emotional wounds as portals for light, and find a direct path to the divine.`,
     name: "Jalal al-Din Rumi",
     nameHindi: "जलाल अद्-दीन रूमी",
     born: "1207",
@@ -632,6 +667,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "kalam_34",
+    summary: `An aerospace scientist who became India's most beloved President, Kalam rose from humble beginnings to lead the nation's space and defense programs. His life of simplicity and dedication stands as a powerful testament to the value of dreaming big and mentoring the youth.`,
     name: "A. P. J. Abdul Kalam",
     nameHindi: "ए. पी. जे. अब्दुल कलाम",
     born: "1931",
@@ -650,6 +686,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "tesla_35",
+    summary: `A visionary inventor who dreamed of wireless energy and built the alternating current system that powers our modern world. Tesla's life reveals the boundary between uncompromised genius and the commercial realities of his time, urging us to think in terms of frequency and vibration.`,
     name: "Nikola Tesla",
     nameHindi: "निकोला टेस्ला",
     born: "1856",
@@ -668,6 +705,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "curie_36",
+    summary: `The pioneering physicist and chemist who isolated radium and polonium, becoming the only person to win Nobel Prizes in two different scientific fields. Curie's relentless devotion to understanding the unknown, while refusing to patent her discoveries, stands as a monument to selfless scientific inquiry.`,
     name: "Marie Curie",
     nameHindi: "मैरी क्यूरी",
     born: "1867",
@@ -686,6 +724,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "gandhi_37",
+    summary: `The leader of India's nonviolent independence movement who transformed politics into a moral practice of Satya (Truth) and Ahimsa (Nonviolence). Gandhi's life demonstrates how simple, disciplined daily habits can build the collective strength needed to challenge empires.`,
     name: "Mahatma Gandhi",
     nameHindi: "महात्मा गांधी",
     born: "1869",
@@ -704,6 +743,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "rumi_38",
+    summary: `The 13th-century Persian poet and Sufi mystic whose ecstatic verses explore love as the primary force of the universe. Rumi's writings invite us to dissolve our egos, welcome our emotional wounds as portals for light, and find a direct path to the divine.`,
     name: "Jalal al-Din Rumi",
     nameHindi: "जलाल अद्-दीन रूमी",
     born: "1207",
@@ -722,6 +762,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "kalam_39",
+    summary: `An aerospace scientist who became India's most beloved President, Kalam rose from humble beginnings to lead the nation's space and defense programs. His life of simplicity and dedication stands as a powerful testament to the value of dreaming big and mentoring the youth.`,
     name: "A. P. J. Abdul Kalam",
     nameHindi: "ए. पी. जे. अब्दुल कलाम",
     born: "1931",
@@ -740,6 +781,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "tesla_40",
+    summary: `A visionary inventor who dreamed of wireless energy and built the alternating current system that powers our modern world. Tesla's life reveals the boundary between uncompromised genius and the commercial realities of his time, urging us to think in terms of frequency and vibration.`,
     name: "Nikola Tesla",
     nameHindi: "निकोला टेस्ला",
     born: "1856",
@@ -758,6 +800,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "curie_41",
+    summary: `The pioneering physicist and chemist who isolated radium and polonium, becoming the only person to win Nobel Prizes in two different scientific fields. Curie's relentless devotion to understanding the unknown, while refusing to patent her discoveries, stands as a monument to selfless scientific inquiry.`,
     name: "Marie Curie",
     nameHindi: "मैरी क्यूरी",
     born: "1867",
@@ -776,6 +819,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "gandhi_42",
+    summary: `The leader of India's nonviolent independence movement who transformed politics into a moral practice of Satya (Truth) and Ahimsa (Nonviolence). Gandhi's life demonstrates how simple, disciplined daily habits can build the collective strength needed to challenge empires.`,
     name: "Mahatma Gandhi",
     nameHindi: "महात्मा गांधी",
     born: "1869",
@@ -794,6 +838,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "rumi_43",
+    summary: `The 13th-century Persian poet and Sufi mystic whose ecstatic verses explore love as the primary force of the universe. Rumi's writings invite us to dissolve our egos, welcome our emotional wounds as portals for light, and find a direct path to the divine.`,
     name: "Jalal al-Din Rumi",
     nameHindi: "जलाल अद्-दीन रूमी",
     born: "1207",
@@ -812,6 +857,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "kalam_44",
+    summary: `An aerospace scientist who became India's most beloved President, Kalam rose from humble beginnings to lead the nation's space and defense programs. His life of simplicity and dedication stands as a powerful testament to the value of dreaming big and mentoring the youth.`,
     name: "A. P. J. Abdul Kalam",
     nameHindi: "ए. पी. जे. अब्दुल कलाम",
     born: "1931",
@@ -830,6 +876,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "tesla_45",
+    summary: `A visionary inventor who dreamed of wireless energy and built the alternating current system that powers our modern world. Tesla's life reveals the boundary between uncompromised genius and the commercial realities of his time, urging us to think in terms of frequency and vibration.`,
     name: "Nikola Tesla",
     nameHindi: "निकोला टेस्ला",
     born: "1856",
@@ -848,6 +895,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "curie_46",
+    summary: `The pioneering physicist and chemist who isolated radium and polonium, becoming the only person to win Nobel Prizes in two different scientific fields. Curie's relentless devotion to understanding the unknown, while refusing to patent her discoveries, stands as a monument to selfless scientific inquiry.`,
     name: "Marie Curie",
     nameHindi: "मैरी क्यूरी",
     born: "1867",
@@ -866,6 +914,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "gandhi_47",
+    summary: `The leader of India's nonviolent independence movement who transformed politics into a moral practice of Satya (Truth) and Ahimsa (Nonviolence). Gandhi's life demonstrates how simple, disciplined daily habits can build the collective strength needed to challenge empires.`,
     name: "Mahatma Gandhi",
     nameHindi: "महात्मा गांधी",
     born: "1869",
@@ -884,6 +933,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "rumi_48",
+    summary: `The 13th-century Persian poet and Sufi mystic whose ecstatic verses explore love as the primary force of the universe. Rumi's writings invite us to dissolve our egos, welcome our emotional wounds as portals for light, and find a direct path to the divine.`,
     name: "Jalal al-Din Rumi",
     nameHindi: "जलाल अद्-दीन रूमी",
     born: "1207",
@@ -902,6 +952,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "kalam_49",
+    summary: `An aerospace scientist who became India's most beloved President, Kalam rose from humble beginnings to lead the nation's space and defense programs. His life of simplicity and dedication stands as a powerful testament to the value of dreaming big and mentoring the youth.`,
     name: "A. P. J. Abdul Kalam",
     nameHindi: "ए. पी. जे. अब्दुल कलाम",
     born: "1931",
@@ -920,6 +971,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "tesla_50",
+    summary: `A visionary inventor who dreamed of wireless energy and built the alternating current system that powers our modern world. Tesla's life reveals the boundary between uncompromised genius and the commercial realities of his time, urging us to think in terms of frequency and vibration.`,
     name: "Nikola Tesla",
     nameHindi: "निकोला टेस्ला",
     born: "1856",
@@ -938,6 +990,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "curie_51",
+    summary: `The pioneering physicist and chemist who isolated radium and polonium, becoming the only person to win Nobel Prizes in two different scientific fields. Curie's relentless devotion to understanding the unknown, while refusing to patent her discoveries, stands as a monument to selfless scientific inquiry.`,
     name: "Marie Curie",
     nameHindi: "मैरी क्यूरी",
     born: "1867",
@@ -956,6 +1009,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "gandhi_52",
+    summary: `The leader of India's nonviolent independence movement who transformed politics into a moral practice of Satya (Truth) and Ahimsa (Nonviolence). Gandhi's life demonstrates how simple, disciplined daily habits can build the collective strength needed to challenge empires.`,
     name: "Mahatma Gandhi",
     nameHindi: "महात्मा गांधी",
     born: "1869",
@@ -974,6 +1028,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "rumi_53",
+    summary: `The 13th-century Persian poet and Sufi mystic whose ecstatic verses explore love as the primary force of the universe. Rumi's writings invite us to dissolve our egos, welcome our emotional wounds as portals for light, and find a direct path to the divine.`,
     name: "Jalal al-Din Rumi",
     nameHindi: "जलाल अद्-दीन रूमी",
     born: "1207",
@@ -992,6 +1047,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "kalam_54",
+    summary: `An aerospace scientist who became India's most beloved President, Kalam rose from humble beginnings to lead the nation's space and defense programs. His life of simplicity and dedication stands as a powerful testament to the value of dreaming big and mentoring the youth.`,
     name: "A. P. J. Abdul Kalam",
     nameHindi: "ए. पी. जे. अब्दुल कलाम",
     born: "1931",
@@ -1010,6 +1066,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "tesla_55",
+    summary: `A visionary inventor who dreamed of wireless energy and built the alternating current system that powers our modern world. Tesla's life reveals the boundary between uncompromised genius and the commercial realities of his time, urging us to think in terms of frequency and vibration.`,
     name: "Nikola Tesla",
     nameHindi: "निकोला टेस्ला",
     born: "1856",
@@ -1028,6 +1085,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "curie_56",
+    summary: `The pioneering physicist and chemist who isolated radium and polonium, becoming the only person to win Nobel Prizes in two different scientific fields. Curie's relentless devotion to understanding the unknown, while refusing to patent her discoveries, stands as a monument to selfless scientific inquiry.`,
     name: "Marie Curie",
     nameHindi: "मैरी क्यूरी",
     born: "1867",
@@ -1046,6 +1104,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "gandhi_57",
+    summary: `The leader of India's nonviolent independence movement who transformed politics into a moral practice of Satya (Truth) and Ahimsa (Nonviolence). Gandhi's life demonstrates how simple, disciplined daily habits can build the collective strength needed to challenge empires.`,
     name: "Mahatma Gandhi",
     nameHindi: "महात्मा गांधी",
     born: "1869",
@@ -1064,6 +1123,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "rumi_58",
+    summary: `The 13th-century Persian poet and Sufi mystic whose ecstatic verses explore love as the primary force of the universe. Rumi's writings invite us to dissolve our egos, welcome our emotional wounds as portals for light, and find a direct path to the divine.`,
     name: "Jalal al-Din Rumi",
     nameHindi: "जलाल अद्-दीन रूमी",
     born: "1207",
@@ -1082,6 +1142,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "kalam_59",
+    summary: `An aerospace scientist who became India's most beloved President, Kalam rose from humble beginnings to lead the nation's space and defense programs. His life of simplicity and dedication stands as a powerful testament to the value of dreaming big and mentoring the youth.`,
     name: "A. P. J. Abdul Kalam",
     nameHindi: "ए. पी. जे. अब्दुल कलाम",
     born: "1931",
@@ -1100,6 +1161,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "tesla_60",
+    summary: `A visionary inventor who dreamed of wireless energy and built the alternating current system that powers our modern world. Tesla's life reveals the boundary between uncompromised genius and the commercial realities of his time, urging us to think in terms of frequency and vibration.`,
     name: "Nikola Tesla",
     nameHindi: "निकोला टेस्ला",
     born: "1856",
@@ -1118,6 +1180,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "curie_61",
+    summary: `The pioneering physicist and chemist who isolated radium and polonium, becoming the only person to win Nobel Prizes in two different scientific fields. Curie's relentless devotion to understanding the unknown, while refusing to patent her discoveries, stands as a monument to selfless scientific inquiry.`,
     name: "Marie Curie",
     nameHindi: "मैरी क्यूरी",
     born: "1867",
@@ -1136,6 +1199,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "gandhi_62",
+    summary: `The leader of India's nonviolent independence movement who transformed politics into a moral practice of Satya (Truth) and Ahimsa (Nonviolence). Gandhi's life demonstrates how simple, disciplined daily habits can build the collective strength needed to challenge empires.`,
     name: "Mahatma Gandhi",
     nameHindi: "महात्मा गांधी",
     born: "1869",
@@ -1154,6 +1218,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "rumi_63",
+    summary: `The 13th-century Persian poet and Sufi mystic whose ecstatic verses explore love as the primary force of the universe. Rumi's writings invite us to dissolve our egos, welcome our emotional wounds as portals for light, and find a direct path to the divine.`,
     name: "Jalal al-Din Rumi",
     nameHindi: "जलाल अद्-दीन रूमी",
     born: "1207",
@@ -1172,6 +1237,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "kalam_64",
+    summary: `An aerospace scientist who became India's most beloved President, Kalam rose from humble beginnings to lead the nation's space and defense programs. His life of simplicity and dedication stands as a powerful testament to the value of dreaming big and mentoring the youth.`,
     name: "A. P. J. Abdul Kalam",
     nameHindi: "ए. पी. जे. अब्दुल कलाम",
     born: "1931",
@@ -1190,6 +1256,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "tesla_65",
+    summary: `A visionary inventor who dreamed of wireless energy and built the alternating current system that powers our modern world. Tesla's life reveals the boundary between uncompromised genius and the commercial realities of his time, urging us to think in terms of frequency and vibration.`,
     name: "Nikola Tesla",
     nameHindi: "निकोला टेस्ला",
     born: "1856",
@@ -1208,6 +1275,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "curie_66",
+    summary: `The pioneering physicist and chemist who isolated radium and polonium, becoming the only person to win Nobel Prizes in two different scientific fields. Curie's relentless devotion to understanding the unknown, while refusing to patent her discoveries, stands as a monument to selfless scientific inquiry.`,
     name: "Marie Curie",
     nameHindi: "मैरी क्यूरी",
     born: "1867",
@@ -1226,6 +1294,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "gandhi_67",
+    summary: `The leader of India's nonviolent independence movement who transformed politics into a moral practice of Satya (Truth) and Ahimsa (Nonviolence). Gandhi's life demonstrates how simple, disciplined daily habits can build the collective strength needed to challenge empires.`,
     name: "Mahatma Gandhi",
     nameHindi: "महात्मा गांधी",
     born: "1869",
@@ -1244,6 +1313,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "rumi_68",
+    summary: `The 13th-century Persian poet and Sufi mystic whose ecstatic verses explore love as the primary force of the universe. Rumi's writings invite us to dissolve our egos, welcome our emotional wounds as portals for light, and find a direct path to the divine.`,
     name: "Jalal al-Din Rumi",
     nameHindi: "जलाल अद्-दीन रूमी",
     born: "1207",
@@ -1262,6 +1332,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "kalam_69",
+    summary: `An aerospace scientist who became India's most beloved President, Kalam rose from humble beginnings to lead the nation's space and defense programs. His life of simplicity and dedication stands as a powerful testament to the value of dreaming big and mentoring the youth.`,
     name: "A. P. J. Abdul Kalam",
     nameHindi: "ए. पी. जे. अब्दुल कलाम",
     born: "1931",
@@ -1280,6 +1351,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "tesla_70",
+    summary: `A visionary inventor who dreamed of wireless energy and built the alternating current system that powers our modern world. Tesla's life reveals the boundary between uncompromised genius and the commercial realities of his time, urging us to think in terms of frequency and vibration.`,
     name: "Nikola Tesla",
     nameHindi: "निकोला टेस्ला",
     born: "1856",
@@ -1298,6 +1370,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "curie_71",
+    summary: `The pioneering physicist and chemist who isolated radium and polonium, becoming the only person to win Nobel Prizes in two different scientific fields. Curie's relentless devotion to understanding the unknown, while refusing to patent her discoveries, stands as a monument to selfless scientific inquiry.`,
     name: "Marie Curie",
     nameHindi: "मैरी क्यूरी",
     born: "1867",
@@ -1316,6 +1389,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "gandhi_72",
+    summary: `The leader of India's nonviolent independence movement who transformed politics into a moral practice of Satya (Truth) and Ahimsa (Nonviolence). Gandhi's life demonstrates how simple, disciplined daily habits can build the collective strength needed to challenge empires.`,
     name: "Mahatma Gandhi",
     nameHindi: "महात्मा गांधी",
     born: "1869",
@@ -1334,6 +1408,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "rumi_73",
+    summary: `The 13th-century Persian poet and Sufi mystic whose ecstatic verses explore love as the primary force of the universe. Rumi's writings invite us to dissolve our egos, welcome our emotional wounds as portals for light, and find a direct path to the divine.`,
     name: "Jalal al-Din Rumi",
     nameHindi: "जलाल अद्-दीन रूमी",
     born: "1207",
@@ -1352,6 +1427,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "kalam_74",
+    summary: `An aerospace scientist who became India's most beloved President, Kalam rose from humble beginnings to lead the nation's space and defense programs. His life of simplicity and dedication stands as a powerful testament to the value of dreaming big and mentoring the youth.`,
     name: "A. P. J. Abdul Kalam",
     nameHindi: "ए. पी. जे. अब्दुल कलाम",
     born: "1931",
@@ -1370,6 +1446,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "tesla_75",
+    summary: `A visionary inventor who dreamed of wireless energy and built the alternating current system that powers our modern world. Tesla's life reveals the boundary between uncompromised genius and the commercial realities of his time, urging us to think in terms of frequency and vibration.`,
     name: "Nikola Tesla",
     nameHindi: "निकोला टेस्ला",
     born: "1856",
@@ -1388,6 +1465,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "curie_76",
+    summary: `The pioneering physicist and chemist who isolated radium and polonium, becoming the only person to win Nobel Prizes in two different scientific fields. Curie's relentless devotion to understanding the unknown, while refusing to patent her discoveries, stands as a monument to selfless scientific inquiry.`,
     name: "Marie Curie",
     nameHindi: "मैरी क्यूरी",
     born: "1867",
@@ -1406,6 +1484,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "gandhi_77",
+    summary: `The leader of India's nonviolent independence movement who transformed politics into a moral practice of Satya (Truth) and Ahimsa (Nonviolence). Gandhi's life demonstrates how simple, disciplined daily habits can build the collective strength needed to challenge empires.`,
     name: "Mahatma Gandhi",
     nameHindi: "महात्मा गांधी",
     born: "1869",
@@ -1424,6 +1503,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "rumi_78",
+    summary: `The 13th-century Persian poet and Sufi mystic whose ecstatic verses explore love as the primary force of the universe. Rumi's writings invite us to dissolve our egos, welcome our emotional wounds as portals for light, and find a direct path to the divine.`,
     name: "Jalal al-Din Rumi",
     nameHindi: "जलाल अद्-दीन रूमी",
     born: "1207",
@@ -1442,6 +1522,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "kalam_79",
+    summary: `An aerospace scientist who became India's most beloved President, Kalam rose from humble beginnings to lead the nation's space and defense programs. His life of simplicity and dedication stands as a powerful testament to the value of dreaming big and mentoring the youth.`,
     name: "A. P. J. Abdul Kalam",
     nameHindi: "ए. पी. जे. अब्दुल कलाम",
     born: "1931",
@@ -1460,6 +1541,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "tesla_80",
+    summary: `A visionary inventor who dreamed of wireless energy and built the alternating current system that powers our modern world. Tesla's life reveals the boundary between uncompromised genius and the commercial realities of his time, urging us to think in terms of frequency and vibration.`,
     name: "Nikola Tesla",
     nameHindi: "निकोला टेस्ला",
     born: "1856",
@@ -1478,6 +1560,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "curie_81",
+    summary: `The pioneering physicist and chemist who isolated radium and polonium, becoming the only person to win Nobel Prizes in two different scientific fields. Curie's relentless devotion to understanding the unknown, while refusing to patent her discoveries, stands as a monument to selfless scientific inquiry.`,
     name: "Marie Curie",
     nameHindi: "मैरी क्यूरी",
     born: "1867",
@@ -1496,6 +1579,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "gandhi_82",
+    summary: `The leader of India's nonviolent independence movement who transformed politics into a moral practice of Satya (Truth) and Ahimsa (Nonviolence). Gandhi's life demonstrates how simple, disciplined daily habits can build the collective strength needed to challenge empires.`,
     name: "Mahatma Gandhi",
     nameHindi: "महात्मा गांधी",
     born: "1869",
@@ -1514,6 +1598,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "rumi_83",
+    summary: `The 13th-century Persian poet and Sufi mystic whose ecstatic verses explore love as the primary force of the universe. Rumi's writings invite us to dissolve our egos, welcome our emotional wounds as portals for light, and find a direct path to the divine.`,
     name: "Jalal al-Din Rumi",
     nameHindi: "जलाल अद्-दीन रूमी",
     born: "1207",
@@ -1532,6 +1617,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "kalam_84",
+    summary: `An aerospace scientist who became India's most beloved President, Kalam rose from humble beginnings to lead the nation's space and defense programs. His life of simplicity and dedication stands as a powerful testament to the value of dreaming big and mentoring the youth.`,
     name: "A. P. J. Abdul Kalam",
     nameHindi: "ए. पी. जे. अब्दुल कलाम",
     born: "1931",
@@ -1550,6 +1636,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "tesla_85",
+    summary: `A visionary inventor who dreamed of wireless energy and built the alternating current system that powers our modern world. Tesla's life reveals the boundary between uncompromised genius and the commercial realities of his time, urging us to think in terms of frequency and vibration.`,
     name: "Nikola Tesla",
     nameHindi: "निकोला टेस्ला",
     born: "1856",
@@ -1568,6 +1655,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "curie_86",
+    summary: `The pioneering physicist and chemist who isolated radium and polonium, becoming the only person to win Nobel Prizes in two different scientific fields. Curie's relentless devotion to understanding the unknown, while refusing to patent her discoveries, stands as a monument to selfless scientific inquiry.`,
     name: "Marie Curie",
     nameHindi: "मैरी क्यूरी",
     born: "1867",
@@ -1586,6 +1674,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "gandhi_87",
+    summary: `The leader of India's nonviolent independence movement who transformed politics into a moral practice of Satya (Truth) and Ahimsa (Nonviolence). Gandhi's life demonstrates how simple, disciplined daily habits can build the collective strength needed to challenge empires.`,
     name: "Mahatma Gandhi",
     nameHindi: "महात्मा गांधी",
     born: "1869",
@@ -1604,6 +1693,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "rumi_88",
+    summary: `The 13th-century Persian poet and Sufi mystic whose ecstatic verses explore love as the primary force of the universe. Rumi's writings invite us to dissolve our egos, welcome our emotional wounds as portals for light, and find a direct path to the divine.`,
     name: "Jalal al-Din Rumi",
     nameHindi: "जलाल अद्-दीन रूमी",
     born: "1207",
@@ -1622,6 +1712,7 @@ export const PEOPLE: Person[] = [
   },
   {
     id: "kalam_89",
+    summary: `An aerospace scientist who became India's most beloved President, Kalam rose from humble beginnings to lead the nation's space and defense programs. His life of simplicity and dedication stands as a powerful testament to the value of dreaming big and mentoring the youth.`,
     name: "A. P. J. Abdul Kalam",
     nameHindi: "ए. पी. जे. अब्दुल कलाम",
     born: "1931",

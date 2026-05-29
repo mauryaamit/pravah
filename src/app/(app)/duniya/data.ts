@@ -1,4 +1,5 @@
 export interface DuniyaEntry {
+  summary: string;
   dayIndex: number;
   type: 'situation' | 'system';
   title: string;
@@ -19,6 +20,7 @@ export interface DuniyaEntry {
 export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   {
     dayIndex: 1,
+    summary: `Explore Bhutan's unique governance philosophy that rejects GDP in favor of Gross National Happiness. By prioritizing spiritual wellbeing, cultural preservation, and environmental conservation, this Himalayan kingdom asks a vital question: what would our lives look like if we stopped measuring only productivity?`,
     type: "system",
     title: "Gross National Happiness in Bhutan",
     title_hi: "भूटान में सकल राष्ट्रीय प्रसन्नता",
@@ -36,6 +38,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 2,
+    summary: `A look at the massive global challenge of marine plastic pollution and the innovative, passive technologies designed to clean our oceans. This situation highlights how understanding natural currents can help us undo our ecological damage, urging us to act before it is too late.`,
     type: "situation",
     title: "The Ocean Cleanup Campaign",
     title_hi: "महासागर सफाई अभियान",
@@ -53,6 +56,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 3,
+    summary: `Explore Bhutan's unique governance philosophy that rejects GDP in favor of Gross National Happiness. By prioritizing spiritual wellbeing, cultural preservation, and environmental conservation, this Himalayan kingdom asks a vital question: what would our lives look like if we stopped measuring only productivity?`,
     type: "system",
     title: "Gross National Happiness in Bhutan",
     title_hi: "भूटान में सकल राष्ट्रीय प्रसन्नता",
@@ -70,6 +74,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 4,
+    summary: `A look at the massive global challenge of marine plastic pollution and the innovative, passive technologies designed to clean our oceans. This situation highlights how understanding natural currents can help us undo our ecological damage, urging us to act before it is too late.`,
     type: "situation",
     title: "The Ocean Cleanup Campaign",
     title_hi: "महासागर सफाई अभियान",
@@ -87,6 +92,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 5,
+    summary: `Explore Bhutan's unique governance philosophy that rejects GDP in favor of Gross National Happiness. By prioritizing spiritual wellbeing, cultural preservation, and environmental conservation, this Himalayan kingdom asks a vital question: what would our lives look like if we stopped measuring only productivity?`,
     type: "system",
     title: "Gross National Happiness in Bhutan",
     title_hi: "भूटान में सकल राष्ट्रीय प्रसन्नता",
@@ -104,6 +110,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 6,
+    summary: `A look at the massive global challenge of marine plastic pollution and the innovative, passive technologies designed to clean our oceans. This situation highlights how understanding natural currents can help us undo our ecological damage, urging us to act before it is too late.`,
     type: "situation",
     title: "The Ocean Cleanup Campaign",
     title_hi: "महासागर सफाई अभियान",
@@ -121,6 +128,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 7,
+    summary: `Explore Bhutan's unique governance philosophy that rejects GDP in favor of Gross National Happiness. By prioritizing spiritual wellbeing, cultural preservation, and environmental conservation, this Himalayan kingdom asks a vital question: what would our lives look like if we stopped measuring only productivity?`,
     type: "system",
     title: "Gross National Happiness in Bhutan",
     title_hi: "भूटान में सकल राष्ट्रीय प्रसन्नता",
@@ -138,6 +146,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 8,
+    summary: `A look at the massive global challenge of marine plastic pollution and the innovative, passive technologies designed to clean our oceans. This situation highlights how understanding natural currents can help us undo our ecological damage, urging us to act before it is too late.`,
     type: "situation",
     title: "The Ocean Cleanup Campaign",
     title_hi: "महासागर सफाई अभियान",
@@ -155,6 +164,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 9,
+    summary: `Explore Bhutan's unique governance philosophy that rejects GDP in favor of Gross National Happiness. By prioritizing spiritual wellbeing, cultural preservation, and environmental conservation, this Himalayan kingdom asks a vital question: what would our lives look like if we stopped measuring only productivity?`,
     type: "system",
     title: "Gross National Happiness in Bhutan",
     title_hi: "भूटान में सकल राष्ट्रीय प्रसन्नता",
@@ -172,6 +182,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 10,
+    summary: `A look at the massive global challenge of marine plastic pollution and the innovative, passive technologies designed to clean our oceans. This situation highlights how understanding natural currents can help us undo our ecological damage, urging us to act before it is too late.`,
     type: "situation",
     title: "The Ocean Cleanup Campaign",
     title_hi: "महासागर सफाई अभियान",
@@ -189,6 +200,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 11,
+    summary: `Explore Bhutan's unique governance philosophy that rejects GDP in favor of Gross National Happiness. By prioritizing spiritual wellbeing, cultural preservation, and environmental conservation, this Himalayan kingdom asks a vital question: what would our lives look like if we stopped measuring only productivity?`,
     type: "system",
     title: "Gross National Happiness in Bhutan",
     title_hi: "भूटान में सकल राष्ट्रीय प्रसन्नता",
@@ -206,6 +218,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 12,
+    summary: `A look at the massive global challenge of marine plastic pollution and the innovative, passive technologies designed to clean our oceans. This situation highlights how understanding natural currents can help us undo our ecological damage, urging us to act before it is too late.`,
     type: "situation",
     title: "The Ocean Cleanup Campaign",
     title_hi: "महासागर सफाई अभियान",
@@ -223,6 +236,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 13,
+    summary: `Explore Bhutan's unique governance philosophy that rejects GDP in favor of Gross National Happiness. By prioritizing spiritual wellbeing, cultural preservation, and environmental conservation, this Himalayan kingdom asks a vital question: what would our lives look like if we stopped measuring only productivity?`,
     type: "system",
     title: "Gross National Happiness in Bhutan",
     title_hi: "भूटान में सकल राष्ट्रीय प्रसन्नता",
@@ -240,6 +254,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 14,
+    summary: `A look at the massive global challenge of marine plastic pollution and the innovative, passive technologies designed to clean our oceans. This situation highlights how understanding natural currents can help us undo our ecological damage, urging us to act before it is too late.`,
     type: "situation",
     title: "The Ocean Cleanup Campaign",
     title_hi: "महासागर सफाई अभियान",
@@ -257,6 +272,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 15,
+    summary: `Explore Bhutan's unique governance philosophy that rejects GDP in favor of Gross National Happiness. By prioritizing spiritual wellbeing, cultural preservation, and environmental conservation, this Himalayan kingdom asks a vital question: what would our lives look like if we stopped measuring only productivity?`,
     type: "system",
     title: "Gross National Happiness in Bhutan",
     title_hi: "भूटान में सकल राष्ट्रीय प्रसन्नता",
@@ -274,6 +290,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 16,
+    summary: `A look at the massive global challenge of marine plastic pollution and the innovative, passive technologies designed to clean our oceans. This situation highlights how understanding natural currents can help us undo our ecological damage, urging us to act before it is too late.`,
     type: "situation",
     title: "The Ocean Cleanup Campaign",
     title_hi: "महासागर सफाई अभियान",
@@ -291,6 +308,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 17,
+    summary: `Explore Bhutan's unique governance philosophy that rejects GDP in favor of Gross National Happiness. By prioritizing spiritual wellbeing, cultural preservation, and environmental conservation, this Himalayan kingdom asks a vital question: what would our lives look like if we stopped measuring only productivity?`,
     type: "system",
     title: "Gross National Happiness in Bhutan",
     title_hi: "भूटान में सकल राष्ट्रीय प्रसन्नता",
@@ -308,6 +326,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 18,
+    summary: `A look at the massive global challenge of marine plastic pollution and the innovative, passive technologies designed to clean our oceans. This situation highlights how understanding natural currents can help us undo our ecological damage, urging us to act before it is too late.`,
     type: "situation",
     title: "The Ocean Cleanup Campaign",
     title_hi: "महासागर सफाई अभियान",
@@ -325,6 +344,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 19,
+    summary: `Explore Bhutan's unique governance philosophy that rejects GDP in favor of Gross National Happiness. By prioritizing spiritual wellbeing, cultural preservation, and environmental conservation, this Himalayan kingdom asks a vital question: what would our lives look like if we stopped measuring only productivity?`,
     type: "system",
     title: "Gross National Happiness in Bhutan",
     title_hi: "भूटान में सकल राष्ट्रीय प्रसन्नता",
@@ -342,6 +362,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 20,
+    summary: `A look at the massive global challenge of marine plastic pollution and the innovative, passive technologies designed to clean our oceans. This situation highlights how understanding natural currents can help us undo our ecological damage, urging us to act before it is too late.`,
     type: "situation",
     title: "The Ocean Cleanup Campaign",
     title_hi: "महासागर सफाई अभियान",
@@ -359,6 +380,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 21,
+    summary: `Explore Bhutan's unique governance philosophy that rejects GDP in favor of Gross National Happiness. By prioritizing spiritual wellbeing, cultural preservation, and environmental conservation, this Himalayan kingdom asks a vital question: what would our lives look like if we stopped measuring only productivity?`,
     type: "system",
     title: "Gross National Happiness in Bhutan",
     title_hi: "भूटान में सकल राष्ट्रीय प्रसन्नता",
@@ -376,6 +398,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 22,
+    summary: `A look at the massive global challenge of marine plastic pollution and the innovative, passive technologies designed to clean our oceans. This situation highlights how understanding natural currents can help us undo our ecological damage, urging us to act before it is too late.`,
     type: "situation",
     title: "The Ocean Cleanup Campaign",
     title_hi: "महासागर सफाई अभियान",
@@ -393,6 +416,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 23,
+    summary: `Explore Bhutan's unique governance philosophy that rejects GDP in favor of Gross National Happiness. By prioritizing spiritual wellbeing, cultural preservation, and environmental conservation, this Himalayan kingdom asks a vital question: what would our lives look like if we stopped measuring only productivity?`,
     type: "system",
     title: "Gross National Happiness in Bhutan",
     title_hi: "भूटान में सकल राष्ट्रीय प्रसन्नता",
@@ -410,6 +434,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 24,
+    summary: `A look at the massive global challenge of marine plastic pollution and the innovative, passive technologies designed to clean our oceans. This situation highlights how understanding natural currents can help us undo our ecological damage, urging us to act before it is too late.`,
     type: "situation",
     title: "The Ocean Cleanup Campaign",
     title_hi: "महासागर सफाई अभियान",
@@ -427,6 +452,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 25,
+    summary: `Explore Bhutan's unique governance philosophy that rejects GDP in favor of Gross National Happiness. By prioritizing spiritual wellbeing, cultural preservation, and environmental conservation, this Himalayan kingdom asks a vital question: what would our lives look like if we stopped measuring only productivity?`,
     type: "system",
     title: "Gross National Happiness in Bhutan",
     title_hi: "भूटान में सकल राष्ट्रीय प्रसन्नता",
@@ -444,6 +470,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 26,
+    summary: `A look at the massive global challenge of marine plastic pollution and the innovative, passive technologies designed to clean our oceans. This situation highlights how understanding natural currents can help us undo our ecological damage, urging us to act before it is too late.`,
     type: "situation",
     title: "The Ocean Cleanup Campaign",
     title_hi: "महासागर सफाई अभियान",
@@ -461,6 +488,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 27,
+    summary: `Explore Bhutan's unique governance philosophy that rejects GDP in favor of Gross National Happiness. By prioritizing spiritual wellbeing, cultural preservation, and environmental conservation, this Himalayan kingdom asks a vital question: what would our lives look like if we stopped measuring only productivity?`,
     type: "system",
     title: "Gross National Happiness in Bhutan",
     title_hi: "भूटान में सकल राष्ट्रीय प्रसन्नता",
@@ -478,6 +506,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 28,
+    summary: `A look at the massive global challenge of marine plastic pollution and the innovative, passive technologies designed to clean our oceans. This situation highlights how understanding natural currents can help us undo our ecological damage, urging us to act before it is too late.`,
     type: "situation",
     title: "The Ocean Cleanup Campaign",
     title_hi: "महासागर सफाई अभियान",
@@ -495,6 +524,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 29,
+    summary: `Explore Bhutan's unique governance philosophy that rejects GDP in favor of Gross National Happiness. By prioritizing spiritual wellbeing, cultural preservation, and environmental conservation, this Himalayan kingdom asks a vital question: what would our lives look like if we stopped measuring only productivity?`,
     type: "system",
     title: "Gross National Happiness in Bhutan",
     title_hi: "भूटान में सकल राष्ट्रीय प्रसन्नता",
@@ -512,6 +542,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 30,
+    summary: `A look at the massive global challenge of marine plastic pollution and the innovative, passive technologies designed to clean our oceans. This situation highlights how understanding natural currents can help us undo our ecological damage, urging us to act before it is too late.`,
     type: "situation",
     title: "The Ocean Cleanup Campaign",
     title_hi: "महासागर सफाई अभियान",
@@ -529,6 +560,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 31,
+    summary: `Explore Bhutan's unique governance philosophy that rejects GDP in favor of Gross National Happiness. By prioritizing spiritual wellbeing, cultural preservation, and environmental conservation, this Himalayan kingdom asks a vital question: what would our lives look like if we stopped measuring only productivity?`,
     type: "system",
     title: "Gross National Happiness in Bhutan",
     title_hi: "भूटान में सकल राष्ट्रीय प्रसन्नता",
@@ -546,6 +578,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 32,
+    summary: `A look at the massive global challenge of marine plastic pollution and the innovative, passive technologies designed to clean our oceans. This situation highlights how understanding natural currents can help us undo our ecological damage, urging us to act before it is too late.`,
     type: "situation",
     title: "The Ocean Cleanup Campaign",
     title_hi: "महासागर सफाई अभियान",
@@ -563,6 +596,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 33,
+    summary: `Explore Bhutan's unique governance philosophy that rejects GDP in favor of Gross National Happiness. By prioritizing spiritual wellbeing, cultural preservation, and environmental conservation, this Himalayan kingdom asks a vital question: what would our lives look like if we stopped measuring only productivity?`,
     type: "system",
     title: "Gross National Happiness in Bhutan",
     title_hi: "भूटान में सकल राष्ट्रीय प्रसन्नता",
@@ -580,6 +614,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 34,
+    summary: `A look at the massive global challenge of marine plastic pollution and the innovative, passive technologies designed to clean our oceans. This situation highlights how understanding natural currents can help us undo our ecological damage, urging us to act before it is too late.`,
     type: "situation",
     title: "The Ocean Cleanup Campaign",
     title_hi: "महासागर सफाई अभियान",
@@ -597,6 +632,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 35,
+    summary: `Explore Bhutan's unique governance philosophy that rejects GDP in favor of Gross National Happiness. By prioritizing spiritual wellbeing, cultural preservation, and environmental conservation, this Himalayan kingdom asks a vital question: what would our lives look like if we stopped measuring only productivity?`,
     type: "system",
     title: "Gross National Happiness in Bhutan",
     title_hi: "भूटान में सकल राष्ट्रीय प्रसन्नता",
@@ -614,6 +650,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 36,
+    summary: `A look at the massive global challenge of marine plastic pollution and the innovative, passive technologies designed to clean our oceans. This situation highlights how understanding natural currents can help us undo our ecological damage, urging us to act before it is too late.`,
     type: "situation",
     title: "The Ocean Cleanup Campaign",
     title_hi: "महासागर सफाई अभियान",
@@ -631,6 +668,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 37,
+    summary: `Explore Bhutan's unique governance philosophy that rejects GDP in favor of Gross National Happiness. By prioritizing spiritual wellbeing, cultural preservation, and environmental conservation, this Himalayan kingdom asks a vital question: what would our lives look like if we stopped measuring only productivity?`,
     type: "system",
     title: "Gross National Happiness in Bhutan",
     title_hi: "भूटान में सकल राष्ट्रीय प्रसन्नता",
@@ -648,6 +686,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 38,
+    summary: `A look at the massive global challenge of marine plastic pollution and the innovative, passive technologies designed to clean our oceans. This situation highlights how understanding natural currents can help us undo our ecological damage, urging us to act before it is too late.`,
     type: "situation",
     title: "The Ocean Cleanup Campaign",
     title_hi: "महासागर सफाई अभियान",
@@ -665,6 +704,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 39,
+    summary: `Explore Bhutan's unique governance philosophy that rejects GDP in favor of Gross National Happiness. By prioritizing spiritual wellbeing, cultural preservation, and environmental conservation, this Himalayan kingdom asks a vital question: what would our lives look like if we stopped measuring only productivity?`,
     type: "system",
     title: "Gross National Happiness in Bhutan",
     title_hi: "भूटान में सकल राष्ट्रीय प्रसन्नता",
@@ -682,6 +722,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 40,
+    summary: `A look at the massive global challenge of marine plastic pollution and the innovative, passive technologies designed to clean our oceans. This situation highlights how understanding natural currents can help us undo our ecological damage, urging us to act before it is too late.`,
     type: "situation",
     title: "The Ocean Cleanup Campaign",
     title_hi: "महासागर सफाई अभियान",
@@ -699,6 +740,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 41,
+    summary: `Explore Bhutan's unique governance philosophy that rejects GDP in favor of Gross National Happiness. By prioritizing spiritual wellbeing, cultural preservation, and environmental conservation, this Himalayan kingdom asks a vital question: what would our lives look like if we stopped measuring only productivity?`,
     type: "system",
     title: "Gross National Happiness in Bhutan",
     title_hi: "भूटान में सकल राष्ट्रीय प्रसन्नता",
@@ -716,6 +758,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 42,
+    summary: `A look at the massive global challenge of marine plastic pollution and the innovative, passive technologies designed to clean our oceans. This situation highlights how understanding natural currents can help us undo our ecological damage, urging us to act before it is too late.`,
     type: "situation",
     title: "The Ocean Cleanup Campaign",
     title_hi: "महासागर सफाई अभियान",
@@ -733,6 +776,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 43,
+    summary: `Explore Bhutan's unique governance philosophy that rejects GDP in favor of Gross National Happiness. By prioritizing spiritual wellbeing, cultural preservation, and environmental conservation, this Himalayan kingdom asks a vital question: what would our lives look like if we stopped measuring only productivity?`,
     type: "system",
     title: "Gross National Happiness in Bhutan",
     title_hi: "भूटान में सकल राष्ट्रीय प्रसन्नता",
@@ -750,6 +794,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 44,
+    summary: `A look at the massive global challenge of marine plastic pollution and the innovative, passive technologies designed to clean our oceans. This situation highlights how understanding natural currents can help us undo our ecological damage, urging us to act before it is too late.`,
     type: "situation",
     title: "The Ocean Cleanup Campaign",
     title_hi: "महासागर सफाई अभियान",
@@ -767,6 +812,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 45,
+    summary: `Explore Bhutan's unique governance philosophy that rejects GDP in favor of Gross National Happiness. By prioritizing spiritual wellbeing, cultural preservation, and environmental conservation, this Himalayan kingdom asks a vital question: what would our lives look like if we stopped measuring only productivity?`,
     type: "system",
     title: "Gross National Happiness in Bhutan",
     title_hi: "भूटान में सकल राष्ट्रीय प्रसन्नता",
@@ -784,6 +830,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 46,
+    summary: `A look at the massive global challenge of marine plastic pollution and the innovative, passive technologies designed to clean our oceans. This situation highlights how understanding natural currents can help us undo our ecological damage, urging us to act before it is too late.`,
     type: "situation",
     title: "The Ocean Cleanup Campaign",
     title_hi: "महासागर सफाई अभियान",
@@ -801,6 +848,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 47,
+    summary: `Explore Bhutan's unique governance philosophy that rejects GDP in favor of Gross National Happiness. By prioritizing spiritual wellbeing, cultural preservation, and environmental conservation, this Himalayan kingdom asks a vital question: what would our lives look like if we stopped measuring only productivity?`,
     type: "system",
     title: "Gross National Happiness in Bhutan",
     title_hi: "भूटान में सकल राष्ट्रीय प्रसन्नता",
@@ -818,6 +866,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 48,
+    summary: `A look at the massive global challenge of marine plastic pollution and the innovative, passive technologies designed to clean our oceans. This situation highlights how understanding natural currents can help us undo our ecological damage, urging us to act before it is too late.`,
     type: "situation",
     title: "The Ocean Cleanup Campaign",
     title_hi: "महासागर सफाई अभियान",
@@ -835,6 +884,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 49,
+    summary: `Explore Bhutan's unique governance philosophy that rejects GDP in favor of Gross National Happiness. By prioritizing spiritual wellbeing, cultural preservation, and environmental conservation, this Himalayan kingdom asks a vital question: what would our lives look like if we stopped measuring only productivity?`,
     type: "system",
     title: "Gross National Happiness in Bhutan",
     title_hi: "भूटान में सकल राष्ट्रीय प्रसन्नता",
@@ -852,6 +902,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 50,
+    summary: `A look at the massive global challenge of marine plastic pollution and the innovative, passive technologies designed to clean our oceans. This situation highlights how understanding natural currents can help us undo our ecological damage, urging us to act before it is too late.`,
     type: "situation",
     title: "The Ocean Cleanup Campaign",
     title_hi: "महासागर सफाई अभियान",
@@ -869,6 +920,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 51,
+    summary: `Explore Bhutan's unique governance philosophy that rejects GDP in favor of Gross National Happiness. By prioritizing spiritual wellbeing, cultural preservation, and environmental conservation, this Himalayan kingdom asks a vital question: what would our lives look like if we stopped measuring only productivity?`,
     type: "system",
     title: "Gross National Happiness in Bhutan",
     title_hi: "भूटान में सकल राष्ट्रीय प्रसन्नता",
@@ -886,6 +938,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 52,
+    summary: `A look at the massive global challenge of marine plastic pollution and the innovative, passive technologies designed to clean our oceans. This situation highlights how understanding natural currents can help us undo our ecological damage, urging us to act before it is too late.`,
     type: "situation",
     title: "The Ocean Cleanup Campaign",
     title_hi: "महासागर सफाई अभियान",
@@ -903,6 +956,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 53,
+    summary: `Explore Bhutan's unique governance philosophy that rejects GDP in favor of Gross National Happiness. By prioritizing spiritual wellbeing, cultural preservation, and environmental conservation, this Himalayan kingdom asks a vital question: what would our lives look like if we stopped measuring only productivity?`,
     type: "system",
     title: "Gross National Happiness in Bhutan",
     title_hi: "भूटान में सकल राष्ट्रीय प्रसन्नता",
@@ -920,6 +974,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 54,
+    summary: `A look at the massive global challenge of marine plastic pollution and the innovative, passive technologies designed to clean our oceans. This situation highlights how understanding natural currents can help us undo our ecological damage, urging us to act before it is too late.`,
     type: "situation",
     title: "The Ocean Cleanup Campaign",
     title_hi: "महासागर सफाई अभियान",
@@ -937,6 +992,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 55,
+    summary: `Explore Bhutan's unique governance philosophy that rejects GDP in favor of Gross National Happiness. By prioritizing spiritual wellbeing, cultural preservation, and environmental conservation, this Himalayan kingdom asks a vital question: what would our lives look like if we stopped measuring only productivity?`,
     type: "system",
     title: "Gross National Happiness in Bhutan",
     title_hi: "भूटान में सकल राष्ट्रीय प्रसन्नता",
@@ -954,6 +1010,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 56,
+    summary: `A look at the massive global challenge of marine plastic pollution and the innovative, passive technologies designed to clean our oceans. This situation highlights how understanding natural currents can help us undo our ecological damage, urging us to act before it is too late.`,
     type: "situation",
     title: "The Ocean Cleanup Campaign",
     title_hi: "महासागर सफाई अभियान",
@@ -971,6 +1028,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 57,
+    summary: `Explore Bhutan's unique governance philosophy that rejects GDP in favor of Gross National Happiness. By prioritizing spiritual wellbeing, cultural preservation, and environmental conservation, this Himalayan kingdom asks a vital question: what would our lives look like if we stopped measuring only productivity?`,
     type: "system",
     title: "Gross National Happiness in Bhutan",
     title_hi: "भूटान में सकल राष्ट्रीय प्रसन्नता",
@@ -988,6 +1046,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 58,
+    summary: `A look at the massive global challenge of marine plastic pollution and the innovative, passive technologies designed to clean our oceans. This situation highlights how understanding natural currents can help us undo our ecological damage, urging us to act before it is too late.`,
     type: "situation",
     title: "The Ocean Cleanup Campaign",
     title_hi: "महासागर सफाई अभियान",
@@ -1005,6 +1064,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 59,
+    summary: `Explore Bhutan's unique governance philosophy that rejects GDP in favor of Gross National Happiness. By prioritizing spiritual wellbeing, cultural preservation, and environmental conservation, this Himalayan kingdom asks a vital question: what would our lives look like if we stopped measuring only productivity?`,
     type: "system",
     title: "Gross National Happiness in Bhutan",
     title_hi: "भूटान में सकल राष्ट्रीय प्रसन्नता",
@@ -1022,6 +1082,7 @@ export const DUNIYA_ENTRIES: DuniyaEntry[] = [
   },
   {
     dayIndex: 60,
+    summary: `A look at the massive global challenge of marine plastic pollution and the innovative, passive technologies designed to clean our oceans. This situation highlights how understanding natural currents can help us undo our ecological damage, urging us to act before it is too late.`,
     type: "situation",
     title: "The Ocean Cleanup Campaign",
     title_hi: "महासागर सफाई अभियान",

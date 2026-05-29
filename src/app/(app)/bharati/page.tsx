@@ -82,6 +82,21 @@ export default function BharatiPage() {
               </div>
             </div>
 
+            {/* Summary Box */}
+            {selected.summary && (
+              <div 
+                className="p-5 border-l-4 rounded bg-[var(--bg-secondary)]" 
+                style={{ borderColor: 'var(--accent-saffron)' }}
+              >
+                <h4 className="text-[10px] uppercase tracking-widest font-semibold mb-2" style={{ color: 'var(--accent-saffron)' }}>
+                  संक्षेप · In Brief
+                </h4>
+                <p className="font-serif italic text-base leading-relaxed text-[var(--text-primary)]">
+                  {selected.summary}
+                </p>
+              </div>
+            )}
+
             {/* Detailed Content */}
             <div className="card-base p-6 space-y-4">
               {selected.content.split('\n\n').map((para: string, i: number) => (

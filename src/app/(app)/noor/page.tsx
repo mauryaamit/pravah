@@ -26,7 +26,7 @@ export default function NoorPage() {
     ? activeEntry.ignition_hi 
     : activeEntry.ignition;
 
-  const textToSpeak = `${currentIgnition}. ${activeEntry.spark}. ${activeEntry.invitation}`;
+  const textToSpeak = `${currentIgnition}. A Moment: ${activeEntry.the_moment}. ${activeEntry.spark}. ${activeEntry.invitation}`;
 
   return (
     <PageTransition>
@@ -36,7 +36,7 @@ export default function NoorPage() {
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 border-b pb-4" style={{ borderColor: 'var(--border-default)' }}>
           <div className="text-left w-full sm:w-auto">
             <p className="section-label">Ignite Room</p>
-            <h1 className="font-serif text-2xl" style={{ color: 'var(--text-primary)' }}>नूर - Noor</h1>
+            <h1 className="font-serif text-2xl" style={{ color: 'var(--text-primary)' }}>प्रेरणा - Prerna</h1>
           </div>
           
           <div className="flex items-center gap-4 flex-wrap justify-center">
@@ -78,26 +78,34 @@ export default function NoorPage() {
             exit={{ opacity: 0, y: -10 }}
             className="flex-1 flex flex-col justify-center py-8"
           >
-            <div className="bg-[var(--bg-secondary)] rounded-xl px-8 py-10 md:px-12 md:py-14 max-w-2xl mx-auto shadow-sm w-full space-y-8">
+            <div className="bg-[var(--bg-secondary)] rounded-xl px-8 py-10 md:px-12 md:py-14 max-w-2xl mx-auto shadow-sm w-full space-y-8 relative overflow-hidden">
+              
               {/* Floating Action Buttons */}
-              <div className="flex justify-end items-center gap-2">
+              <div className="flex justify-end items-center gap-2 relative z-10">
                 <ReadAloudButton text={textToSpeak} lang={script === 'hi' ? 'hi-IN' : 'en-IN'} size="sm" />
                 <RevisitButton roomId="noor" roomName="Noor" contentTitle={activeEntry.ignition.slice(0, 30) + '...'} contentSummary={activeEntry.attribution} />
                 <SutraNoteButton roomId="noor" roomName="Noor" contentTitle={activeEntry.ignition.slice(0, 30) + '...'} />
               </div>
 
-              {/* Ignition Text */}
-              <div className="space-y-4 text-center px-4">
+              {/* Decorative Quote Mark and Quote */}
+              <div className="relative text-center px-4">
+                <span 
+                  className="absolute -top-10 left-1/2 -translate-x-1/2 font-serif text-8xl pointer-events-none select-none opacity-30" 
+                  style={{ color: 'var(--accent-saffron)', fontFamily: 'Cormorant Garamond, serif' }}
+                >
+                  “
+                </span>
+                
                 <p 
-                  className={`font-serif text-2xl md:text-3xl text-center mx-auto max-w-xl ${script === 'hi' ? 'font-devanagari not-italic' : 'italic'}`}
-                  style={{ color: 'var(--text-primary)', lineHeight: 1.8 }}
+                  className={`font-serif text-3xl md:text-4xl text-center mx-auto max-w-xl relative z-10 ${script === 'hi' ? 'font-devanagari not-italic' : 'italic'}`}
+                  style={{ color: 'var(--text-primary)', lineHeight: 1.6 }}
                 >
                   {currentIgnition}
                 </p>
                 
-                <div className="space-y-1">
-                  <p className="text-sm font-sans uppercase tracking-widest text-center" style={{ color: 'var(--text-muted)' }}>
-                    {activeEntry.attribution}
+                <div className="space-y-1 mt-6">
+                  <p className="text-sm font-sans uppercase tracking-widest text-center" style={{ color: 'var(--text-primary)' }}>
+                    — {activeEntry.attribution}
                   </p>
                   <p className="text-xs font-sans italic text-center" style={{ color: 'var(--text-muted)' }}>
                     {activeEntry.attribution_context}
@@ -105,16 +113,25 @@ export default function NoorPage() {
                 </div>
               </div>
 
-              {/* Thin visual separator */}
-              <div className="w-12 h-[1px] mx-auto bg-[var(--border-default)]" />
+              {/* A Moment Section */}
+              {activeEntry.the_moment && (
+                <div className="space-y-3 max-w-lg mx-auto border-t pt-6" style={{ borderColor: 'var(--border-default)' }}>
+                  <h4 className="text-[10px] uppercase tracking-widest font-semibold text-center" style={{ color: 'var(--accent-saffron)' }}>
+                    एक पल · A Moment
+                  </h4>
+                  <p className="text-sm font-serif italic text-center leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                    {activeEntry.the_moment}
+                  </p>
+                </div>
+              )}
 
               {/* Spark & Invitation block */}
-              <div className="space-y-6 max-w-lg mx-auto">
+              <div className="space-y-6 max-w-lg mx-auto border-t pt-6" style={{ borderColor: 'var(--border-default)' }}>
                 <p className="text-base font-sans text-center" style={{ color: 'var(--text-secondary)', lineHeight: 1.8 }}>
                   {activeEntry.spark}
                 </p>
                 
-                <p className="font-serif italic text-xl text-center" style={{ color: 'var(--accent-saffron)' }}>
+                <p className="font-serif italic text-xl text-center font-semibold" style={{ color: 'var(--accent-saffron)' }}>
                   {activeEntry.invitation}
                 </p>
               </div>

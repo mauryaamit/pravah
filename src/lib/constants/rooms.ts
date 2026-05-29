@@ -18,7 +18,7 @@ export interface Room {
 
 export const ROOMS: Room[] = [
   // STANDALONE / GATEWAY
-  { id: 'sutr',        name: 'Sutr',         nameHi: 'सूत्र',       nameHindi: 'सूत्र',      emoji: '📖', description: 'Philosophical gateway to Pravah',            route: '/sutr',         colorVar: '--room-sutr',         colorHex: '#3D3560', cluster: 'sutr' as any },
+  { id: 'sutr',        name: 'Sutr',         nameHi: 'प्रस्तावना',  nameHindi: 'प्रस्तावना', emoji: '📖', description: 'Philosophical gateway to Pravah',            route: '/sutr',         colorVar: '--room-sutr',         colorHex: '#3D3560', cluster: 'sutr' as any },
 
   // DAILY
   { id: 'aarambh',     name: 'Aarambh',     nameHi: 'आरंभ',       nameHindi: 'आरंभ',      emoji: '🌅', description: 'Daily start - mood, intention, mantra',       route: '/aarambh',      colorVar: '--room-aarambh',      colorHex: '#C4873A', cluster: 'daily' },
@@ -29,7 +29,7 @@ export const ROOMS: Room[] = [
   // INNER
   { id: 'sukoon',      name: 'Sukoon',       nameHi: 'सुकून',      nameHindi: 'सुकून',     emoji: '🌧️', description: 'Poetry - Hindi, Roman Urdu, English',         route: '/sukoon',       colorVar: '--room-sukoon',       colorHex: '#5B6B8A', cluster: 'inner' },
   { id: 'manthan',     name: 'Manthan',      nameHi: 'मन्थन',      nameHindi: 'मन्थन',     emoji: '🌀', description: 'Mental models - the thinking tools of every discipline', route: '/manthan', colorVar: '--room-manthan', colorHex: '#6A3A8A', cluster: 'inner' },
-  { id: 'noor',        name: 'Noor',         nameHi: 'नूर',         nameHindi: 'नूर',       emoji: '✨', description: 'Daily fire - transformation, not motivation',   route: '/noor',         colorVar: '--room-noor',         colorHex: '#D4A853', cluster: 'inner' },
+  { id: 'noor',        name: 'Prerna',       nameHi: 'प्रेरणा',    nameHindi: 'प्रेरणा',   emoji: '✨', description: 'One person. One moment. One ignition.',        route: '/noor',         colorVar: '--room-noor',         colorHex: '#D4A853', cluster: 'inner' },
   { id: 'riyaz',       name: 'Riyaz',        nameHi: 'रियाज़',     nameHindi: 'रियाज़',    emoji: '🎵', description: 'Music and arts - the practice of beauty',      route: '/riyaz',        colorVar: '--room-riyaz',        colorHex: '#8A4A8A', cluster: 'inner' },
   { id: 'manas',       name: 'Manas',        nameHi: 'मानस',       nameHindi: 'मानस',      emoji: '🧘', description: 'Psychology and the science of human behavior', route: '/manas',        colorVar: '--room-manas',        colorHex: '#3A6A5A', cluster: 'inner' },
 
@@ -38,7 +38,8 @@ export const ROOMS: Room[] = [
   { id: 'neurolab',    name: 'NeuroLab',     nameHi: 'न्यूरोलैब', nameHindi: 'न्यूरोलैब', emoji: '🧠', description: 'Daily brain science',                          route: '/neurolab',     colorVar: '--room-neurolab',     colorHex: '#7A3A8A', cluster: 'knowledge' },
   { id: 'cosmos',      name: 'Cosmos',       nameHi: 'ब्रह्मांड', nameHindi: 'ब्रह्मांड', emoji: '🌌', description: 'Astrophysics and the infinite universe',        route: '/cosmos',       colorVar: '--room-cosmos',       colorHex: '#3A5A8A', cluster: 'knowledge' },
   { id: 'darshan',     name: 'Darshan',      nameHi: 'दर्शन',      nameHindi: 'दर्शन',     emoji: '🏛️', description: 'Philosophy - all schools of thought',          route: '/darshan',      colorVar: '--room-darshan',      colorHex: '#8A6A3A', cluster: 'knowledge' },
-  { id: 'bhasha',      name: 'Bhasha',        nameHi: 'भाषा',       nameHindi: 'भाषा',      emoji: '🔤', description: 'Language as the shape of thought',               route: '/bhasha',       colorVar: '--room-bhasha',       colorHex: '#B8860B', cluster: 'knowledge' },
+  { id: 'angrezi',     name: 'Angrezi',      nameHi: 'अंग्रेज़ी',  nameHindi: 'अंग्रेज़ी', emoji: '🔤', description: 'English as a living language - words, craft, mastery', route: '/angrezi', colorVar: '--room-angrezi',  colorHex: '#5B7FA6', cluster: 'knowledge' },
+  { id: 'lekh',        name: 'Lekh',          nameHi: 'लेख',        nameHindi: 'लेख',        emoji: '📰', description: 'Curated essays and articles - one per genre, every day', route: '/lekh',  colorVar: '--room-lekh',         colorHex: '#8B4A4A', cluster: 'knowledge' },
   { id: 'srot',        name: 'Srot',          nameHi: 'स्रोत',      nameHindi: 'स्रोत',     emoji: '📚', description: 'One deep read per day',                        route: '/srot',         colorVar: '--room-srot',         colorHex: '#3A6A8A', cluster: 'knowledge' },
   { id: 'vani',        name: 'Vani',          nameHi: 'वाणी',       nameHindi: 'वाणी',      emoji: '🪔', description: 'Sanskrit shlokas, dohas, and living folk wisdom', route: '/vani',         colorVar: '--room-vani',         colorHex: '#8B3A3A', cluster: 'knowledge' },
   { id: 'paradox',     name: 'Paradox',       nameHi: 'विरोधाभास',   nameHindi: 'विरोधाभास', emoji: '🧩', description: 'One paradox per day - fully explained',          route: '/paradox',      colorVar: '--room-paradox',      colorHex: '#4A3570', cluster: 'knowledge' },
@@ -54,6 +55,7 @@ export const ROOMS: Room[] = [
   { id: 'kathakar',    name: 'Kathakar',     nameHi: 'कथाकार',     nameHindi: 'कथाकार',    emoji: '📜', description: 'Stories across genres and centuries',          route: '/kathakar',     colorVar: '--room-kathakar',     colorHex: '#8A5A3A', cluster: 'creative' },
   { id: 'vibhav',      name: 'Vibhav',       nameHi: 'विभाव',      nameHindi: 'विभाव',     emoji: '👤', description: 'Person of the day - their life, their way',    route: '/vibhav',       colorVar: '--room-vibhav',       colorHex: '#6A8A4A', cluster: 'creative' },
   { id: 'lekhak',      name: 'Lekhak',       nameHi: 'लेखक',       nameHindi: 'लेखक',      emoji: '✍️', description: 'Writer of the day - literature universe',     route: '/lekhak',       colorVar: '--room-lekhak',       colorHex: '#7A5A8A', cluster: 'creative' },
+
   { id: 'anand',       name: 'Anand',        nameHi: 'आनंद',       nameHindi: 'आनंद',      emoji: '🎨', description: 'Joy room - humor, illusions, wonder, delight', route: '/anand',        colorVar: '--room-anand',        colorHex: '#C47A3A', cluster: 'creative' },
 ];
 

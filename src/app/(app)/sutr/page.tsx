@@ -47,7 +47,7 @@ export default function SutrPage() {
 
             <div className="relative z-10 space-y-5">
               <span className="sutr-section-label text-sm tracking-[0.25em] uppercase block">
-                Sutr · सूत्र
+              प्रस्तावना · Prastavana
               </span>
               <h1 className="sutr-heading text-4xl sm:text-6xl font-light tracking-wide" style={{ color: '#3D3560' }}>
                 Pravah
@@ -114,7 +114,7 @@ export default function SutrPage() {
           <section className="sutr-section space-y-8">
             <div className="text-center space-y-3">
               <h2 className="sutr-heading text-2xl sm:text-3xl font-serif" style={{ color: '#3D3560' }}>
-                The Twenty-Six Rooms
+                The Twenty-Eight Rooms
               </h2>
               <p className="sutr-section-label text-xs uppercase tracking-widest">
                 Walk through the portals of the sanctuary

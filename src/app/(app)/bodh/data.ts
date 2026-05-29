@@ -1,4 +1,5 @@
 export interface BodhEntry {
+  summary: string;
   dayIndex: number;
   domain: string;             // e.g. "Mathematics" / "History" / "Economics"
   domain_hi: string;          // e.g. "गणित"
@@ -13,6 +14,7 @@ export interface BodhEntry {
 export const BODH_ENTRIES: BodhEntry[] = [
   {
     dayIndex: 1,
+    summary: `In the realm of set theory and geometry, the Banach-Tarski paradox stands as one of the most counterintuitive discoveries. It asserts that a solid three-dimensional ball can be split into a finite number of non-overlapping pieces, which can then be put back together in a different way to yield two identical copies of the original ball.`,
     domain: "Mathematics",
     domain_hi: "गणित",
     idea_title: "The Banach-Tarski Paradox",
@@ -24,6 +26,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 2,
+    summary: `Kurt Gödel shattered the mathematical world in 1931 by proving that any consistent axiomatic system capable of doing basic arithmetic is inherently incomplete. He demonstrated that within any such system, there will always be true statements that cannot be proven using the rules of that system.`,
     domain: "Mathematics",
     domain_hi: "गणित",
     idea_title: "Gödel's Incompleteness Theorems",
@@ -35,6 +38,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 3,
+    summary: `Chaos theory is the study of systems that are highly sensitive to initial conditions, a phenomenon popularly known as the butterfly effect. In these systems, small differences in the starting state, like the flap of a butterfly's wings, can lead to vast differences in the final outcome, making long-term prediction impossible.`,
     domain: "Mathematics",
     domain_hi: "गणित",
     idea_title: "Chaos Theory",
@@ -46,6 +50,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 4,
+    summary: `Gabriel's Horn, also known as Torricelli's trumpet, is a geometric figure that possesses an infinite surface area but a finite volume. It is created by rotating the curve of the function y equals one over x around the x-axis, for all values of x greater than or equal to one. Using calculus, one can prove that the horn can be filled with a finite amount of paint, yet it would take an infinite amount of paint to coat its outer surface.`,
     domain: "Mathematics",
     domain_hi: "गणित",
     idea_title: "Gabriel's Horn",
@@ -57,6 +62,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 5,
+    summary: `Georg Cantor revolutionized mathematics by demonstrating that infinity is not a single, uniform concept, but rather a collection of different sizes. He introduced transfinite numbers to measure these different infinities.`,
     domain: "Mathematics",
     domain_hi: "गणित",
     idea_title: "Cantor's Transfinite Numbers",
@@ -68,6 +74,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 6,
+    summary: `The Prisoner's Dilemma is a foundational model in game theory that demonstrates why two rational individuals might not cooperate, even if it is in their best interest to do so. In this scenario, two prisoners are interrogated separately. If both betray each other, they receive moderate sentences.`,
     domain: "Mathematics",
     domain_hi: "गणित",
     idea_title: "Prisoner's Dilemma",
@@ -79,6 +86,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 7,
+    summary: `Quantum entanglement is a physical phenomenon that occurs when pairs or groups of particles are generated, interact, or share spatial proximity in ways such that the quantum state of each particle cannot be described independently of the state of the others. When two particles are entangled, measuring the state of one instantaneously determines the state of the other, no matter how far apart they are, even if they are on opposite sides of the universe.`,
     domain: "Physics",
     domain_hi: "भौतिकी",
     idea_title: "Quantum Entanglement",
@@ -90,6 +98,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 8,
+    summary: `The Holographic Principle is a property of string theories and a supposed property of quantum gravity. It states that the description of a volume of space can be thought of as encoded on a lower-dimensional boundary to the region, much like a two-dimensional hologram can project a three-dimensional image.`,
     domain: "Physics",
     domain_hi: "भौतिकी",
     idea_title: "The Holographic Principle",
@@ -101,6 +110,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 9,
+    summary: `Maxwell's Demon is a thought experiment created by James Clerk Maxwell in 1867 to challenge the Second Law of Thermodynamics, which states that entropy must always increase. The demon guards a door between two chambers of gas. By letting fast, hot molecules pass into one chamber and slow, cold molecules into the other, the demon decreases entropy without doing work, violating the law. The paradox was solved by Leo Szilard and Rolf Landauer, who proved that the demon must store and eventually erase information about the molecules, which requires work and generates heat, thereby saving the Second Law. This physical principle reveals the deeply interconnected and counterintuitive nature of the universe at its most fundamental level.`,
     domain: "Physics",
     domain_hi: "भौतिकी",
     idea_title: "Maxwell's Demon",
@@ -112,6 +122,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 10,
+    summary: `Schrödinger's Cat is a famous thought experiment devised by Erwin Schrödinger in 1935 to illustrate the absurdity of the Copenhagen interpretation of quantum mechanics when applied to everyday objects. In this scenario, a cat is placed in a sealed box with a radioactive atom, a Geiger counter, a vial of poison, and a hammer.`,
     domain: "Physics",
     domain_hi: "भौतिकी",
     idea_title: "Schrödinger's Cat",
@@ -123,6 +134,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 11,
+    summary: `The Many-Worlds Interpretation of quantum mechanics, proposed by Hugh Everett III in 1957, suggests that the wave function never collapses. Instead, every time a quantum measurement is made, the universe splits into multiple, non-communicating parallel universes, each representing a different outcome of the measurement.`,
     domain: "Physics",
     domain_hi: "भौतिकी",
     idea_title: "The Many-Worlds Interpretation",
@@ -134,6 +146,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 12,
+    summary: `The Planck scale defines the absolute limits of size, time, and energy in our universe, below which the traditional laws of physics, including general relativity and quantum mechanics, break down completely. Named after Max Planck, it includes the Planck length, which is about ten to the power of minus thirty-five meters, and the Planck time, the time it takes light to travel that distance.`,
     domain: "Physics",
     domain_hi: "भौतिकी",
     idea_title: "Planck Scale",
@@ -145,6 +158,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 13,
+    summary: `Neuroplasticity is the brain's ability to reorganize itself by forming new neural connections throughout life. For decades, scientists believed the adult brain was fixed and unchangeable.`,
     domain: "Neuroscience",
     domain_hi: "तंत्रिका विज्ञान",
     idea_title: "Neuroplasticity",
@@ -156,6 +170,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 14,
+    summary: `The Default Mode Network is a network of interacting brain regions that activates when a person is not focused on the outside world. Discovered using neuroimaging, this network becomes active during daydreaming, mind-wandering, recalling memories, envisioning the future, and thinking about the self.`,
     domain: "Neuroscience",
     domain_hi: "तंत्रिका विज्ञान",
     idea_title: "Default Mode Network",
@@ -167,6 +182,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 15,
+    summary: `Mirror neurons are a class of visuomotor neurons discovered in the premotor cortex of primates that fire both when an individual performs an action and when they observe another individual performing the same action. In essence, the brain mirrors the actions of others, simulating their movements and intentions internally.`,
     domain: "Neuroscience",
     domain_hi: "तंत्रिका विज्ञान",
     idea_title: "Mirror Neurons",
@@ -178,6 +194,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 16,
+    summary: `During childhood and adolescence, the brain undergoes a massive regulatory process known as synaptic pruning. It is the neurological equivalent of sculpting, where the brain systematically eliminates weaker, less active synaptic connections while strengthening those that are used more frequently.`,
     domain: "Neuroscience",
     domain_hi: "तंत्रिका विज्ञान",
     idea_title: "Synaptic Pruning",
@@ -189,6 +206,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 17,
+    summary: `The split-brain phenomenon emerges in patients whose corpus callosum, the thick band of nerve fibers connecting the left and right hemispheres of the brain, has been surgically severed to treat severe epilepsy. Pioneering studies by Roger Sperry and Michael Gazzaniga revealed that the two hemispheres can then act independently, each possessing its own perception, memory, and impulses.`,
     domain: "Neuroscience",
     domain_hi: "तंत्रिका विज्ञान",
     idea_title: "The Split-Brain Phenomenon",
@@ -200,6 +218,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 18,
+    summary: `Predictive processing is a revolutionary theory suggesting the brain is not a passive receiver of sensory inputs, but an active prediction engine. Instead of waiting for light or sound waves to reach our senses, the brain constantly generates top-down predictions about what is happening in the world.`,
     domain: "Neuroscience",
     domain_hi: "तंत्रिका विज्ञान",
     idea_title: "Predictive Processing",
@@ -211,6 +230,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 19,
+    summary: `The Ship of Theseus is a thought experiment that asks whether an object that has had all of its components replaced remains fundamentally the same object. First recorded by Plutarch, the paradox describes a ship whose wooden planks are replaced one by one as they decay.`,
     domain: "Philosophy",
     domain_hi: "दर्शनशास्त्र",
     idea_title: "Ship of Theseus",
@@ -222,6 +242,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 20,
+    summary: `Epistemic humility is the philosophical stance of acknowledging the limits of our own knowledge and the fallibility of our cognitive processes. Rooted in Socrates' famous declaration that he only knew that he knew nothing, this principle encourages us to remain open to new evidence and alternative viewpoints.`,
     domain: "Philosophy",
     domain_hi: "दर्शनशास्त्र",
     idea_title: "Epistemic Humility",
@@ -233,6 +254,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 21,
+    summary: `Solipsism is the philosophical idea that only one's own mind is sure to exist. It asserts that knowledge of anything outside one's own mind, including the external world and other people, is completely unsure and cannot be proven.`,
     domain: "Philosophy",
     domain_hi: "दर्शनशास्त्र",
     idea_title: "Solipsism",
@@ -244,6 +266,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 22,
+    summary: `Plato's Allegory of the Cave describes prisoners chained inside a dark cave, facing a wall. Behind them, a fire burns, and puppeteers carry objects, casting shadows on the wall.`,
     domain: "Philosophy",
     domain_hi: "दर्शनशास्त्र",
     idea_title: "The Allegory of the Cave",
@@ -255,6 +278,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 23,
+    summary: `The problem of induction, famously articulated by David Hume, questions our logical justification for believing that the future will resemble the past. We assume that because the sun has risen every day, it will rise tomorrow, or because bread has nourished us, it will continue to do so. However, Hume pointed out that this assumption cannot be proven logically; it is based on habit and custom, not deductive reasoning.`,
     domain: "Philosophy",
     domain_hi: "दर्शनशास्त्र",
     idea_title: "The Problem of Induction",
@@ -266,6 +290,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 24,
+    summary: `The simulation hypothesis, popularized by Nick Bostrom, proposes that our physical reality is actually an artificial simulation, run by a technologically advanced civilization. Bostrom argues that at least one of three propositions is true: civilizations go extinct before developing this technology, they lose interest in running simulations, or we are almost certainly living in one. As our own computer graphics, physics engines, and virtual worlds approach reality, it becomes mathematically plausible that a posthuman civilization could run billions of ancestor simulations.`,
     domain: "Philosophy",
     domain_hi: "दर्शनशास्त्र",
     idea_title: "Simulation Hypothesis",
@@ -277,6 +302,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 25,
+    summary: `Cognitive dissonance is the psychological discomfort felt by an individual who holds two or more contradictory beliefs, ideas, or values at the same time. First investigated by Leon Festinger, the theory states that humans have an inner drive to keep all our beliefs and attitudes in harmony.`,
     domain: "Cognitive Science",
     domain_hi: "संज्ञानात्मक विज्ञान",
     idea_title: "Cognitive Dissonance",
@@ -288,6 +314,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 26,
+    summary: `Embodied cognition is a theory in cognitive science suggesting that our thoughts are deeply influenced, and even shaped, by our physical bodies and their interactions with the environment. For centuries, Western thought viewed the mind as a computer program running on brain hardware, independent of the body.`,
     domain: "Cognitive Science",
     domain_hi: "संज्ञानात्मक विज्ञान",
     idea_title: "Embodied Cognition",
@@ -299,6 +326,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 27,
+    summary: `Dual process theory, popularized by Daniel Kahneman, posits that human thinking is governed by two distinct cognitive systems. System One is fast, automatic, emotional, and unconscious.`,
     domain: "Cognitive Science",
     domain_hi: "संज्ञानात्मक विज्ञान",
     idea_title: "Dual Process Theory",
@@ -310,6 +338,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 28,
+    summary: `Metacognition is commonly defined as thinking about thinking or knowing about knowing. It involves the active monitoring and regulation of one's own cognitive processes.`,
     domain: "Cognitive Science",
     domain_hi: "संज्ञानात्मक विज्ञान",
     idea_title: "Metacognition",
@@ -321,6 +350,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 29,
+    summary: `The Hyperactive Agency Detection Device is a hypothetical cognitive system proposed by evolutionary psychologists to explain the human tendency to attribute intention and agency to inanimate objects and random events. From an evolutionary perspective, it was safer for our ancestors to mistake a rustling bush for a hidden predator (attributing agency) than to mistake a predator for wind.`,
     domain: "Cognitive Science",
     domain_hi: "संज्ञानात्मक विज्ञान",
     idea_title: "Hyperactive Agency Detection Device",
@@ -332,6 +362,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 30,
+    summary: `Semiotics is the study of signs and symbols, and how meaning is constructed and communicated. Founded by Ferdinand de Saussure and Charles Sanders Peirce, it analyzes how words, images, sounds, and gestures function as signs that represent concepts.`,
     domain: "Cognitive Science",
     domain_hi: "संज्ञानात्मक विज्ञान",
     idea_title: "Semiotics",
@@ -343,6 +374,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 31,
+    summary: `Natural selection, the core mechanism of evolution proposed by Charles Darwin, is the process by which organisms better adapted to their environment tend to survive and produce more offspring. It operates on three basic principles: variation in traits among individuals, inheritance of these traits, and differential survival based on environmental pressures.`,
     domain: "Evolutionary Biology",
     domain_hi: "क्रमिक विकासवादी जीवविज्ञान",
     idea_title: "Natural Selection",
@@ -354,6 +386,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 32,
+    summary: `Epigenetics is the study of how environmental factors can change gene expression without altering the underlying DNA sequence. For a long time, it was believed that our genes were fixed at birth and passed on unchanged.`,
     domain: "Evolutionary Biology",
     domain_hi: "क्रमिक विकासवादी जीवविज्ञान",
     idea_title: "Epigenetics",
@@ -365,6 +398,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 33,
+    summary: `Symbiogenesis is an evolutionary theory, pioneered by Lynn Margulis, which posits that eukaryotic cells (the complex cells that make up plants and animals) evolved from the symbiotic merger of simpler, prokaryotic organisms. Mitochondria, the powerhouses of our cells, were once independent bacteria that were engulfed by another cell.`,
     domain: "Evolutionary Biology",
     domain_hi: "क्रमिक विकासवादी जीवविज्ञान",
     idea_title: "Symbiogenesis",
@@ -376,6 +410,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 34,
+    summary: `The Red Queen hypothesis is an evolutionary theory proposing that organisms must constantly adapt, evolve, and proliferate not merely to gain a reproductive advantage, but simply to survive against ever-evolving opposing organisms in an ever-shifting environment. Named after the Red Queen in Lewis Carroll's Through the Looking-Glass, who states that it takes all the running you can do to keep in the same place, this concept explains why sexual reproduction evolved to generate genetic diversity.`,
     domain: "Evolutionary Biology",
     domain_hi: "क्रमिक विकासवादी जीवविज्ञान",
     idea_title: "Red Queen Hypothesis",
@@ -387,6 +422,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 35,
+    summary: `An evolutionary spandrel is a biological trait that is a byproduct of the evolution of some other trait, rather than a direct product of adaptive selection. The term was borrowed from architecture by Stephen Jay Gould and Richard Lewontin.`,
     domain: "Evolutionary Biology",
     domain_hi: "क्रमिक विकासवादी जीवविज्ञान",
     idea_title: "Evolutionary Spandrels",
@@ -398,6 +434,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 36,
+    summary: `Kin selection is an evolutionary strategy that favors the reproductive success of an organism's relatives, even at a cost to the organism's own survival and reproduction. Mathematically formalized by W.D.`,
     domain: "Evolutionary Biology",
     domain_hi: "क्रमिक विकासवादी जीवविज्ञान",
     idea_title: "Kin Selection",
@@ -409,6 +446,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 37,
+    summary: `Opportunity cost is the loss of potential gain from other alternatives when one alternative is chosen. In a world of finite resources, time, and attention, every choice we make automatically involves rejecting all other choices.`,
     domain: "Economics",
     domain_hi: "अर्थशास्त्र",
     idea_title: "Opportunity Cost",
@@ -420,6 +458,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 38,
+    summary: `The Tragedy of the Commons is an economics concept describing a situation where individual users, acting independently according to their own self-interest, behave contrary to the common good of all users by depleting or spoiling a shared resource. First described by William Forster Lloyd and later popularized by Garrett Hardin, it explains why open pastures, fish stocks, and clean air are routinely overexploited.`,
     domain: "Economics",
     domain_hi: "अर्थशास्त्र",
     idea_title: "Tragedy of the Commons",
@@ -431,6 +470,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 39,
+    summary: `Creative destruction is a term coined by sociologist Werner Sombart and popularized by economist Joseph Schumpeter in 1942. It describes the process of industrial mutation that constantly revolutionizes the economic structure from within, incessantly destroying the old one and incessantly creating a new one. Schumpeter argued that capitalism cannot be understood without recognizing this violent, turbulent wave, where new innovations, technologies, and business models drive economic growth by making older industries, jobs, and practices obsolete.`,
     domain: "Economics",
     domain_hi: "अर्थशास्त्र",
     idea_title: "Creative Destruction",
@@ -442,6 +482,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 40,
+    summary: `Marginal utility is the additional satisfaction or benefit that a consumer derives from buying an additional unit of a commodity or service. The law of diminishing marginal utility states that as a person consumes more of a product, the satisfaction derived from each additional unit decreases.`,
     domain: "Economics",
     domain_hi: "अर्थशास्त्र",
     idea_title: "Marginal Utility",
@@ -453,6 +494,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 41,
+    summary: `A Nash equilibrium, named after mathematician John Nash, is a situation in game theory where each player has chosen a strategy, and no player can benefit by changing their strategy while the other players keep theirs unchanged. It represents a state of stability in a strategic game, where everyone is making the best decision possible given what others are doing.`,
     domain: "Economics",
     domain_hi: "अर्थशास्त्र",
     idea_title: "Nash Equilibrium",
@@ -464,6 +506,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 42,
+    summary: `Goodhart's Law, named after economist Charles Goodhart, states that when a measure becomes a target, it ceases to be a good measure. When we select a metric to evaluate performance, people will optimize their behavior to meet that specific metric, often distorting the system and destroying the original goal.`,
     domain: "Economics",
     domain_hi: "अर्थशास्त्र",
     idea_title: "Goodhart's Law",
@@ -475,6 +518,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 43,
+    summary: `Emergence is the phenomenon where a whole entity exhibits properties and behaviors that its individual parts do not possess on their own. It is summed up by the phrase: the whole is greater than the sum of its parts. For example, individual water molecules are not wet, but water in bulk is. Individual neurons do not have thoughts, but the brain does.`,
     domain: "Systems Theory",
     domain_hi: "प्रणाली सिद्धांत",
     idea_title: "Emergence",
@@ -486,6 +530,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 44,
+    summary: `A feedback loop is a process where the output of a system is circled back to be used as input. Systems are governed by two types of feedback loops: positive and negative.`,
     domain: "Systems Theory",
     domain_hi: "प्रणाली सिद्धांत",
     idea_title: "Feedback Loops",
@@ -497,6 +542,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 45,
+    summary: `Homeostasis, first conceptualized by Claude Bernard and named by Walter Cannon, is the self-regulating process by which biological systems maintain internal stability while adjusting to changing external conditions. It is the body's effort to keep its internal environment constant, regulating temperature, pH, and nutrient concentrations within narrow, life-supporting limits.`,
     domain: "Systems Theory",
     domain_hi: "प्रणाली सिद्धांत",
     idea_title: "Homeostasis",
@@ -508,6 +554,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 46,
+    summary: `Scale invariance is a feature of objects or laws that do not change if scales of length, energy, or other variables are multiplied by a common factor. In geometry, this property is displayed in fractals, where the same patterns repeat at smaller and smaller scales, like coastlines, river networks, or Romanesco broccoli.`,
     domain: "Systems Theory",
     domain_hi: "प्रणाली सिद्धांत",
     idea_title: "Scale Invariance",
@@ -519,6 +566,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 47,
+    summary: `Path dependence is the idea that decisions we face in any given circumstance are limited by the decisions we made in the past, even when past circumstances are no longer relevant. In economics and sociology, it explains why inefficient standards persist.`,
     domain: "Systems Theory",
     domain_hi: "प्रणाली सिद्धांत",
     idea_title: "Path Dependence",
@@ -530,6 +578,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 48,
+    summary: `Cybernetics, founded by Norbert Wiener, is the transdisciplinary study of the structure of regulatory systems. It focuses on how flow of information, feedback, and control loops operate in machines, living organisms, and social institutions.`,
     domain: "Systems Theory",
     domain_hi: "प्रणाली सिद्धांत",
     idea_title: "Cybernetics",
@@ -541,6 +590,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 49,
+    summary: `The Sapir-Whorf hypothesis, also known as linguistic relativity, proposes that the structure of a language influences its speakers' worldview and cognition. Edward Sapir and Benjamin Lee Whorf argued that language is not just a tool for voicing thoughts, but rather the framework that shapes them.`,
     domain: "Linguistics",
     domain_hi: "भाषाविज्ञान",
     idea_title: "Sapir-Whorf Hypothesis",
@@ -552,6 +602,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 50,
+    summary: `Universal Grammar is a theory in linguistics, proposed by Noam Chomsky, suggesting that the ability to learn grammar is hard-wired into the human brain from birth. Chomsky argued that children could not learn the complex rules of language so quickly based solely on the incomplete speech they hear around them, a problem known as the poverty of the stimulus.`,
     domain: "Linguistics",
     domain_hi: "भाषाविज्ञान",
     idea_title: "Universal Grammar",
@@ -563,6 +614,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 51,
+    summary: `Semantic shift is the evolution of word meanings over time, where a word takes on a completely different definition than its original historical root. This process is driven by social changes, technological innovations, and cultural metaphors.`,
     domain: "Linguistics",
     domain_hi: "भाषाविज्ञान",
     idea_title: "Semantic Shift",
@@ -574,6 +626,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 52,
+    summary: `A phonestheme is a systematic phoneme or cluster of phonemes that shares a common meaning or association in a language, despite there being no logical reason for the connection. In English, the sound cluster gl- is found in many words associated with light or sight, such as gleam, glow, glisten, glitter, and glance.`,
     domain: "Linguistics",
     domain_hi: "भाषाविज्ञान",
     idea_title: "Phonestheme",
@@ -585,6 +638,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 53,
+    summary: `A double entendre is a figure of speech or a particular way of wording that is devised to be understood in two different ways, with one meaning being obvious and literal, while the other is often risqué or ironic. Rooted in the ambiguity of language, it relies on homophones, puns, and cultural context to convey hidden messages.`,
     domain: "Linguistics",
     domain_hi: "भाषाविज्ञान",
     idea_title: "Double Entendre",
@@ -596,6 +650,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 54,
+    summary: `Linguistic relativity suggests that the structure of language affects its speakers' world view and cognition. Unlike the strong version of the hypothesis, which claims that language limits thought, the weak version claims that language influences how we classify and remember things.`,
     domain: "Linguistics",
     domain_hi: "भाषाविज्ञान",
     idea_title: "Linguistic Relativity",
@@ -607,6 +662,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 55,
+    summary: `Cyclical history is the philosophical view that history does not progress in a linear fashion toward a specific destination, but rather repeats itself in predictable cycles. This perspective is found in many ancient traditions, such as the Hindu concept of Yugas and the Greek cycle of regimes.`,
     domain: "History",
     domain_hi: "इतिहास",
     idea_title: "Cyclical History",
@@ -618,6 +674,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 56,
+    summary: `Historiography is the study of how history is written, analyzing the methods, sources, and biases of historians over time. It reveals that history is not a collection of objective facts, but rather a series of narratives constructed from a specific point of view.`,
     domain: "History",
     domain_hi: "इतिहास",
     idea_title: "Historiography",
@@ -629,6 +686,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 57,
+    summary: `Presentism is the introduction of present-day ideas and perspectives into depictions or interpretations of the past. It is a bias in historical analysis, where we judge the actions, beliefs, and morals of historical figures based on modern ethical standards rather than the context of their own time.`,
     domain: "History",
     domain_hi: "इतिहास",
     idea_title: "Presentism",
@@ -640,6 +698,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 58,
+    summary: `The Great Man Theory, popularized by Thomas Carlyle in the nineteenth century, suggests that history is primarily driven by the actions of highly influential individuals. According to this view, figures like Napoleon, Ashoka, or Abraham Lincoln shaped the course of human events through their exceptional leadership, genius, and moral character.`,
     domain: "History",
     domain_hi: "इतिहास",
     idea_title: "The Great Man Theory",
@@ -651,6 +710,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 59,
+    summary: `Cliometrics, also known as new economic history, is the systematic application of economic theory and quantitative methods to the study of history. Founded in the mid-twentieth century, it revolutionized historical research by replacing traditional narrative descriptions with data analysis, statistical modeling, and counterfactual analysis.`,
     domain: "History",
     domain_hi: "इतिहास",
     idea_title: "Cliometrics",
@@ -662,6 +722,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 60,
+    summary: `Structural history, associated with the French Annales School and historians like Fernand Braudel, prioritizes long-term, slow-moving structures over short-term political events. Braudel divided history into three levels: the geographic time of the environment (the long term), the social time of economies and cultures (the medium term), and the individual time of events and politics (the short term).`,
     domain: "History",
     domain_hi: "इतिहास",
     idea_title: "Structural History",
@@ -673,6 +734,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 61,
+    summary: `Social capital is a concept in sociology that refers to the networks of relationships among people who live and work in a particular society, enabling that society to function effectively. It includes shared values, trust, reciprocity, and social networks that facilitate cooperation for mutual benefit.`,
     domain: "Sociology",
     domain_hi: "समाजशास्त्र",
     idea_title: "Social Capital",
@@ -684,6 +746,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 62,
+    summary: `The Panopticon is a type of institutional building designed by philosopher Jeremy Bentham, allowing all inmates to be observed by a single watchman without their knowing if they are being watched. Bentham's design consists of a circular structure with cells around the circumference and a tower in the center.`,
     domain: "Sociology",
     domain_hi: "समाजशास्त्र",
     idea_title: "Panopticon",
@@ -695,6 +758,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 63,
+    summary: `Hyperreality is a concept in semiotics and postmodern sociology, developed by Jean Baudrillard. It describes a condition in which what is real and what is fiction are seamlessly blended together so that there is no clear distinction for the spectator.`,
     domain: "Sociology",
     domain_hi: "समाजशास्त्र",
     idea_title: "Hyperreality",
@@ -706,6 +770,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 64,
+    summary: `Anomie is a sociological term introduced by Émile Durkheim to describe a state of normlessness, where society's social norms and collective values have broken down or lost their authority. Durkheim argued that rapid economic and social change can leave individuals without clear moral guidelines, leading to feelings of aimlessness, alienation, and despair.`,
     domain: "Sociology",
     domain_hi: "समाजशास्त्र",
     idea_title: "Anomie",
@@ -717,6 +782,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 65,
+    summary: `McDonaldisation is a term coined by sociologist George Ritzer to describe the process by which the principles of the fast-food restaurant are coming to dominate more sectors of American society and the rest of the world. Ritzer identifies four core components: efficiency, calculability, predictability, and control through technology.`,
     domain: "Sociology",
     domain_hi: "समाजशास्त्र",
     idea_title: "McDonaldisation",
@@ -728,6 +794,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 66,
+    summary: `The strength of weak ties is a pioneering sociological theory by Mark Granovetter, demonstrating that our acquaintances (weak ties) are more valuable than close friends (strong ties) for obtaining new information and opportunities. Strong ties form dense, closed cliques where everyone knows the same information.`,
     domain: "Sociology",
     domain_hi: "समाजशास्त्र",
     idea_title: "Strength of Weak Ties",
@@ -739,6 +806,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 67,
+    summary: `Turing completeness, named after computer scientist Alan Turing, describes a system of data-manipulation rules that can simulate any single-tape Turing machine. A programming language or computational system is Turing complete if it can solve any computational problem, given enough time and memory, regardless of complexity.`,
     domain: "Computer Science",
     domain_hi: "कंप्यूटर विज्ञान",
     idea_title: "Turing Completeness",
@@ -750,6 +818,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 68,
+    summary: `The halting problem is a famous computational decision problem proved unsolvable by Alan Turing in 1936. It asks whether a computer program, given a specific input, will finish running (halt) or run forever in an infinite loop.`,
     domain: "Computer Science",
     domain_hi: "कंप्यूटर विज्ञान",
     idea_title: "Halting Problem",
@@ -761,6 +830,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 69,
+    summary: `The P vs NP problem is the most famous unsolved question in computer science. It asks whether every problem whose solution can be quickly verified by a computer (NP) can also be solved quickly by a computer (P).`,
     domain: "Computer Science",
     domain_hi: "कंप्यूटर विज्ञान",
     idea_title: "P vs NP Problem",
@@ -772,6 +842,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 70,
+    summary: `Claude Shannon founded information theory in 1948 by mathematically defining information as the reduction of uncertainty. He introduced the concept of the bit as the fundamental unit of information and proved that any message can be compressed and transmitted reliably over a noisy channel up to a strict limit, known as the Shannon capacity.`,
     domain: "Computer Science",
     domain_hi: "कंप्यूटर विज्ञान",
     idea_title: "Shannon's Information Theory",
@@ -783,6 +854,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 71,
+    summary: `Conway's Game of Life is a cellular automaton designed by mathematician John Horton Conway in 1970. It is a zero-player game, meaning its evolution is determined by its initial state.`,
     domain: "Computer Science",
     domain_hi: "कंप्यूटर विज्ञान",
     idea_title: "Conway's Game of Life",
@@ -794,6 +866,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 72,
+    summary: `The Chinese Room is a famous thought experiment devised by philosopher John Searle in 1980 to challenge the concept of strong artificial intelligence. Searle imagines himself inside a closed room, following a rule-book to manipulate Chinese symbols and respond to questions written in Chinese.`,
     domain: "Computer Science",
     domain_hi: "कंप्यूटर विज्ञान",
     idea_title: "The Chinese Room Argument",
@@ -805,6 +878,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 73,
+    summary: `A trophic cascade is an ecological phenomenon triggered by the addition or removal of top predators, which propagates down the food web and alters the entire ecosystem. The classic example is the reintroduction of wolves to Yellowstone National Park.`,
     domain: "Ecology",
     domain_hi: "पारिस्थितिकी",
     idea_title: "Trophic Cascade",
@@ -816,6 +890,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 74,
+    summary: `The Gaia hypothesis, proposed by James Lovelock and co-developed by Lynn Margulis, views the Earth as a complex, self-regulating system that maintains the conditions for life. It asserts that the biosphere, atmosphere, oceans, and soil actively interact to maintain temperature, oxygen levels, and ocean salinity within a stable, life-supporting range, resembling a single organism.`,
     domain: "Ecology",
     domain_hi: "पारिस्थितिकी",
     idea_title: "Gaia Hypothesis",
@@ -827,6 +902,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 75,
+    summary: `Carrying capacity is the maximum population size of a biological species that a specific environment can sustain indefinitely, given the food, water, habitat, and other available resources. When a population exceeds its carrying capacity, it overexploits its environment, leading to resource depletion, starvation, and a subsequent population crash.`,
     domain: "Ecology",
     domain_hi: "पारिस्थितिकी",
     idea_title: "Carrying Capacity",
@@ -838,6 +914,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 76,
+    summary: `A keystone species is an organism that helps define an entire ecosystem, playing a critical role in maintaining its structure and preventing it from collapsing. Without its keystone species, the ecosystem would be dramatically different or cease to exist altogether.`,
     domain: "Ecology",
     domain_hi: "पारिस्थितिकी",
     idea_title: "Keystone Species",
@@ -849,6 +926,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 77,
+    summary: `The theory of island biogeography, developed by Robert MacArthur and E.O. Wilson, describes the factors that affect the species richness and diversity of isolated natural communities.`,
     domain: "Ecology",
     domain_hi: "पारिस्थितिकी",
     idea_title: "Island Biogeography",
@@ -860,6 +938,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 78,
+    summary: `An ecological niche is the specific role and position a species has in its environment, including how it meets its needs for food and shelter, how it survives, and how it reproduces. It encompasses all physical, chemical, and biological factors a species requires to survive.`,
     domain: "Ecology",
     domain_hi: "पारिस्थितिकी",
     idea_title: "Ecological Niche",
@@ -871,6 +950,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 79,
+    summary: `Cultural relativism is the principle that an individual's beliefs, values, and practices should be understood based on that person's own culture, rather than be judged against the criteria of another. Established by Franz Boas in the early twentieth century, it challenged the ethnocentric view that Western civilization is the pinnacle of human development.`,
     domain: "Anthropology",
     domain_hi: "मानवविज्ञान",
     idea_title: "Cultural Relativism",
@@ -882,6 +962,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 80,
+    summary: `Structuralism, pioneered in anthropology by Claude Lévi-Strauss, posits that human cultures can be understood by analyzing the underlying, universal structures of the human mind. Lévi-Strauss argued that cultural phenomena, such as myths, kinship systems, and cooking habits, are not random, but are surface expressions of deep, binary oppositions (like raw and cooked, nature and culture) that structure human thought.`,
     domain: "Anthropology",
     domain_hi: "मानवविज्ञान",
     idea_title: "Structuralism",
@@ -893,6 +974,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 81,
+    summary: `Liminality, a term introduced by anthropologist Arnold van Gennep and expanded by Victor Turner, describes the quality of ambiguity or disorientation that occurs in the middle stage of a rite of passage. During the liminal phase, individuals have stripped away their old identity but have not yet received their new one; they are in-between, standing on a threshold.`,
     domain: "Anthropology",
     domain_hi: "मानवविज्ञान",
     idea_title: "Liminality",
@@ -904,6 +986,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 82,
+    summary: `A gift economy is a mode of exchange where valuables are not traded or sold, but rather given without an explicit agreement for immediate or future rewards. Pioneered by Marcel Mauss, this concept shows that gifts are not free; they create social obligations of reciprocity, binding the giver and receiver in a long-term relationship.`,
     domain: "Anthropology",
     domain_hi: "मानवविज्ञान",
     idea_title: "Gift Economy",
@@ -915,6 +998,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 83,
+    summary: `A rite of passage, first conceptualized by Arnold van Gennep, is a ceremony or ritual that marks the transition of an individual from one social status to another. It typically consists of three distinct phases: separation (leaving the old status), liminality (the transitional state of ambiguity), and incorporation (returning to society with a new status).`,
     domain: "Anthropology",
     domain_hi: "मानवविज्ञान",
     idea_title: "Rite of Passage",
@@ -926,6 +1010,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 84,
+    summary: `Ethnocentrism is the evaluation of other cultures according to preconceptions originating in the standards and customs of one's own culture. Coined by William Graham Sumner, it is the natural human tendency to view one's own group as the center of everything, and to judge others as inferior or abnormal.`,
     domain: "Anthropology",
     domain_hi: "मानवविज्ञान",
     idea_title: "Ethnocentrism",
@@ -937,6 +1022,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 85,
+    summary: `Gestalt psychology is a school of thought founded by Max Wertheimer, Wolfgang Köhler, and Kurt Koffka, proposing that the human mind perceives objects not as a collection of individual parts, but as structured, unified wholes. The central principle is that the whole is different from the sum of its parts.`,
     domain: "Psychology",
     domain_hi: "मनोविज्ञान",
     idea_title: "Gestalt Psychology",
@@ -948,6 +1034,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 86,
+    summary: `The flow state, conceptualized by psychologist Mihaly Csikszentmihalyi, is a cognitive state of intense focus and immersion in an activity. During flow, individuals lose track of time, their self-consciousness vanishes, and they experience deep intrinsic motivation, feeling at one with the task.`,
     domain: "Psychology",
     domain_hi: "मनोविज्ञान",
     idea_title: "Flow State",
@@ -959,6 +1046,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 87,
+    summary: `The Shadow Self is a concept in analytical psychology developed by Carl Jung. It refers to the unconscious aspect of the personality which the conscious ego does not identify in itself, containing repressed weaknesses, desires, and instincts.`,
     domain: "Psychology",
     domain_hi: "मनोविज्ञान",
     idea_title: "Shadow Self",
@@ -970,6 +1058,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 88,
+    summary: `Learned helplessness is a psychological condition discovered by Martin Seligman, where an individual learns to behave helplessly after enduring repeated adverse stimuli that they cannot escape. Eventually, even when opportunities to escape are presented, the individual fails to take action, having internalized a belief that they have no control over their environment.`,
     domain: "Psychology",
     domain_hi: "मनोविज्ञान",
     idea_title: "Learned Helplessness",
@@ -981,6 +1070,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 89,
+    summary: `A cognitive bias is a systematic pattern of deviation from norm or rationality in judgment, occurring as the brain attempts to simplify complex information. First investigated by Amos Tversky and Daniel Kahneman, these biases are evolutionary heuristics that helped our ancestors make quick decisions for survival.`,
     domain: "Psychology",
     domain_hi: "मनोविज्ञान",
     idea_title: "Cognitive Bias",
@@ -992,6 +1082,7 @@ export const BODH_ENTRIES: BodhEntry[] = [
   },
   {
     dayIndex: 90,
+    summary: `The hedonic treadmill, also known as hedonic adaptation, is the observed tendency of humans to quickly return to a relatively stable level of happiness despite major positive or negative life events. Coined by Brickman and Campbell, this concept explains why winning the lottery or getting a promotion only brings a temporary spike in happiness.`,
     domain: "Psychology",
     domain_hi: "मनोविज्ञान",
     idea_title: "Hedonic Treadmill",

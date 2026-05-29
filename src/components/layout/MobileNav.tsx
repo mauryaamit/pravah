@@ -17,7 +17,7 @@ const MOBILE_TABS = [
 export default function MobileNav() {
   const pathname = usePathname();
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const activeRoomId = ROOMS.find(r => pathname.startsWith(r.route))?.id;
+  const activeRoomId = ROOMS.find(r => pathname && pathname.startsWith(r.route))?.id;
 
   return (
     <>

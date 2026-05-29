@@ -21,7 +21,7 @@ export default function RoomShell({ children }: RoomShellProps) {
   const { preferences } = useUser();
   const { toggle: toggleTheme } = useTheme();
   
-  const room = ROOMS.find(r => pathname.startsWith(r.route));
+  const room = ROOMS.find(r => pathname && pathname.startsWith(r.route));
 
   // Modal states
   const [isShortcutsOpen, setIsShortcutsOpen] = useState(false);

@@ -24,8 +24,8 @@ const ROOM_ICONS: Record<string, React.ComponentType<any>> = {
   aarambh: Sunrise, agni: Flame, antarman: PenLine, bargad: TreePine,
   sukoon: CloudRain, manthan: Waves, noor: Zap, riyaz: Music2,
   bodh: Lightbulb, neurolab: Brain, cosmos: Telescope, darshan: Landmark,
-  samvaad: MessageSquare, srot: Library,
-  vani: Mic2, shabda: Type, paradox: Puzzle,
+  angrezi: Type, lekh: BookOpen, srot: Library,
+  vani: Mic2, paradox: Puzzle,
   duniya: Globe2, neelakurinji: Sparkles, safar: PlaneTakeoff, aranya: Leaf, bharati: Flag,
   kathakar: ScrollText, vibhav: UserRound, lekhak: BookMarked, anand: Heart,
 };
@@ -43,7 +43,7 @@ export default function Sidebar() {
   const [pendingRoom, setPendingRoom] = useState<string | null>(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
-  const activeRoomId = ROOMS.find(r => pathname.startsWith(r.route))?.id;
+  const activeRoomId = ROOMS.find(r => pathname && pathname.startsWith(r.route))?.id;
   const activeRoom = ROOMS.find(r => r.id === activeRoomId);
 
   // Clear pending when route settles

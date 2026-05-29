@@ -15,7 +15,7 @@ export default function Topbar() {
   const pathname = usePathname();
   const { isMuted, toggleMute, enableAudio } = useAudio();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const room = ROOMS.find(r => pathname.startsWith(r.route));
+  const room = ROOMS.find(r => pathname && pathname.startsWith(r.route));
 
   return (
     <header

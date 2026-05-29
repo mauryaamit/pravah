@@ -1,0 +1,765 @@
+=== STEP 0 ===
+<USER_REQUEST>
+continue with previous instruction
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-05-26T16:30:31+05:30.
+</ADDITIONAL_METADATA>
+<USER_SETTINGS_CHANGE>
+The user changed setting `Model Selection` from None to Claude Sonnet 4.6 (Thinking). No need to comment on this change if the user doesn't ask about it. If reporting what model you are, please use a human readable name instead of the exact string.
+</USER_SETTINGS_CHANGE>
+
+=== STEP 179 ===
+<USER_REQUEST>
+Four Fixes — Readability, Spacing, Contrast, Breathing
+
+Fix 1 — Sutr Page: Text Contrast and Font Size
+The Sutr page text is too light and too small. The content is washing into the background painting. Fix every text element on /sutr:
+css/* Sutr page — override all text colors to be fully readable */
+
+/* Main body paragraphs */
+.sutr-body {
+  color: #2C2416;              /* deep warm brown — not black, not gray */
+  font-size: clamp(1.0625rem, 2vw, 1.1875rem);  /* 17–19px */
+  line-height: 1.95;
+  opacity: 1 !important;       /* remove any opacity: 0.7 or 0.8 that's washing it out */
+}
+
+/* Section headings */
+.sutr-heading {
+  color: #1A1410;              /* near-black warm */
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  opacity: 1 !important;
+}
+
+/* Section label (I. II. III.) */
+.sutr-section-label {
+  color: #C4873A;              /* saffron — already good, just ensure opacity: 1 */
+  opacity: 1 !important;
+}
+
+/* Pull quotes */
+.sutr-pullquote {
+  color: #2C2416;
+  border-left-color: #C4873A;
+  opacity: 1 !important;
+  font-size: 1.25rem;
+}
+
+/* Room entry names */
+.sutr-room-name {
+  color: #1A1410;
+  opacity: 1 !important;
+}
+
+/* Room descriptions */
+.sutr-room-description {
+  color: #3D3325;              /* medium warm brown — clearly readable */
+  font-size: 1.0625rem;
+  line-height: 1.85;
+  opacity: 1 !important;
+}
+
+/* Room dimension label */
+.sutr-room-dimension {
+  color: #C4873A;
+  opacity: 1 !important;
+}
+
+/* Principle titles */
+.sutr-principle-title {
+  color: #1A1410;
+  opacity: 1 !important;
+}
+
+/* Principle body */
+.sutr-principle-body {
+  color: #3D3325;
+  opacity: 1 !important;
+}
+
+/* Closing text */
+.sutr-closing-text {
+  color: #2C2416;
+  opacity: 1 !important;
+}
+
+/* Night mode — Sutr page */
+[data-theme="night"] .sutr-body,
+[data-theme="night"] .sutr-room-description,
+[data-theme="night"] .sutr-principle-body,
+[data-theme="night"] .sutr-closing-text {
+  color: #E8DDD0;
+  opacity: 1 !important;
+}
+
+[data-theme="night"] .sutr-heading,
+[data-theme="night"] .sutr-room-name
+<truncated 7652 bytes>
+ing cycle sequence:
+typescriptconst runCycle = async () => {
+  // 1. Speak "Breathe in..." → simultaneously start fill animation
+  speakPhrase('inhale');
+  animateFill('inhale', 4000);
+  await wait(4000);
+
+  // 2. Speak "Hold..." → orb stays full with shimmer
+  speakPhrase('hold');
+  animateFill('hold', 4000);
+  await wait(4000);
+
+  // 3. Speak "Let go..." → simultaneously start drain animation
+  speakPhrase('exhale');
+  animateFill('exhale', 4000);
+  await wait(4000);
+
+  // 4. Brief pause — 800ms silence, orb empty, before next cycle
+  await wait(800);
+
+  // 5. Repeat
+  if (isOpen) runCycle();
+};
+
+6. Display the user’s name first in Devanagari script and then in English (Roman script).
+Example: instead of Amit.” show अमित (Amit).”
+
+Apply this dynamically for every logged-in user by transliterating their name into Devanagari automatically.
+
+
+Verification
+SUTR READABILITY:
+☐ Body text clearly dark and readable — no washing out
+☐ Section headings bold and visible
+☐ Room descriptions fully readable against background
+☐ Background painting at 4% — text wins everywhere
+☐ Night mode text equally readable
+
+SUTR SPACING:
+☐ No large blank gaps between sections
+☐ Page flows like a book — generous but not vacant
+☐ Sections feel connected, not isolated
+
+GLOBAL CONTRAST:
+☐ Sidebar section labels clearly readable
+☐ Card body text readable in all rooms
+☐ Input placeholders visible (not invisible)
+☐ Tab labels have clear active vs inactive states
+☐ All text passes 7:1 contrast visually
+
+BREATHING:
+☐ Voice sounds warm, slow, human — not robotic
+☐ Says "Breathe in..." / "Hold..." / "Let go..."
+☐ Orb fills smoothly from bottom as inhale begins
+☐ Orb stays full during hold with gentle shimmer
+☐ Orb drains smoothly during exhale
+☐ Fill and voice are in sync — start together
+☐ Animation is smooth, not jumpy
+☐ Works on mobile full-screen overlay
+
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-05-26T17:07:50+05:30.
+</ADDITIONAL_METADATA>
+
+=== STEP 232 ===
+<USER_REQUEST>
+Continue in the same coding style, architecture, UI tone, and reasoning approach as the previous Sonnet session. Maintain consistency in structure, naming conventions, design language, and implementation quality while optimizing for efficiency.
+
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-05-26T17:17:16+05:30.
+</ADDITIONAL_METADATA>
+<USER_SETTINGS_CHANGE>
+The user changed setting `Model Selection` from Claude Sonnet 4.6 (Thinking) to Gemini 3.5 Flash (Medium). No need to comment on this change if the user doesn't ask about it. If reporting what model you are, please use a human readable name instead of the exact string.
+</USER_SETTINGS_CHANGE>
+
+=== STEP 295 ===
+<USER_REQUEST>
+## Two Targeted Fixes Only — Touch Nothing Else
+
+---
+
+### Fix 1 — Hindi/Devanagari Text Rendering Broken
+
+Looking at the screenshots, Devanagari text is showing as garbled characters (`à¤1à¤° à¤|à¤¿à¤"` etc.) in two places — the Daily Mantra card and the season/moon line in Aarambh. This is a font encoding issue, not a content issue.
+
+**Root cause:** The Devanagari font is not loading for these specific components, so the browser falls back to a font that cannot render Unicode Hindi characters correctly.
+
+```typescript
+// Fix 1A — Check that Noto Serif Devanagari is correctly declared in globals.css
+// The @font-face must be present and the font files must exist in public/fonts/
+
+// Verify this exists in globals.css:
+@font-face {
+  font-family: 'Noto Serif Devanagari';
+  src: url('/fonts/NotoSerifDevanagari-Variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
+  unicode-range: U+0900-097F; /* Devanagari Unicode block */
+}
+
+// And this CSS variable is set:
+:root {
+  --font-devanagari: 'Noto Serif Devanagari', serif;
+}
+```
+
+```typescript
+// Fix 1B — Apply the font explicitly to every element that renders Hindi text
+// The garbled rendering means these elements are missing font-family: var(--font-devanagari)
+
+// In the Daily Mantra card — the mantra text element:
+// Add: fontFamily: 'var(--font-devanagari)' to the mantra text div
+
+// In Aarambh header — the season line showing broken Hindi:
+// The line "ग्रीष्म - Grishma" is garbled
+// Add font-family: var(--font-devanagari) to the season display span
+
+// In the Today's Spark card — the label "आज' TODAY'S SPARK:" is garbled
+// Add font-family: var(--font-devanagari) to the spark label
+
+// Global rule — add this to globals.css to catch all Hindi text:
+[lang="hi"],
+.devanagari,
+.hindi-text {
+  font-family: var(--font-devanagari) !important;
+}
+```
+
+```typescript
+// Fix 1C — The Today's Spark card also has garbled quote marks
+/
+<truncated 1531 bytes>
+ the idle orb to original behavior:
+// - Soft saffron/amber circle, same size as before the breathing changes
+// - Gentle scale pulse animation (the original CSS keyframe)
+// - Text: "breathe" — lowercase, serif, centered
+// - Two concentric circles — inner filled, outer soft glow ring
+// - NO fill/water animation in idle state
+// - NO SVG clipPath in idle state
+// - Just the original simple pulsing orb
+
+// The original idle animation was likely:
+@keyframes orb-idle-pulse {
+  0%, 100% { transform: scale(1.0);  opacity: 0.85; }
+  50%       { transform: scale(1.08); opacity: 1.0;  }
+}
+// Apply to the idle orb with animation-duration: 3s ease-in-out infinite
+
+// When isOpen === false → show original idle orb (reverted)
+// When isOpen === true  → show full-screen overlay with fill animation (keep as-is)
+
+// Do NOT touch anything inside the full-screen overlay
+// Do NOT touch the voice, the fill animation, or the dark backdrop
+// Only the idle pre-click orb appearance reverts
+```
+
+---
+
+### Verification
+
+```
+DEVANAGARI FIX:
+☐ Daily Mantra shows correct Hindi text — no garbled characters
+☐ Season line in Aarambh shows "ग्रीष्म" correctly
+☐ Today's Spark label shows correct Hindi characters
+☐ Quote marks in Spark card render as " " not â€œ â€
+☐ All other Hindi text across all rooms renders correctly
+☐ Devanagari font loads confirmed in browser DevTools (Network tab)
+
+BREATHING ORB:
+☐ Pre-click orb on Aarambh looks exactly like original — soft pulse, "breathe" text
+☐ Two concentric circles visible in idle state
+☐ No fill animation showing before clicking
+☐ Clicking orb → full-screen overlay opens correctly
+☐ Fill animation works: fills on inhale, stays on hold, drains on exhale
+☐ Voice says "Breathe in..." / "Hold..." / "Let go..." warmly
+☐ Tapping dark area closes overlay — orb returns to idle state
+
+
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-05-26T17:36:07+05:30.
+</ADDITIONAL_METADATA>
+
+=== STEP 394 ===
+<USER_REQUEST>
+The Sutr page appears empty on the local server — please debug and fix the rendering issue while keeping the current design intact.
+
+Also, restore the original “breathe orb” aura animation from the initial page state. Keep the clicked breath page as is, just add orignal page breath orb animation The default idle state should include:
+
+* soft expanding aura/glow
+* subtle breathing/enlarging animation
+* same visual feel as the previous implementation
+
+Do not change the existing layout/UI otherwise — only fix the missing aura animation and empty Sutr page issue.
+
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-05-26T17:58:42+05:30.
+</ADDITIONAL_METADATA>
+
+=== STEP 427 ===
+<USER_REQUEST>
+Make only these two refinements on the Sutr page — keep everything else exactly as it is:
+
+1. Increase the overall font size slightly across the Sutr page to improve readability. Keep it elegant and minimal, not oversized.
+
+2. Fix text overflow inside the background-image cards:
+
+* The quote:
+  “Life is not a series of problems to solve, but a stream to walk. Slow down, align, and allow yourself to flow.”
+* And the closing text:
+  “Your sanctuary is waiting. Step across the threshold and begin.”
+
+Both are overflowing outside the background image container. Either:
+
+* slightly increase the card/image width, OR
+* reduce the text width/max-width/font-size just enough to fit cleanly within the card.
+
+Do not alter layout, spacing, theme, colors, or structure otherwise.
+
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-05-26T18:25:16+05:30.
+</ADDITIONAL_METADATA>
+
+=== STEP 463 ===
+<USER_REQUEST>
+push the changes to git
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-05-26T18:31:40+05:30.
+</ADDITIONAL_METADATA>
+
+=== STEP 475 ===
+<USER_REQUEST>
+Many room pages are showing missing/blank hero images. Please fix this by downloading and storing suitable local fallback images for these rooms so the UI never looks broken or unfetched.
+
+Pages/rooms needing images:
+
+* Cosmod
+* Safar
+* Aranya
+* Bharti
+* Vibhav
+* Anand
+
+Instructions:
+
+* Use aesthetically matching, high-quality generic images aligned with each room’s theme and mood.
+* Store them locally in the project assets/public folder and reference them locally (not external URLs).
+* Maintain the current visual style, muted tones, and immersive aesthetic of the app.
+* Ensure proper image sizing/cropping so cards look polished and consistent.
+* Only fix missing images; keep layout, typography, and UI unchanged.
+
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-05-26T18:46:55+05:30.
+</ADDITIONAL_METADATA>
+
+=== STEP 558 ===
+<USER_REQUEST>
+continue
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-05-26T21:32:48+05:30.
+</ADDITIONAL_METADATA>
+<USER_SETTINGS_CHANGE>
+The user changed setting `Model Selection` from Gemini 3.5 Flash (Medium) to Claude Sonnet 4.6 (Thinking). No need to comment on this change if the user doesn't ask about it. If reporting what model you are, please use a human readable name instead of the exact string.
+</USER_SETTINGS_CHANGE>
+
+=== STEP 654 ===
+<USER_REQUEST>
+Continue
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-05-26T21:57:11+05:30.
+</ADDITIONAL_METADATA>
+
+=== STEP 680 ===
+<USER_REQUEST>
+go ahead
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-05-26T22:00:23+05:30.
+</ADDITIONAL_METADATA>
+
+=== STEP 719 ===
+<USER_REQUEST>
+continue
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-05-26T22:11:26+05:30.
+</ADDITIONAL_METADATA>
+<USER_SETTINGS_CHANGE>
+The user changed setting `Model Selection` from Claude Sonnet 4.6 (Thinking) to Gemini 3.5 Flash (Medium). No need to comment on this change if the user doesn't ask about it. If reporting what model you are, please use a human readable name instead of the exact string.
+</USER_SETTINGS_CHANGE>
+
+=== STEP 899 ===
+<USER_REQUEST>
+Keep all existing layouts, styling, and interactions unchanged. Only add these enhancements:
+
+1. In the “Vani” room:
+
+* At the bottom of the page, below “Dialect Folk Saying”, add one more section matching the same visual style. 
+* Section: “Hindi Word of the Day” आज का शब्द 
+* Include:
+
+  * Hindi word 
+  * Meaning
+  * Simple usage/example sentence
+
+
+2. In the “Shabda” room:
+   Keep everything as it is, only add Hindi meaning of words and phrases shown everyday [in devnagri], rest keep everything as it is:
+
+* Word of the Day 
+* Phrase & Idiom Origin 
+* Rare & Beautiful Word 
+* Contemporary Slang (Gen Z) 
+
+3. In the “Sutr” section, :
+   Add the 3 newly added rooms details, count will become 25- Vani, shabda, Uljhan, maintaining the same structure, styling, and navigation consistency as the existing entries.
+
+4. I really loved the new changes in the Antarman room.
+
+There’s one bug across all these sections — Diary, Journal, Poetry, Story, and Gratitude:
+while writing, the cursor keeps jumping back to the beginning/start position after a few keystrokes. I have to repeatedly place the cursor back manually, which breaks the writing flow and feels frustrating.
+
+Please fix the editor behavior so the cursor remains exactly where I’m typing without resetting or losing focus.
+
+Rest everything is working great keep the UI and functionality unchanged.
+
+5. rename 'Uljhan' and name this room as 'Paradox' विरोधाभास 
+
+6. the ambeant music is not working I can hear it in local server, but not on hosted, so fix all the music according to their name- Soft, Forest, Vinyl, Flowing, Cafe, Library, Tibetan, Fireplace.
+
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-05-26T23:30:57+05:30.
+</ADDITIONAL_METADATA>
+
+=== STEP 961 ===
+<USER_REQUEST>
+go ahead
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-05-26T23:36:16+05:30.
+</ADDITIONAL_METADATA>
+
+=== STEP 1059 ===
+<USER_REQUEST>
+Great loved all previous changes, 
+some updates and changes on the Sutr page, few refinements remaining, keep other pages/room as it is, only apply these changes in sutr page:
+
+1. Mobile View Spacing Fix
+   In phone view, there’s too much empty space above and below the Pravah background image/card. Reduce this unnecessary vertical margin/padding only for mobile view so it feels cleaner and more elegant.
+   Desktop/laptop view already looks perfect — keep it unchanged.
+
+2. Room Descriptions Missing on Mobile
+   On mobile/main server, the full descriptions of all 26 rooms are not visible properly, though they appear correctly on localhost/laptop view.
+   Please fix the responsive rendering/layout issue so all room descriptions display properly on phone view as well.
+
+3. Correct Room Count Title
+   Currently it says:
+   “The Twenty-Five Rooms”
+   Please correct it to:
+   “The Twenty-Six Rooms”
+   since there are now 26 rooms.
+
+4. Increase Room Description Readability
+   The textual descriptions of each room look slightly too small.
+   Increase the font size only for this specific room-description section to improve readability while preserving the current aesthetic and typography style.
+
+5. Slightly Increase Background Image Visibility
+   On the Sutr page, increase the background image opacity/visibility a little so it feels more present.
+   Keep it subtle and elegant — not too bright or overpowering.
+   Only apply this to the Sutr page.
+
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-05-27T00:08:59+05:30.
+</ADDITIONAL_METADATA>
+
+=== STEP 1077 ===
+<USER_REQUEST>
+go ahead
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-05-27T00:10:12+05:30.
+</ADDITIONAL_METADATA>
+
+=== STEP 1164 ===
+<USER_REQUEST>
+These fixes are only for the Sutr page in mobile/phone view - keep everything else exactly as it is:
+
+1. The descriptions of the 26 rooms are not visible properly in phone view, it lookes as if hidden on phone view. Please fix the responsive rendering/layout so all room descriptions display correctly on mobile.
+
+2. Remove the long AI-style dash “—” globally from textual content and replace it with a normal short hyphen “-” for a more natural, human-written feel.
+
+3. In phone view only, below the text:
+   “Scroll to begin your passage”
+   inside the Pravah background image card, there is almost no bottom spacing/margin, making the image look visually cut off.
+
+Please add a subtle bottom padding/margin there so the card breathes properly and feels elegant.
+
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-05-27T00:38:47+05:30.
+</ADDITIONAL_METADATA>
+
+=== STEP 1209 ===
+<USER_REQUEST>
+Sutr room fix: The 26 room descriptions on the Sutr page are still not visible in phone/mobile view. Everything above and below that section renders correctly — only the room description content appears hidden/not rendering on mobile. Please properly debug the responsive layout/CSS issue and ensure all 26 room descriptions are fully visible on phone view.
+
+Also, for Dark Mode only (keep all other modes unchanged):
+many texts have poor readability due to weak contrast between text and background. Please improve dark mode accessibility globally by ensuring strong readable contrast (target around WCAG 7:1 where possible) across:
+
+* body text
+* room descriptions
+* subtitles
+* buttons
+* muted/secondary text
+* cards and overlays
+
+Keep the same aesthetic and theme intact — only improve readability and text visibility in dark mode without changing layouts or colors drastically.
+
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-05-27T00:57:54+05:30.
+</ADDITIONAL_METADATA>
+
+=== STEP 1258 ===
+<USER_REQUEST>
+revert the last change, the dark mode thing
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-05-27T01:04:07+05:30.
+</ADDITIONAL_METADATA>
+
+=== STEP 1299 ===
+<USER_REQUEST>
+Two small refinements - only for mobile/phone view. Keep everything else exactly as it is:
+
+1. Noor Room - Text Alignment Fix
+   In the Noor room, the affirmation/content text is breaking into very scattered vertical lines on phone view (as shown in the screenshot).
+   Please fix the responsive text container/width/line-breaking so the text flows naturally and remains elegant and readable on mobile.
+
+2. “सूत्र - Sutr” Hyphen Fix
+   The hyphen/dash between “सूत्र” and “Sutr” appears too long visually.
+   Replace it with a small normal hyphen (“-”) and reduce the spacing slightly so it feels cleaner and more balanced.
+
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-05-27T01:38:02+05:30.
+</ADDITIONAL_METADATA>
+
+=== STEP 1379 ===
+<USER_REQUEST>
+additions and improvements-
+AARAMBH IMPROVEMENTS
+Location: src/app/(app)/aarambh/page.tsx
+2A — Today's Thread
+Add a "Today's Thread" element — a single thematic word or short phrase that loosely connects what the user will encounter across all rooms today.
+UI: Appears near the top of Aarambh, below the greeting, above the mood pulse. Subtle — not a banner. Small label text "आज का धागा / Today's Thread" in muted styling, followed by the theme word/phrase in Cormorant Garamond italic, ~20px. One or two lines maximum.
+Data: Add a theme field to the daily seed content. Path: content/aarambh/{YYYY-MM-DD} or derive from a threads collection with a 90-day rotation. The thread is a single word or short phrase — examples: "Impermanence", "The courage of beginnings", "What is left unsaid", "Attention as love", "The mind that watches itself".
+Behavior:
+
+Shows every day, changes daily at midnight IST
+Script toggle applies (show Devanagari equivalent if script is set to Devanagari)
+Read-aloud button on this element (reads the thread phrase)
+No interaction required — purely contemplative
+
+
+2B — Evening Intention Mirror
+Current behavior: Today's Intention field saves text as the user types (1.5s debounce). That's correct — keep it.
+New behavior: When the user opens Aarambh after 6:00 PM local time AND they wrote an intention earlier that day, show a soft reflection below the intention field:
+
+A muted card (slightly indented, no border — just a subtle background shift) containing:
+
+Their morning intention in Cormorant Garamond italic
+Below it, one gentle question in DM Sans, small size, muted color: "Did you hold this today?"
+No input, no buttons, no scoring — this is a mirror, not a form
+
+
+
+Behavior:
+
+Only appears after 6pm if an intention was saved earlier that day
+Does not appear if no intention was written
+Does not appear before 6pm
+The reflection card is not editable — the editable intention field remains as-is above it
+Disappears at midnight (next day starts fresh)
+
+
+2C 
+<truncated 21914 bytes>
+alendar, dot indicator, search, and On This Day features unchanged.
+
+IMPLEMENTATION NOTES FOR ALL SECTIONS
+Firestore seed script: Update scripts/seed-firestore.ts for all new content (Manthan 30 models, Safar 90 Indian + 90 global, Darshan 30 days, Bhasha 90 days). Run pnpm seed after all content is written.
+Navigation updates: Add Manthan and Bhasha to:
+
+src/lib/constants/rooms.ts
+src/components/layout/Sidebar.tsx
+src/components/layout/MobileNav.tsx (if applicable)
+src/app/(app)/sutr/page.tsx room descriptions
+Remove Shabda and Samvaad entries, add redirects in next.config.js
+
+TypeScript: All new interfaces must be in src/types/. No any types. Strict mode must continue to pass.
+After all changes: Run pnpm build to verify TypeScript and build succeed before git push origin main.
+Deployment: git add . && git commit -m "feat: full enhancement - manthan, safar, bhasha, darshan, sutra notes, revisit, archaeology, antarman additions, bug fixes" && git push origin main
+
+WHAT NOT TO CHANGE
+
+The overall app aesthetic, color system, or typography
+Aarambh's greeting logic, mood pulse, or streak display
+Agni's habit completion rings, streak flame, or 7-day history view
+Antarman's 5-tab structure, auto-save behavior, rich text toolbar, or calendar
+Sukoon's poem display or Nastaliq rendering
+Bargad's sankalp/tree structure
+Ambient sound system or Howler.js implementation
+Firebase Auth or middleware route protection
+PWA manifest or service worker
+Any existing room that is not mentioned in this prompt
+
+
+Pravah is a sanctuary, not a product. Every addition should feel like it was always meant to be there.
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-05-28T13:56:33+05:30.
+</ADDITIONAL_METADATA>
+<USER_SETTINGS_CHANGE>
+The user changed setting `Model Selection` from Gemini 3.5 Flash (Medium) to Claude Sonnet 4.6 (Thinking). No need to comment on this change if the user doesn't ask about it. If reporting what model you are, please use a human readable name instead of the exact string.
+</USER_SETTINGS_CHANGE>
+
+=== STEP 1409 ===
+<USER_REQUEST>
+go ahead
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-05-28T14:05:00+05:30.
+</ADDITIONAL_METADATA>
+
+=== STEP 1488 ===
+<USER_REQUEST>
+Continue from the current state while maintaining the same reasoning depth, coding quality, architecture decisions, UI sensitivity, and implementation style as Claude Sonnet 4.6 Thinking.
+
+
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-05-28T14:25:37+05:30.
+</ADDITIONAL_METADATA>
+<USER_SETTINGS_CHANGE>
+The user changed setting `Model Selection` from Claude Sonnet 4.6 (Thinking) to Gemini 3.5 Flash (Medium). No need to comment on this change if the user doesn't ask about it. If reporting what model you are, please use a human readable name instead of the exact string.
+</USER_SETTINGS_CHANGE>
+
+=== STEP 1842 ===
+<USER_REQUEST>
+Here is the complete prompt:
+
+---
+
+# Pravah — Remaining Rooms Implementation Prompt
+## For Antigravity | May 2026
+
+---
+
+## CONTEXT & ABSOLUTE CONSTRAINTS
+
+You are continuing work on **Pravah (प्रवाह)** — a neuroscience-based cognitive sanctuary app. The following has already been implemented in previous sessions:
+
+**Already done — do not touch:**
+- Aarambh (Today's Thread, Evening Mirror, glow pulse)
+- Manthan (Mental Models room)
+- Safar (Dual destination system)
+- Bhasha (Shabda + Samvaad merged)
+- Darshan (Five-tradition structure)
+- Sutra Notes system (✦ button, Aarambh weekly surface, Antarman 6th tab)
+- Spaced Revisit system (BookMarked button, Aarambh revisit cards)
+- Agni Habit Archaeology
+- **Antarman — do not touch a single line. Zero changes. Leave exactly as it is.**
+- Bug fixes (Antarman cursor, Sutr mobile, Noor mobile) — already fixed
+
+**Design principles — never violate:**
+- Soft, muted, contemplative aesthetic — warm ivory (#F5F0E8) day, warm charcoal (#141210) night
+- All text minimum 7:1 contrast ratio (WCAG AAA)
+- Fonts: Cormorant Garamond (poetry/quotes/headings), DM Sans (UI/body), Noto Serif Devanagari (Hindi)
+- No jarring animations — everything moves like a slow exhale
+- No em dashes anywhere — hyphens only
+- Indian voice TTS (hi-IN priority, rate 0.75, pitch 0.85)
+- No guilt, no streaks pressure, no social features
+- Background painting always subtle (max 25% opacity)
+
+**Tech stack:** Next.js 14 App Router, TypeScript strict, Tailwind CSS v3 + CSS variables, Framer Motion v11, Firebase Firestore (asia-south1), Howler.js, Zustand, Lucide React, Recharts
+
+**Daily content architecture (apply to every room in this prompt):**
+
+```typescript
+// Content lives as static arrays in each room's data file:
+// src/app/(app)/{room}/data.ts
+// No Firestore dependency for content — arrays indexed by dayIndex
+
+// dayIndex computation (use this exact utility, or add to src/lib/utils/date.ts):
+export function getD
+<truncated 45215 bytes>
+                          // Aim for: "A day on Venus is longer than a year on Venus."
+    why_its_delightful: string; // 20-30 words. What makes this fact wonderful.
+  };
+  brain_teaser: {
+    question: string;           // A puzzle, riddle, or lateral thinking problem.
+    reveal: string;             // The answer — hidden until user taps "Reveal"
+    type: 'logic' | 'lateral' | 'mathematical' | 'linguistic' | 'visual_described';
+  };
+  creative_constraint: {
+    invitation: string;         // One creative micro-challenge. 
+                                 // No materials needed. Can be done mentally.
+                                 // "Name 5 things in your current room that share a color."
+                                 // "Write a 6-word story about today."
+                                 // "Describe your current mood as a weather system."
+                                 // "What animal would your current energy be?"
+                                 // These are creative prompts, not productivity tasks.
+  };
+}
+```
+
+**Joke reveal pattern:** Show setup. Below it: a "Punchline →" button. On tap: punchline appears with a gentle ease-in. No dramatic animation — just a reveal.
+
+**Brain teaser reveal:** Same pattern — question shown, answer hidden behind "Reveal →" tap.
+
+**Seed — 90 entries minimum.** Brain teasers: classic lateral thinking problems (the surgeon paradox, the man in the elevator, river crossing puzzles), wordplay riddles, mathematical curiosities (the birthday paradox stated as a puzzle), logic puzzles that aren't frustrating. Creative constraints: inspired by Brian Eno's Oblique Strategies and improv theater warm-ups.
+
+**UI layout:**
+- Four sections as soft cards — each with its own character
+- Joke card: slightly warmer background tint
+- Fun fact card: a soft "✦" or star motif in corner
+- B
+<truncated 11729 bytes>
+
+NOTE: The output was truncated because it was too long. Use a more targeted query or a smaller range to get the information you need.
+
+=== STEP 1912 ===
+<USER_REQUEST>
+go ahead
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-05-28T18:36:32+05:30.
+</ADDITIONAL_METADATA>
+
+=== STEP 1919 ===
+<USER_REQUEST>
+continue
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-05-28T18:40:54+05:30.
+</ADDITIONAL_METADATA>
+
+=== STEP 2177 ===
+<USER_REQUEST>
+continue
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-05-29T00:07:58+05:30.
+</ADDITIONAL_METADATA>
+

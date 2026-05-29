@@ -1,4 +1,5 @@
 export interface NeuroLabEntry {
+  summary: string;
   dayIndex: number;
   week_theme: 'memory' | 'attention' | 'emotion' | 'creativity';
   week_theme_display: string;   // e.g. "Memory & Learning"
@@ -16,6 +17,7 @@ export interface NeuroLabEntry {
 export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   {
     dayIndex: 1,
+    summary: `When you learn something new, your brain does not just store it like a digital file. Instead, it alters the physical connections between neurons in a process called Long-Term Potentiation.`,
     week_theme: 'memory',
     week_theme_display: 'Memory & Learning',
     week_theme_hi: 'स्मृति और सीखना',
@@ -30,6 +32,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 2,
+    summary: `For decades, dogmatic belief dictated that the adult brain was completely fixed and unable to produce new brain cells. We now know that the dentate gyrus within the hippocampus continues to generate thousands of new neurons daily, a process known as adult neurogenesis.`,
     week_theme: 'memory',
     week_theme_display: 'Memory & Learning',
     week_theme_hi: 'स्मृति और सीखना',
@@ -44,6 +47,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 3,
+    summary: `During waking hours, your brain constantly absorbs information, encoding it into fragile neural patterns within the hippocampus. To transform these temporary traces into permanent knowledge, the brain must perform synaptic consolidation, which primarily occurs during deep, slow-wave sleep.`,
     week_theme: 'memory',
     week_theme_display: 'Memory & Learning',
     week_theme_hi: 'स्मृति और सीखना',
@@ -58,6 +62,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 4,
+    summary: `Working memory is your brain's mental scratchpad, located in the prefrontal cortex, which holds and manipulates information in real time. Unlike long-term memory, which has a nearly infinite capacity, working memory is strictly limited, typically holding only four to seven items for a few seconds.`,
     week_theme: 'memory',
     week_theme_display: 'Memory & Learning',
     week_theme_hi: 'स्मृति और सीखना',
@@ -72,6 +77,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 5,
+    summary: `At the molecular level, memory is built through a process called Long-Term Potentiation, or LTP. When two neurons communicate repeatedly, the chemical and electrical signals between them strengthen, making it easier for them to fire together in the future. This is the biological basis for the famous phrase, neurons that fire together wire together.`,
     week_theme: 'memory',
     week_theme_display: 'Memory & Learning',
     week_theme_hi: 'स्मृति और सीखना',
@@ -86,6 +92,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 6,
+    summary: `The Testing Effect, or retrieval practice, shows that actively recalling information strengthens memory pathways far more than passive review. When you read notes, your brain processes information passively.`,
     week_theme: 'memory',
     week_theme_display: 'Memory & Learning',
     week_theme_hi: 'स्मृति और सीखना',
@@ -100,6 +107,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 7,
+    summary: `Context-Dependent Memory refers to the phenomenon where retrieval is most successful when the external environment matches the encoding state. When you form a memory, your brain does not record the target information in isolation.`,
     week_theme: 'memory',
     week_theme_display: 'Memory & Learning',
     week_theme_hi: 'स्मृति और सीखना',
@@ -114,6 +122,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 8,
+    summary: `Dual Coding Theory explains that our brains process information through two separate channels: visual and verbal. The visual cortex, located at the back of the brain in the occipital lobe, is highly developed and processes imagery with immense speed.`,
     week_theme: 'memory',
     week_theme_display: 'Memory & Learning',
     week_theme_hi: 'स्मृति और सीखना',
@@ -128,6 +137,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 9,
+    summary: `The Zeigarnik Effect is the psychological phenomenon where incomplete or interrupted tasks are remembered significantly better than completed ones. When a task is initiated, the prefrontal cortex maintains a state of cognitive tension, holding the details in working memory to ensure completion.`,
     week_theme: 'memory',
     week_theme_display: 'Memory & Learning',
     week_theme_hi: 'स्मृति और सीखना',
@@ -142,6 +152,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 10,
+    summary: `State-Dependent Memory is the phenomenon where memory recall is most efficient when you are in the same internal physiological state as you were during encoding. Your internal state, shaped by neurotransmitters and hormones in the amygdala and autonomic nervous system, acts as an internal context.`,
     week_theme: 'memory',
     week_theme_display: 'Memory & Learning',
     week_theme_hi: 'स्मृति और सीखना',
@@ -156,6 +167,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 11,
+    summary: `Chunking is a cognitive strategy that involves grouping individual pieces of information into larger, meaningful units, or chunks. Because our working memory is biologically limited to holding only a few items, presenting raw data can quickly overwhelm the prefrontal cortex.`,
     week_theme: 'memory',
     week_theme_display: 'Memory & Learning',
     week_theme_hi: 'स्मृति और सीखना',
@@ -170,6 +182,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 12,
+    summary: `Human memory is divided into two primary systems: episodic memory and semantic memory. Episodic memory, managed by the hippocampus, is the autobiography of your life, storing personal experiences tied to specific times and places.`,
     week_theme: 'memory',
     week_theme_display: 'Memory & Learning',
     week_theme_hi: 'स्मृति और सीखना',
@@ -184,6 +197,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 13,
+    summary: `A schema is a cognitive framework or mental template that helps organize and interpret information based on past experiences. Located in the cortical association areas, schemas allow your brain to process new inputs rapidly by fitting them into established categories.`,
     week_theme: 'memory',
     week_theme_display: 'Memory & Learning',
     week_theme_hi: 'स्मृति और सीखना',
@@ -198,6 +212,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 14,
+    summary: `Retroactive Interference is a memory phenomenon where newly acquired information interferes with the retrieval of older, established memories. This occurs because the hippocampus has a limited capacity for active encoding, and new inputs can overwrite or disrupt the consolidation of recently formed neural traces.`,
     week_theme: 'memory',
     week_theme_display: 'Memory & Learning',
     week_theme_hi: 'स्मृति और सीखना',
@@ -212,6 +227,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 15,
+    summary: `The Serial Position Effect states that when we retrieve a list of items, we recall the first and last items best, and the middle items worst. The Primacy Effect occurs because the first items receive more cognitive attention and rehearsal, allowing them to transfer into long-term memory.`,
     week_theme: 'memory',
     week_theme_display: 'Memory & Learning',
     week_theme_hi: 'स्मृति और सीखना',
@@ -226,6 +242,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 16,
+    summary: `When you stop focusing on the external world, your brain does not shut down. Instead, a large, interconnected web of regions known as the Default Mode Network, or DMN, becomes highly active.`,
     week_theme: 'attention',
     week_theme_display: 'Attention & Focus',
     week_theme_hi: 'ध्यान और एकाग्रता',
@@ -240,6 +257,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 17,
+    summary: `Attentional Blink is a cognitive phenomenon where the brain is temporarily unable to detect a second visual target if it appears too quickly after the first one. When you focus on a stimulus, your parietal and frontal cortices allocate significant processing resources to identify and encode it. This allocation process takes approximately two hundred to five hundred milliseconds, during which the brain is effectively blind to new inputs. It is as if the mind takes a brief, subconscious snapshot, and while it is processing that photo, the camera shutter is closed.`,
     week_theme: 'attention',
     week_theme_display: 'Attention & Focus',
     week_theme_hi: 'ध्यान और एकाग्रता',
@@ -254,6 +272,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 18,
+    summary: `Your brain utilizes two distinct modes of thinking: the focused mode and the diffuse mode. The focused mode, governed by the prefrontal cortex, is highly analytical and linear, allowing you to concentrate deeply on a specific, well-defined task.`,
     week_theme: 'attention',
     week_theme_display: 'Attention & Focus',
     week_theme_hi: 'ध्यान और एकाग्रता',
@@ -268,6 +287,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 19,
+    summary: `Dopamine is often misunderstood as the molecule of pleasure, but in neuroscience, it is the molecule of anticipation and search. The dopaminergic pathway, starting in the midbrain and projecting to the striatum, is activated by novelty and unexpected rewards.`,
     week_theme: 'attention',
     week_theme_display: 'Attention & Focus',
     week_theme_hi: 'ध्यान और एकाग्रता',
@@ -282,6 +302,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 20,
+    summary: `Cognitive Load Theory describes the total amount of mental effort being used in the working memory. There are three types of cognitive load: intrinsic (associated with the difficulty of the task), extraneous (caused by the way information is presented), and germane (the work put into creating a permanent store of knowledge).`,
     week_theme: 'attention',
     week_theme_display: 'Attention & Focus',
     week_theme_hi: 'ध्यान और एकाग्रता',
@@ -296,6 +317,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 21,
+    summary: `Your brain filters the world through two attentional systems: top-down (voluntary) and bottom-up (involuntary) attention. Top-down attention is goal-driven, managed by the prefrontal cortex, and allows you to consciously choose what to focus on. Bottom-up attention is stimulus-driven, managed by the sensory cortices and amygdala, and is automatically captured by loud noises, bright lights, or sudden movements.`,
     week_theme: 'attention',
     week_theme_display: 'Attention & Focus',
     week_theme_hi: 'ध्यान और एकाग्रता',
@@ -310,6 +332,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 22,
+    summary: `Neuroscience has conclusively proven that the human brain cannot consciously process two cognitively demanding tasks at the same time. What we call multitasking is actually task-switching, where the prefrontal cortex rapidly shifts its focus back and forth between different activities.`,
     week_theme: 'attention',
     week_theme_display: 'Attention & Focus',
     week_theme_hi: 'ध्यान और एकाग्रता',
@@ -324,6 +347,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 23,
+    summary: `Sustained focused attention is a highly energy-intensive process that relies on the prefrontal cortex. This region consumes glucose and oxygen at a rapid rate when filtering out distractions and maintaining concentration.`,
     week_theme: 'attention',
     week_theme_display: 'Attention & Focus',
     week_theme_hi: 'ध्यान और एकाग्रता',
@@ -338,6 +362,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 24,
+    summary: `Inattentional Blindness is the psychological lack of attention that is not associated with any vision defects or deficits. It occurs when an individual fails to perceive an unexpected stimulus that is in plain sight, purely because their attention is focused on another task.`,
     week_theme: 'attention',
     week_theme_display: 'Attention & Focus',
     week_theme_hi: 'ध्यान और एकाग्रता',
@@ -352,6 +377,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 25,
+    summary: `Auditory Entrainment, or brainwave entrainment, is the capacity of the brain to align its internal electrical frequencies with external rhythmic stimuli. When you listen to a steady beat or sound frequency, the auditory cortex processes the signal and transmits it to other brain regions.`,
     week_theme: 'attention',
     week_theme_display: 'Attention & Focus',
     week_theme_hi: 'ध्यान और एकाग्रता',
@@ -366,6 +392,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 26,
+    summary: `The Salience Network, anchored in the insular cortex and anterior cingulate cortex, is the brain's internal sorting system. It constantly monitors both internal bodily sensations and external environmental inputs to decide what is most important, or salient, at any given moment.`,
     week_theme: 'attention',
     week_theme_display: 'Attention & Focus',
     week_theme_hi: 'ध्यान और एकाग्रता',
@@ -380,6 +407,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 27,
+    summary: `Every second, your sensory organs are bombarded with millions of bits of data: the feeling of your clothes, the hum of the air conditioner, the visual details in your periphery. If all of this reached your conscious mind, you would be overwhelmed.`,
     week_theme: 'attention',
     week_theme_display: 'Attention & Focus',
     week_theme_hi: 'ध्यान और एकाग्रता',
@@ -394,6 +422,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 28,
+    summary: `Mindfulness practice is often viewed as a purely emotional exercise, but MRI studies have shown that it produces structural changes in the brain. Specifically, regular mindfulness practice increases cortical thickness in the prefrontal cortex and the insula.`,
     week_theme: 'attention',
     week_theme_display: 'Attention & Focus',
     week_theme_hi: 'ध्यान और एकाग्रता',
@@ -408,6 +437,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 29,
+    summary: `Hyperfocus is a state of intense, deep concentration that occurs when an individual is completely absorbed in a task, to the point of ignoring their surroundings. Managed by the basal ganglia and dopamine networks, hyperfocus is common in individuals with ADHD, representing a paradox of attention regulation.`,
     week_theme: 'attention',
     week_theme_display: 'Attention & Focus',
     week_theme_hi: 'ध्यान और एकाग्रता',
@@ -422,6 +452,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 30,
+    summary: `The Stroop Effect is a demonstration of cognitive interference where the delay in reaction time of a task is measured. When you are asked to read the name of a color written in a different ink color (for example, the word blue written in red ink), your brain experiences a delay.`,
     week_theme: 'attention',
     week_theme_display: 'Attention & Focus',
     week_theme_hi: 'ध्यान और एकाग्रता',
@@ -436,6 +467,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 31,
+    summary: `When you face a sudden threat or emotional stress, your brain's alarm system, the amygdala, can bypass the rational prefrontal cortex. This survival mechanism, known as an Amygdala Hijack, triggers a rapid flood of adrenaline and cortisol, preparing your body for a fight-or-flight response.`,
     week_theme: 'emotion',
     week_theme_display: 'Emotional Regulation',
     week_theme_hi: 'भावनात्मक नियंत्रण',
@@ -450,6 +482,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 32,
+    summary: `The vagus nerve is the longest nerve in the autonomic nervous system, connecting the brain to the heart, lungs, and digestive tract. It is the primary pathway for the parasympathetic nervous system, which governs the body's rest and digest state.`,
     week_theme: 'emotion',
     week_theme_display: 'Emotional Regulation',
     week_theme_hi: 'भावनात्मक नियंत्रण',
@@ -464,6 +497,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 33,
+    summary: `Cognitive Reappraisal is an emotional regulation strategy that involves changing the way you think about a situation to alter its emotional impact. This process is managed by the prefrontal cortex, which exerts top-down control over the emotional processing centers in the amygdala.`,
     week_theme: 'emotion',
     week_theme_display: 'Emotional Regulation',
     week_theme_hi: 'भावनात्मक नियंत्रण',
@@ -478,6 +512,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 34,
+    summary: `Interoception is the brain's ability to sense and interpret the internal physiological state of the body, such as heart rate, respiration, hunger, and muscle tension. This process is managed by the insular cortex, which acts as a bridge between bodily states and conscious feelings.`,
     week_theme: 'emotion',
     week_theme_display: 'Emotional Regulation',
     week_theme_hi: 'भावनात्मक नियंत्रण',
@@ -492,6 +527,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 35,
+    summary: `Empathy is not just a social concept; it is deeply rooted in our biology through mirror neurons, located in the premotor cortex and inferior parietal lobe. Mirror neurons fire both when you perform an action and when you observe someone else performing that same action.`,
     week_theme: 'emotion',
     week_theme_display: 'Emotional Regulation',
     week_theme_hi: 'भावनात्मक नियंत्रण',
@@ -506,6 +542,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 36,
+    summary: `Joy and positive emotions are driven by a complex interplay of neurotransmitters within the brain's reward centers, primarily the nucleus accumbens. When you experience moments of connection, gratitude, or achievement, your brain releases a combination of dopamine, serotonin, and endorphins.`,
     week_theme: 'emotion',
     week_theme_display: 'Emotional Regulation',
     week_theme_hi: 'भावनात्मक नियंत्रण',
@@ -520,6 +557,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 37,
+    summary: `Heart Rate Variability, or HRV, is the measure of the variation in time between each heartbeat. Managed by the autonomic nervous system, HRV is a key indicator of cardiovascular health and emotional resilience.`,
     week_theme: 'emotion',
     week_theme_display: 'Emotional Regulation',
     week_theme_hi: 'भावनात्मक नियंत्रण',
@@ -534,6 +572,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 38,
+    summary: `Emotional Granularity is the ability to identify and label your emotions with high precision. Instead of simply feeling bad, an individual with high emotional granularity can distinguish between feeling disappointed, anxious, lonely, or exhausted.`,
     week_theme: 'emotion',
     week_theme_display: 'Emotional Regulation',
     week_theme_hi: 'भावनात्मक नियंत्रण',
@@ -548,6 +587,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 39,
+    summary: `Oxytocin is a hormone and neurotransmitter produced in the hypothalamus and released by the pituitary gland. It is often referred to as the trust molecule or bonding hormone, playing a vital role in social connection, empathy, and relationship building.`,
     week_theme: 'emotion',
     week_theme_display: 'Emotional Regulation',
     week_theme_hi: 'भावनात्मक नियंत्रण',
@@ -562,6 +602,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 40,
+    summary: `Fear Conditioning occurs when the brain associates a neutral stimulus with a stressful event, a process managed by the amygdala. For example, if you experience a car accident, your brain might associate the sound of screeching tires with fear.`,
     week_theme: 'emotion',
     week_theme_display: 'Emotional Regulation',
     week_theme_hi: 'भावनात्मक नियंत्रण',
@@ -576,6 +617,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 41,
+    summary: `Endorphins are neurotransmitters produced by the pituitary gland and hypothalamus in response to pain, stress, or intense physical exertion. The word endorphin translates to endogenous morphine, reflecting their ability to bind to opioid receptors in the brain and block the transmission of pain signals.`,
     week_theme: 'emotion',
     week_theme_display: 'Emotional Regulation',
     week_theme_hi: 'भावनात्मक नियंत्रण',
@@ -590,6 +632,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 42,
+    summary: `Under acute stress, the adrenal glands release cortisol, a hormone that mobilizes energy, increases blood sugar, and suppresses non-essential functions like digestion and immune response to help you survive. However, when stress becomes chronic, cortisol levels remain elevated.`,
     week_theme: 'emotion',
     week_theme_display: 'Emotional Regulation',
     week_theme_hi: 'भावनात्मक नियंत्रण',
@@ -604,6 +647,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 43,
+    summary: `The Gut-Brain Axis is a bidirectional communication channel that links your central nervous system with your enteric nervous system, located in your gastrointestinal tract. This connection is maintained through the vagus nerve, immune signals, and gut hormones.`,
     week_theme: 'emotion',
     week_theme_display: 'Emotional Regulation',
     week_theme_hi: 'भावनात्मक नियंत्रण',
@@ -618,6 +662,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 44,
+    summary: `The Somatic Marker Hypothesis, proposed by neuroscientist Antonio Damasio, suggests that decision-making is a process influenced by bodily sensations, or somatic markers. When you face a choice, your brain retrieves past emotional experiences associated with similar options, triggering physical responses like heart rate changes or muscle tension.`,
     week_theme: 'emotion',
     week_theme_display: 'Emotional Regulation',
     week_theme_hi: 'भावनात्मक नियंत्रण',
@@ -632,6 +677,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 45,
+    summary: `Positive Resonance is a term coined by psychologist Barbara Fredrickson to describe the brief, micro-moments of shared positive emotion and connection between people. At the neural level, this resonance is characterized by synchronized brain activity in the limbic systems of both individuals, along with matching heart rates and mutual releases of oxytocin.`,
     week_theme: 'emotion',
     week_theme_display: 'Emotional Regulation',
     week_theme_hi: 'भावनात्मक नियंत्रण',
@@ -646,6 +692,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 46,
+    summary: `The Incubation Period is a critical stage in the creative process where the mind is distracted from the target problem, allowing the brain to process it subconsciously. When you focus intensely on a problem, your prefrontal cortex restricts your thinking to familiar pathways.`,
     week_theme: 'creativity',
     week_theme_display: 'Creativity & Focus',
     week_theme_hi: 'रचनात्मकता और प्रवाह',
@@ -660,6 +707,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 47,
+    summary: `Creativity requires the balance of two distinct cognitive processes: divergent thinking and convergent thinking, both managed by the prefrontal cortex. Divergent thinking is the ability to generate a wide variety of unique ideas, exploring multiple possibilities without judgment.`,
     week_theme: 'creativity',
     week_theme_display: 'Creativity & Focus',
     week_theme_hi: 'रचनात्मकता और प्रवाह',
@@ -674,6 +722,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 48,
+    summary: `Dopamine plays a critical role in the creative process by driving exploration and curiosity. The mesolimbic dopamine pathway is activated when you explore new environments, learn new skills, or seek out unusual information.`,
     week_theme: 'creativity',
     week_theme_display: 'Creativity & Focus',
     week_theme_hi: 'रचनात्मकता और प्रवाह',
@@ -688,6 +737,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 49,
+    summary: `The Flow State is a state of deep absorption where an individual becomes completely immersed in an activity, experiencing effortless focus and high performance. At the neural level, flow is characterized by transient hypofrontality, where the dorsolateral prefrontal cortex, the seat of self-monitoring and self-criticism, temporarily quiets down.`,
     week_theme: 'creativity',
     week_theme_display: 'Creativity & Focus',
     week_theme_hi: 'रचनात्मकता और प्रवाह',
@@ -702,6 +752,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 50,
+    summary: `Synesthesia is a neurological condition where stimulation of one sensory pathway leads to automatic, involuntary experiences in a second sensory pathway. For example, hearing a sound might trigger the visualization of a color, or tasting a food might trigger a physical sensation.`,
     week_theme: 'creativity',
     week_theme_display: 'Creativity & Focus',
     week_theme_hi: 'रचनात्मकता और प्रवाह',
@@ -716,6 +767,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 51,
+    summary: `Cognitive Flexibility is the brain's ability to transition between different concepts, adapt to unexpected changes, and find multiple solutions to a single problem. This skill is managed by the anterior cingulate cortex and prefrontal networks, which monitor conflict and adjust behavioral strategies.`,
     week_theme: 'creativity',
     week_theme_display: 'Creativity & Focus',
     week_theme_hi: 'रचनात्मकता और प्रवाह',
@@ -730,6 +782,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 52,
+    summary: `Latent Inhibition is the brain's automatic filter that classifies familiar stimuli as irrelevant, preventing them from reaching conscious awareness. Managed by the thalamus and dopamine pathways, this mechanism protects the prefrontal cortex from sensory overload.`,
     week_theme: 'creativity',
     week_theme_display: 'Creativity & Focus',
     week_theme_hi: 'रचनात्मकता और प्रवाह',
@@ -744,6 +797,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 53,
+    summary: `In our hyper-connected world, we rarely experience boredom. The moment we feel a pause, we check our phones, seeking instant stimulation.`,
     week_theme: 'creativity',
     week_theme_display: 'Creativity & Focus',
     week_theme_hi: 'रचनात्मकता और प्रवाह',
@@ -758,6 +812,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 54,
+    summary: `Hypnagogia is the transitional state of consciousness between wakefulness and sleep, characterized by vivid sensory imagery and fluid thought patterns. During this phase, the thalamus slows its filtering of sensory data, while the prefrontal cortex's executive control weakens.`,
     week_theme: 'creativity',
     week_theme_display: 'Creativity & Focus',
     week_theme_hi: 'रचनात्मकता और प्रवाह',
@@ -772,6 +827,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 55,
+    summary: `The Aha Moment, or sudden insight, is a distinct cognitive event where a solution to a problem appears in conscious awareness. EEG and fMRI studies reveal that immediately before an insight, there is a sudden burst of high-frequency gamma-band activity in the right superior temporal gyrus.`,
     week_theme: 'creativity',
     week_theme_display: 'Creativity & Focus',
     week_theme_hi: 'रचनात्मकता और प्रवाह',
@@ -786,6 +842,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 56,
+    summary: `Neuroplasticity is the brain's ability to reorganize itself by forming new neural connections in response to learning and experience. When you practice a creative skill, such as playing an instrument or writing, you drive structural changes in specific brain regions.`,
     week_theme: 'creativity',
     week_theme_display: 'Creativity & Focus',
     week_theme_hi: 'रचनात्मकता और प्रवाह',
@@ -800,6 +857,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 57,
+    summary: `Cognitive Disinhibition is the temporary weakening of the frontal lobe's executive filters, which normally suppress unusual thoughts, feelings, and sensory details. While these filters are essential for daily functioning and logical thinking, they can restrict creative expression by blocking unconventional connections.`,
     week_theme: 'creativity',
     week_theme_display: 'Creativity & Focus',
     week_theme_hi: 'रचनात्मकता और प्रवाह',
@@ -814,6 +872,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 58,
+    summary: `Playfulness and exploration are not just childhood activities; they are powerful stimulators of adult neurogenesis and brain plasticity. When you engage in play, exploration, or try new things, your brain releases neurotrophic factors like BDNF, which supports the survival and growth of new neurons in the hippocampus.`,
     week_theme: 'creativity',
     week_theme_display: 'Creativity & Focus',
     week_theme_hi: 'रचनात्मकता और प्रवाह',
@@ -828,6 +887,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 59,
+    summary: `Analogical Reasoning is the cognitive process of transferring information or meaning from a particular subject to another. This ability is managed by the frontopolar cortex, the most anterior part of the prefrontal cortex, which is highly developed in humans.`,
     week_theme: 'creativity',
     week_theme_display: 'Creativity & Focus',
     week_theme_hi: 'रचनात्मकता और प्रवाह',
@@ -842,6 +902,7 @@ export const NEUROLAB_ENTRIES: NeuroLabEntry[] = [
   },
   {
     dayIndex: 60,
+    summary: `Daydreaming, or mind-wandering, is often dismissed as a lack of focus, but it is actually a complex cognitive process that supports creativity. When your mind wanders, the Default Mode Network engages in a self-generated search, linking memories, feelings, and future scenarios.`,
     week_theme: 'creativity',
     week_theme_display: 'Creativity & Focus',
     week_theme_hi: 'रचनात्मकता और प्रवाह',

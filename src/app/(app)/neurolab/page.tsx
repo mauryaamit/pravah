@@ -99,6 +99,21 @@ export default function NeuroLabPage() {
               </p>
             </div>
 
+            {/* Summary Box */}
+            {activeEntry.summary && (
+              <div 
+                className="p-5 border-l-4 rounded bg-[var(--bg-secondary)]" 
+                style={{ borderColor: 'var(--accent-saffron)' }}
+              >
+                <h4 className="text-[10px] uppercase tracking-widest font-semibold mb-2" style={{ color: 'var(--accent-saffron)' }}>
+                  संक्षेप · In Brief
+                </h4>
+                <p className="font-serif italic text-base leading-relaxed text-[var(--text-primary)]">
+                  {activeEntry.summary}
+                </p>
+              </div>
+            )}
+
             {/* 3 Core Content Sections */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Section 1: The Science */}

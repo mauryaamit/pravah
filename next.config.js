@@ -25,8 +25,10 @@ const nextConfig = {
   },
   async redirects() {
     return [
-      { source: '/shabda', destination: '/bhasha', permanent: true },
-      { source: '/samvaad', destination: '/bhasha', permanent: true },
+      { source: '/shabda', destination: '/angrezi', permanent: true },
+      { source: '/samvaad', destination: '/angrezi', permanent: true },
+      { source: '/bhasha', destination: '/angrezi', permanent: true },
+      { source: '/prerna', destination: '/noor', permanent: true },
     ];
   },
   async headers() {

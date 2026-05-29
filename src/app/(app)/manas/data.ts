@@ -2,6 +2,7 @@
 // Manas room - Neuroscience-based cognitive sanctuary entries
 
 export interface ManasEntry {
+  summary: string;
   dayIndex: number;
   domain: 'bias' | 'social' | 'emotion' | 'learning' | 'decision';
   domain_display: string;     // e.g. "Cognitive Bias"
@@ -19,6 +20,7 @@ export interface ManasEntry {
 export const MANAS_ENTRIES: ManasEntry[] = [
   {
     dayIndex: 1,
+    summary: `Confirmation bias is a pervasive cognitive phenomenon where the human brain actively seeks, interprets, and recalls information in a way that confirms preexisting beliefs while systematically discounting contradictory evidence. Rooted in our neural architecture, this tendency minimizes cognitive dissonance by avoiding the discomfort of being wrong.`,
     domain: 'bias',
     domain_display: 'Cognitive Bias',
     domain_hi: 'संज्ञानात्मक पूर्वाग्रह',
@@ -33,6 +35,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 2,
+    summary: `Anchoring bias occurs when individuals rely too heavily on the first piece of information they encounter when making decisions, even if that information is completely irrelevant. The initial number or value acts as a cognitive anchor, pulling all subsequent estimates and judgements toward it. This heuristic is a shortcut because the brain prefers to make relative adjustments rather than calculating values from scratch.`,
     domain: 'bias',
     domain_display: 'Cognitive Bias',
     domain_hi: 'संज्ञानात्मक पूर्वाग्रह',
@@ -47,6 +50,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 3,
+    summary: `The availability heuristic is a mental shortcut that relies on immediate examples that come to a person's mind when evaluating a specific topic, concept, method or decision. When we assess the risk or likelihood of an event, the brain queries memory for instances of that event.`,
     domain: 'bias',
     domain_display: 'Cognitive Bias',
     domain_hi: 'संज्ञानात्मक पूर्वाग्रह',
@@ -61,6 +65,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 4,
+    summary: `Hindsight bias, often described as the 'knew-it-all-along' effect, is the psychological tendency to believe, after an event has occurred, that we predicted or expected it, even if we had no such expectation. Once an outcome is known, the brain reconstructs its memory of the past to create a coherent narrative that makes the outcome seem inevitable.`,
     domain: 'bias',
     domain_display: 'Cognitive Bias',
     domain_hi: 'संज्ञानात्मक पूर्वाग्रह',
@@ -75,6 +80,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 5,
+    summary: `The Dunning-Kruger effect is a cognitive bias where people with low ability or knowledge in a specific domain overestimate their own competence. Conversely, highly competent individuals often underestimate their relative skill, assuming tasks easy for them are also easy for others.`,
     domain: 'bias',
     domain_display: 'Cognitive Bias',
     domain_hi: 'संज्ञानात्मक पूर्वाग्रह',
@@ -89,6 +95,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 6,
+    summary: `Negativity bias is the psychological tendency to register and dwell on negative experiences, emotions, or information far more intensely than positive ones of equal intensity. Neurologically, the amygdala uses about two-thirds of its neurons to detect bad news, responding faster and more intensely to threats than to opportunities.`,
     domain: 'bias',
     domain_display: 'Cognitive Bias',
     domain_hi: 'संज्ञानात्मक पूर्वाग्रह',
@@ -103,6 +110,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 7,
+    summary: `Optimism bias is the cognitive tendency to overestimate the likelihood of experiencing positive events in our lives while underestimating the probability of experiencing negative ones. We believe we are more likely than our peers to achieve professional success, live a long life, and have a happy marriage, while assuming we are less vulnerable to illness, financial disaster, or accidents.`,
     domain: 'bias',
     domain_display: 'Cognitive Bias',
     domain_hi: 'संज्ञानात्मक पूर्वाग्रह',
@@ -117,6 +125,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 8,
+    summary: `Status quo bias is an emotional preference for the current state of affairs, where any change from the established baseline is perceived as a potential loss. This bias leads individuals to choose familiar options and stick with existing arrangements, even when superior alternatives are readily available.`,
     domain: 'bias',
     domain_display: 'Cognitive Bias',
     domain_hi: 'संज्ञानात्मक पूर्वाग्रह',
@@ -131,6 +140,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 9,
+    summary: `Self-serving bias is the cognitive tendency to attribute our successes to internal, personal factors, such as intelligence, skill, or hard work, while attributing our failures to external, situational factors, such as bad luck, unfair rules, or difficult people. This bias acts as a protective shield for our self-esteem.`,
     domain: 'bias',
     domain_display: 'Cognitive Bias',
     domain_hi: 'संज्ञानात्मक पूर्वाग्रह',
@@ -145,6 +155,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 10,
+    summary: `Ingroup bias is the tendency to favor, trust, and support members of our own group over those who belong to an outgroup, even when the groups are formed on trivial or arbitrary criteria. The human brain is highly sensitive to social categorization, separating the world into 'us' and 'them'.`,
     domain: 'bias',
     domain_display: 'Cognitive Bias',
     domain_hi: 'संज्ञानात्मक पूर्वाग्रह',
@@ -159,6 +170,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 11,
+    summary: `The fundamental attribution error is our tendency to explain other people's behavior by overemphasizing their internal personality traits while underestimating the impact of situational factors. Conversely, when explaining our own behavior, we do the opposite, blaming situations rather than our character.`,
     domain: 'bias',
     domain_display: 'Cognitive Bias',
     domain_hi: 'संज्ञानात्मक पूर्वाग्रह',
@@ -173,6 +185,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 12,
+    summary: `The halo effect is a cognitive bias where our overall impression of a person, particularly their physical attractiveness or charisma, influences how we feel and think about their character, intelligence, and capabilities. If we perceive someone as beautiful or warm, our brain automatically creates a positive 'halo' around them, assuming they are also honest, smart, and kind.`,
     domain: 'bias',
     domain_display: 'Cognitive Bias',
     domain_hi: 'संज्ञानात्मक पूर्वाग्रह',
@@ -187,6 +200,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 13,
+    summary: `Social loafing is the phenomenon where individuals exert less effort when working collectively on a task than when working individually. When people feel their individual contribution cannot be singlehandedly identified or measured, their motivation drops.`,
     domain: 'social',
     domain_display: 'Social Cognition',
     domain_hi: 'सामाजिक संज्ञान',
@@ -201,6 +215,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 14,
+    summary: `The bystander effect is a social psychological phenomenon where individuals are less likely to offer help to a victim when other people are present. This hesitation is driven by two main factors: diffusion of responsibility, where the psychological cost of not acting is shared, and pluralistic ignorance, where people look to others to gauge how to react.`,
     domain: 'social',
     domain_display: 'Social Cognition',
     domain_hi: 'सामाजिक संज्ञान',
@@ -215,6 +230,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 15,
+    summary: `Groupthink is a psychological phenomenon that occurs within a group of people in which the desire for harmony and conformity results in an irrational or dysfunctional decision-making outcome. To maintain group cohesion, members suppress dissenting viewpoints, ignore external information, and isolate themselves from alternative perspectives.`,
     domain: 'social',
     domain_display: 'Social Cognition',
     domain_hi: 'सामाजिक संज्ञान',
@@ -229,6 +245,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 16,
+    summary: `The spotlight effect is the psychological tendency to overestimate the extent to which other people notice and pay attention to our appearance, behavior, and mistakes. We live at the center of our own universe, making our actions highly salient to ourselves.`,
     domain: 'social',
     domain_display: 'Social Cognition',
     domain_hi: 'सामाजिक संज्ञान',
@@ -243,6 +260,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 17,
+    summary: `Asch conformity refers to the powerful tendency of individuals to align their opinions, beliefs, and behaviors with those of a surrounding group, even when the group is clearly wrong. In famous experiments, participants chose obviously incorrect answers simply because the rest of the group did. Neurologically, conforming activates the brain's reward pathways, while resisting the group triggers the amygdala, signaling social threat and distress.`,
     domain: 'social',
     domain_display: 'Social Cognition',
     domain_hi: 'सामाजिक संज्ञान',
@@ -257,6 +275,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 18,
+    summary: `The chameleon effect is the unconscious mimicry of the postures, mannerisms, facial expressions, and behaviors of our interaction partners. When we talk to someone, we naturally mirror their body language, speed of speech, and gestures without realizing it. This mirroring is mediated by mirror neurons in the brain, which simulate the actions of others to build empathy and mutual understanding.`,
     domain: 'social',
     domain_display: 'Social Cognition',
     domain_hi: 'सामाजिक संज्ञान',
@@ -271,6 +290,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 19,
+    summary: `The pratfall effect is a psychological phenomenon whereby an individual's attractiveness or likability increases or decreases after they make a mistake, depending on their perceived competence. If a highly competent person makes a minor blunder, like spilling coffee, they become more human and likable to others because it softens their intimidating perfection.`,
     domain: 'social',
     domain_display: 'Social Cognition',
     domain_hi: 'सामाजिक संज्ञान',
@@ -285,6 +305,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 20,
+    summary: `Social comparison theory states that individuals determine their own social and personal worth based on how they stack up against others. Because we lack objective measures for many of our qualities, the brain looks to our peers to evaluate our success, wealth, beauty, and intelligence.`,
     domain: 'social',
     domain_display: 'Social Cognition',
     domain_hi: 'सामाजिक संज्ञान',
@@ -299,6 +320,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 21,
+    summary: `The Pygmalion effect is a psychological phenomenon wherein high expectations lead to improved performance in a given area. When others believe in our potential, they unconsciously treat us with more warmth, provide better feedback, and offer more opportunities.`,
     domain: 'social',
     domain_display: 'Social Cognition',
     domain_hi: 'सामाजिक संज्ञान',
@@ -313,6 +335,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 22,
+    summary: `Deindividuation is a state of decreased self-awareness and weakened personal responsibility that can occur when individuals are part of a large crowd or wear disguises. In these situations, people feel anonymous, believing they cannot be singled out for their actions.`,
     domain: 'social',
     domain_display: 'Social Cognition',
     domain_hi: 'सामाजिक संज्ञान',
@@ -327,6 +350,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 23,
+    summary: `Pluralistic ignorance is a social phenomenon where a majority of group members privately reject a norm, but incorrectly assume that most others accept it, leading them to go along with it publicly. Everyone conforms to a perceived consensus that does not actually exist.`,
     domain: 'social',
     domain_display: 'Social Cognition',
     domain_hi: 'सामाजिक संज्ञान',
@@ -341,6 +365,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 24,
+    summary: `The false consensus effect is the cognitive tendency to overestimate the degree to which other people share our beliefs, values, habits, and preferences. We use our own opinions as the baseline for normal behavior, assuming that our thoughts are common and typical.`,
     domain: 'social',
     domain_display: 'Social Cognition',
     domain_hi: 'सामाजिक संज्ञान',
@@ -355,6 +380,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 25,
+    summary: `The hedonic treadmill, or hedonic adaptation, is the observed tendency of humans to quickly return to a relatively stable level of happiness despite major positive or negative life events. When we achieve a goal, like buying a house or getting a promotion, the brain's dopamine pathways experience a temporary spike.`,
     domain: 'emotion',
     domain_display: 'Affective Science',
     domain_hi: 'भावनात्मक विज्ञान',
@@ -369,6 +395,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 26,
+    summary: `The somatic marker hypothesis proposes that emotional processes guide behavior, particularly decision-making. When we face choices, the brain generates subconscious bodily reactions, or somatic markers, like a racing heart, gut tension, or muscle relaxation.`,
     domain: 'emotion',
     domain_display: 'Affective Science',
     domain_hi: 'भावनात्मक विज्ञान',
@@ -383,6 +410,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 27,
+    summary: `Affective forecasting is the process of predicting our future emotional states. While we are generally good at knowing whether an event will make us feel happy or sad, we are notoriously bad at predicting the intensity and duration of these emotions.`,
     domain: 'emotion',
     domain_display: 'Affective Science',
     domain_hi: 'भावनात्मक विज्ञान',
@@ -397,6 +425,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 28,
+    summary: `Misattribution of arousal is the process whereby people make a mistake in assuming what is causing them to feel aroused or excited. When the body experiences physiological arousal, like a racing heart or shallow breathing, the brain looks to the immediate environment for an explanation.`,
     domain: 'emotion',
     domain_display: 'Affective Science',
     domain_hi: 'भावनात्मक विज्ञान',
@@ -411,6 +440,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 29,
+    summary: `Emotional contagion is the phenomenon of having one's emotions and related behaviors directly trigger similar emotions and behaviors in others. This process is automatic and rapid, occurring through the unconscious mimicry of facial expressions, postures, and vocal tones.`,
     domain: 'emotion',
     domain_display: 'Affective Science',
     domain_hi: 'भावनात्मक विज्ञान',
@@ -425,6 +455,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 30,
+    summary: `Cognitive reappraisal is an emotion regulation strategy that involves changing the trajectory of an emotional response by reinterpreting the meaning of the emotional stimulus. When we face a stressful event, the brain's default interpretation can trigger intense anxiety or anger.`,
     domain: 'emotion',
     domain_display: 'Affective Science',
     domain_hi: 'भावनात्मक विज्ञान',
@@ -439,6 +470,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 31,
+    summary: `An amygdala hijack is an immediate, overwhelming emotional response that is out of proportion to the actual trigger because it has bypassed our logical brain. Sensory information travels to the amygdala before the prefrontal cortex can process it. If the amygdala perceives a threat, it initiates a fight-or-flight response, releasing adrenaline and cortisol, and shutting down logical reasoning.`,
     domain: 'emotion',
     domain_display: 'Affective Science',
     domain_hi: 'भावनात्मक विज्ञान',
@@ -453,6 +485,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 32,
+    summary: `The broaden-and-build theory suggests that positive emotions, such as joy, interest, and contentment, broaden our transient thought-action repertoires, encouraging us to explore, play, and learn. Unlike negative emotions, which narrow our focus to a single survival response like fighting or fleeing, positive emotions expand our cognitive horizon.`,
     domain: 'emotion',
     domain_display: 'Affective Science',
     domain_hi: 'भावनात्मक विज्ञान',
@@ -467,6 +500,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 33,
+    summary: `Emotional labor is the process of managing feelings and expressions to fulfill the emotional requirements of a job. It requires workers to project specific emotions, like warmth and patience, while suppressing their true feelings of exhaustion, anger, or sadness. Neurologically, this constant monitoring and self-regulation requires significant activity in the prefrontal cortex, consuming metabolic energy and leading to cognitive fatigue.`,
     domain: 'emotion',
     domain_display: 'Affective Science',
     domain_hi: 'भावनात्मक विज्ञान',
@@ -481,6 +515,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 34,
+    summary: `The facial feedback hypothesis asserts that facial movement can influence emotional experience. For example, an individual who is forced to smile during an event will actually find the event more enjoyable than someone who wears a neutral expression.`,
     domain: 'emotion',
     domain_display: 'Affective Science',
     domain_hi: 'भावनात्मक विज्ञान',
@@ -495,6 +530,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 35,
+    summary: `Mood-congruent memory is the tendency to recall memories that are consistent with our current emotional state. When we are happy, our brain finds it easy to retrieve joyful memories, reinforcing our positive outlook.`,
     domain: 'emotion',
     domain_display: 'Affective Science',
     domain_hi: 'भावनात्मक विज्ञान',
@@ -509,6 +545,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 36,
+    summary: `The Yerkes-Dodson Law dictates that performance increases with physiological or mental arousal, but only up to an optimal point. When levels of arousal become too high, performance decreases, creating an inverted U-shaped curve.`,
     domain: 'emotion',
     domain_display: 'Affective Science',
     domain_hi: 'भावनात्मक विज्ञान',
@@ -523,6 +560,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 37,
+    summary: `Neuroplasticity is the brain's ability to reorganize itself by forming new neural connections throughout life. Far from being a static organ that stops developing after childhood, the brain changes in response to learning, experience, and environment.`,
     domain: 'learning',
     domain_display: 'Learning & Memory',
     domain_hi: 'अधिगम और स्मृति',
@@ -537,6 +575,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 38,
+    summary: `The spacing effect is the phenomenon whereby learning is greater when studying is spread out over time, as opposed to studying in a single session. Cramming information into the brain in one long session leads to rapid forgetting.`,
     domain: 'learning',
     domain_display: 'Learning & Memory',
     domain_hi: 'अधिगम और स्मृति',
@@ -551,6 +590,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 39,
+    summary: `The Zeigarnik effect states that people remember uncompleted or interrupted tasks better than completed tasks. When a task is started, the brain creates a state of cognitive tension, keeping the details of the task active in our working memory.`,
     domain: 'learning',
     domain_display: 'Learning & Memory',
     domain_hi: 'अधिगम और स्मृति',
@@ -565,6 +605,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 40,
+    summary: `Hebbian learning is a neuroscientific theory stating that when an axon of cell A is near enough to excite cell B and repeatedly takes part in firing it, some growth process takes place in one or both cells such that A's efficiency, as one of the cells firing B, is increased. This is often summarized as: 'cells that fire together, wire together.' This associative learning is the foundation of habit formation, memory creation, and classical conditioning, explaining how the brain links sensory inputs with motor actions and emotional responses through physical, synaptic changes.`,
     domain: 'learning',
     domain_display: 'Learning & Memory',
     domain_hi: 'अधिगम और स्मृति',
@@ -579,6 +620,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 41,
+    summary: `A growth mindset is the belief that an individual's talents and abilities can be developed through dedication, hard work, and learning. This contrasts with a fixed mindset, which views intelligence as a static, unchangeable trait.`,
     domain: 'learning',
     domain_display: 'Learning & Memory',
     domain_hi: 'अधिगम और स्मृति',
@@ -593,6 +635,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 42,
+    summary: `Cognitive load theory is an instructional design theory that explains how the human brain processes and stores information. Our working memory has a strictly limited capacity, able to hold only about four to seven chunks of information at a time.`,
     domain: 'learning',
     domain_display: 'Learning & Memory',
     domain_hi: 'अधिगम और स्मृति',
@@ -607,6 +650,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 43,
+    summary: `Retrieval practice is a learning strategy where we focus on getting information out of our minds, rather than trying to force it in. Commonly known as testing ourselves, this practice involves recalling facts from memory. Every time we retrieve a memory, we physically alter the brain's architecture, making the memory path stronger and more accessible in the future.`,
     domain: 'learning',
     domain_display: 'Learning & Memory',
     domain_hi: 'अधिगम और स्मृति',
@@ -621,6 +665,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 44,
+    summary: `The levels of processing framework suggests that the strength and durability of a memory trace depend on the depth of mental processing that occurred during learning. Shallow processing focuses on physical or structural features, like the font of a word.`,
     domain: 'learning',
     domain_display: 'Learning & Memory',
     domain_hi: 'अधिगम और स्मृति',
@@ -635,6 +680,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 45,
+    summary: `Dual-coding theory states that the human brain processes information through two separate but connected channels: a verbal channel for language and a visual channel for images. When we receive information through both channels simultaneously, we create two separate memory traces in our brain.`,
     domain: 'learning',
     domain_display: 'Learning & Memory',
     domain_hi: 'अधिगम और स्मृति',
@@ -649,6 +695,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 46,
+    summary: `Context-dependent memory refers to the phenomenon where it is easier to retrieve a memory when we are in the same environment or context in which the memory was formed. The brain does not store memories in isolation; it records the sights, sounds, smells, and internal emotional states that surround us during learning.`,
     domain: 'learning',
     domain_display: 'Learning & Memory',
     domain_hi: 'अधिगम और स्मृति',
@@ -663,6 +710,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 47,
+    summary: `The generation effect is a cognitive phenomenon where information is better remembered if it is generated from one's own mind rather than simply read or heard. When we actively produce an answer, solve a puzzle, or explain a concept in our own words, our brain engages in deeper cognitive processing.`,
     domain: 'learning',
     domain_display: 'Learning & Memory',
     domain_hi: 'अधिगम और स्मृति',
@@ -677,6 +725,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 48,
+    summary: `The testing effect is the finding that long-term memory is increased when some of the learning period is devoted to retrieving information through testing, rather than just studying it. While re-studying makes us feel confident because the material seems familiar, testing forces the brain to practice the difficult act of retrieval. This active retrieval process modifies the memory trace, making it more robust and resistant to forgetting.`,
     domain: 'learning',
     domain_display: 'Learning & Memory',
     domain_hi: 'अधिगम और स्मृति',
@@ -691,6 +740,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 49,
+    summary: `Prospect theory describes how people choose between probabilistic alternatives that involve risk, showing that we make decisions based on perceived gains or losses rather than absolute outcomes. The theory demonstrates that humans are asymmetrical in their preferences: the pain of losing is psychologically about twice as powerful as the pleasure of gaining the same amount.`,
     domain: 'decision',
     domain_display: 'Decision Science',
     domain_hi: 'निर्णय विज्ञान',
@@ -705,6 +755,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 50,
+    summary: `Bounded rationality is the idea that when individuals make decisions, their rationality is limited by the tractability of the decision problem, the cognitive limitations of their minds, and the time available to make the decision. Rather than seeking the mathematically optimal choice, which requires infinite time and information, the human brain uses heuristics to find a 'good enough' solution.`,
     domain: 'decision',
     domain_display: 'Decision Science',
     domain_hi: 'निर्णय विज्ञान',
@@ -719,6 +770,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 51,
+    summary: `Choice overload is a cognitive process in which people have a difficult time making a decision when faced with many options. While we believe that more options bring more freedom, a large number of choices paralyzes the brain.`,
     domain: 'decision',
     domain_display: 'Decision Science',
     domain_hi: 'निर्णय विज्ञान',
@@ -733,6 +785,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 52,
+    summary: `Temporal discounting, or delay discounting, is the tendency to value immediate rewards more highly than future rewards, even when the future reward is much larger. The subjective value of a reward decreases, or is discounted, the longer we have to wait for it. Neurologically, immediate rewards activate the brain's emotional, dopamine-driven limbic system, causing a strong urge to consume now. Future rewards require the prefrontal cortex to simulate a distant future self, a process that is cognitively difficult and emotionally weak, explaining why we choose short-term pleasure over long-term health and wealth.`,
     domain: 'decision',
     domain_display: 'Decision Science',
     domain_hi: 'निर्णय विज्ञान',
@@ -747,6 +800,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 53,
+    summary: `The decoy effect is a phenomenon where consumers tend to have a specific change in preference between two options when presented with a third option that is asymmetrically dominated. The third option, or the decoy, is designed to be inferior to one option in all aspects, but only slightly inferior to the other option.`,
     domain: 'decision',
     domain_display: 'Decision Science',
     domain_hi: 'निर्णय विज्ञान',
@@ -761,6 +815,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 54,
+    summary: `The peak-end rule is a cognitive bias that impacts how we remember past events. Rather than averaging the entire experience or remembering its duration, the brain judges the experience based on two points: how it felt at its peak (the most intense point) and how it felt at its end. This selective memory retrieval occurs because the brain does not record life like a video camera; it stores emotional highlights.`,
     domain: 'decision',
     domain_display: 'Decision Science',
     domain_hi: 'निर्णय विज्ञान',
@@ -775,6 +830,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 55,
+    summary: `The framing effect is a cognitive bias where people react to a particular choice in different ways depending on how it is presented, or framed. For example, we prefer options presented in a positive frame, highlighting gains, over options in a negative frame, highlighting losses, even if both options are mathematically identical.`,
     domain: 'decision',
     domain_display: 'Decision Science',
     domain_hi: 'निर्णय विज्ञान',
@@ -789,6 +845,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 56,
+    summary: `The paradox of choice is the observation that while having choice is essential for well-being, having too much of it leads to anxiety, decision fatigue, and unhappiness. As the number of options increases, the effort required to make a good choice rises.`,
     domain: 'decision',
     domain_display: 'Decision Science',
     domain_hi: 'निर्णय विज्ञान',
@@ -803,6 +860,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 57,
+    summary: `Loss aversion is a cognitive bias that describes how the pain of losing is psychologically about twice as powerful as the pleasure of gaining. We are highly motivated to protect what we already own, even if keeping it prevents us from gaining superior resources.`,
     domain: 'decision',
     domain_display: 'Decision Science',
     domain_hi: 'निर्णय विज्ञान',
@@ -817,6 +875,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 58,
+    summary: `The sunk cost fallacy is the tendency to continue an endeavor once an investment in money, effort, or time has been made, even if the current costs outweigh the potential benefits. The brain struggles to accept that past investments are gone and cannot be recovered.`,
     domain: 'decision',
     domain_display: 'Decision Science',
     domain_hi: 'निर्णय विज्ञान',
@@ -831,6 +890,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 59,
+    summary: `The IKEA effect is a cognitive bias in which consumers place a disproportionately high value on products they partially created or assembled. When we invest our physical labor and time into building something, our brain associates the effort with pride and achievement.`,
     domain: 'decision',
     domain_display: 'Decision Science',
     domain_hi: 'निर्णय विज्ञान',
@@ -845,6 +905,7 @@ export const MANAS_ENTRIES: ManasEntry[] = [
   },
   {
     dayIndex: 60,
+    summary: `The overconfidence effect is a cognitive bias where a person's subjective confidence in their judgements is reliably greater than the objective accuracy of those judgements. We overestimate our skills, knowledge, and ability to predict future events.`,
     domain: 'decision',
     domain_display: 'Decision Science',
     domain_hi: 'निर्णय विज्ञान',

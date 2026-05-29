@@ -13,183 +13,189 @@ export const SUTR_ROOMS: SutrRoomDescription[] = [
     id: 'aarambh',
     name: 'Aarambh',
     nameHindi: 'आरंभ',
-    oneLiner: 'Daily start - mood, intention, mantra',
-    contemplativeText: 'Begin each morning by aligning your breath, setting your focus, and stepping mindfully into the flow of the day.'
+    oneLiner: 'How you begin the day determines how you move through it',
+    contemplativeText: 'A mood check, an intention, a mantra, and a question - four things, five minutes, at the start of each day. Aarambh is not about making you optimistic. It is about making you intentional. There is a difference.'
   },
   {
     id: 'agni',
     name: 'Agni',
     nameHindi: 'अग्नि',
-    oneLiner: 'Habit forge - streak and micro-wins',
-    contemplativeText: 'Feed the fire of action. Track small, deliberate actions that gather heat and transform into lifelong character.'
+    oneLiner: 'The daily forge - small habits, large lives',
+    contemplativeText: 'You do not become someone different in a moment of decision. You become someone different through the unremarkable accumulation of small, repeated actions. Agni tracks those actions - not to shame you when you miss, but to remind you of what you are building.'
   },
   {
     id: 'antarman',
     name: 'Antarman',
     nameHindi: 'अन्तर्मन',
-    oneLiner: 'Journal - write, reflect, grow',
-    contemplativeText: 'A quiet mirror for your inner thoughts. Empty your mind, trace your feelings, and record your evolution.'
+    oneLiner: 'The private room - journal, reflect, remember',
+    contemplativeText: 'This room belongs only to you. No feeds, no audience, no performance. Just the page and what you actually think. Research consistently shows that the simple act of writing about your life - what happened, what you felt, what you want - reduces stress and increases clarity. Antarman is where that happens.'
   },
   {
     id: 'bargad',
     name: 'Bargad',
     nameHindi: 'बरगद',
-    oneLiner: 'Your Sankalps - deep long-term goals',
-    contemplativeText: 'Plant your deepest commitments under the shade of the banyan tree. Watch your silent vows take root and grow.'
+    oneLiner: 'Your long-term intentions - the things you are becoming',
+    contemplativeText: 'Not a task list of things to do, but a forest of the things you want to grow into. Under the shade of Bargad, you set intentions that span months and years, and return to them when the noise of the day gets too loud.'
   },
   {
     id: 'sukoon',
     name: 'Sukoon',
     nameHindi: 'सुकून',
-    oneLiner: 'Poetry - Hindi, Roman Urdu, English',
-    contemplativeText: 'Lose yourself in the cadence of timeless verses. Let the rhythm of words soothe your spirit.'
+    oneLiner: 'A quiet shelter in the rhythm of verses',
+    contemplativeText: 'Timeless poems in Hindi, Roman Hindustani, and English. Sukoon is not for scanning or speed-reading. It is a room to sit in for ten minutes, letting the resonance of Ghalib, Faiz, or Mahadevi Varma slow your breathing and restore your vocabulary of feeling.'
   },
   {
     id: 'manthan',
     name: 'Manthan',
     nameHindi: 'मन्थन',
-    oneLiner: 'Mental models - the thinking tools of every discipline',
-    contemplativeText: 'Equip your mind with the frameworks of history\'s greatest thinkers. See the world differently, decide more wisely, and act with greater clarity.'
+    oneLiner: 'Frameworks to see the world with absolute clarity',
+    contemplativeText: 'Every problem you face has been solved conceptually before. Manthan collects the mental models - from inversion to first principles - that help you cut through noise, make better decisions, and see the hidden structure of complex situations.'
   },
   {
     id: 'noor',
-    name: 'Noor',
-    nameHindi: 'नूर',
-    oneLiner: 'Daily fire - transformation, not motivation',
-    contemplativeText: 'A spark of quiet light to illuminate your path. Seek the wisdom that demands internal shift over superficial action.'
+    name: 'Prerna',
+    nameHindi: 'प्रेरणा',
+    oneLiner: 'One person. One moment. One ignition.',
+    contemplativeText: 'Not a quote for your Instagram. A person who faced something real and chose a specific way through it. Prerna gives you one such person each day - their words, their defining moment, and the question their life leaves open for yours.'
   },
   {
     id: 'riyaz',
     name: 'Riyaz',
     nameHindi: 'रियाज़',
-    oneLiner: 'Music and arts - the practice of beauty',
-    contemplativeText: 'Immerse yourself in ragas, scales, and the deep practice of harmony. Dedicate your attention to crafting pure aesthetic grace.'
+    oneLiner: 'The practice of focus, scale, and beauty',
+    contemplativeText: 'Indian classical ragas, western classical movements, and the stories of the artists who practiced them. Riyaz is a guide to the discipline of daily attention, teaching you how to listen to silence and appreciate the craft of sound.'
   },
   {
     id: 'manas',
     name: 'Manas',
     nameHindi: 'मानस',
-    oneLiner: 'The science of being human',
-    contemplativeText: 'Deconstruct the biases, social currents, and cognitive illusions that shape your decisions, and discover how to see clearly.'
+    oneLiner: 'The architecture of your mind',
+    contemplativeText: 'Every decision you made today was shaped by forces you did not notice. Manas names them - the bias that made you overconfident, the social pressure you mistook for your own opinion, the memory that was not quite accurate. Not to shame you, but to show you how your mind actually works.'
   },
   {
     id: 'bodh',
     name: 'Bodh',
     nameHindi: 'बोध',
-    oneLiner: 'Mental models and ideas that change you',
-    contemplativeText: 'Equip your consciousness with frameworks of clarity. View the world through the lenses of history’s greatest thinkers.'
+    oneLiner: 'Ideas that shift how you interact with reality',
+    contemplativeText: 'Some ideas do not just add to your knowledge; they change the person who knows. Bodh explores deep concepts in science, economics, and history that shift your perspective, offering new lenses through which to view your daily choices.'
   },
   {
     id: 'neurolab',
     name: 'NeuroLab',
     nameHindi: 'न्यूरोलैब',
-    oneLiner: 'Daily brain science',
-    contemplativeText: 'Understand the biological clockwork inside you. Uncover how habits, focus, and quiet change the pathways of your mind.'
+    oneLiner: 'The biology of focus, rest, and growth',
+    contemplativeText: 'Your brain is a physical organ governed by biological laws. NeuroLab translates the latest neuroscience into actionable insights, showing you how light, sleep, attention, and chemical pathways dictate your mood and capability.'
   },
   {
     id: 'cosmos',
     name: 'Cosmos',
     nameHindi: 'ब्रह्मांड',
-    oneLiner: 'Astrophysics and the infinite universe',
-    contemplativeText: 'Look up at the silent stars. Contemplate the vast, dark scale of space and find your small, precious place.'
+    oneLiner: 'A view of the infinite',
+    contemplativeText: 'A daily look at cosmic structures, space history, and the physics of the universe. In the face of nebulae and light-years, your daily anxieties shrink to their proper, tiny size, leaving you with a sense of quiet wonder and cosmic perspective.'
   },
   {
     id: 'darshan',
     name: 'Darshan',
     nameHindi: 'दर्शन',
-    oneLiner: 'Philosophy - all schools of thought',
-    contemplativeText: 'From ancient Vedic seers to modern existentialists, trace the human struggle to answer: What is the good life?'
+    oneLiner: 'The human struggle for meaning',
+    contemplativeText: 'From ancient Vedic debates to Stoic reflections and existential questions. Darshan is not an academic lecture; it is an invitation to engage with the oldest human questions about duty, suffering, consciousness, and the art of living well.'
   },
   {
-    id: 'bhasha',
-    name: 'Bhasha',
-    nameHindi: 'भाषा',
-    oneLiner: 'Language as the shape of thought',
-    contemplativeText: 'Explore the hidden life of words across English, Hindi, Sanskrit, and Urdu. Discover that every word is a civilization compressed into sound.'
+    id: 'angrezi',
+    name: 'Angrezi',
+    nameHindi: 'अंग्रेज़ी',
+    oneLiner: 'English as a living language - its words, its structures, its craft',
+    contemplativeText: 'A word you did not know this morning. An idiom with a 300-year history. A grammar structure that separates good English from fluent English. And daily drills that train you to think in English rather than translate from Hindi. Language is not just communication - it is the shape of thought.'
+  },
+  {
+    id: 'lekh',
+    name: 'Lekh',
+    nameHindi: 'लेख',
+    oneLiner: 'The finest longform writing across every domain of human thought',
+    contemplativeText: 'Ten essays. Ten articles. Every day. From the science of dying to the politics of language, from the ecology of cities to the philosophy of love - Lekh is where you read the kind of writing that changes how you think about something you thought you already understood. A Pravah Companion walks you through each piece before you read it and leaves you with a question after.'
   },
   {
     id: 'srot',
     name: 'Srot',
     nameHindi: 'स्रोत',
-    oneLiner: 'One deep read per day',
-    contemplativeText: 'Escape the surface-level scroll. Sit with long-form ideas that expand your mind and command your full presence.'
+    oneLiner: 'One long-form article to build deep focus',
+    contemplativeText: 'In a world that fragments your attention into seconds, Srot offers depth. One long-form essay per day, designed to be read slowly, without distraction. Reclaim your capacity for sustained, deep thought and explore ideas that require time to settle.'
   },
   {
     id: 'duniya',
     name: 'Duniya',
     nameHindi: 'दुनिया',
-    oneLiner: '3 world stories, explained deeply',
-    contemplativeText: 'Unpack the forces shaping our modern earth. Read three key geopolitical and human stories with deep history.'
+    oneLiner: 'The historical currents behind today’s headlines',
+    contemplativeText: 'Three key stories from around the globe, explained through the lens of history, geography, and culture. Duniya helps you see past the daily outrage of the news to understand the slow, structural shifts that shape our shared planet.'
   },
   {
     id: 'neelakurinji',
     name: 'Neelakurinji',
     nameHindi: 'नीलकुरिंजी',
-    oneLiner: 'Wonder room - daily surprise',
-    contemplativeText: 'A bloom of pure curiosity. Encounter the Mpemba effect, Fibonacci sequences, or strange optical coincidences in nature.'
+    oneLiner: 'Daily curiosities and natural anomalies',
+    contemplativeText: 'A bloom of pure curiosity. Neelakurinji brings you the unexpected - why hot water can freeze faster than cold, how trees communicate, or the psychology of optical illusions. A reminder that the world is far more mysterious than we assume.'
   },
   {
     id: 'safar',
     name: 'Safar',
     nameHindi: 'सफ़र',
-    oneLiner: 'Travel the world from here',
-    contemplativeText: 'Wander across remote corners, historic libraries, and sacred ghats of the earth without leaving your seat.'
+    oneLiner: 'Journey to the remote corners of human curiosity',
+    contemplativeText: 'Travel across historic cities, remote landscapes, and ancient libraries from your desk. Safar is not about tourism; it is about pilgrimage - understanding how places shape human culture, memory, and spirit.'
   },
   {
     id: 'aranya',
     name: 'Aranya',
     nameHindi: 'अरण्य',
-    oneLiner: 'Nature room - flora, fauna, Earth',
-    contemplativeText: 'Rekindle your connection with the soil. Listen to the silent communications of trees and the whispers of wild forests.'
+    oneLiner: 'Reconnecting with the living earth',
+    contemplativeText: 'Stories of soil, forests, migratory birds, and mycelial networks. Aranya is a digital window into the natural world, reminding us of the ancient, non-human rhythms that continue to support and shape all human endeavor.'
   },
   {
     id: 'bharati',
     name: 'Bharati',
     nameHindi: 'भारती',
-    oneLiner: 'Discover India - history, culture, wonder',
-    contemplativeText: 'Journey through the ancient Indus engineering, standard metrics, and philosophical arts of the subcontinent.'
+    oneLiner: 'The intellectual and scientific legacy of India',
+    contemplativeText: 'From the engineering of Harappan cities to the grammar of Panini and the history of Indian mathematics. Bharati explores the deep, foundational ideas that emerged from the subcontinent, connecting the past to our modern lives.'
   },
   {
     id: 'kathakar',
     name: 'Kathakar',
     nameHindi: 'कथाकार',
-    oneLiner: 'Stories across genres and centuries',
-    contemplativeText: 'Revisit classic fables, folklore, and narratives that have lived across generations to teach us how to survive.'
+    oneLiner: 'Timeless narratives that teach us how to live',
+    contemplativeText: 'Fables, Zen koans, Sufi parables, and classic short stories. Kathakar presents the tales that have survived for centuries because they carry the distilled emotional truth of human experience. Read them to remember who we are.'
   },
   {
     id: 'vibhav',
     name: 'Vibhav',
     nameHindi: 'विभाव',
-    oneLiner: 'Person of the day - their life, their way',
-    contemplativeText: 'Deconstruct the struggles, routines, and characters of historical icons who forged unique ways of living.'
+    oneLiner: 'The daily routines and struggles of historical icons',
+    contemplativeText: 'Not dry biographies, but intimate portraits of how great writers, scientists, and leaders structured their days, faced failure, and kept their fire alive. Vibhav shows you that greatness is a daily practice, not an accident.'
   },
   {
     id: 'lekhak',
     name: 'Lekhak',
     nameHindi: 'लेखक',
-    oneLiner: 'Writer of the day - literature universe',
-    contemplativeText: 'Unveil the inner processes, draft histories, and stylistic visions of the world’s most profound authors.'
+    oneLiner: 'The craft and vision of the written word',
+    contemplativeText: 'Enter the workshops of history’s most profound writers. Discover how they drafted their masterpieces, what they believed about the purpose of literature, and how they refined their voice to speak across generations.'
   },
   {
     id: 'anand',
     name: 'Anand',
     nameHindi: 'आनंद',
-    oneLiner: 'Joy room - humor, illusions, wonder, delight',
-    contemplativeText: 'Celebrate the simple pleasure of lighthearted delight. Relax with gentle humor, paradoxes, and optical play.'
+    oneLiner: 'A light heart and quiet delight',
+    contemplativeText: 'A space for gentle humor, optical play, and joyful curiosities. Anand is here to remind you that a contemplative life does not need to be heavy. Cleanse your mental palate with something light and delightful.'
   },
   {
     id: 'vani',
     name: 'Vani',
     nameHindi: 'वाणी',
-    oneLiner: 'Sanskrit shlokas, dohas, and living folk wisdom',
-    contemplativeText: 'Connect with the resonance of our ancestors. Listen to the wisdom of Sanskrit shlokas, Kabir’s verses, and regional sayings.'
+    oneLiner: 'Sanskrit shlokas, dohas, and oral heritage',
+    contemplativeText: 'The concise, rhythmic wisdom of Kabir, Rahim, and ancient shlokas. Vani presents short verses that are easy to memorize but take a lifetime to fully understand. Listen to the resonance of words designed to guide daily life.'
   },
-  /* Shabda is now merged into Bhasha */
   {
     id: 'paradox',
     name: 'Paradox',
     nameHindi: 'विरोधाभास',
-    oneLiner: 'One paradox per day - fully explained',
-    contemplativeText: 'Sit with the ultimate contradictions of human thought. Challenge your logic, unravel cognitive puzzles, and expand your perspective.'
+    oneLiner: 'Puzzles that stretch the boundaries of logic',
+    contemplativeText: 'One mind-bending paradox per day, fully unpacked. Sit with the ultimate contradictions of physics, logic, and philosophy. Paradox is designed to dismantle your assumptions and remind you of the limits of certainty.'
   }
 ];

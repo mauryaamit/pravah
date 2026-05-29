@@ -69,6 +69,21 @@ export default function BodhPage() {
               )}
             </div>
 
+            {/* Summary Box */}
+            {activeEntry.summary && (
+              <div 
+                className="p-5 border-l-4 rounded bg-[var(--bg-secondary)]" 
+                style={{ borderColor: 'var(--accent-saffron)' }}
+              >
+                <h4 className="text-[10px] uppercase tracking-widest font-semibold mb-2" style={{ color: 'var(--accent-saffron)' }}>
+                  संक्षेप · In Brief
+                </h4>
+                <p className="font-serif italic text-base leading-relaxed text-[var(--text-primary)]">
+                  {activeEntry.summary}
+                </p>
+              </div>
+            )}
+
             {/* The core idea text */}
             <div className="card-base p-6 space-y-4">
               <h3 className="section-label uppercase tracking-widest text-xs" style={{ color: 'var(--accent-saffron)' }}>

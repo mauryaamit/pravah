@@ -67,6 +67,21 @@ export default function VibhavPage() {
               </div>
             </div>
 
+            {/* Summary Box */}
+            {selected.summary && (
+              <div 
+                className="p-5 border-l-4 rounded bg-[var(--bg-secondary)]" 
+                style={{ borderColor: 'var(--accent-saffron)' }}
+              >
+                <h4 className="text-[10px] uppercase tracking-widest font-semibold mb-2" style={{ color: 'var(--accent-saffron)' }}>
+                  संक्षेप · In Brief
+                </h4>
+                <p className="font-serif italic text-base leading-relaxed text-[var(--text-primary)]">
+                  {selected.summary}
+                </p>
+              </div>
+            )}
+
             {/* Famous Quote */}
             <div className="card-base p-6 relative" style={{ background: 'color-mix(in srgb, var(--accent-saffron) 6%, var(--bg-secondary))' }}>
               <div className="absolute top-6 right-6">

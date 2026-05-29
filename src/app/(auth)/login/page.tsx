@@ -50,7 +50,7 @@ function LoginForm() {
       if (!res.ok) throw new Error(data.error || 'Failed to establish secure session.');
 
       setUser(data.user);
-      const from = searchParams.get('from');
+      const from = searchParams ? searchParams.get('from') : null;
       router.push(from || '/aarambh');
     } catch (err: unknown) {
       console.error(err);

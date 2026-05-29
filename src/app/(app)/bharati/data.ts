@@ -1,4 +1,5 @@
 export interface BharatiEntry {
+  summary: string;
   dayIndex: number;
   id: string;
   title: string;
@@ -13,6 +14,7 @@ export interface BharatiEntry {
 export const BHARATI_ENTRIES: BharatiEntry[] = [
   {
     dayIndex: 1,
+    summary: `Nestled amidst the snow-capped peaks of Kashmir, Dal Lake in Srinagar is home to the world's only floating post office. Established during the British colonial era, this remarkable post office is housed inside a large, intricately carved wooden houseboat.`,
     id: "float-post-office-dal",
     title: "The Floating Post Office of Dal Lake",
     titleHindi: "पता था?",
@@ -24,6 +26,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 2,
+    summary: `The Indus Valley Civilization, which flourished around 2500 BCE, was renowned for its sophisticated urban planning. At the heart of cities like Harappa and Mohenjo-daro was an advanced sanitation system.`,
     id: "indus-valley-drainage",
     title: "The Advanced Sanitation of Harappa",
     titleHindi: "सिंधु घाटी की जल निकासी",
@@ -35,6 +38,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 3,
+    summary: `The Western Ghats, a mountain range stretching along the western coast of India, is one of the world's eight hottest hotspots of biological diversity. These mountains act as a key barrier to the monsoon winds, receiving heavy rainfall that sustains tropical rainforests, grasslands, and montane forests.`,
     id: "western-ghats-biodiversity",
     title: "The Biodiversity of the Western Ghats",
     titleHindi: "पश्चिमी घाट की जैव विविधता",
@@ -46,6 +50,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 4,
+    summary: `The Ajanta and Ellora caves in Maharashtra represent the pinnacle of ancient Indian rock-cut architecture. The Ajanta caves, dating from the second century BCE to the fifth century CE, contain magnificent Buddhist murals depicting the Jataka tales, painted with natural pigments that have survived for centuries.`,
     id: "ajanta-ellora-caves",
     title: "The Rock-Cut Wonders of Ajanta and Ellora",
     titleHindi: "अजंता और एलोरा की गुफाएं",
@@ -57,6 +62,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 5,
+    summary: `The concept of zero as a number and the positional decimal system are among India's greatest contributions to global civilization. While ancient cultures used symbols for empty columns, it was in India that zero (shunya) was defined as a mathematical digit with its own arithmetic rules, codified by Brahmagupta in 628 CE. This system revolutionized calculation, replacing cumbersome Roman numerals with a flexible system where a digit's value depends on its position.`,
     id: "invention-of-zero",
     title: "The Origin of Zero and Decimal System",
     titleHindi: "शून्य और दशमलव प्रणाली",
@@ -68,6 +74,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 6,
+    summary: `The Bhakti Movement, which swept across India between the eighth and seventeenth centuries, was a major social and religious reform movement. It advocated for a direct, personal relationship between the devotee and the divine, rejecting the mediation of priests and complex rituals.`,
     id: "bhakti-movement-equality",
     title: "The Social Equality of Bhakti Movement",
     titleHindi: "भक्ति आंदोलन और सामाजिक समानता",
@@ -79,6 +86,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 7,
+    summary: `Swami Vivekananda was a disciple of the mystic Ramakrishna Paramahansa and a key figure in the introduction of Indian philosophies to the West. He rose to international prominence after his famous address at the Parliament of the World's Religions in Chicago in 1893, where he spoke of universal tolerance and acceptance.`,
     id: "swami-vivekananda",
     title: "Swami Vivekananda's Global Message",
     titleHindi: "स्वामी विवेकानंद",
@@ -90,6 +98,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 8,
+    summary: `Located on the Srinagar-Leh highway, the Magnetic Hill is a fascinating road stretch that seems to defy gravity. If you park a vehicle at a marked spot in neutral gear, it appears to roll uphill at speeds of up to twenty kilometers per hour.`,
     id: "magnetic-hill-ladakh",
     title: "The Magnetic Hill of Ladakh",
     titleHindi: "पता था?",
@@ -101,6 +110,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 9,
+    summary: `Following the brutal Kalinga War, Emperor Ashoka of the Maurya Empire experienced a deep spiritual transformation. He embraced Buddhism and sought to rule his empire through Dhamma or righteous conduct rather than conquest.`,
     id: "ashoka-rock-edicts",
     title: "Ashoka's Edicts of Dharma",
     titleHindi: "अशोक के शिलालेख",
@@ -112,6 +122,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 10,
+    summary: `Spanning the delta of the Ganges and Brahmaputra rivers in West Bengal and Bangladesh, the Sundarbans is a vast mangrove ecosystem. This unique landscape is defined by tidal waterways, mudflats, and salt-tolerant mangrove trees.`,
     id: "sundarbans-mangroves",
     title: "The Resilient Sundarbans Mangroves",
     titleHindi: "सुंदरवन के मैंग्रोव",
@@ -123,6 +134,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 11,
+    summary: `Indian classical music is divided into two major traditions: Hindustani music of the north and Carnatic music of the south. Both systems share a common foundation based on Raga (melodic framework) and Tala (rhythmic cycle), tracing their origin to ancient Vedic chants and the Natya Shastra text.`,
     id: "classical-music-traditions",
     title: "The Dual Streams of Indian Classical Music",
     titleHindi: "शास्त्रीय संगीत परंपराएं",
@@ -134,6 +146,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 12,
+    summary: `Sushruta, an ancient Indian physician who practiced in Varanasi around 600 BCE, is widely regarded as the Father of Surgery. His text, the Sushruta Samhita, is a comprehensive treatise describing over a hundred surgical instruments, numerous surgical procedures, and the classification of human anatomy.`,
     id: "sushruta-samhita-surgery",
     title: "The Ancient Surgery of Sushruta",
     titleHindi: "सुश्रुत संहिता और शल्य चिकित्सा",
@@ -145,6 +158,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 13,
+    summary: `Raja Ram Mohan Roy, often called the Maker of Modern India, was a pioneer of social and educational reform in Bengal. In the early nineteenth century, he campaigned against social evils, particularly the practice of Sati, where widows were forced to self-immolate on their husband's funeral pyres.`,
     id: "ram-mohan-sati-abolition",
     title: "Ram Mohan Roy and the Abolition of Sati",
     titleHindi: "राजा राममोहन राय और सती प्रथा",
@@ -156,6 +170,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 14,
+    summary: `Rabindranath Tagore was a polymath who reshaped Bengali literature, music, and art in the late nineteenth and early twentieth centuries. In 1913, he became the first non-European to win the Nobel Prize in Literature for his collection of poems, Gitanjali, celebrated for its spiritual depth and lyricism.`,
     id: "rabindranath-tagore",
     title: "Rabindranath Tagore: The Universal Bard",
     titleHindi: "रवींद्रनाथ टैगोर",
@@ -167,6 +182,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 15,
+    summary: `Lonar Lake, situated in the Buldhana district of Maharashtra, is one of the world's most unique natural wonders. Formed over fifty thousand years ago, this basaltic rock crater was created when a massive meteorite crashed into the Earth at a speed of ninety thousand kilometers per hour.`,
     id: "lonar-meteorite-lake",
     title: "Lonar Lake's Celestial Origin",
     titleHindi: "पता था?",
@@ -178,6 +194,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 16,
+    summary: `During the tenth and eleventh centuries, the Chola Dynasty of southern India emerged as a dominant maritime power. Under rulers like Rajaraja Chola I and Rajendra Chola I, the Cholas developed a highly organized navy and merchant fleet.`,
     id: "chola-maritime-expeditions",
     title: "The Maritime Legacy of the Cholas",
     titleHindi: "चोल नौसेना साम्राज्य",
@@ -189,6 +206,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 17,
+    summary: `Tucked away in the high Himalayas of Uttarakhand, the Valley of Flowers is a national park celebrated for its meadows of endemic alpine flowers. For most of the year, this remote valley remains buried under a thick layer of snow.`,
     id: "valley-of-flowers",
     title: "The Alpine Meadow of Valley of Flowers",
     titleHindi: "फूलों की घाटी",
@@ -200,6 +218,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 18,
+    summary: `Dhokra is a traditional metal casting technique practiced by tribal artisans in regions like Chhattisgarh, Odisha, and West Bengal. It utilizes the lost-wax casting method, where a clay core is wrapped in wax threads, covered with more clay, and then baked, allowing the molten brass to replace the melted wax. This art form is characterized by its rustic, primitive designs, depicting tribal deities, animals, and daily activities.`,
     id: "dhokra-metal-casting",
     title: "Dhokra: The Ancient Lost-Wax Art",
     titleHindi: "ढोकरा धातु कला",
@@ -211,6 +230,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 19,
+    summary: `Aryabhata, writing in 499 CE at the age of twenty-three, revolutionized classical astronomy and mathematics. In his treatise, the Aryabhatiya, he proposed that the Earth rotates on its own axis, explaining the apparent daily movement of the stars.`,
     id: "aryabhata-heliocentric-astronomy",
     title: "The Heliocentric Insights of Aryabhata",
     titleHindi: "आर्यभट्ट के खगोलीय सिद्धांत",
@@ -222,6 +242,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 20,
+    summary: `Jyotirao Phule was a social reformer and thinker from Maharashtra who dedicated his life to the eradication of caste oppression and the empowerment of marginalized communities. Phule argued that education was the primary tool for liberation, challenging the monopoly of upper castes over knowledge.`,
     id: "jyotirao-phule-education",
     title: "Jyotirao Phule's Social Revolution",
     titleHindi: "ज्योतिराव फुले और महिला शिक्षा",
@@ -233,6 +254,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 21,
+    summary: `Srinivasa Ramanujan was a self-taught mathematical genius born in Erode, Tamil Nadu. Working in isolation, Ramanujan compiled thousands of mathematical identities and equations in his notebooks, covering number theory, infinite series, and mock theta functions, which were far ahead of his time.`,
     id: "srinivasa-ramanujan",
     title: "Srinivasa Ramanujan: The Mathematical Genius",
     titleHindi: "श्रीनिवास रामानुजन",
@@ -244,6 +266,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 22,
+    summary: `Tucked away in the East Khasi Hills of Meghalaya, Mawlynnong has earned global acclaim as the cleanest village in Asia. The community of the Khasi tribe has maintained a strict tradition of cleanliness for generations, where every resident actively participates in keeping the village pristine.`,
     id: "mawlynnong-cleanest-village",
     title: "Mawlynnong: Asia's Cleanest Village",
     titleHindi: "पता था?",
@@ -255,6 +278,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 23,
+    summary: `In the early eighth century, the rapid expansion of the Umayyad Caliphate reached the eastern borders of Persia and the Sindh region. Seeking to push further into the Indian heartland, Arab armies launched major campaigns toward western India.`,
     id: "battle-of-rajasthan",
     title: "The Battle of Rajasthan",
     titleHindi: "राजस्थान का युद्ध",
@@ -266,6 +290,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 24,
+    summary: `Chilika Lake, located on the east coast of Odisha, is a massive brackish water lagoon connected to the Bay of Bengal. It is the largest wintering ground for migratory birds on the Indian subcontinent, hosting species that travel from Siberia, Central Asia, and the Himalayas.`,
     id: "chilika-lake-lagoon",
     title: "Chilika Lake: A Haven for Migratory Birds",
     titleHindi: "चिलिका झील पारिस्थितिकी",
@@ -277,6 +302,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 25,
+    summary: `Kathakali, originating in Kerala in the seventeenth century, is a highly stylized classical dance-drama. It combines literature, music, painting, and dance to present stories from Hindu epics.`,
     id: "kathakali-dance-drama",
     title: "The Dramatic Art of Kathakali",
     titleHindi: "कथकली नृत्य शैली",
@@ -288,6 +314,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 26,
+    summary: `Wootz steel is an ultra-high carbon steel developed in southern India (modern Tamil Nadu, Karnataka, and Andhra Pradesh) as early as the sixth century BCE. The process involved heating iron ore and wood charcoal in sealed clay crucibles, allowing the carbon to melt into the iron, forming a uniform alloy. Prized for its strength, flexibility, and sharp edge, Wootz steel was exported to the Middle East, where it was forged into the famous Damascus swords, recognizable by their wavy patterns.`,
     id: "wootz-steel-metallurgy",
     title: "Wootz: The Legendary Crucible Steel",
     titleHindi: "वुट्ज़ स्टील धातु कर्म",
@@ -299,6 +326,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 27,
+    summary: `Savitribai Phule, along with her husband Jyotirao, was a pioneer of women's education and social reform in Maharashtra. In 1848, she became India's first female teacher when they opened the country's first school for girls at Bhide Wada in Pune.`,
     id: "savitribai-phule-teacher",
     title: "Savitribai Phule: Pioneer of Women's Education",
     titleHindi: "सावित्रीबाई फुले और सामाजिक क्रांति",
@@ -310,6 +338,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 28,
+    summary: `Chhatrapati Shivaji Maharaj was a seventeenth-century warrior king who carved out a sovereign Maratha kingdom from the declining Adilshahi sultanate and the Mughal Empire. Shivaji pioneered guerrilla tactics (Ganimi Kava), using the geography of the Western Ghats to defeat larger armies.`,
     id: "shivaji-maharaj",
     title: "Chhatrapati Shivaji: The Warrior King",
     titleHindi: "छत्रपति शिवाजी महाराज",
@@ -321,6 +350,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 29,
+    summary: `In the Ahmednagar district of Maharashtra lies the village of Shani Shingnapur, famous for its unique architecture: none of the houses have front doors. For centuries, residents have lived in homes without locks or wooden doors, relying entirely on their faith in the deity Lord Shani, whom they believe guards the village from any theft.`,
     id: "shani-shingnapur-doors",
     title: "Shani Shingnapur: The Doorless Village",
     titleHindi: "पता था?",
@@ -332,6 +362,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 30,
+    summary: `Founded in 1336, the Vijayanagara Empire was one of the most powerful and wealthy kingdoms of medieval southern India. Its capital, Vijayanagara, located at modern Hampi, was described by visiting European and Persian travelers as one of the largest and most beautiful cities in the world.`,
     id: "vijayanagara-hampi",
     title: "The Splendor of Vijayanagara",
     titleHindi: "विजयनगर साम्राज्य और हम्पी",
@@ -343,6 +374,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 31,
+    summary: `Across India, there exists an ancient tradition of protecting patches of forest as sacred groves, known locally as Devarakadu, Kavu, or Sarnas. Dedicated to local deities or ancestral spirits, these groves are protected by strict community taboos that prohibit the cutting of trees or hunting of animals.`,
     id: "sacred-groves-conservation",
     title: "Sacred Groves: Traditional Forest Sanctuaries",
     titleHindi: "पवित्र उपवन संरक्षण",
@@ -354,6 +386,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 32,
+    summary: `Madhubani painting, also known as Mithila art, originated in the Mithila region of Bihar. Traditionally created by women on the freshly plastered mud walls of their homes, this folk art has transitioned to handmade paper and canvas.`,
     id: "madhubani-painting-bihar",
     title: "Madhubani: The Folk Art of Mithila",
     titleHindi: "मधुबनी चित्रकला",
@@ -365,6 +398,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 33,
+    summary: `The Kerala School of Astronomy and Mathematics, founded by Madhava of Sangamagrama in the fourteenth century, was a major center of mathematical innovation. Operating in southern India, this school made discoveries in infinite series, calculus, and mathematical analysis.`,
     id: "kerala-school-calculus",
     title: "The Calculus of the Kerala School",
     titleHindi: "केरल गणितीय संप्रदाय",
@@ -376,6 +410,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 34,
+    summary: `Basaveshwara, a philosopher and prime minister of the Kalachuri Empire in Karnataka, was a radical reformer who challenged the religious and social hierarchies of his time. He founded the Anubhava Mantapa, or the Hall of Spiritual Experience, which is regarded as one of the world's earliest parliaments of philosophy.`,
     id: "basaveshwara-anubhava-mantapa",
     title: "Basaveshwara and the Parliament of Philosophy",
     titleHindi: "बसवेश्वर और अनुभव मंटप",
@@ -387,6 +422,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 35,
+    summary: `Emperor Akbar, who ruled the Mughal Empire from 1556 to 1605, was a patron of arts, literature, and religious dialogue. Seeking to unify his diverse empire, Akbar established the Ibadat Khana (House of Worship) at Fatehpur Sikri, welcoming scholars from different religions to debate philosophy.`,
     id: "akbar-din-i-ilahi",
     title: "Akbar's Vision of Religious Harmony",
     titleHindi: "अकबर और दीन-ए-इलाही",
@@ -398,6 +434,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 36,
+    summary: `The Kumbh Mela is a major pilgrimage in Hinduism, celebrated four times over a cycle of twelve years at four sacred river banks: Prayagraj, Haridwar, Nashik, and Ujjain. It attracts tens of millions of pilgrims who gather to take a holy dip in the sacred waters, seeking spiritual purification.`,
     id: "kumbh-mela-space",
     title: "The Cosmic Scale of Kumbh Mela",
     titleHindi: "पता था?",
@@ -409,6 +446,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 37,
+    summary: `In the late seventeenth century, the Maratha Empire, under Chhatrapati Shivaji Maharaj, recognized the importance of naval power to secure the Konkan coast. This naval vision reached its peak under Admiral Kanhoji Angre, who took command of the Maratha fleet.`,
     id: "maratha-navy-angre",
     title: "The Naval Strategy of Kanhoji Angre",
     titleHindi: "कान्होजी आंग्रे और मराठा नौसेना",
@@ -420,6 +458,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 38,
+    summary: `Loktak Lake in Manipur is a unique freshwater body known for its floating islands called 'phumdis'. These are heterogeneous masses of soil, vegetation, and organic matter in various stages of decomposition that float on the water surface.`,
     id: "loktak-lake-phumdis",
     title: "Loktak Lake and the Floating National Park",
     titleHindi: "लोकटक झील और फुमदी",
@@ -431,6 +470,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 39,
+    summary: `During the Chola Dynasty, South Indian artisans mastered the art of bronze casting, creating some of the finest metal sculptures in history. The most famous is the image of Shiva as Nataraja, the Lord of Dance, captured in a circle of flames.`,
     id: "chola-bronze-nataraja",
     title: "The Cosmic Dance in Chola Bronze",
     titleHindi: "चोल कांस्य नटराज",
@@ -442,6 +482,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 40,
+    summary: `The Charaka Samhita is one of the oldest and most comprehensive treatises on internal medicine, serving as the foundation of Ayurveda. Attributed to the physician Charaka in the first century CE, the text is structured as a dialogue between teachers and students, covering diagnosis, treatment, and pharmacology.`,
     id: "charaka-samhita-ayurveda",
     title: "The Holistic Medicine of Charaka",
     titleHindi: "चरक संहिता और आयुर्वेद",
@@ -453,6 +494,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 41,
+    summary: `Dr. Bhimrao Ramji Ambedkar was a jurist, economist, and social reformer who dedicated his life to the struggle against social discrimination and the caste system. Born into a marginalized community, he overcame severe obstacles to earn doctorates from Columbia University and the London School of Economics.`,
     id: "ambedkar-caste-eradication",
     title: "Ambedkar and the Pursuit of Justice",
     titleHindi: "डॉ. बी. आर. अम्बेडकर",
@@ -464,6 +506,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 42,
+    summary: `Rani Lakshmibai, born Manikarnika, was the queen of the Maratha princely state of Jhansi. When the British East India Company attempted to annex her state under the Doctrine of Lapse, rejecting her adopted son's claim, Lakshmibai chose to fight rather than surrender her territory.`,
     id: "rani-lakshmibai-jhansi",
     title: "Rani Lakshmibai and the Resistance of Jhansi",
     titleHindi: "रानी लक्ष्मीबाई",
@@ -475,6 +518,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 43,
+    summary: `Mawsynram, a picturesque village located in the East Khasi Hills of Meghalaya, holds the Guinness World Record for the wettest place on Earth. It receives an average annual rainfall of over eleven thousand millimeters, driven by the moisture-laden winds coming from the Bay of Bengal that strike the steep slopes of the Khasi Hills.`,
     id: "mawsynram-wettest-place",
     title: "Mawsynram: The Realm of Constant Rain",
     titleHindi: "पता था?",
@@ -486,6 +530,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 44,
+    summary: `The Kalinga War, fought in 261 BCE between the Mauryan Empire and the republic of Kalinga, was one of the deadliest conflicts in ancient history. The war resulted in over a hundred thousand casualties and the displacement of countless people.`,
     id: "kalinga-war-aftermath",
     title: "The Turning Point of Kalinga",
     titleHindi: "कलिंग युद्ध और परिवर्तन",
@@ -497,6 +542,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 45,
+    summary: `In the high-altitude regions of the Indian Himalayas, above the tree line and below the snow line, lie the alpine meadows known locally as 'Bugyals'. These meadows are covered in snow for over six months of the year, but during the summer, they bloom with nutrient-rich grasses and wildflowers, attracting migratory pastoralists and unique wildlife.`,
     id: "alpine-meadows-himalaya",
     title: "The Bugyals of the Himalayas",
     titleHindi: "हिमालयी घास के मैदान",
@@ -508,6 +554,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 46,
+    summary: `Phad is a unique style of scroll painting from Rajasthan, created on long pieces of hand-woven cloth. These paintings depict the complex stories of local folk deities like Pabuji and Devnarayan.`,
     id: "phad-painting-rajasthan",
     title: "Phad: The Scroll Paintings of Rajasthan",
     titleHindi: "फड़ चित्रकला",
@@ -519,6 +566,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 47,
+    summary: `In the early eighteenth century, Maharaja Sawai Jai Singh II of Jaipur commissioned five astronomical observatories, known as Jantar Mantar, in northern India. Jai Singh found that the existing brass instruments were too small and prone to wear, so he chose to build massive stone structures to improve accuracy.`,
     id: "jantar-mantar-observatories",
     title: "The Stone Observatories of Jantar Mantar",
     titleHindi: "जंतर मंतर वेधशालाएं",
@@ -530,6 +578,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 48,
+    summary: `Ishwar Chandra Vidyasagar was a key figure of the Bengal Renaissance, known for his contributions to the education system and social reform. A scholar of Sanskrit, Vidyasagar used his knowledge of ancient texts to argue that Hindu scriptures did not forbid the remarriage of young widows.`,
     id: "vidyasagar-widow-remarriage",
     title: "Vidyasagar and the Rights of Widows",
     titleHindi: "विद्यासागर और विधवा पुनर्विवाह",
@@ -541,6 +590,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 49,
+    summary: `Maharana Pratap was a sixteenth-century Rajput king of Mewar who is celebrated for his refusal to submit to the suzerainty of the Mughal Emperor Akbar. While many neighboring rulers formed alliances with the Mughals, Pratap chose to live in the Aravalli hills, continuing his resistance.`,
     id: "maharana-pratap",
     title: "Maharana Pratap's Uncompromising Pride",
     titleHindi: "महाराणा प्रताप",
@@ -552,6 +602,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 50,
+    summary: `Perched at an elevation of two thousand four hundred and forty-four meters above sea level, the cricket ground in Chail, Himachal Pradesh, is a testament to India's passion for the sport. Built in 1893 by the Maharaja of Patiala, Bhupinder Singh, who was an avid cricketer, the ground was carved out of a thick forest of pine and deodar trees after leveling a hilltop.`,
     id: "chail-cricket-ground",
     title: "The Sky-High Pitch of Chail",
     titleHindi: "पता था?",
@@ -563,6 +614,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 51,
+    summary: `The Kushan Empire, which flourished in northern India and Central Asia during the first two centuries CE, was a unique multicultural state. Under Emperor Kanishka I, the empire reached its peak, controlling key trade routes along the Silk Road.`,
     id: "kushan-empire-kanishka",
     title: "Kanishka and the Kushan Empire",
     titleHindi: "कुषाण साम्राज्य और कनिष्क",
@@ -574,6 +626,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 52,
+    summary: `The Thar Desert, spanning northwestern India and parts of Pakistan, is a unique arid zone characterized by sand dunes, scrub forests, and salt flats. Unlike most other deserts, the Thar is highly populated and rich in biodiversity.`,
     id: "thar-desert-ecology",
     title: "The Vibrant Life of the Thar Desert",
     titleHindi: "थार मरुस्थल पारिस्थितिकी",
@@ -585,6 +638,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 53,
+    summary: `Yakshagana is a classical theater form native to the coastal districts of Karnataka. It depicts stories from the Ramayana, Mahabharata, and Puranas, performed in an open-air setting.`,
     id: "yakshagana-theater-karnataka",
     title: "The Vibrant World of Yakshagana",
     titleHindi: "यक्षगान लोक नाट्य",
@@ -596,6 +650,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 54,
+    summary: `Jagadish Chandra Bose was a polymath who made significant contributions to physics and plant physiology. In the late nineteenth century, Bose invented the crescograph, a highly sensitive device capable of magnifying plant growth and movements up to ten thousand times.`,
     id: "jc-bose-plant-response",
     title: "Jagadish Chandra Bose and Plant Sensation",
     titleHindi: "जगदीश चंद्र बसु और पादप संवेदना",
@@ -607,6 +662,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 55,
+    summary: `The Chipko Movement, originating in the Garhwal Himalayas of Uttarakhand in 1973, was a unique, non-violent protest against commercial logging. Village communities, particularly women, recognized that the destruction of local forests led to severe landslides and water scarcity.`,
     id: "chipko-movement-conservation",
     title: "Chipko: The Tree Huggers of Uttarakhand",
     titleHindi: "चिपको आंदोलन",
@@ -618,6 +674,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 56,
+    summary: `Subhas Chandra Bose, known affectionately as Netaji, was a leader of the Indian independence movement. Disillusioned by the slow progress of non-violent methods, Bose believed that external alliances and armed resistance were necessary to overthrow British colonial rule.`,
     id: "subhas-chandra-bose",
     title: "Subhas Chandra Bose and the INA",
     titleHindi: "नेताजी सुभाष चंद्र बोस",
@@ -629,6 +686,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 57,
+    summary: `Barren Island, located in the Andaman and Nicobar territory, is home to the only active volcano in South Asia. True to its name, the island is uninhabited by humans and features a stark, black landscape shaped by basaltic lava flows.`,
     id: "barren-island-volcano",
     title: "Barren Island: India's Only Active Volcano",
     titleHindi: "पता था?",
@@ -640,6 +698,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 58,
+    summary: `The Gupta Empire, ruling northern and central India from the fourth to the sixth century CE, is widely regarded as the Golden Age of Indian history. Under rulers like Chandragupta II, the empire enjoyed peace and stability, creating the perfect environment for intellectual pursuits.`,
     id: "gupta-golden-age",
     title: "The Scientific Gupta Golden Age",
     titleHindi: "गुप्त काल का स्वर्ण युग",
@@ -651,6 +710,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 59,
+    summary: `Myristica swamps are rare, ancient freshwater swamp forests found in the southern Western Ghats of Kerala and Karnataka. These swamps are dominated by wild nutmeg trees belonging to the Myristicaceae family, which is one of the oldest flowering plant families on Earth.`,
     id: "myristica-swamps",
     title: "The Ancient Myristica Swamps",
     titleHindi: "मायरिस्टिका दलदल",
@@ -662,6 +722,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 60,
+    summary: `Kalaripayattu, originating in Kerala during the Sangam period, is widely regarded as one of the oldest surviving martial arts in the world. It is practiced in a specialized mud pit called a 'Kalari'.`,
     id: "kalaripayattu-martial-art",
     title: "Kalaripayattu: The Mother of Martial Arts",
     titleHindi: "कलरीपायट्टु युद्ध कला",
@@ -673,6 +734,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 61,
+    summary: `In 1928, the Indian physicist Sir C.V. Raman discovered a phenomenon that revolutionized the study of light and matter.`,
     id: "cv-raman-effect",
     title: "The Raman Effect and Light Scattering",
     titleHindi: "सी. वी. रमन और रमन प्रभाव",
@@ -684,6 +746,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 62,
+    summary: `Narayana Guru was a spiritual leader and social reformer who transformed the social landscape of Kerala in the late nineteenth and early twentieth centuries. Born into a marginalized community, he studied Sanskrit and yogic sciences, challenging the monopoly of upper castes over spiritual knowledge.`,
     id: "narayana-guru-reform",
     title: "Narayana Guru's Message of Unity",
     titleHindi: "नारायण गुरु और सामाजिक एकता",
@@ -695,6 +758,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 63,
+    summary: `Lal Bahadur Shastri was a freedom fighter and statesman who served as the second Prime Minister of India. Shastri was loved for his humility, integrity, and simple lifestyle, refusing to accept royal privileges and continuing to live in a modest house during his tenure.`,
     id: "lal-bahadur-shastri",
     title: "Lal Bahadur Shastri and Simplicity",
     titleHindi: "लाल बहादुर शास्त्री",
@@ -706,6 +770,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 64,
+    summary: `Roopkund is a remote glacial lake situated in the Himalayas at an altitude of over five thousand meters. Known as the 'Skeleton Lake', it became famous when a forest ranger discovered hundreds of human bones scattered along its banks and frozen inside the ice. For decades, the origin of these skeletons remained a source of intense scientific debate.`,
     id: "roopkund-skeleton-lake",
     title: "The Mystery of Roopkund Lake",
     titleHindi: "पता था?",
@@ -717,6 +782,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 65,
+    summary: `In 1671, the Mughal Empire launched a massive invasion to capture Assam. The Ahom Kingdom, under the leadership of General Lachit Borphukan, stood as the last line of defense.`,
     id: "battle-of-saraighat-ahom",
     title: "The Legend of Lachit Borphukan",
     titleHindi: "सरायघाट की लड़ाई",
@@ -728,6 +794,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 66,
+    summary: `Lakshadweep, meaning 'a hundred thousand islands' in Sanskrit, is India's only coral island territory. It consists of three-six islands surrounded by vast lagoons and coral reefs.`,
     id: "lakshadweep-coral-reefs",
     title: "The Coral Atolls of Lakshadweep",
     titleHindi: "लक्षद्वीप के मूंगा चट्टान",
@@ -739,6 +806,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 67,
+    summary: `Warli painting is a traditional tribal art form practiced by the Warli tribe in the mountainous and coastal regions of Maharashtra. Created on red mud walls using a paste of rice flour and water, these paintings use only basic geometric shapes: circles, triangles, and squares, to construct complex scenes.`,
     id: "warli-tribal-art",
     title: "The Simple Geometry of Warli Art",
     titleHindi: "वारली जनजातीय कला",
@@ -750,6 +818,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 68,
+    summary: `Brahmagupta, a mathematician and astronomer from Rajasthan, made fundamental contributions to algebra and arithmetic in 628 CE. His work, the Brahmasphutasiddhanta, was the first text to treat zero as a number in its own right, establishing the rules for adding, subtracting, and multiplying with zero. Brahmagupta also formulated the rules for working with negative numbers, which he referred to as 'debts' in contrast to positive numbers or 'fortunes'.`,
     id: "brahmagupta-algebra",
     title: "Brahmagupta's Rules for Zero and Algebra",
     titleHindi: "ब्रह्मगुप्त और बीजगणित",
@@ -761,6 +830,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 69,
+    summary: `Murlidhar Devidas Amte, known affectionately as Baba Amte, was a social reformer who worked for the empowerment of leprosy patients and marginalized communities. In 1949, Amte established Anandwan (Forest of Joy), a community ashram in Maharashtra dedicated to the treatment and rehabilitation of leprosy patients.`,
     id: "baba-amte-leprosy",
     title: "Baba Amte and Anandwan",
     titleHindi: "बाबा आम्टे और कुष्ठ सेवा",
@@ -772,6 +842,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 70,
+    summary: `Bhagat Singh was a revolutionary socialist who played a key role in the Indian independence movement. Disillusioned by colonial violence, Singh co-founded the Hindustan Socialist Republican Association, advocating for an armed revolution to establish a socialist republic in India.`,
     id: "bhagat-singh-patriot",
     title: "Bhagat Singh and the Revolutionary Mind",
     titleHindi: "शहीद भगत सिंह",
@@ -783,6 +854,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 71,
+    summary: `Opened in 1914, the Pamban Bridge is an engineering masterpiece spanning the Palk Strait between mainland India and Pamban Island. It was India's first sea bridge and remained the longest until the opening of the Bandra-Worli Sea Link.`,
     id: "pamban-sea-bridge",
     title: "The Historic Pamban Bridge",
     titleHindi: "पता था?",
@@ -794,6 +866,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 72,
+    summary: `The Kakatiya Dynasty, ruling the eastern Deccan region from the twelfth to the fourteenth century, was renowned for its unique contributions to agriculture and architecture. They developed the 'chain-tank' system, linking hundreds of reservoirs across the dry Deccan plateau to harvest rainwater.`,
     id: "kakatiya-dynasty-ramappa",
     title: "The Kakatiya Water Engineering",
     titleHindi: "काकतीय राजवंश",
@@ -805,6 +878,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 73,
+    summary: `The Great Rann of Kutch in Gujarat is one of the largest salt deserts in the world. For half the year, the region is submerged under shallow seawater driven by the monsoon tides.`,
     id: "rann-of-kutch-marsh",
     title: "The White Salt Desert of Kutch",
     titleHindi: "कच्छ का रण",
@@ -816,6 +890,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 74,
+    summary: `Manipuri dance, originating in the northeastern state of Manipur, is one of the major classical dance forms of India. It is deeply rooted in the Vaishnavite tradition, depicting the love stories of Radha and Krishna through the 'Raas Leela'.`,
     id: "manipuri-raas-leela",
     title: "The Grace of Manipuri Raas Leela",
     titleHindi: "मणिपुरी रास लीला",
@@ -827,6 +902,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 75,
+    summary: `Yellapragada Subbarow was an Indian biochemist who worked in the United States in the early twentieth century. Despite his monumental contributions to medicine, his name remains largely unknown to the general public.`,
     id: "yellapragada-subbarow-medicine",
     title: "Yellapragada Subbarow and Modern Medicine",
     titleHindi: "यल्लाप्रगदा सुब्बाराव",
@@ -838,6 +914,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 76,
+    summary: `Pandita Ramabai was a pioneer of women's education and social reform in western India during the late nineteenth century. A brilliant scholar, she was the first woman to be awarded the titles of 'Pandita' and 'Saraswati' by the university of Calcutta for her knowledge of Sanskrit.`,
     id: "pandita-ramabai-women",
     title: "Pandita Ramabai and Women's Freedom",
     titleHindi: "पंडिता रमाबाई और शारदा सदन",
@@ -849,6 +926,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 77,
+    summary: `Sardar Vallabhbhai Patel was a lawyer and political leader who served as the first Home Minister and Deputy Prime Minister of India. Patel earned the title 'Sardar' (Chief) for his leadership during the Bardoli Satyagraha, where he organized farmers against British taxes.`,
     id: "sardar-vallabhbhai-patel",
     title: "Sardar Patel and the Integration of India",
     titleHindi: "सरदार वल्लभभाई पटेल",
@@ -860,6 +938,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 78,
+    summary: `Gahirmatha Marine Sanctuary in Odisha is the site of a spectacular natural phenomenon known as the 'Arribada' - the mass nesting of Olive Ridley sea turtles. Every year, during the winter months, hundreds of thousands of female turtles swim across the Indian Ocean to lay their eggs on these sandy beaches, guided by instincts that remain a mystery.`,
     id: "olive-ridley-gahirmatha",
     title: "The Arribada of Gahirmatha",
     titleHindi: "पता था?",
@@ -871,6 +950,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 79,
+    summary: `The Pala Dynasty, ruling eastern India from the eighth to the twelfth century, was a major patron of Vajrayana Buddhism. Rulers like Dharmapala restored and expanded the ancient university of Nalanda and founded new centers of learning like Vikramashila.`,
     id: "pala-dynasty-nalanda",
     title: "The Buddhist Patronage of the Palas",
     titleHindi: "पाल राजवंश और नालंदा",
@@ -882,6 +962,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 80,
+    summary: `Established in 1986, the Nilgiri Biosphere Reserve is a vast protected area spanning the states of Tamil Nadu, Kerala, and Karnataka. It encompasses diverse ecosystems, from dry deciduous forests to wet evergreen forests and high-altitude shola grasslands.`,
     id: "nilgiri-biosphere-reserve",
     title: "The Nilgiri Biosphere Reserve",
     titleHindi: "नीलगिरि बायोस्फीयर रिजर्व",
@@ -893,6 +974,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 81,
+    summary: `Puppetry has been a popular medium of entertainment and education in India for over two thousand years, as mentioned in ancient Tamil literature. The country has diverse puppetry traditions, classified into string, rod, glove, and shadow puppets.`,
     id: "traditional-puppetry-india",
     title: "The Puppetry Traditions of India",
     titleHindi: "पारंपरिक कठपुतली कला",
@@ -904,6 +986,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 82,
+    summary: `Homi Jehangir Bhabha was a visionary physicist who founded India's nuclear research program. In 1948, Bhabha established the Atomic Energy Commission of India, advocating for the peaceful use of nuclear energy to power the country's industrial development.`,
     id: "homi-bhabha-nuclear",
     title: "Homi Bhabha's Nuclear Vision",
     titleHindi: "होमी भाभा और परमाणु ऊर्जा",
@@ -915,6 +998,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 83,
+    summary: `Erode Venkatappa Ramasamy, known as Periyar, was a social activist and politician who founded the Self-Respect Movement in Tamil Nadu. Periyar argued that caste oppression was rooted in religious and social traditions, advocating for rationalism, scientific temper, and self-respect as tools for liberation.`,
     id: "periyar-self-respect",
     title: "Periyar and the Self-Respect Movement",
     titleHindi: "पेरियार और आत्म-सम्मान आंदोलन",
@@ -926,6 +1010,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 84,
+    summary: `Dr. A.P.J. Abdul Kalam was a scientist and statesman who served as the eleventh President of India.`,
     id: "apj-abdul-kalam-personality",
     title: "APJ Abdul Kalam: The People's President",
     titleHindi: "डॉ. ए. पी. जे. अब्दुल कलाम",
@@ -937,6 +1022,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 85,
+    summary: `In the humid forests of Meghalaya, the local Khasi and Jaintia tribes have developed a sustainable form of architecture: living root bridges. By directing the flexible aerial roots of the Ficus elastica tree through hollowed bamboo trunks across rivers, they guide the roots to take hold in the soil on the opposite bank.`,
     id: "living-root-bridges",
     title: "The Living Root Bridges of Meghalaya",
     titleHindi: "पता था?",
@@ -948,6 +1034,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 86,
+    summary: `Following the fall of the Gupta Empire, King Harsha Vardhana of Kannauj unified northern India and established a reign of peace and cultural revival. Harsha was a patron of literature and a writer himself, composing three famous Sanskrit plays.`,
     id: "harsha-vardhana-kannauj",
     title: "Emperor Harsha's Assembly of Scholars",
     titleHindi: "हर्षवर्धन और कन्नौज सभा",
@@ -959,6 +1046,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 87,
+    summary: `Majuli, located in the Brahmaputra River in Assam, is a unique freshwater island known for its rich biodiversity and cultural heritage. The island is formed by the changing courses of the Brahmaputra and Subansiri rivers, creating a landscape of wetlands, sandbars, and fertile agricultural fields that support diverse bird and fish species.`,
     id: "majuli-island-ecology",
     title: "Majuli: The Living River Island",
     titleHindi: "माजुली द्वीप पारिस्थितिकी",
@@ -970,6 +1058,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 88,
+    summary: `In the Bankura district of West Bengal lies Bishnupur, famous for its unique terracotta temples built during the seventeenth and eighteenth centuries. Due to the lack of stone in the alluvial delta of Bengal, the Malla kings utilized locally available clay to bake bricks and carve decorative panels.`,
     id: "terracotta-temples-bishnupur",
     title: "The Terracotta Temples of Bishnupur",
     titleHindi: "बिष्णुपुर के टेराकोटा मंदिर",
@@ -981,6 +1070,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 89,
+    summary: `Vikram Sarabhai was a physicist and industrialist who is celebrated as the Father of the Indian Space Program. In the 1960s, Sarabhai convinced the government that a developing nation like India needed to invest in space technology, not for international prestige, but to address daily national problems.`,
     id: "vikram-sarabhai-space",
     title: "Vikram Sarabhai: The Space Visionary",
     titleHindi: "विक्रम साराभाई और अंतरिक्ष कार्यक्रम",
@@ -992,6 +1082,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 90,
+    summary: `Acharya Vinoba Bhave was a non-violence activist and spiritual leader who is best known for founding the Bhoodan (Land Gift) Movement in 1951. Inspired by Gandhi's philosophy of trusteeship, Bhave sought to resolve the problem of land inequality through peaceful persuasion rather than state force.`,
     id: "vinoba-bhave-bhoodan",
     title: "Vinoba Bhave and the Bhoodan Movement",
     titleHindi: "विनोबा भावे और भूदान आंदोलन",
@@ -1003,6 +1094,7 @@ export const BHARATI_ENTRIES: BharatiEntry[] = [
   },
   {
     dayIndex: 91,
+    summary: `Birsa Munda was a tribal leader and folk hero belonging to the Munda tribe in the Chhotanagpur plateau. In the late nineteenth century, Munda led a major tribal movement known as the 'Ulgulan' (Great Tumult) against the British colonial authorities and local landlords who seized tribal lands.`,
     id: "birsa-munda-rebellion",
     title: "Birsa Munda and the Ulgulan",
     titleHindi: "बिरसा मुंडा",
