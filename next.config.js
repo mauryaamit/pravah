@@ -30,6 +30,8 @@ const nextConfig = {
       { source: '/bhasha', destination: '/angrezi', permanent: true },
       { source: '/prerna', destination: '/noor', permanent: true },
       { source: '/lekh', destination: '/typewriter', permanent: true },
+      { source: '/srot', destination: '/sahitya', permanent: true },
+      { source: '/bodh', destination: '/darshan', permanent: true },
     ];
   },
   async headers() {

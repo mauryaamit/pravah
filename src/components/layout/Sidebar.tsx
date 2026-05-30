@@ -6,7 +6,7 @@ import { ChevronLeft, ChevronRight, Settings, ChevronDown } from 'lucide-react';
 import {
   Sunrise, Flame, PenLine, TreePine,
   CloudRain, Waves, Zap, Music2,
-  Lightbulb, Brain, Telescope, Landmark, MessageSquare, Library,
+  Lightbulb, Brain, Telescope, Landmark, MessageSquare, Library, Compass,
   Globe2, Sparkles, PlaneTakeoff, Leaf, Flag,
   ScrollText, UserRound, BookMarked, Heart, BookOpen,
   Mic2, Type, Puzzle, Keyboard, LandPlot,
@@ -23,8 +23,8 @@ import SettingsModal from '@/components/shared/SettingsModal';
 const ROOM_ICONS: Record<string, React.ComponentType<any>> = {
   aarambh: Sunrise, agni: Flame, antarman: PenLine, bargad: TreePine,
   sukoon: CloudRain, manthan: Waves, noor: Zap, riyaz: Music2,
-  bodh: Lightbulb, neurolab: Brain, cosmos: Telescope, darshan: Landmark,
-  angrezi: Type, srot: Library,
+  darshan: Compass, darshanik: Landmark, neurolab: Brain, cosmos: Telescope,
+  angrezi: Type, sahitya: Library,
   typewriter: Keyboard,
   vani: Mic2, paradox: Puzzle,
   duniya: Globe2, neelakurinji: Sparkles, safar: PlaneTakeoff, aranya: Leaf, bharati: Flag,

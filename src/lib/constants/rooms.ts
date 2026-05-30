@@ -14,6 +14,7 @@ export interface Room {
   colorVar: string;
   colorHex: string;
   cluster: RoomCluster;
+  ambientSound?: string;
 }
 
 export const ROOMS: Room[] = [
@@ -28,21 +29,22 @@ export const ROOMS: Room[] = [
 
   // INNER
   { id: 'sukoon',      name: 'Sukoon',       nameHi: 'सुकून',      nameHindi: 'सुकून',     emoji: '🌧️', description: 'Poetry - Hindi, Roman Urdu, English',         route: '/sukoon',       colorVar: '--room-sukoon',       colorHex: '#5B6B8A', cluster: 'inner' },
-  { id: 'manthan',     name: 'Manthan',      nameHi: 'मन्थन',      nameHindi: 'मन्थन',     emoji: '🌀', description: 'Mental models - the thinking tools of every discipline', route: '/manthan', colorVar: '--room-manthan', colorHex: '#6A3A8A', cluster: 'inner' },
   { id: 'noor',        name: 'Prerna',       nameHi: 'प्रेरणा',    nameHindi: 'प्रेरणा',   emoji: '✨', description: 'One person. One moment. One ignition.',        route: '/noor',         colorVar: '--room-noor',         colorHex: '#D4A853', cluster: 'inner' },
   { id: 'riyaz',       name: 'Riyaz',        nameHi: 'रियाज़',     nameHindi: 'रियाज़',    emoji: '🎵', description: 'Music and arts - the practice of beauty',      route: '/riyaz',        colorVar: '--room-riyaz',        colorHex: '#8A4A8A', cluster: 'inner' },
   { id: 'manas',       name: 'Manas',        nameHi: 'मानस',       nameHindi: 'मानस',      emoji: '🧘', description: 'Psychology and the science of human behavior', route: '/manas',        colorVar: '--room-manas',        colorHex: '#3A6A5A', cluster: 'inner' },
 
   // KNOWLEDGE
-  { id: 'bodh',        name: 'Bodh',         nameHi: 'बोध',        nameHindi: 'बोध',       emoji: '💡', description: 'Mental models and ideas that change you',      route: '/bodh',         colorVar: '--room-bodh',         colorHex: '#A6893A', cluster: 'knowledge' },
+  { id: 'darshan',     name: 'Darshan',      nameHi: 'दर्शन',      nameHindi: 'दर्शन',     emoji: '🧭', description: 'Philosophy - all schools of thought',          route: '/darshan',      colorVar: '--room-darshan-bodh', colorHex: '#4A5568', cluster: 'knowledge', ambientSound: 'library' },
+  { id: 'darshanik',   name: 'Darshanik',    nameHi: 'दार्शनिक',   nameHindi: 'दार्शनिक',  emoji: '🏛️', description: 'The thinkers who mapped the paths of meaning', route: '/darshanik',    colorVar: '--room-darshan',      colorHex: '#8A6A3A', cluster: 'knowledge' },
+  { id: 'sahitya',     name: 'Sahitya',      nameHi: 'साहित्य',    nameHindi: 'साहित्य',   emoji: '📚', description: 'A sanctuary for literature and the writers',   route: '/sahitya',      colorVar: '--room-sahitya',      colorHex: '#6B4A7A', cluster: 'knowledge', ambientSound: 'library' },
+  { id: 'manthan',     name: 'Manthan',      nameHi: 'मन्थन',      nameHindi: 'मन्थन',     emoji: '🌀', description: 'Mental models - the thinking tools of every discipline', route: '/manthan', colorVar: '--room-manthan', colorHex: '#6A3A8A', cluster: 'knowledge' },
   { id: 'neurolab',    name: 'NeuroLab',     nameHi: 'न्यूरोलैब', nameHindi: 'न्यूरोलैब', emoji: '🧠', description: 'Daily brain science',                          route: '/neurolab',     colorVar: '--room-neurolab',     colorHex: '#7A3A8A', cluster: 'knowledge' },
   { id: 'cosmos',      name: 'Cosmos',       nameHi: 'ब्रह्मांड', nameHindi: 'ब्रह्मांड', emoji: '🌌', description: 'Astrophysics and the infinite universe',        route: '/cosmos',       colorVar: '--room-cosmos',       colorHex: '#3A5A8A', cluster: 'knowledge' },
-  { id: 'darshan',     name: 'Darshan',      nameHi: 'दर्शन',      nameHindi: 'दर्शन',     emoji: '🏛️', description: 'Philosophy - all schools of thought',          route: '/darshan',      colorVar: '--room-darshan',      colorHex: '#8A6A3A', cluster: 'knowledge' },
   { id: 'angrezi',     name: 'Angrezi',      nameHi: 'अंग्रेज़ी',  nameHindi: 'अंग्रेज़ी', emoji: '🔤', description: 'English as a living language - words, craft, mastery', route: '/angrezi', colorVar: '--room-angrezi',  colorHex: '#5B7FA6', cluster: 'knowledge' },
-  { id: 'typewriter',  name: 'Typewriter',    nameHi: 'टाइपराइटर',  nameHindi: 'टाइपराइटर', emoji: '⌨️', description: 'World\'s best essays and articles, curated by The Electric Typewriter', route: '/typewriter', colorVar: '--room-typewriter', colorHex: '#2C3E2D', cluster: 'knowledge' },
-  { id: 'srot',        name: 'Srot',          nameHi: 'स्रोत',      nameHindi: 'स्रोत',     emoji: '📚', description: 'One deep read per day',                        route: '/srot',         colorVar: '--room-srot',         colorHex: '#3A6A8A', cluster: 'knowledge' },
+  { id: 'typewriter',  name: 'Typewriter',    nameHi: 'टाइपराइटर',  nameHindi: 'टाइपराइटर', emoji: '⌨️', description: 'World\'s best essays and articles',          route: '/typewriter',   colorVar: '--room-typewriter',   colorHex: '#2C3E2D', cluster: 'knowledge' },
   { id: 'vani',        name: 'Vani',          nameHi: 'वाणी',       nameHindi: 'वाणी',      emoji: '🪔', description: 'Sanskrit shlokas, dohas, and living folk wisdom', route: '/vani',         colorVar: '--room-vani',         colorHex: '#8B3A3A', cluster: 'knowledge' },
   { id: 'paradox',     name: 'Paradox',       nameHi: 'विरोधाभास',   nameHindi: 'विरोधाभास', emoji: '🧩', description: 'One paradox per day - fully explained',          route: '/paradox',      colorVar: '--room-paradox',      colorHex: '#4A3570', cluster: 'knowledge' },
+  { id: 'kathakar',    name: 'Kathakar',     nameHi: 'कथाकार',     nameHindi: 'कथाकार',    emoji: '📜', description: 'Stories across genres and centuries',          route: '/kathakar',     colorVar: '--room-kathakar',     colorHex: '#8A5A3A', cluster: 'knowledge' },
 
   // WORLD
   { id: 'duniya',      name: 'Duniya',       nameHi: 'दुनिया',     nameHindi: 'दुनिया',    emoji: '🌍', description: '3 world stories, explained deeply',             route: '/duniya',       colorVar: '--room-duniya',       colorHex: '#4A7C59', cluster: 'world' },
@@ -53,10 +55,8 @@ export const ROOMS: Room[] = [
   { id: 'neelakurinji',name: 'Neelakurinji', nameHi: 'नीलकुरिंजी',nameHindi: 'नीलकुरिंजी',emoji: '💫', description: 'Wonder room - daily surprise',                route: '/neelakurinji', colorVar: '--room-neelakurinji', colorHex: '#7B6BA6', cluster: 'world' },
 
   // CREATIVE
-  { id: 'kathakar',    name: 'Kathakar',     nameHi: 'कथाकार',     nameHindi: 'कथाकार',    emoji: '📜', description: 'Stories across genres and centuries',          route: '/kathakar',     colorVar: '--room-kathakar',     colorHex: '#8A5A3A', cluster: 'creative' },
   { id: 'vibhav',      name: 'Vibhav',       nameHi: 'विभाव',      nameHindi: 'विभाव',     emoji: '👤', description: 'Person of the day - their life, their way',    route: '/vibhav',       colorVar: '--room-vibhav',       colorHex: '#6A8A4A', cluster: 'creative' },
   { id: 'lekhak',      name: 'Lekhak',       nameHi: 'लेखक',       nameHindi: 'लेखक',      emoji: '✍️', description: 'Writer of the day - literature universe',     route: '/lekhak',       colorVar: '--room-lekhak',       colorHex: '#7A5A8A', cluster: 'creative' },
-
   { id: 'anand',       name: 'Anand',        nameHi: 'आनंद',       nameHindi: 'आनंद',      emoji: '🎨', description: 'Joy room - humor, illusions, wonder, delight', route: '/anand',        colorVar: '--room-anand',        colorHex: '#C47A3A', cluster: 'creative' },
 ];
 

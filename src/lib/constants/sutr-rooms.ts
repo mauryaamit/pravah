@@ -73,11 +73,11 @@ export const SUTR_ROOMS: SutrRoomDescription[] = [
     contemplativeText: 'Every decision you made today was shaped by forces you did not notice. Manas names them - the bias that made you overconfident, the social pressure you mistook for your own opinion, the memory that was not quite accurate. Not to shame you, but to show you how your mind actually works.'
   },
   {
-    id: 'bodh',
-    name: 'Bodh',
-    nameHindi: 'बोध',
-    oneLiner: 'Ideas that shift how you interact with reality',
-    contemplativeText: 'Some ideas do not just add to your knowledge; they change the person who knows. Bodh explores deep concepts in science, economics, and history that shift your perspective, offering new lenses through which to view your daily choices.'
+    id: 'darshan',
+    name: 'Darshan',
+    nameHindi: 'दर्शन',
+    oneLiner: 'The major philosophical traditions of human thought',
+    contemplativeText: 'An immersive journey through the core traditions of philosophy - Indian, Western, Eastern, African, and Islamic - alongside a Daily Spark of wisdom. Explore the concepts, thinkers, and debates that have shaped human existence and continue to offer clarity in the modern world.'
   },
   {
     id: 'neurolab',
@@ -94,11 +94,11 @@ export const SUTR_ROOMS: SutrRoomDescription[] = [
     contemplativeText: 'A daily look at cosmic structures, space history, and the physics of the universe. In the face of nebulae and light-years, your daily anxieties shrink to their proper, tiny size, leaving you with a sense of quiet wonder and cosmic perspective.'
   },
   {
-    id: 'darshan',
-    name: 'Darshan',
-    nameHindi: 'दर्शन',
-    oneLiner: 'The human struggle for meaning',
-    contemplativeText: 'From ancient Vedic debates to Stoic reflections and existential questions. Darshan is not an academic lecture; it is an invitation to engage with the oldest human questions about duty, suffering, consciousness, and the art of living well.'
+    id: 'darshanik',
+    name: 'Darshanik',
+    nameHindi: 'दार्शनिक',
+    oneLiner: 'The thinkers who mapped the paths of meaning',
+    contemplativeText: 'Meet the architects of human thought. From ancient sages to modern critics, Darshanik traces the lives, struggles, and core ideas of the philosophers who challenged their eras and left us maps to navigate the complexities of our own minds and society.'
   },
   {
     id: 'angrezi',
@@ -108,11 +108,11 @@ export const SUTR_ROOMS: SutrRoomDescription[] = [
     contemplativeText: 'A word you did not know this morning. An idiom with a 300-year history. A grammar structure that separates good English from fluent English. And daily drills that train you to think in English rather than translate from Hindi. Language is not just communication - it is the shape of thought.'
   },
   {
-    id: 'srot',
-    name: 'Srot',
-    nameHindi: 'स्रोत',
-    oneLiner: 'One long-form article to build deep focus',
-    contemplativeText: 'In a world that fragments your attention into seconds, Srot offers depth. One long-form essay per day, designed to be read slowly, without distraction. Reclaim your capacity for sustained, deep thought and explore ideas that require time to settle.'
+    id: 'sahitya',
+    name: 'Sahitya',
+    nameHindi: 'साहित्य',
+    oneLiner: 'A sanctuary for literature and the writers who shaped the world',
+    contemplativeText: 'A deep sanctuary for world literature, combining dedicated Reading Companions with a daily celebration of Indian, English, and World writers. Step inside the workshops of history\'s greatest authors, read their signatures, and rediscover the written word as a mirror to the human soul.'
   },
   {
     id: 'duniya',
