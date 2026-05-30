@@ -72,7 +72,13 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   const isDark = false;
   const resolvedTheme = 'day';
-  const toggle = () => {};
+  const toggle = () => {
+    const themes: PravahTheme[] = ['cream', 'vangogh', 'forest'];
+    const currentIndex = themes.indexOf(theme);
+    const nextIndex = (currentIndex + 1) % themes.length;
+    setTheme(themes[nextIndex]);
+  };
+
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme, isDark, resolvedTheme, toggle }}>

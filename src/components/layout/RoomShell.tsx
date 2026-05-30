@@ -76,12 +76,13 @@ export default function RoomShell({ children }: RoomShellProps) {
         return;
       }
 
-      // Toggle theme (N)
-      if (e.key.toLowerCase() === 'n') {
+      // Toggle theme (T)
+      if (e.key.toLowerCase() === 't') {
         e.preventDefault();
         toggleTheme();
         return;
       }
+
 
       // Go to room sequence (G + Key)
       if (e.key.toLowerCase() === 'g') {

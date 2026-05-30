@@ -12,6 +12,7 @@ interface UserContextValue {
   preferences: UserPreferences;
   setUser: (u: User | null) => void;
   updatePreferences: (prefs: Partial<UserPreferences>) => void;
+  updateName: (name: string) => Promise<void>;
   logout: () => void;
 }
 
@@ -132,6 +133,19 @@ export function UserProvider({ children }: { children: ReactNode }) {
     }
   }, [preferences, user]);
 
+  const updateName = useCallback(async (newName: string) => {
+    if (!user) return;
+    setUserState(prev => prev ? { ...prev, name: newName } : null);
+    if (db) {
+      try {
+        const userDocRef = doc(db!, 'users', user.id);
+        await updateDoc(userDocRef, { name: newName });
+      } catch (err) {
+        console.error('Failed to update name in Firestore:', err);
+      }
+    }
+  }, [user]);
+
   const logout = useCallback(async () => {
     if (auth) {
       try {
@@ -145,7 +159,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, isLoading, preferences, setUser, updatePreferences, logout }}>
+    <UserContext.Provider value={{ user, isLoading, preferences, setUser, updatePreferences, updateName, logout }}>
       {children}
     </UserContext.Provider>
   );

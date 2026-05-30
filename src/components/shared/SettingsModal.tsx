@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, LogOut, Settings, Languages, MessageSquare, Volume2, User as UserIcon, Palette, VolumeX, Bell, Download, ShieldAlert } from 'lucide-react';
 import { useUser } from '@/components/providers/UserProvider';
@@ -20,13 +20,26 @@ interface SettingsModalProps {
 }
 
 export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
-  const { user, preferences, updatePreferences, logout } = useUser();
+  const { user, preferences, updatePreferences, updateName, logout } = useUser();
   const { theme, setTheme } = useTheme();
   const { isMuted, toggleMute, enableAudio } = useAudio();
 
+  const [tempName, setTempName] = useState(user?.name || '');
   const [exportingJournal, setExportingJournal] = useState(false);
   const [exportingHabits, setExportingHabits] = useState(false);
   const [exportingAnthology, setExportingAnthology] = useState(false);
+
+  useEffect(() => {
+    if (user?.name) {
+      setTempName(user.name);
+    }
+  }, [user?.name]);
+
+  const handleSaveName = async () => {
+    if (tempName.trim() && tempName.trim() !== user?.name) {
+      await updateName(tempName.trim());
+    }
+  };
 
   if (!user) return null;
 
@@ -381,21 +394,54 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                   User Sanctuary
                 </h3>
                 <div
-                  className="flex items-center gap-4 p-4 rounded-xl border"
+                  className="flex flex-col gap-4 p-4 rounded-xl border animate-fade-in"
                   style={{ backgroundColor: 'var(--bg-primary)', borderColor: 'var(--border-default)' }}
                 >
-                  <div
-                    className="w-12 h-12 rounded-full flex items-center justify-center text-white text-base font-semibold flex-shrink-0"
-                    style={{ background: 'var(--accent-saffron)' }}
-                  >
-                    {user.name.charAt(0).toUpperCase()}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="font-serif text-sm truncate" style={{ color: 'var(--text-primary)' }}>
-                      {user.name}
+                  <div className="flex items-center gap-4">
+                    <div
+                      className="w-12 h-12 rounded-full flex items-center justify-center text-white text-base font-semibold flex-shrink-0"
+                      style={{ background: 'var(--accent-saffron)' }}
+                    >
+                      {user.name.charAt(0).toUpperCase()}
                     </div>
-                    <div className="text-xs truncate" style={{ color: 'var(--text-muted)' }}>
-                      {user.email}
+                    <div className="min-w-0 flex-1">
+                      <div className="font-serif text-sm truncate" style={{ color: 'var(--text-primary)' }}>
+                        {user.name}
+                      </div>
+                      <div className="text-xs truncate" style={{ color: 'var(--text-muted)' }}>
+                        {user.email}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Name Edit Input */}
+                  <div className="space-y-1.5 pt-3 border-t" style={{ borderColor: 'var(--border-default)' }}>
+                    <div className="flex justify-between text-[11px] font-medium" style={{ color: 'var(--text-secondary)' }}>
+                      <span>Change Name</span>
+                    </div>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={tempName}
+                        onChange={(e) => setTempName(e.target.value)}
+                        placeholder="Enter your name"
+                        className="flex-1 px-3 py-1.5 text-xs rounded-lg border font-sans focus:outline-none"
+                        style={{
+                          backgroundColor: 'var(--bg-secondary)',
+                          borderColor: 'var(--border-default)',
+                          color: 'var(--text-primary)',
+                        }}
+                      />
+                      <button
+                        onClick={handleSaveName}
+                        disabled={!tempName.trim() || tempName.trim() === user.name}
+                        className="px-3 py-1.5 text-xs font-semibold rounded-lg text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                        style={{
+                          backgroundColor: 'var(--accent-saffron)',
+                        }}
+                      >
+                        Save
+                      </button>
                     </div>
                   </div>
                 </div>

@@ -27,10 +27,11 @@ export default function ShortcutsModal({ isOpen, onClose }: ShortcutsModalProps)
       items: [
         { keys: ['?'], desc: 'Open shortcuts panel' },
         { keys: ['R'], desc: 'Toggle read-aloud on current page' },
-        { keys: ['N'], desc: 'Toggle Night / Day mode' },
+        { keys: ['T'], desc: 'Cycle themes' },
         { keys: ['ESC'], desc: 'Close any open modal or panel' },
       ],
     },
+
   ];
 
   return (
