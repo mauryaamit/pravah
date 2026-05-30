@@ -66,13 +66,6 @@ export const SUTR_ROOMS: SutrRoomDescription[] = [
     contemplativeText: 'Indian classical ragas, western classical movements, and the stories of the artists who practiced them. Riyaz is a guide to the discipline of daily attention, teaching you how to listen to silence and appreciate the craft of sound.'
   },
   {
-    id: 'manas',
-    name: 'Manas',
-    nameHindi: 'मानस',
-    oneLiner: 'The architecture of your mind',
-    contemplativeText: 'Every decision you made today was shaped by forces you did not notice. Manas names them - the bias that made you overconfident, the social pressure you mistook for your own opinion, the memory that was not quite accurate. Not to shame you, but to show you how your mind actually works.'
-  },
-  {
     id: 'darshan',
     name: 'Darshan',
     nameHindi: 'दर्शन',
@@ -83,8 +76,8 @@ export const SUTR_ROOMS: SutrRoomDescription[] = [
     id: 'neurolab',
     name: 'NeuroLab',
     nameHindi: 'न्यूरोलैब',
-    oneLiner: 'The biology of focus, rest, and growth',
-    contemplativeText: 'Your brain is a physical organ governed by biological laws. NeuroLab translates the latest neuroscience into actionable insights, showing you how light, sleep, attention, and chemical pathways dictate your mood and capability.'
+    oneLiner: 'Brain science and mind psychology — two rooms, one destination',
+    contemplativeText: `NeuroLab is the science of what is happening inside you right now. The NeuroLab tab covers the physical brain — neuroplasticity, memory formation, attention, sleep, creativity — the biology of thought itself. The Manas tab covers the psychology of being human — cognitive biases, social behavior, emotion, decision-making, the forces that shape your choices without your knowing. Two disciplines. One room. Because the brain and the mind are not the same thing, and understanding both changes how you see yourself.`,
   },
   {
     id: 'cosmos',
@@ -111,15 +104,15 @@ export const SUTR_ROOMS: SutrRoomDescription[] = [
     id: 'sahitya',
     name: 'Sahitya',
     nameHindi: 'साहित्य',
-    oneLiner: 'A sanctuary for literature and the writers who shaped the world',
-    contemplativeText: 'A deep sanctuary for world literature, combining dedicated Reading Companions with a daily celebration of Indian, English, and World writers. Step inside the workshops of history\'s greatest authors, read their signatures, and rediscover the written word as a mirror to the human soul.'
+    oneLiner: 'Literature — Indian writers, English writers, world writers, and a daily reading companion',
+    contemplativeText: `Sahitya opens with the writers closest to home. The Indian Writer tab: one voice from Indian literature daily — Hindi or English, classical or contemporary, from Kabir and Mirabai through Premchand and Nirala to Arundhati Roy and Amitav Ghosh. The English Writer tab: one voice from the great tradition of English-language literature, Shakespeare to Toni Morrison, Austen to Zadie Smith. The World Writer tab: one voice from every other language — Dostoevsky, Rumi, García Márquez, Clarice Lispector, Murasaki Shikibu — always with the note on which translation to read. And last: the Reading Companion, a long-form essay or article each day with full context, intellectual lineage, and the question it leaves open. Four tabs. The whole of literature, from here to everywhere.`,
   },
   {
-    id: 'duniya',
-    name: 'Duniya',
-    nameHindi: 'दुनिया',
-    oneLiner: 'The historical currents behind today’s headlines',
-    contemplativeText: 'Three key stories from around the globe, explained through the lens of history, geography, and culture. Duniya helps you see past the daily outrage of the news to understand the slow, structural shifts that shape our shared planet.'
+    id: 'vishwa',
+    name: 'Vishwa',
+    nameHindi: 'विश्व',
+    oneLiner: 'World intelligence — global situations and systems explained without telling you what to think',
+    contemplativeText: `Vishwa does one thing: explains what is actually happening in the world, and why, without telling you what to think about it. On alternating days, either a situation — why Pakistan's military has political power, why Sri Lanka's economy collapsed, what the South China Sea dispute is actually about — or a system — how the IMF works, what currency pegs are, why the UN Security Council veto exists. Each situation comes with the key players, the timeline, and the single most important thing to understand. Each system comes with how it was created, who benefits, and what the reform debate looks like. On Sundays: the Vishwa Lens — a one-paragraph structural observation about the global order. Not news. Context. The difference between knowing what happened and understanding why.`,
   },
   {
     id: 'neelakurinji',
@@ -143,32 +136,32 @@ export const SUTR_ROOMS: SutrRoomDescription[] = [
     contemplativeText: 'Stories of soil, forests, migratory birds, and mycelial networks. Aranya is a digital window into the natural world, reminding us of the ancient, non-human rhythms that continue to support and shape all human endeavor.'
   },
   {
-    id: 'bharati',
-    name: 'Bharati',
-    nameHindi: 'भारती',
-    oneLiner: 'The intellectual and scientific legacy of India',
-    contemplativeText: 'From the engineering of Harappan cities to the grammar of Panini and the history of Indian mathematics. Bharati explores the deep, foundational ideas that emerged from the subcontinent, connecting the past to our modern lives.'
+    id: 'bharat',
+    name: 'Bharat',
+    nameHindi: 'भारत',
+    oneLiner: 'India — known deeply, one theme each day across history, ecology, science, art, society, and people',
+    contemplativeText: `Bharat is not a patriotism exercise. It is a daily encounter with the actual depth and strangeness of this country. Monday is history — not the textbook version but the version with the complications left in. Tuesday is ecology — the rivers, the forests, the species that exist nowhere else. Wednesday is art and culture — the traditions that encoded an entire worldview in a weave pattern or a raga. Thursday is science — from Aryabhata's 5th-century heliocentric model to the Mars Orbiter Mission's impossible budget. Friday is society — caste, reform, the constitution, the ongoing arguments about who India is for. Saturday is the people who shaped it, especially the ones the textbooks missed. Sunday is पता था — the fact that changes what you thought you knew. A different India, every day.`,
   },
   {
-    id: 'kathakar',
-    name: 'Kathakar',
-    nameHindi: 'कथाकार',
-    oneLiner: 'Timeless narratives that teach us how to live',
-    contemplativeText: 'Fables, Zen koans, Sufi parables, and classic short stories. Kathakar presents the tales that have survived for centuries because they carry the distilled emotional truth of human experience. Read them to remember who we are.'
+    id: 'kahani',
+    name: 'Kahani',
+    nameHindi: 'कहानी',
+    oneLiner: 'Stories — one daily tale from every tradition, and your own writing space',
+    contemplativeText: `Kahani holds two things: the world's stories and yours. Every day, one story from the oldest traditions of human narrative — Panchatantra, Jataka tales, Zen koans, West African Anansi stories, Norse myths, Sufi teaching tales, Greek myths retold without the sanitization. Each story comes with what it knows about human nature — not the moral, which you can find yourself, but the observation the story is built around. And in the second tab: your own space to write. A title, a thread, a blank page. A calendar with dots for the days you wrote. The story of the day and the story you are writing are not separate things.`,
   },
   {
-    id: 'vibhav',
-    name: 'Vibhav',
-    nameHindi: 'विभाव',
-    oneLiner: 'The daily routines and struggles of historical icons',
-    contemplativeText: 'Not dry biographies, but intimate portraits of how great writers, scientists, and leaders structured their days, faced failure, and kept their fire alive. Vibhav shows you that greatness is a daily practice, not an accident.'
+    id: 'vyakti',
+    name: 'Vyakti',
+    nameHindi: 'व्यक्ति',
+    oneLiner: 'One person every day — the human beneath the achievement',
+    contemplativeText: `Vyakti is not a biography room. It does not give you birth dates and award lists. It gives you one person per day — the specific thing they knew about being alive, the moment that defined them, the idea their life embodied. Scientists, poets, revolutionaries, philosophers, rulers, reformers, artists — from every culture and era, with deliberate attention to the overlooked: women who changed their fields and weren't credited, thinkers from traditions outside Europe, Indians who should be household names but aren't. One person. One portrait. One question their life leaves open for yours.`,
   },
   {
-    id: 'lekhak',
-    name: 'Lekhak',
-    nameHindi: 'लेखक',
-    oneLiner: 'The craft and vision of the written word',
-    contemplativeText: 'Enter the workshops of history’s most profound writers. Discover how they drafted their masterpieces, what they believed about the purpose of literature, and how they refined their voice to speak across generations.'
+    id: 'write',
+    name: 'Write',
+    nameHindi: 'लिखो',
+    oneLiner: 'Your writing space — stories, thoughts, anything',
+    contemplativeText: `लिखो is simply a space to write. No prompts unless you want them. No word counts unless you want them. Just a page, a cursor, and whatever needs to come out today.`,
   },
   {
     id: 'anand',

@@ -22,7 +22,7 @@ import WriterCard from '@/components/sahitya/WriterCard';
 type Tab = 'companion' | 'indian' | 'english' | 'world';
 
 export default function SahityaPage() {
-  const [activeTab, setActiveTab] = useState<Tab>('companion');
+  const [activeTab, setActiveTab] = useState<Tab>('indian');
 
   // Independent date states for each tab
   const [companionDate, setCompanionDate] = useState<Date>(new Date());
@@ -72,10 +72,10 @@ export default function SahityaPage() {
 
   // Tab definitions
   const tabs = [
-    { id: 'companion', label: 'Companion', labelHi: 'सहयात्री' },
     { id: 'indian', label: 'Indian Writers', labelHi: 'भारतीय लेखक' },
     { id: 'english', label: 'English Writers', labelHi: 'अंग्रेजी लेखक' },
     { id: 'world', label: 'World Writers', labelHi: 'विश्व लेखक' },
+    { id: 'companion', label: 'Companion', labelHi: 'सहयात्री' },
   ] as const;
 
   return (

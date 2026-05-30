@@ -32,6 +32,12 @@ const nextConfig = {
       { source: '/lekh', destination: '/typewriter', permanent: true },
       { source: '/srot', destination: '/sahitya', permanent: true },
       { source: '/bodh', destination: '/darshan', permanent: true },
+      { source: '/manas', destination: '/neurolab', permanent: true },
+      { source: '/bharati', destination: '/bharat', permanent: true },
+      { source: '/duniya', destination: '/vishwa', permanent: true },
+      { source: '/vibhav', destination: '/vyakti', permanent: true },
+      { source: '/kathakar', destination: '/kahani', permanent: true },
+      { source: '/lekhak', destination: '/write', permanent: true },
     ];
   },
   async headers() {

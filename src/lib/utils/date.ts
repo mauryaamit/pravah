@@ -10,9 +10,18 @@ const EPOCH = new Date('2024-01-01');
  * Same day = same content for all users.
  * dayIndex = differenceInDays(today, epoch) % 90 + 1  →  1..90
  */
-export function getDayIndex(date: Date = new Date()): number {
-  const diff = differenceInDays(date, EPOCH);
-  return (diff % 90) + 1;
+export function getDayIndex(date?: Date): number;
+export function getDayIndex(arrayLength: number, date: Date): number;
+export function getDayIndex(arg1?: Date | number, arg2?: Date): number {
+  if (typeof arg1 === 'number') {
+    const d = arg2 || new Date();
+    const diff = differenceInDays(d, EPOCH);
+    return Math.abs(diff % arg1);
+  } else {
+    const d = arg1 || new Date();
+    const diff = differenceInDays(d, EPOCH);
+    return (diff % 90) + 1;
+  }
 }
 
 export function getDayIndexForArray(date: Date, arrayLength: number): number {

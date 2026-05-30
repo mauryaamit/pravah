@@ -87,7 +87,7 @@ The impulse to cut is one of the most important impulses in revision. Almost eve
   },
 ];
 
-export default function LekhakPage() {
+export default function WritePage() {
   const dayOfYear = getDayOfYear();
   const todayPrompt = WRITING_PROMPTS[dayOfYear % WRITING_PROMPTS.length];
   const [selectedPrompt, setSelectedPrompt] = useState(todayPrompt);
@@ -107,7 +107,7 @@ export default function LekhakPage() {
 
         <motion.div variants={FADE_UP} initial="initial" animate="animate" className="space-y-1">
           <p className="section-label">Writing Room</p>
-          <h1 className="font-serif text-2xl" style={{ color: 'var(--text-primary)' }}>लेखक - Lekhak</h1>
+          <h1 className="font-serif text-2xl" style={{ color: 'var(--text-primary)' }}>लिखो · Write</h1>
           <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
             Writing is thinking made visible. The page is not where you record what you think - it is where you find out what you think.
           </p>

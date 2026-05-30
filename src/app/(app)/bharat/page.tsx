@@ -4,10 +4,10 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FADE_UP } from '@/lib/utils/motion';
 import PageTransition from '@/components/layout/PageTransition';
-import { getDayIndexForArray } from '@/lib/utils/date';
+import { getDayIndex } from '@/lib/utils/date';
 import ReadAloudButton from '@/components/shared/ReadAloudButton';
 import DayNavigator from '@/components/shared/DayNavigator';
-import { BHARATI_ENTRIES, BharatiEntry } from './data';
+import { BHARAT_DATA, BharatEntry } from './data';
 import { Sparkles, HelpCircle } from 'lucide-react';
 
 const INDIA_SNIPPETS = [
@@ -17,14 +17,14 @@ const INDIA_SNIPPETS = [
   { title: 'Biodiversity Hotspot', content: 'India contains four of the world\'s 36 biodiversity hotspots: the Himalayas, the Western Ghats, the Eastern Himalayas, and Sundaland (Andaman and Nicobar).' },
 ];
 
-export default function BharatiPage() {
+export default function BharatPage() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [expandedSnippet, setExpandedSnippet] = useState<number | null>(null);
 
-  const activeIndex = getDayIndexForArray(currentDate, BHARATI_ENTRIES.length);
-  const selected = BHARATI_ENTRIES[activeIndex];
+  const activeIndex = getDayIndex(BHARAT_DATA.length, currentDate);
+  const selected = BHARAT_DATA[activeIndex];
 
-  const textToSpeak = `${selected.title}. ${selected.subtitle}. ${selected.content}`;
+  const textToSpeak = `${selected.title}. ${selected.summary}. ${selected.the_content}`;
 
   return (
     <PageTransition>
@@ -34,7 +34,7 @@ export default function BharatiPage() {
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 border-b pb-4" style={{ borderColor: 'var(--border-default)' }}>
           <div className="text-left w-full sm:w-auto">
             <p className="section-label">Discover India</p>
-            <h1 className="font-serif text-2xl" style={{ color: 'var(--text-primary)' }}>भारती - Bharati</h1>
+            <h1 className="font-serif text-2xl" style={{ color: 'var(--text-primary)' }}>भारत — Bharat</h1>
             <p className="text-xs text-[var(--text-muted)] mt-0.5">
               5,000 years of history, 4 language families, 1.4 billion stories. India is a civilization.
             </p>
@@ -55,7 +55,7 @@ export default function BharatiPage() {
             <div className="card-base overflow-hidden">
               <div className="relative" style={{ paddingBottom: '50%', background: 'var(--bg-tertiary)' }}>
                 <img
-                  src={selected.imageUrl}
+                  src={selected.imageUrl || "/images/bharati/indus-valley.png"}
                   alt={selected.title}
                   className="absolute inset-0 w-full h-full object-cover"
                   onError={(e) => {
@@ -66,9 +66,13 @@ export default function BharatiPage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-5 flex justify-between items-end">
                   <div>
-                    <span className="text-xs font-semibold uppercase tracking-widest text-[#E8A87C]">{selected.category}</span>
+                    <span className="text-xs font-semibold uppercase tracking-widest text-[#E8A87C]">
+                      {selected.theme} · {selected.theme_hi}
+                    </span>
                     <h2 className="font-serif text-2xl text-white mt-1 leading-tight">{selected.title}</h2>
-                    <p className="font-devanagari text-sm text-white/60 mt-0.5">{selected.titleHindi}</p>
+                    {selected.title_hi && (
+                      <p className="font-devanagari text-sm text-white/60 mt-0.5">{selected.title_hi}</p>
+                    )}
                   </div>
                   <div className="flex items-center gap-1.5 bg-black/40 p-1.5 rounded-lg backdrop-blur-sm">
                     <ReadAloudButton text={textToSpeak} lang="en-IN" size="sm" />
@@ -77,29 +81,30 @@ export default function BharatiPage() {
               </div>
               <div className="p-5">
                 <p className="font-serif italic text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                  {selected.subtitle}
+                  {selected.summary}
                 </p>
               </div>
             </div>
 
-            {/* Summary Box */}
-            {selected.summary && (
-              <div 
-                className="p-5 border-l-4 rounded bg-[var(--bg-secondary)]" 
-                style={{ borderColor: 'var(--accent-saffron)' }}
-              >
-                <h4 className="text-[10px] uppercase tracking-widest font-semibold mb-2" style={{ color: 'var(--accent-saffron)' }}>
-                  संक्षेप · In Brief
-                </h4>
-                <p className="font-serif italic text-base leading-relaxed text-[var(--text-primary)]">
-                  {selected.summary}
-                </p>
+            {/* Region / Period Badge Row */}
+            {(selected.region || selected.period) && (
+              <div className="flex gap-2 flex-wrap text-xs">
+                {selected.region && (
+                  <span className="px-2.5 py-1 rounded-full border border-[var(--border-default)] text-[var(--text-muted)] bg-[var(--bg-secondary)]">
+                    📍 {selected.region}
+                  </span>
+                )}
+                {selected.period && (
+                  <span className="px-2.5 py-1 rounded-full border border-[var(--border-default)] text-[var(--text-muted)] bg-[var(--bg-secondary)]">
+                    ⏳ {selected.period}
+                  </span>
+                )}
               </div>
             )}
 
             {/* Detailed Content */}
             <div className="card-base p-6 space-y-4">
-              {selected.content.split('\n\n').map((para: string, i: number) => (
+              {selected.the_content.split('\n\n').map((para: string, i: number) => (
                 <p key={i} className="text-sm leading-relaxed text-justify" style={{ color: 'var(--text-secondary)', lineHeight: 1.9 }}>
                   {para}
                 </p>
@@ -113,9 +118,17 @@ export default function BharatiPage() {
                 <span>पता था? / Did You Know?</span>
               </p>
               <p className="font-serif italic text-base leading-relaxed text-[var(--text-primary)]">
-                {selected.wonder}
+                {selected.pata_tha}
               </p>
             </div>
+
+            {/* Explore More Box */}
+            {selected.explore_more && (
+              <div className="card-base p-4 text-xs font-mono text-[var(--text-muted)] flex items-center justify-between">
+                <span>📚 Explore More:</span>
+                <span className="font-semibold text-[var(--text-primary)]">{selected.explore_more}</span>
+              </div>
+            )}
           </motion.div>
         </AnimatePresence>
 

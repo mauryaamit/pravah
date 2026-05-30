@@ -21,7 +21,7 @@ const WRITING_PROMPTS = [
   "He had exactly one hour before the train arrived, and a secret he could no longer keep..."
 ];
 
-export default function KathakarPage() {
+export default function KahaniPage() {
   const { user, loading: authLoading } = useAuth();
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [activeTab, setActiveTab] = useState<'today' | 'my-stories'>('today');
@@ -180,7 +180,7 @@ export default function KathakarPage() {
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 border-b pb-4" style={{ borderColor: 'var(--border-default)' }}>
           <div className="text-left w-full sm:w-auto">
             <p className="section-label">Creative Sanctuary</p>
-            <h1 className="font-serif text-2xl" style={{ color: 'var(--text-primary)' }}>कथाकार - Kathakar</h1>
+            <h1 className="font-serif text-2xl" style={{ color: 'var(--text-primary)' }}>कहानी - Kahani</h1>
           </div>
           
           {/* Tab buttons */}

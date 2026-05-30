@@ -27,9 +27,9 @@ const ROOM_ICONS: Record<string, React.ComponentType<any>> = {
   angrezi: Type, sahitya: Library,
   typewriter: Keyboard,
   vani: Mic2, paradox: Puzzle,
-  duniya: Globe2, neelakurinji: Sparkles, safar: PlaneTakeoff, aranya: Leaf, bharati: Flag,
+  vishwa: Globe2, neelakurinji: Sparkles, safar: PlaneTakeoff, aranya: Leaf, bharat: Flag,
   pratha: LandPlot,
-  kathakar: ScrollText, vibhav: UserRound, lekhak: BookMarked, anand: Heart,
+  kahani: ScrollText, vyakti: UserRound, write: BookMarked, anand: Heart,
 };
 
 const EXPANDED_W = 260;
