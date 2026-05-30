@@ -108,11 +108,11 @@ export const SUTR_ROOMS: SutrRoomDescription[] = [
     contemplativeText: `Sahitya opens with the writers closest to home. The Indian Writer tab: one voice from Indian literature daily — Hindi or English, classical or contemporary, from Kabir and Mirabai through Premchand and Nirala to Arundhati Roy and Amitav Ghosh. The English Writer tab: one voice from the great tradition of English-language literature, Shakespeare to Toni Morrison, Austen to Zadie Smith. The World Writer tab: one voice from every other language — Dostoevsky, Rumi, García Márquez, Clarice Lispector, Murasaki Shikibu — always with the note on which translation to read. And last: the Reading Companion, a long-form essay or article each day with full context, intellectual lineage, and the question it leaves open. Four tabs. The whole of literature, from here to everywhere.`,
   },
   {
-    id: 'vishwa',
-    name: 'Vishwa',
-    nameHindi: 'विश्व',
+    id: 'vaishwik',
+    name: 'Vaishwik',
+    nameHindi: 'वैश्विक',
     oneLiner: 'World intelligence — global situations and systems explained without telling you what to think',
-    contemplativeText: `Vishwa does one thing: explains what is actually happening in the world, and why, without telling you what to think about it. On alternating days, either a situation — why Pakistan's military has political power, why Sri Lanka's economy collapsed, what the South China Sea dispute is actually about — or a system — how the IMF works, what currency pegs are, why the UN Security Council veto exists. Each situation comes with the key players, the timeline, and the single most important thing to understand. Each system comes with how it was created, who benefits, and what the reform debate looks like. On Sundays: the Vishwa Lens — a one-paragraph structural observation about the global order. Not news. Context. The difference between knowing what happened and understanding why.`,
+    contemplativeText: `Vaishwik does one thing: explains what is actually happening in the world, and why, without telling you what to think about it. On alternating days, either a situation — why Pakistan's military has political power, why Sri Lanka's economy collapsed, what the South China Sea dispute is actually about — or a system — how the IMF works, what currency pegs are, why the UN Security Council veto exists. Each situation comes with the key players, the timeline, and the single most important thing to understand. Each system comes with how it was created, who benefits, and what the reform debate looks like. On Sundays: the Vaishwik Lens — a one-paragraph structural observation about the global order. Not news. Context. The difference between knowing what happened and understanding why.`,
   },
   {
     id: 'neelakurinji',

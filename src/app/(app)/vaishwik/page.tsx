@@ -7,14 +7,14 @@ import PageTransition from '@/components/layout/PageTransition';
 import { getDayIndexForArray } from '@/lib/utils/date';
 import ReadAloudButton from '@/components/shared/ReadAloudButton';
 import DayNavigator from '@/components/shared/DayNavigator';
-import { VISHWA_ENTRIES, VISHWA_LENS, VishwaSituation, VishwaSystem } from './data';
+import { VAISHWIK_ENTRIES, VAISHWIK_LENS, VaishwikSituation, VaishwikSystem } from './data';
 import { Globe, AlertCircle, Cpu, Shield, UserCheck, HelpCircle, Info, Landmark, History, MessageSquare, Compass } from 'lucide-react';
 
-export default function VishwaPage() {
+export default function VaishwikPage() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
 
-  const activeIndex = getDayIndexForArray(currentDate, VISHWA_ENTRIES.length);
-  const selected = VISHWA_ENTRIES[activeIndex];
+  const activeIndex = getDayIndexForArray(currentDate, VAISHWIK_ENTRIES.length);
+  const selected = VAISHWIK_ENTRIES[activeIndex];
 
   const textToSpeak = selected.type === 'situation'
     ? `${selected.title}. Situation: ${selected.the_situation}. Why it matters: ${selected.why_it_matters}.`
@@ -22,7 +22,7 @@ export default function VishwaPage() {
 
   const isDayIndexSunday = selected.dayIndex % 7 === 0;
   const weekIndex = Math.floor(selected.dayIndex / 7);
-  const lens = VISHWA_LENS[weekIndex % VISHWA_LENS.length];
+  const lens = VAISHWIK_LENS[weekIndex % VAISHWIK_LENS.length];
 
   return (
     <PageTransition>
@@ -32,7 +32,7 @@ export default function VishwaPage() {
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 border-b pb-4" style={{ borderColor: 'var(--border-default)' }}>
           <div className="text-left w-full sm:w-auto">
             <p className="section-label">World Intelligence</p>
-            <h1 className="font-serif text-2xl" style={{ color: 'var(--text-primary)' }}>विश्व - Vishwa</h1>
+            <h1 className="font-serif text-2xl" style={{ color: 'var(--text-primary)' }}>वैश्विक - Vaishwik</h1>
             <p className="text-xs text-[var(--text-muted)] mt-0.5">
               Global situations & systems explained plainly without telling you what to think.
             </p>
@@ -40,11 +40,11 @@ export default function VishwaPage() {
           <DayNavigator currentDate={currentDate} onDateChange={setCurrentDate} />
         </div>
 
-        {/* Vishwa Lens — shown only on Sunday (dayIndex % 7 === 0) */}
+        {/* Vaishwik Lens — shown only on Sunday (dayIndex % 7 === 0) */}
         {isDayIndexSunday && lens && (
           <div className="bg-[var(--bg-secondary)] rounded-xl px-6 py-6 mb-6 border-l-4 border-[var(--room-darshan)]" style={{ borderColor: 'var(--accent-saffron)' }}>
             <div className="text-xs uppercase tracking-widest text-[var(--accent-saffron)] font-semibold mb-2">
-              🌐 विश्व दृष्टि · Vishwa Lens — Weekly Perspective
+              🌐 वैश्विक दृष्टि · Vaishwik Lens — Weekly Perspective
             </div>
             <h3 className="text-xl font-serif text-[var(--text-primary)] mb-3">
               {lens.title}

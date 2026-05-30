@@ -45,7 +45,7 @@ export const ROOMS: Room[] = [
   { id: 'kahani',      name: 'Kahani',       nameHi: 'कहानी',      nameHindi: 'कहानी',     emoji: '📜', description: 'Stories across genres and centuries',          route: '/kahani',       colorVar: '--room-kathakar',     colorHex: '#8A5A3A', cluster: 'knowledge' },
 
   // WORLD
-  { id: 'vishwa',      name: 'Vishwa',       nameHi: 'विश्व',     nameHindi: 'विश्व',    emoji: '🌐', description: 'World Intelligence — Global Situations & Systems Explained', route: '/vishwa', colorVar: '--room-duniya',       colorHex: '#4A7C59', cluster: 'world' },
+  { id: 'vaishwik',    name: 'Vaishwik',     nameHi: 'वैश्विक',    nameHindi: 'वैश्विक',   emoji: '🌐', description: 'World Intelligence — Global Situations & Systems Explained', route: '/vaishwik', colorVar: '--room-duniya',       colorHex: '#4A7C59', cluster: 'world' },
   { id: 'safar',       name: 'Safar',        nameHi: 'सफ़र',        nameHindi: 'सफ़र',       emoji: '✈️', description: 'Travel the world from here',                  route: '/safar',        colorVar: '--room-safar',        colorHex: '#3A8A8A', cluster: 'world' },
   { id: 'bharat',      name: 'Bharat',       nameHi: 'भारत',       nameHindi: 'भारत',      emoji: '🇮🇳', description: 'Discover India - history, culture, wonder',   route: '/bharat',       colorVar: '--room-bharati',      colorHex: '#8A3A3A', cluster: 'world' },
   { id: 'aranya',      name: 'Aranya',       nameHi: 'अरण्य',      nameHindi: 'अरण्य',     emoji: '🌿', description: 'Nature room - flora, fauna, Earth',            route: '/aranya',       colorVar: '--room-aranya',       colorHex: '#4A7C59', cluster: 'world' },

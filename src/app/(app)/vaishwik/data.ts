@@ -1,7 +1,7 @@
-// src/app/(app)/vishwa/data.ts
-// Programmatically generated Vishwa data.ts
+// src/app/(app)/vaishwik/data.ts
+// Programmatically generated Vaishwik data.ts
 
-export interface VishwaSituation {
+export interface VaishwikSituation {
   type: 'situation';
   dayIndex: number;
   region: string;
@@ -24,7 +24,7 @@ export interface VishwaSituation {
   india_angle?: string;
 }
 
-export interface VishwaSystem {
+export interface VaishwikSystem {
   type: 'system';
   dayIndex: number;
   system_name: string;
@@ -45,14 +45,14 @@ export interface VishwaSystem {
   closing_question: string;
 }
 
-export interface VishwaLens {
+export interface VaishwikLens {
   weekIndex: number;
   title: string;
   one_paragraph: string;
   three_things_to_watch: string[];
 }
 
-export const VISHWA_ENTRIES: (VishwaSituation | VishwaSystem)[] = [
+export const VAISHWIK_ENTRIES: (VaishwikSituation | VaishwikSystem)[] = [
   {
     "type": "system",
     "dayIndex": 1,
@@ -3025,7 +3025,7 @@ export const VISHWA_ENTRIES: (VishwaSituation | VishwaSystem)[] = [
   }
 ];
 
-export const VISHWA_LENS: VishwaLens[] = [
+export const VAISHWIK_LENS: VaishwikLens[] = [
   {
     "weekIndex": 0,
     "title": "The Global Order Shift - Week 1",
