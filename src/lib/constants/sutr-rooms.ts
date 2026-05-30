@@ -204,6 +204,13 @@ export const SUTR_ROOMS: SutrRoomDescription[] = [
     nameHindi: 'टाइपराइटर',
     oneLiner: 'The internet\'s finest longform essays, fetched fresh every day',
     contemplativeText: 'The Electric Typewriter is a curated archive of the greatest essays, articles, and longform journalism ever published on the web. Every day, Typewriter surfaces a fresh selection from its vast library — essays that change how you think, articles that challenge what you assume, prose that rewards unhurried reading. No algorithm. No clickbait. Just the finest writing, accompanied by a Pravah Companion that prepares you for the text and stays with you after.'
+  },
+  {
+    id: 'pratha',
+    name: 'Pratha',
+    nameHindi: 'प्रथा',
+    oneLiner: 'The beautiful, the bewildering, the troubling, and the human — one of each, every day',
+    contemplativeText: 'Every culture has developed practices that make complete sense from inside and look incomprehensible from outside. Pratha does not judge — it witnesses. Each day: one festival so beautiful it makes you wish you were there, one so bewildering it makes you question what you know about human nature, one troubling enough to sit with honestly. And one tribe — a human community that has found a completely different answer to the question of how to live. Pratha is not about exotic curiosity. It is about the radical act of understanding the world as it actually is — all of it.'
   }
 ];
 

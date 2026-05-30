@@ -1,0 +1,829 @@
+import os
+
+# Helper to escape backticks and templates in typescript output
+def escape_ts(s):
+    if not isinstance(s, str):
+        return s
+    return s.replace('\\', '\\\\').replace('`', '\\`').replace('${', '\\${')
+
+# Define base Utsavs
+utsav_base = [
+    # Base 0
+    {
+        "name": "Hornbill Festival",
+        "name_local": "Hornbill Festival of Nagaland",
+        "name_hi": "हॉर्नबिल महोत्सव",
+        "location": "Kisama Heritage Village, Nagaland, India",
+        "community": "Sixteen Naga tribes — Ao, Angami, Lotha, Sumi, Konyak, Chakhesang, and ten others",
+        "when": "December 1-10 every year",
+        "duration": "10 days",
+        "origin_period": "2000 CE — though the traditions it celebrates are thousands of years old",
+        "participants": "~80,000 visitors, all sixteen Naga tribes",
+        "summary": "In the misty hills of Nagaland, sixteen warrior tribes who once fought each other gather for ten days every December — not for war but for something rarer: the conscious decision to remember who they are together. The Hornbill Festival is a stunning celebration of indigenous cultural preservation.",
+        "the_story": "The hornbill is not just a bird in Nagaland. It is the centerpiece of the warrior\\'s headdress, the symbol of valor and honor, the creature whose feathers a Naga man once had to earn through deed in battle.\\n\\nIn a world where that particular kind of earning is no longer possible, the Hornbill Festival becomes a space where the identity encoded in every bead and song can still breathe. The festival takes place at Kisama Heritage Village on land that was the site of one of World War II\\'s most ferocious battles, where Allied forces stopped the Japanese advance into India in 1944.\\n\\nEach of the sixteen tribes arrives with its own morungs — traditional bachelor dormitories. These are not tourist displays. They are living spaces where young men of each tribe stay, and where the dances, songs, and rituals of each tribe are performed with full seriousness. The Konyak come with their tattooed faces, the Angami women wear their distinctive shawls of red and black, and the Ao bring their log drum rhythms.",
+        "what_they_believe": "The Nagas believe that their identity is encoded in their material culture — that the specific design of a shawl, the pattern of a tattoo, the rhythm of a particular drum is not decoration but information. It carries knowledge about who your ancestors were. To lose the shawl is to lose the knowledge.",
+        "did_you_know": [
+            "Nagaland has more varieties of traditional shawl patterns than any comparable region on Earth — each village and social status has its own distinct weave.",
+            "The Konyak Nagas, whose tattooed face patterns are famous, received facial tattoos that marked how many heads they had taken in battle.",
+            "Nagaland has more than 60 recorded languages. The Hornbill Festival is one of the only places where all sixteen major tribes communicate freely."
+        ],
+        "feel_after_reading": "You will feel: the particular grief of realizing you have never heard of something this extraordinary that exists within your own country — and the impulse to go."
+    },
+    # Base 1
+    {
+        "name": "Gerewol Festival",
+        "name_local": "Gerewol",
+        "name_hi": "गेरेवोल उत्सव",
+        "location": "Niger, Chad, and northern Nigeria — the Sahel and Sahara borderlands",
+        "community": "Wodaabe Fula (also called Bororo) — nomadic cattle herders",
+        "when": "End of the rainy season — August or September, depending on the rains",
+        "duration": "7-10 days",
+        "origin_period": "Centuries old — practiced continuously by the Wodaabe",
+        "participants": "Several thousand Wodaabe, gathering from across thousands of kilometers",
+        "summary": "In the Sahel, among the Wodaabe nomads, beauty is a man\\'s greatest asset — and once a year, the most beautiful men in the community line up to be evaluated by women who have the power to choose them. The Gerewol is a unique inversion of traditional beauty pageants.",
+        "the_story": "For most of the year, the Wodaabe are scattered across the Sahel — one of the world\\'s most demanding landscapes, a thin strip of semi-arid land between the Sahara Desert and the savanna. They move with their cattle, following the rains, covering hundreds of kilometers.\\n\\nOnce a year, at the end of the rainy season when the pastures are green, they gather. The Gerewol is the occasion of this gathering. The contestants are men. The judges are women. The ideal man has white teeth, white eyes, a long straight nose, and tall, lean proportions. Men line up in long rows and perform a dance that involves rolling their eyes and baring their teeth in wide smiles.\\n\\n Wodaabe men spend more time on grooming than the women of most societies. The makeup applied for the Gerewol takes hours. The indigo-dyed garments are precious. The ostrich feathers in the headdress are rare. This is a culture where male beauty is a form of capital, and the Gerewol is where it is assessed and rewarded.",
+        "what_they_believe": "The Wodaabe believe that beauty — \\'togu\\' — is not merely aesthetic but moral. A beautiful man is more likely to be a good man: patient, generous, capable of the endurance that herding in the Sahel demands. The Gerewol is therefore how the community assesses fitness.",
+        "did_you_know": [
+            "Wodaabe men use a paste made from ostrich egg yolk, charcoal, and clay to exaggerate the length and straightness of the nose during the Gerewol.",
+            "The Gerewol has two distinct competitions: the Yaake, which is about charm, and the Gerewol proper, which judges beauty and endurance.",
+            "The Wodaabe have a concept called \\'ngorgu\\' — beauty of character — which includes patience, care, and generosity."
+        ],
+        "feel_after_reading": "You will feel: the slight shock of realizing that your own culture\\'s beauty standards are not universal or inevitable — and admiration for this reversal."
+    },
+    # Base 2
+    {
+        "name": "Day of the Dead",
+        "name_local": "Día de los Muertos",
+        "name_hi": "मृतकों का दिन",
+        "location": "Mexico (primarily Central and South regions)",
+        "community": "Mexican people, combining Aztec traditions with Catholic beliefs",
+        "when": "November 1st and 2nd",
+        "duration": "2 days",
+        "origin_period": "Thousands of years, dating back to Aztec rituals for Mictecacihuatl",
+        "participants": "Millions of people across Mexico and globally",
+        "summary": "In Mexico, death is not met with silence or mourning, but with a riot of color, music, and orange marigolds. Día de los Muertos is the beautiful celebration where families welcome the souls of their departed relatives back for a brief, joyful reunion.",
+        "the_story": "For two days every November, the boundary between the living and the dead dissolves. Families build altars, or ofrendas, decorated with bright orange cempasúchil (marigolds), sugar skulls, and the favorite foods of the deceased.\\n\\nThe belief is that the dead are guided back by the scent of the marigolds and the glow of candles. It is a time to share stories, laugh, and celebrate the lives of those who have passed, rather than mourning their absence. Pan de muerto is baked, graves are cleaned and decorated, and streets fill with parades of people painted as elegant skeletons, or Catrinas.\\n\\nThis festival reframes death not as an end, but as a natural phase of human existence, keeping the memory of loved ones alive.",
+        "what_they_believe": "The Mexican people believe that the dead are still part of the community, kept alive in memory and spirit. During Día de los Muertos, they temporarily return. To mourn them with sadness is considered insulting to their memory; instead, they must be greeted with joy and celebration.",
+        "did_you_know": [
+            "The yellow marigold, called cempasúchil, represents the sun and is believed to guide the souls of the dead back with its bright color and strong scent.",
+            "Sugar skulls are not macabre; they represent the sweetness of life and are often inscribed with the names of the living as a playful reminder of mortality.",
+            "La Catrina was created by printmaker José Guadalupe Posada as a satirical depiction of Mexican natives who tried to adopt European styles, showing that in death we are all equal."
+        ],
+        "feel_after_reading": "You will feel: a deep warmth and a peaceful shift in how you view loss, seeing remembrance as a celebration of life rather than a sorrowful goodbye."
+    },
+    # Base 3
+    {
+        "name": "Onam",
+        "name_local": "Onam",
+        "name_hi": "ओणम",
+        "location": "Kerala, India",
+        "community": "Malayali people of all religions",
+        "when": "August-September (Chingam month of Malayalam calendar)",
+        "duration": "10 days",
+        "origin_period": "Over 1,500 years of recorded history",
+        "participants": "Over 35 million people in Kerala and the Malayali diaspora",
+        "summary": "Onam is the harvest festival of Kerala, celebrating the legendary reign of the Asura King Mahabali. It is a festival of floral carpets, grand feasts, and snake boat races, uniting the state in a shared memory of an egalitarian golden age.",
+        "the_story": "According to legend, King Mahabali was a generous ruler under whom Kerala enjoyed a golden age of equality, prosperity, and honesty. His popularity made the gods anxious, leading Lord Vishnu to take the Vamana avatar and banish him to the underworld, granting him one wish: to return to his land and people once a year.\\n\\nOnam celebrates Mahabali\\'s annual homecoming. The festival spans ten days, starting with Atham. Houses are decorated with Athapookalam — intricate floral carpets that grow larger each day. Families gather for the grand Onam Sadya, a feast of up to 30 vegetarian dishes served on banana leaves.\\n\\n The celebration includes Vallam Kali (the famous snake boat races), Pulikali (tiger dances where men paint their bodies as tigers), and traditional dances like Kaikottikali. It is a time when the whole of Kerala, regardless of caste or religion, celebrates a mythical past where all humans were equal.",
+        "what_they_believe": "The people of Kerala believe in the ideals of King Mahabali\\'s reign — a time when there was no theft, no deceit, and no social division. Onam is a collective performance of that ideal society, asserting that prosperity and peace are possible when fairness and generosity govern a land.",
+        "did_you_know": [
+            "The Onam Sadya feast must contain at least 24 to 28 dishes served in a specific sequence and location on the banana leaf.",
+            "The Vallam Kali snake boat races utilize boats that are up to 100 feet long, rowed by over 100 men singing traditional rhythmic songs.",
+            "Pulikali (tiger dance) takes years of training to master the specific belly-shaking movements that mimic a tiger\\'s stealth and playfulness."
+        ],
+        "feel_after_reading": "You will feel: a sense of abundance and community warmth, inspired by the vision of a golden age where equality and honesty ruled."
+    },
+    # Base 4
+    {
+        "name": "Inti Raymi",
+        "name_local": "Inti Raymi — Festival of the Sun",
+        "name_hi": "इंती रायमी",
+        "location": "Cusco, Peru (Sacsayhuamán archaeological park)",
+        "community": "Andean indigenous communities, primarily Quechua",
+        "when": "June 24th (Winter Solstice in the Southern Hemisphere)",
+        "duration": "One day",
+        "origin_period": "1412 CE (established by Inca Emperor Pachacuti)",
+        "participants": "~100,000 spectators and over 800 actors/dancers",
+        "summary": "In the high Andes, at the stone fortress of Sacsayhuamán, the Quechua people recreate the grandest festival of the Inca Empire to honor the Sun God. Inti Raymi is a spectacular display of Andean heritage, gratitude to Pachamama, and cultural pride.",
+        "the_story": "Inti Raymi was the most important ceremony of the Inca Empire, marking the winter solstice and the beginning of a new agricultural cycle. It was banned by the Spanish conquerors and the Catholic Church in 1572, but survived in secret until it was officially revived in 1944 based on historical records.\\n\\nThe modern reconstruction begins at the Temple of the Sun (Qorikancha) in Cusco, where the actor playing the Sapa Inca (Emperor) invokes the Sun God. The procession moves to the Plaza de Armas and then up to the massive stone fortress of Sacsayhuamán.\\n\\nHere, the Sapa Inca performs rituals of gratitude to Pachamama (Mother Earth) and offers chicha (sacred corn beer). Hundreds of performers dressed in traditional, colorful regalia representing the four quarters of the Inca Empire dance and sing in Quechua. The air is filled with the haunting sounds of pututos (conch shells) and pan flutes, connecting the modern Andes directly with its imperial ancestors.",
+        "what_they_believe": "The Andean people believe in a reciprocal relationship with nature, particularly the Sun (Inti) and the Earth (Pachamama). Inti Raymi is an act of gratitude and renewal, ensuring that the sun returns to warm the earth and bring a fertile harvest, while asserting the survival of Quechua identity.",
+        "did_you_know": [
+            "Qorikancha, where the festival starts, was once covered in plates of solid gold that reflected the sun\\'s rays before it was looted by Spanish conquistadors.",
+            "During the Inca empire, the three days preceding the festival involved strict fasting, and no fires were allowed to be lit in Cusco until the sacred fire was ignited by the Emperor.",
+            "The revival of Inti Raymi in 1944 was led by Faustino Espinoza Navarro, a Quechua writer who reconstructed the script using historical accounts by Garcilaso de la Vega."
+        ],
+        "feel_after_reading": "You will feel: the awe of standing in a high-altitude stone amphitheater, listening to ancient Quechua chants that have echoed across the Andes for six centuries."
+    },
+    # Base 5
+    {
+        "name": "Nowruz",
+        "name_local": "Nowruz — New Day",
+        "name_hi": "नौरोज़",
+        "location": "Central Asia, Iran, the Caucasus, and the Middle East",
+        "community": "Persian, Kurdish, Turkic, and Zoroastrian heritage groups",
+        "when": "Vernal Equinox — March 20th or 21st",
+        "duration": "13 days",
+        "origin_period": "Over 3,000 years ago — rooted in ancient Zoroastrianism",
+        "participants": "Over 300 million people worldwide",
+        "summary": "Nowruz is the Persian New Year, celebrating the exact moment of the vernal equinox when spring triumphs over winter. It is a 13-day festival of rebirth, deep cleaning, and the beautiful ritual arrangement of the Haft-Sin table.",
+        "the_story": "Nowruz has been celebrated for over three millennia, surviving empires, religious shifts, and modernization. It is an astronomical holiday, beginning at the exact second the sun crosses the celestial equator. The preparations begin weeks earlier with\\'khaneh takani\\' — literally \\'shaking the house\\' — a thorough cleaning that symbolizes washing away the dust of the old year.\\n\\nThe centerpiece of Nowruz is the Haft-Sin table, which contains seven items starting with the Persian letter \\'S\\', each representing a specific hope for the new year: Sabzeh (wheat sprouts for rebirth), Samanu (sweet pudding for wealth), Senjed (dry fruit for love), Seer (garlic for medicine), Seeb (apple for beauty), Somarq (sumac for sunrise), and Serkeh (vinegar for age).\\n\\nPeople visit elders, share sweets, and on the thirteenth day (Sizdah Bedar), head outdoors to picnic in nature and throw the Sabzeh into running water, releasing any accumulated bad luck back to the earth.",
+        "what_they_believe": "Nowruz is rooted in the Zoroastrian cosmology of light defeating darkness. The return of spring is seen as the victory of life and warmth over the dead cold of winter. The Haft-Sin table is a symbolic contract with nature, inviting prosperity, health, and love through objects that carry those energies.",
+        "did_you_know": [
+            "Nowruz is recognized by the United Nations as an International Day and is inscribed on UNESCO\\'s Representative List of the Intangible Cultural Heritage of Humanity.",
+            "Alongside the seven \\'S\\' items, the Haft-Sin table often holds a mirror (for reflection), goldfish (for life), and a book of poetry, usually the Divan of Hafez or the Shahnameh.",
+            "In Iran, the festival is heralded by Haji Firooz, a folklore character who plays a tambourine and sings traditional songs in the streets to bring joy."
+        ],
+        "feel_after_reading": "You will feel: the clean freshness of a swept house, the green promise of wheat sprouts, and the hope of starting fresh with the turning of the earth."
+    },
+    # Base 6
+    {
+        "name": "Songkran",
+        "name_local": "Songkran — Astrological Passage",
+        "name_hi": "सोंगक्रान",
+        "location": "Thailand",
+        "community": "Thai people and Buddhist devotees",
+        "when": "April 13-15 every year",
+        "duration": "3 days",
+        "origin_period": "Centuries old — adapted from the Sanskrit Sankranti",
+        "participants": "Virtually the entire population of Thailand and millions of tourists",
+        "summary": "Songkran is the Thai New Year, transforming the entire country into the world\\'s largest, most joyful water fight. Behind the public water battles lies a beautiful Buddhist ritual of washing away bad luck and paying respect to elders.",
+        "the_story": "Songkran marks the sun\\'s passage from Pisces to Aries, signifying the astrological new year. In the dry heat of April, the hottest month in Thailand, water is the natural medium of celebration. What began as a gentle sprinkling of water over shoulders has evolved into a nationwide street festival where entire cities engage in water fights.\\n\\nThe traditional celebrations begin in the temples. People pour water mixed with Thai perfume (Nam Ob) over Buddha statues in a ritual called Song Nam Phra. They also perform Rod Nam Dum Hua — pouring scented water over the hands of elders and monks to ask for blessings and wash away past mistakes.\\n\\nOn the streets, however, it is pure, unbridled play. Trucks carrying barrels of water roam the streets, while children and adults armed with water guns and buckets splash anyone in sight. It is a leveling experience: in the heat of April, everyone is soaked, everyone is laughing, and all social distinctions dissolve under the cool splash of water.",
+        "what_they_believe": "The Thai people believe that water is a purifier — physically, morally, and spiritually. Splashing water is not just fun; it is a literal and symbolic washing away of the bad luck, misfortunes, and misdeeds of the past year, starting the new cycle clean, refreshed, and blessed.",
+        "did_you_know": [
+            "During Songkran, people apply a white talcum paste called din sor pong to each other\\'s faces, symbolizing protection from evil and sunscreen in the April heat.",
+            "It is highly customary to build sand pagodas in temple grounds during Songkran, a practice meant to replace the sand that visitors carry away on their shoes throughout the year.",
+            "The water fights are so intense in cities like Chiang Mai that the old city moat becomes a prime staging area, with pumps spraying water directly into the streets."
+        ],
+        "feel_after_reading": "You will feel: the sudden, laughing shock of ice-cold water thrown on a hot afternoon, and the relief of starting the year with a clean slate."
+    },
+    # Base 7
+    {
+        "name": "Midsommar",
+        "name_local": "Midsommar",
+        "name_hi": "मिडसोममार",
+        "location": "Sweden (primarily rural and archipelago areas)",
+        "community": "Swedish people across all ages",
+        "when": "Friday between June 19th and June 25th (Midsummer\\'s Eve)",
+        "duration": "One day",
+        "origin_period": "Pre-Christian pagan roots, celebrated for over a thousand years",
+        "participants": "Millions of people across Sweden",
+        "summary": "In the land of the midnight sun, Midsommar is Sweden\\'s most beloved celebration, honoring the peak of summer and fertility. It is a day of flower crowns, dancing around the maypole, and eating pickled herring under a sun that never sets.",
+        "the_story": "In Sweden, winters are long, dark, and isolating. The arrival of summer is therefore not just a season change, but a collective liberation. Midsommar takes place at the summer solstice, when the day is longest and the night is a brief twilight.\\n\\nFamilies and friends gather in countryside cottages and parks. The day begins with gathering wildflowers to weave flower crowns (blomsterkrans) and decorate the maypole (midsommarstång). Once the pole is raised, people of all generations dance around it, singing traditional playful songs like \\'Små grodorna\\' (The Little Frogs).\\n\\nThe feast includes pickled herring (sill), fresh new potatoes boiled with dill, sour cream, red onions, and the first Swedish strawberries of the season, accompanied by schnapps and drinking songs. As night approaches, the light remains soft and golden. The celebration continues into the early morning hours, celebrating the sun that refuses to set.",
+        "what_they_believe": "Midsommar is rooted in ancient fertility rites and nature worship. The Swedes believe that midsummer night is filled with magic — that plants have healing powers and that the light connects humans directly with the fertility of the earth. It is an assertion of joy and life after months of winter darkness.",
+        "did_you_know": [
+            "Traditional folklore says that if an unmarried person gathers seven different types of flowers in silence and places them under their pillow on Midsommar night, they will dream of their future spouse.",
+            "The maypole\\'s shape and the dances associated with it are believed by historians to have pagan roots representing the fertility of the earth and the union of sun and soil.",
+            "Swedish cities are virtually deserted on Midsommar Eve, as almost the entire population moves to country houses, archipelagos, or parks."
+        ],
+        "feel_after_reading": "You will feel: the quiet magic of a golden, endless twilight in a forest clearing, wearing a crown of wild daisies and hearing the distant laughter of dancers."
+    }
+]
+
+# Define base Achambas
+achamba_base = [
+    # Base 0
+    {
+        "name": "El Colacho — The Baby Jumping Festival",
+        "name_local": "El Salto del Colacho",
+        "location": "Castrillo de Murcia, Burgos, Spain",
+        "community": "The Brotherhood of Santísimo Sacramento de Minerva — a Catholic lay brotherhood",
+        "when": "Every year on Corpus Christi Sunday — 60 days after Easter",
+        "duration": "One day (the jumping); full week of festival surrounding it",
+        "origin_period": "1620 CE — over 400 years of continuous practice",
+        "participants": "The entire village, plus thousands of visitors; all babies born in the previous year",
+        "summary": "In a small Spanish village, men dressed as the Devil leap over rows of babies laid on mattresses in the street. The Catholic Church disapproves. The babies are never harmed. The parents queue up. And the village would not stop for anything.",
+        "the_story": "The man is dressed in a yellow-and-red jumpsuit with a demonic mask, carrying a whip and a scepter. He runs down a street in Castrillo de Murcia. Laid across the cobblestones, on mattresses and cushions provided by the village, are a dozen babies — all born in the previous year.\\n\\nSome are sleeping, some are staring at the sky. The man in the devil costume takes a running jump and clears all of them. Then he does it again at the next row. This is El Colacho — the Devil Jump — and it has been happening every year since 1620.\\n\\nThe theological logic is precise. The man playing El Colacho represents the devil. By jumping over the infants, the devil is symbolically defeated, driven away, made to clear a path rather than take possession. The babies are considered purified. The Vatican disapproves, calling the practice non-doctrinal, but the village ignores the warnings.",
+        "what_they_believe": "The people of Castrillo de Murcia believe that original sin is real, that the devil is real, and that protective ritual performed by the community can guard a soul. The continuity of this festival connects generations in a shared cosmic drama.",
+        "did_you_know": [
+            "The population of Castrillo de Murcia is approximately 290 people, but the festival brings several thousand visitors.",
+            "El Colacho has been registered as a Spanish Festival of Tourist Interest, which means the government promotes it despite Vatican disapproval.",
+            "The men who play El Colacho are members of the Brotherhood and train for weeks to ensure they can jump over the babies safely."
+        ],
+        "feel_after_reading": "You will feel: the specific vertigo of realizing that \\'normal\\' is entirely local, and that somewhere in Spain, parents are making plans to have a devil jump over their infant."
+    },
+    # Base 1
+    {
+        "name": "Hadaka Matsuri — The Naked Festival",
+        "name_local": "裸祭り (Hadaka Matsuri)",
+        "location": "Saidaiji Temple, Okayama, Japan",
+        "community": "Men of the local community — traditionally only men",
+        "when": "Third Saturday of February — the coldest time of year",
+        "duration": "One night",
+        "origin_period": "767 CE — over 1,250 years of documented practice",
+        "participants": "~10,000 men at Saidaiji alone; hundreds of thousands across Japan",
+        "summary": "At midnight in February, in near-freezing temperatures, ten thousand Japanese men wearing nothing but a loincloth hurl themselves into a single heaving mass, fighting for two sacred sticks. No one dies. Everyone gets bruised.",
+        "the_story": "The preparations begin weeks before. The men train to endure cold and intense physical contact, wearing only a fundoshi (loincloth). On the night of the festival, they purify themselves by pouring cold water over their bodies before walking barefoot to the temple.\\n\\nInside the temple grounds, the ten thousand press together into a single mass of bodies, generating enough heat that steam visibly rises in the freezing night air. At midnight precisely, the priest on the upper floor extinguishes all the lights.\\n\\nIn complete darkness, he throws two shingi — sacred wooden sticks — into the crowd. Ten thousand men scramble for them. The man who manages to plunge the shingi into a box of rice is declared the Lucky Man of the Year, believed to bring fortune to the community.",
+        "what_they_believe": "The stripping away of clothing is, in the Shinto context, a stripping away of social rank. In a highly structured society, the Hadaka Matsuri creates radical equality: the factory worker and the president are both in loincloths, cold, and fighting for the same goal.",
+        "did_you_know": [
+            "The cold water pouring ritual, \\'misogi\\', is believed to purify the soul as well as the skin.",
+            "Along with the two sacred sticks, the priest throws bundles of twigs called \\'gomagi\\', which are also considered lucky.",
+            "Experienced older men, called \\'osaemu\\', circulate through the crowd during the scrum to prevent crushes and lift fallen participants."
+        ],
+        "feel_after_reading": "You will feel: a sudden, unexpected desire to strip to a loincloth in freezing cold water with ten thousand strangers — and then the realization that this is not normal."
+    },
+    # Base 2
+    {
+        "name": "Monkey Buffet Festival",
+        "name_local": "Monkey Buffet Festival",
+        "location": "Lopburi, Thailand (Phra Prang Sam Yot temple)",
+        "community": "The residents of Lopburi province",
+        "when": "Last Sunday of November",
+        "duration": "One day",
+        "origin_period": "1989 CE — though rooted in the ancient Ramayana epic",
+        "participants": "Thousands of macaque monkeys and thousands of human tourists",
+        "summary": "In an ancient Thai city, the human residents lay out a massive banquet of four tons of fruits, vegetables, and cakes for thousands of wild monkeys. It is a spectacular thank-you feast to the creatures that bring tourism and carry divine blessing.",
+        "the_story": "Every November, the ruins of the 13th-century Phra Prang Sam Yot temple in Lopburi host a feast unlike any other. Long tables are laden with over 4,000 kilograms of colorful fruits, sticky rice, salads, cakes, and even sodas. Once the feast is inaugurated, the true guests arrive: thousands of long-tailed macaques.\\n\\nThe monkeys descend upon the tables, grabbing pineapples, drinking soda straight from cans, throwing food at tourists, and climbing on the heads of spectators. The festival was started in 1989 by a local businessman to promote tourism, but it quickly tapped into deep-seated beliefs about monkeys being the descendants of Hanuman\\'s warrior army.\\n\\nThe event is a chaotic, colorful, and sticky spectacle where the boundaries between wild animals and human hosts are completely erased for a day.",
+        "what_they_believe": "The people of Lopburi view the macaques not as pests, but as sacred residents who bring good luck to the town. According to the Ramayana, Hanuman helped Rama rescue Sita, and the monkeys are honored as his descendants. Feeding them is an act of spiritual merit-making and gratitude.",
+        "did_you_know": [
+            "Lopburi is known as the \\'Monkey City\\' because the monkeys roam the streets, occupy abandoned buildings, and interact with humans daily.",
+            "The buffet includes ice blocks with fruits frozen inside, which the monkeys lick and break open to stay cool in the tropical heat.",
+            "While tourists love the festival, local residents must protect their homes and shops with screens and sticks, as the monkeys are notoriously bold thieves."
+        ],
+        "feel_after_reading": "You will feel: the amusement of visualizing a wild monkey drinking an orange soda while sitting on the shoulder of a stunned tourist."
+    },
+    # Base 3
+    {
+        "name": "Cheese Rolling",
+        "name_local": "Cooper\\'s Hill Cheese-Rolling and Wake",
+        "location": "Cooper\\'s Hill, Gloucestershire, England",
+        "community": "The residents of Brockworth and international daredevils",
+        "when": "Spring Bank Holiday Monday",
+        "duration": "One afternoon",
+        "origin_period": "At least 1800s CE — possibly ancient pagan origin",
+        "participants": "Hundreds of contestants and thousands of spectators",
+        "summary": "On a near-vertical English hill, adults hurl themselves down a muddy slope in pursuit of a rolling wheel of Double Gloucester cheese. Bones are broken, mud is worn, and the winner gets to keep the cheese. It is a gloriously dangerous tradition.",
+        "the_story": "Cooper\\'s Hill has a 1-in-2 gradient (50% slope) and is incredibly uneven. At the start of the race, an 8-pound wheel of Double Gloucester cheese is released, rolling down the hill at speeds exceeding 70 miles per hour. A second later, the contestants throw themselves down after it.\\n\\nNo one actually runs; the slope is too steep. Instead, they tumble, roll, cartwheel, and slide through the mud and grass. The first person to cross the finish line at the bottom wins the cheese. The race is so dangerous that ambulances are parked at the bottom, and local volunteer rugby players stand ready to catch racers who cannot stop.\\n\\nInjuries range from sprained ankles and concussions to broken collarbones. Despite safety concerns and attempts to cancel the official status of the race, local residents continue to organize it every year, refusing to let an ancient custom die.",
+        "what_they_believe": "The people of Brockworth believe in the absolute sovereignty of their local tradition. The race is believed by some to have pagan roots related to rolling burning brushwood down the hill to mark the end of winter, or maintaining grazing rights on common land. Today, it represents a stubborn, eccentric English pride.",
+        "did_you_know": [
+            "In 2013, due to safety regulations, the real cheese was temporarily replaced with a lightweight foam replica, causing outrage among purists.",
+            "Chris Anderson, a local rebel and soldier, holds the all-time record of winning 22 cheeses over his racing career.",
+            "Brockworth Rugby Club players act as\\'catchers\\' at the bottom of the hill, tackling out-of-control runners to prevent them from crashing into spectators."
+        ],
+        "feel_after_reading": "You will feel: the physical ache of watching people tumble head-over-heels down a muddy cliff, and admiration for their reckless courage for a wheel of cheese."
+    },
+    # Base 4
+    {
+        "name": "Night of the Radishes",
+        "name_local": "Noche de Rábanos",
+        "location": "Oaxaca City, Oaxaca, Mexico",
+        "community": "Oaxacan artisans and farmers",
+        "when": "December 23rd every year",
+        "duration": "One night",
+        "origin_period": "1897 CE (formalized by Mayor Francisco Vasconcelos)",
+        "participants": "Over 100 competitors and tens of thousands of visitors",
+        "summary": "In the central plaza of Oaxaca, artisans carve oversized, specially grown red radishes into intricate, lifelike sculptures of nativity scenes, historic buildings, and mythical figures. It is one of the world\\'s most ephemeral art shows.",
+        "the_story": "The radishes used for this festival are not the small, crisp ones found in salads. They are heavily fertilized, specially grown, and left in the ground for months until they reach lengths of up to two feet and weigh up to seven pounds. They are woody, misshapen, and perfect for carving.\\n\\nOn December 23rd, the Zócalo (main square) of Oaxaca City is lined with booths where artisans display their creations. Using the red skin and white flesh of the radish, they carve detailed religious scenes, traditional dances, wildlife, and historical events.\\n\\nThe sculptures last only a few hours before the radishes begin to wilt and turn brown. Long lines of people wait for hours in the cool evening air just to walk past the displays. It is a celebration of craftsmanship, patience, and the beauty of things that cannot last.",
+        "what_they_believe": "The artisans of Oaxaca believe that beauty can be coaxed from the most humble of natural objects. The festival is an expression of their deep connection to the land and their agricultural history, transforming a simple crop into a medium of religious devotion and artistic pride.",
+        "did_you_know": [
+            "The radishes are grown on a special government-owned plot of land and are harvested using heavy machinery due to their size.",
+            "To prevent the radishes from drying out and turning brown, carvers spray their sculptures with water throughout the day.",
+            "The festival originated in the colonial era when Spanish friars suggested carving radishes at the Christmas market to attract customers to agricultural stalls."
+        ],
+        "feel_after_reading": "You will feel: the delicate beauty of a nativity scene carved from a giant root, and the soft melancholy of knowing it will wither by dawn."
+    },
+    # Base 5
+    {
+        "name": "Kanamara Matsuri",
+        "name_local": "かなまら祭り — Festival of the Steel Phallus",
+        "location": "Kawasaki, Japan (Kanayama Shrine)",
+        "community": "Local Shinto priests, sex workers, and LGBT communities",
+        "when": "First Sunday of April",
+        "duration": "One day",
+        "origin_period": "17th Century CE — though revived in 1977",
+        "participants": "~50,000 visitors, including international tourists",
+        "summary": "In a suburb of Tokyo, crowds gather to carry giant pink phallic shrines through the streets while eating themed candies. What appears to be an absurd spectacle is a serious Shinto prayer for fertility, safe relationships, and health awareness.",
+        "the_story": "The Kanamara Matsuri is centered around the Kanayama Shrine, which historically honored Shinto deities of metalworking. According to legend, a demon with sharp teeth hid inside the vagina of a young woman and bit off the penises of two men. In response, a blacksmith forged a steel phallus to break the demon\\'s teeth, establishing the shrine\\'s focus.\\n\\nIn the 17th century, sex workers came to the shrine to pray for protection against sexually transmitted infections. Today, the festival is a vibrant parade featuring three large phallic mikoshi (portable shrines) carried through the streets by chanting devotees.\\n\\nParticipants buy penis-shaped lollipops, carve vegetables, and dress in colorful costumes. The festival has become a major event for LGBT visibility and fundraising for HIV research, demonstrating how ancient Shinto rituals can adapt to modern social causes.",
+        "what_they_believe": "The Shinto tradition does not view the human body or sexuality as inherently shameful or sinful. The phallus is honored as a symbol of life-giving fertility, marital harmony, and protective health. By celebrating it openly, the community strips away stigma and celebrates the continuation of life.",
+        "did_you_know": [
+            "One of the three mikoshi, the \\'Elizabeth Mikoshi\\', is a giant pink phallus donated by a famous local cross-dressing club and is carried by members in drag.",
+            "All proceeds from the festival are donated to organizations that fund HIV/AIDS research, prevention, and support services.",
+            "The blacksmith origins of the shrine are still honored, with participants performing a ritual hammering of hot iron during the festival morning."
+        ],
+        "feel_after_reading": "You will feel: the liberation of seeing something typically hidden and taboo celebrated openly with laughter, community pride, and social purpose."
+    },
+    # Base 6
+    {
+        "name": "Burning Man",
+        "name_local": "Burning Man",
+        "location": "Black Rock Desert, Nevada, USA",
+        "community": "A global community of\\'Burners\\' dedicated to radical self-expression",
+        "when": "Late August to early September (concluding on Labor Day)",
+        "duration": "9 days",
+        "origin_period": "1986 CE (started on a San Francisco beach by Larry Harvey)",
+        "participants": "~80,000 people forming a temporary city",
+        "summary": "In a desolate, dry lakebed in Nevada, a temporary city of 80,000 people rises for nine days, dedicated to art, radical self-reliance, and a gift economy. At the end, a giant wooden man is burned, and the city vanishes without leaving a trace.",
+        "the_story": "Black Rock City is a semi-circular settlement built on the alkaline flats of the Nevada desert. It has no stores, no sponsors, and no trash cans. Except for ice and coffee, nothing can be bought; the entire economy runs on gifting. Participants must bring everything they need to survive the extreme heat, dust storms, and cold nights.\\n\\nThe desert becomes an open-air art gallery featuring massive, interactive installations, art cars shaped like dragons, and musical stages. The festival operates under Ten Principles, including Radical Inclusion, Gifting, Decommodification, and Leaving No Trace.\\n\\nOn the penultimate night, a towering wooden effigy of a man is burned in a massive, celebratory bonfire. The following night, a solemn temple dedicated to grief and memory is burned in complete silence. Within days, the city is completely dismantled, leaving the desert as empty as they found it.",
+        "what_they_believe": "Burners believe that modern society isolates individuals through consumerism and social roles. By stripping away money and commercialism in a harsh environment, they create a space for radical self-expression and immediate human connection. The burning of the effigies represents impermanence and release.",
+        "did_you_know": [
+            "Black Rock City is a fully recognized municipality during the event, complete with its own airport, emergency services, and radio stations.",
+            "\\'Leaving No Trace\\' is taken so seriously that volunteers comb the desert on their hands and knees to collect\\'MOPh\\' (Matter Out of Place), including tiny wood shavings and hair.",
+            "The festival began as a gathering of 20 friends on Baker Beach in San Francisco, where they burned an 8-foot wooden man to mark the summer solstice."
+        ],
+        "feel_after_reading": "You will feel: the dusty, exhausted euphoria of seeing a temporary civilization rise in the wilderness, celebrate its own creativity, and burn itself to the ground."
+    },
+    # Base 7
+    {
+        "name": "Buzkashi",
+        "name_local": "Buzkashi — Goat Grabbing",
+        "location": "Central Asia (primarily Afghanistan, Kyrgyzstan, and Tajikistan)",
+        "community": "Nomadic Turkic and Iranian ethnic groups",
+        "when": "Autumn and winter months, often during weddings and national holidays",
+        "duration": "One day",
+        "origin_period": "Over a thousand years old — dating back to Turkic Mongol migrations",
+        "participants": "Dozens of horse riders (chapandazan) and thousands of spectators",
+        "summary": "In the rugged steppes of Central Asia, horsemen compete in a wild, chaotic sport where the objective is to grab a headless goat carcass and drop it in a scoring circle. It is the ultimate test of horsemanship, strength, and raw power.",
+        "the_story": "Buzkashi is the national sport of Afghanistan. The game is played on a vast, open field. A headless, disemboweled goat or calf carcass (weighting up to 100 pounds) is placed in the center. The chapandazan (riders) on their powerful, trained horses charge in a mass, fighting to lean down from the saddle, lift the carcass, ride around a flag, and return it to the\\'Circle of Justice\\'.\\n\\nThere are no teams in the traditional sense; it is every man for himself, though modern versions have introduced team rules. The horsemen carry whips, and the competition is fierce, with horses biting and riders shoving. The horses are highly prized, trained for years to push through the crowd and protect their riders. It is a display of ancient nomadic steppe identity, where control of the horse was the difference between survival and death.",
+        "what_they_believe": "The people of Central Asia view Buzkashi as the supreme expression of masculine virtue and tribal honor. It honors the bond between a rider and his horse, demonstrating courage, tactical skill, and physical dominance. A successful chapandaz is celebrated as a hero, earning patronage and respect across the region.",
+        "did_you_know": [
+            "The carcass is soaked in cold water for 24 hours before the game to make the skin tough, preventing it from tearing apart during the intense tugs-of-war.",
+            "Buzkashi horses are trained to automatically stop and guard a fallen rider, preventing them from being trampled by other horses.",
+            "The game was banned during the first Taliban regime in Afghanistan as\\'un-Islamic\\', but was immediately revived and remains immensely popular."
+        ],
+        "feel_after_reading": "You will feel: the thundering rush of hooves, the smell of sweat and leather, and the wild intensity of a sport that has changed little since the days of Genghis Khan."
+    }
+]
+
+# Define base Prashnas
+prashna_base = [
+    # Base 0
+    {
+        "name": "Gadhimai Festival",
+        "name_local": "Gadhimai Mela",
+        "location": "Bariyarpur, Bara District, Nepal",
+        "community": "Hindu devotees primarily from Nepal, Bihar, and Uttar Pradesh",
+        "when": "Every 5 years — most recently 2019, 2024",
+        "duration": "2 days of sacrifice; full festival over 2 weeks",
+        "origin_period": "Approximately 300 years ago — exact date disputed",
+        "participants": "2-5 million pilgrims; hundreds of thousands of animals",
+        "summary": "Every five years, the world\\'s largest animal sacrifice takes place in a small Nepali village. Devotees offer animals to Gadhimai, the goddess of power, in a custom that has sparked international outcry and deep internal reform debates.",
+        "the_story": "The road to Bariyarpur is packed with pilgrims carrying buffaloes, goats, and pigeons. They believe sacrificing these animals to the goddess Gadhimai will bring prosperity and remove suffering. The origin story involves Bhagwan Chaudhary, who was imprisoned 300 years ago; the goddess appeared to him and promised protection in exchange for sacrifice.\\n\\nThe scale is staggering. In 2009, an estimated 250,000 animals were killed. This triggered massive campaigns by animal welfare groups. The temple trust announced in 2015 it would work to end the sacrifice. The 2019 and 2024 festivals were smaller, but the practice continues. Devotees are often poor farmers whose buffalo is their most valuable asset; the sacrifice is a measure of their desperate faith.",
+        "what_they_believe": "The pilgrims believe that the goddess Gadhimai is real and that her protection requires sacrifice. They face extreme daily precarity and believe this act creates a relationship with divine power that can intercede in their favor. The pressure for reform has been most effective when led by local Nepalis rather than Western organizations.",
+        "did_you_know": [
+            "The festival generates significant local commerce, with the meat and hides of sacrificed animals being processed and sold.",
+            "In 2015, the temple trust formally announced an end to the sacrifice, but cannot control individual pilgrims who bring their own offerings.",
+            "Younger generations of Nepali Hindus are increasingly questioning the practice, advocating for vegetarian offerings like coconuts."
+        ],
+        "feel_after_reading": "You will feel: the discomfort of holding two things simultaneously — concern for animal welfare, and respect for the faith and poverty of the people."
+    },
+    # Base 1
+    {
+        "name": "Sateré-Mawé Bullet Ant Glove Initiation",
+        "name_local": "Ritual de iniciação com luvas de formigas",
+        "location": "Amazon rainforest, Amazonas state, Brazil",
+        "community": "Sateré-Mawé — an Amazonian indigenous people",
+        "when": "When a boy is deemed ready — typically between 12 and 16 years old; can be repeated up to 20 times",
+        "duration": "10 minutes per initiation — a duration that feels infinite",
+        "origin_period": "Unknown — practiced continuously for centuries",
+        "participants": "The boy being initiated, the community, and approximately 80 bullet ants per glove",
+        "summary": "To become a man among the Sateré-Mawé, a boy must wear gloves woven with bullet ants — the insect with the most painful sting on Earth — for ten minutes. He must do this twenty times without showing fear.",
+        "the_story": "The bullet ant sting is ranked first on the Schmidt Pain Index, described as \\'pure, intense, brilliant pain\\' that lasts 24 hours. The Sateré-Mawé use them in their male initiation ritual.\\n\\nElders collect the ants from the forest and weave them, stingers inward, into a pair of thick gloves. The boy wears these gloves for ten minutes, dancing while the community sings. He cannot cry or show pain.\\n\\nWhen the gloves are removed, the boy\\'s hands are paralyzed and black from the venom. He must endure this twenty times over several months. The ritual is designed to build resilience, preparing young men for the hardships of forest life. While some youth have expressed reluctance to participate, the community views it as essential for maintaining their culture.",
+        "what_they_believe": "The Sateré-Mawé believe that a man who cannot bear pain cannot protect his family or hunt effectively. The bullet ant initiation is not cruelty; it is a physical and spiritual preparation that transforms pain into will, earning the boy the right to be trusted by the community.",
+        "did_you_know": [
+            "The bullet ant venom contains poneratoxin, a neurotoxin that disrupts nerve signaling, causing intense pain and local paralysis.",
+            "The Sateré-Mawé are also famous for domesticating guaraná, a plant containing high concentrations of caffeine.",
+            "Modern Sateré-Mawé villages are debating the age of initiation, with some making the ritual voluntary rather than mandatory."
+        ],
+        "feel_after_reading": "You will feel: the tension between respecting a culture\\'s right to its practices and recognizing when those practices involve intense pain imposed on youth."
+    },
+    # Base 2
+    {
+        "name": "Faroe Islands Grindadráp",
+        "name_local": "Grindadráp",
+        "location": "The Faroe Islands, North Atlantic (autonomous territory of Denmark)",
+        "community": "Faroese people — descendants of Norse Vikings",
+        "when": "Summer months, whenever pilot whales are spotted near the shore",
+        "duration": "A few hours per hunt",
+        "origin_period": "Since the 9th Century CE — over 1,200 years of documented hunts",
+        "participants": "Local boat owners, slaughtermen, and the community distribution network",
+        "summary": "Every summer, Faroese communities gather to drive pilot whales into shallow bays, slaughtering them by hand. The sea turns red with blood. The meat is distributed for free. The hunt is fiercely defended as a vital tradition of food security.",
+        "the_story": "When a pod of long-finned pilot whales is spotted, the call\\'Grind!\\' goes out. Locals take to their boats, forming a semi-circle to drive the whales into designated bays. Once the whales beach, men in wetsuits wade in, using metal hooks and lances to sever the spinal cords of the whales.\\n\\nThe slaughter is fast but highly graphic. The sea turns deep crimson, and the entire beach becomes a slaughterhouse. Animal rights groups condemn the practice as barbaric. The Faroese respond that the meat is not commercialized — it is divided equally among the residents of the district, providing local, organic food in a harsh archipelago where farming is near-impossible.\\n\\nThe debate highlights the conflict between global conservation ethics and local indigenous subsistence rights in the North Atlantic.",
+        "what_they_believe": "The Faroese believe that the Grindadráp is an ecological right. They do not view their relationship with nature as one of distant romanticism, but of direct, responsible harvest. To buy imported factory-farmed meat from Europe is seen as ethically inferior to hunting wild, free-ranging whales locally.",
+        "did_you_know": [
+            "The meat and blubber from the hunt are divided using a complex mathematical formula that allocates shares to the hunters, the lookouts, and the local community.",
+            "Modern research has shown that pilot whale meat contains dangerously high levels of mercury and PCB toxins, leading Faroese health officers to advise against eating it.",
+            "The hunting tools have been modernized: traditional iron harpoons are banned, replaced by a specialized spinal lance designed to kill the whale in seconds."
+        ],
+        "feel_after_reading": "You will feel: the visceral shock of the blood-red bay, and the intellectual conflict between protecting intelligent marine life and respecting local food sovereignty."
+    },
+    # Base 3
+    {
+        "name": "Running of the Bulls",
+        "name_local": "Encierro de Toros",
+        "location": "Pamplona, Spain (San Fermín Festival)",
+        "community": "The residents of Pamplona and international thrill-seekers",
+        "when": "July 7-14 every year",
+        "duration": "8 days (runs take place at 8:00 AM daily)",
+        "origin_period": "14th Century CE — originating from moving cattle to the bullring",
+        "participants": "Thousands of runners (mozos) and six fighting bulls",
+        "summary": "Every July, thousands of people run ahead of six angry fighting bulls through the narrow, cobbled streets of Pamplona. Dozens are injured, and the bulls are killed later in the day. The custom is a highly contested symbol of Spanish identity.",
+        "the_story": "At 8:00 AM, a rocket is fired, and six fighting bulls alongside six steers are released into the barricaded streets. The runners, dressed in traditional white with red neckerchiefs, sprint ahead of the herd, trying to stay close to the bulls\\' horns without being gored or trampled.\\n\\nThe run is 875 meters long and lasts about three minutes. Slip-ups are common, and when a bull separates from the pack, it becomes highly dangerous. Animal welfare organizations campaign to end the run, pointing out that the bulls are driven to the arena where they are killed in bullfights later that afternoon.\\n\\nSpanish defenders argue that the Encierro is a sacred art, a test of courage, and a central pillar of Oaxacan and Basque cultural heritage that cannot be understood through foreign values.",
+        "what_they_believe": "Defenders believe that the run is a confrontation with death that makes life feel intense and real. It is a ritual of courage and community solidarity. Animal rights advocates argue that causing terror to animals for public entertainment is an outdated cruelty that should be replaced with modern celebrations.",
+        "did_you_know": [
+            "Since 1910, 16 people have been killed during the running of the bulls in Pamplona, with the most recent death occurring in 2009.",
+            "The mozos carry rolled-up newspapers, which they use to distract the bulls if they get too close, never using weapons during the run.",
+            "The path is sprayed with a special non-slip chemical before the run to prevent the bulls from slipping on the slick, historic cobblestones."
+        ],
+        "feel_after_reading": "You will feel: the adrenaline of the narrow street chase, and the unresolved debate over whether animal suffering can ever be justified by cultural heritage."
+    },
+    # Base 4
+    {
+        "name": "Dog Meat Festival",
+        "name_local": "Yulin Lychee and Dog Meat Festival",
+        "location": "Yulin, Guangxi, China",
+        "community": "Local dog meat traders and consumers in Yulin",
+        "when": "June 21st (Summer Solstice)",
+        "duration": "10 days",
+        "origin_period": "2009 CE — though eating dog meat has historical roots in Chinese medicine",
+        "participants": "Thousands of traders and local consumers",
+        "summary": "Every summer solstice in Yulin, thousands of dogs are slaughtered and consumed alongside fresh lychees. The festival has sparked intense global outrage and a growing domestic animal rights movement within China itself.",
+        "the_story": "The Yulin festival was started in 2009 by local traders to boost sagging meat sales. Eating dog meat is believed in traditional Chinese medicine to stimulate internal heat and bring good luck during the summer months. An estimated 10,000 to 15,000 dogs are killed during the festival.\\n\\nThe event is highly controversial. Activists point out that many dogs are stolen pets, transported in cramped cages without food or water. The slaughter methods are often brutal. The global backlash has been severe, but it has also triggered a defensive regional pride among locals who resist Western moral imperialism.\\n\\nImportantly, the strongest opposition now comes from within China, where a growing middle class views dogs as companion animals rather than livestock, leading to clashes between activists and traders.",
+        "what_they_believe": "Traders and consumers believe that eating dog meat is no different from eating pigs, cows, or chickens, arguing that the Western outrage is hypocritical. Chinese animal activists, however, believe that companion animals deserve distinct legal protection, framing the debate as a conflict between traditional dietary habits and modern ethical standards.",
+        "did_you_know": [
+            "The Chinese government has distanced itself from the festival, stating it is not an officially sanctioned event and introducing stricter food safety laws.",
+            "Due to pressure, the number of dogs slaughtered has dropped from over 10,000 to less than 2,000 in recent years.",
+            "In 2020, China\\'s Ministry of Agriculture officially reclassified dogs from \\'livestock\\' to \\'companion animals\\', providing activists with new legal leverage."
+        ],
+        "feel_after_reading": "You will feel: a deep distress at the treatment of companion animals, and the recognition that the fight to end the practice is being won from within China itself."
+    },
+    # Base 5
+    {
+        "name": "Toro de la Vega",
+        "name_local": "Torneo del Toro de la Vega",
+        "location": "Tordesillas, Valladolid, Spain",
+        "community": "The residents of Tordesillas",
+        "when": "Second Tuesday of September",
+        "duration": "One day",
+        "origin_period": "1534 CE — over 480 years of documented practice",
+        "participants": "Hundreds of lancers on foot and horseback, and one bull",
+        "summary": "In a medieval Spanish town, a bull is released into the streets and chased into a meadow by lancers who historically speared it to death. Banned in 2016 after intense protests, the festival remains a highly contested battleground of cultural values.",
+        "the_story": "The Torneo del Toro de la Vega was one of Spain\\'s oldest festivals. A bull was let loose in the town streets, guided across a bridge over the Duero River, and driven into an open plain. There, hundreds of men armed with long spears chased the bull, competing to deliver the fatal strike.\\n\\nThe hunter who killed the bull was awarded a spear of honor. The festival was condemned as a barbaric spectacle of animal torture. Following years of intense protests and legal battles, the regional government of Castile and León banned the killing of the bull in public in 2016.\\n\\nToday, the bull is still chased, but not killed in public. The residents of Tordesillas protest the ban, viewing it as an attack on their freedom, history, and municipal sovereignty by urban elites.",
+        "what_they_believe": "The people of Tordesillas believe that the tournament is a noble contest between man and beast, rooted in medieval chivalry. They argue that the bull is given a chance to defend itself in an open field, unlike animals in industrial slaughterhouses. Opponents view it as a cruel mob ritual that has no place in a modern society.",
+        "did_you_know": [
+            "According to the ancient rules, if the bull managed to escape beyond the boundaries of the plain without being killed, it was granted its life.",
+            "The ban in 2016 led to clashes between local residents who supported the tournament and animal rights activists who arrived to protest.",
+            "The tournament\\'s origin is linked to medieval games held to celebrate the visit of royalty or the signing of peace treaties."
+        ],
+        "feel_after_reading": "You will feel: the tension between a community\\'s fierce attachment to its medieval heritage and the modern consensus on animal protection."
+    },
+    # Base 6
+    {
+        "name": "Dani Finger Amputation Mourning",
+        "name_local": "Ikipalin",
+        "location": "Baliem Valley, Western Papua, Indonesia",
+        "community": "The Dani people — an indigenous Papuan group",
+        "when": "Upon the death of a close family member",
+        "duration": "A few hours per ritual",
+        "origin_period": "Ancient ancestral practice",
+        "participants": "Dani women (primarily) and elders who perform the amputation",
+        "summary": "To express their grief and appease ancestral spirits, Dani women historically amputated the upper joints of their fingers when a close relative died. The practice is now banned and declining, but its legacy is carried on the hands of older women.",
+        "the_story": "In the remote Baliem Valley, the Dani people maintained a way of life isolated from the modern world until the mid-20th century. Their mourning ritual, Ikipalin, involved a physical sacrifice: when a husband, child, or sibling died, a female relative had the top joint of a finger cut off.\\n\\nBefore the amputation, the finger was bound tightly with string for several hours to numb it. An elder then severed the joint with a stone blade or ax. The remaining stub was treated with clay and leaves. The severed finger was dried and burned, or buried in a sacred place.\\n\\nThe practice was meant to show that the pain of grief was real and physical, and to satisfy the spirits of the dead who might otherwise cause misfortune. The Indonesian government banned the practice in the 1970s, and it is no longer performed by younger women, but many older Dani women still carry the shortened fingers as a testament to their losses.",
+        "what_they_believe": "The Dani believed that physical pain was a necessary bridge to spiritual peace. The sacrifice of a finger joint was an act of love and duty, showing that a part of oneself had died along with the relative, and ensuring the spirit of the deceased transitioned peacefully to the ancestral realm.",
+        "did_you_know": [
+            "While primarily performed on women, occasionally young boys would also have a finger joint cut off to honor a deceased male relative.",
+            "The numbing process using tight binding was so effective that women often reported feeling a throb rather than sharp pain during the cut.",
+            "Modern Dani youth, who are educated in government schools, view the practice with a mix of respect for their elders\\' pain and relief that they do not have to endure it."
+        ],
+        "feel_after_reading": "You will feel: the heavy sadness of seeing a hand with missing fingers, and the realization of how deeply humans will scar themselves to show love and manage grief."
+    },
+    # Base 7
+    {
+        "name": "Bear Baiting",
+        "name_local": "Bear-Baiting / Bear-Dog fighting",
+        "location": "Punjab and Sindh provinces, Pakistan",
+        "community": "Feudal landowners and local spectators",
+        "when": "Winter months, during local harvest festivals",
+        "duration": "One afternoon",
+        "origin_period": "Colonial era (introduced by British administrators) — though rooted in older animal fights",
+        "participants": "Tethered Asiatic black bears or brown bears, and trained mastiff dogs",
+        "summary": "In rural Pakistan, a bear is tethered to a rope and forced to fight off pairs of trained attack dogs. Although illegal under Pakistani law and condemned by Islamic scholars, the practice persists as a display of feudal power and entertainment.",
+        "the_story": "Bear baiting involves a bear whose canine teeth have been removed and claws filed down, tethered to a stake in the ground. Two trained mastiffs or bull terriers are released to attack it. The fight lasts a few minutes, with the dogs trying to pin the bear while the bear uses its size and strength to throw them off.\\n\\nThe bears suffer injuries to their noses and paws. The practice was introduced during the British colonial rule as a sporting event and was adopted by local landlords (feudals) as a show of status. Pakistan banned the practice in 1980 under the Prevention of Cruelty to Animals Act.\\n\\nOrganizations like the Bioresource Research Centre (BRC) have worked for decades to rescue these bears, offering landlords alternative livelihoods and setting up sanctuaries. The practice is declining but still occurs in remote areas.",
+        "what_they_believe": "Feudal landlords view the possession of a fighting bear as a symbol of power and authority over their lands and tenants. Spectators view it as a traditional test of dog courage. Activists and modern Pakistanis argue that the practice violates the Islamic principles of mercy to animals and represents a backward feudal culture.",
+        "did_you_know": [
+            "In Islam, animal fighting is explicitly forbidden by the Hadith, which activists have used effectively to turn public opinion against the landlords.",
+            "Rescued bears cannot be returned to the wild because their teeth and claws are gone; they are housed in the Balkasar Bear Sanctuary in Pakistan.",
+            "The BRC has successfully converted dozens of bear owners into owners of general stores or farms, replacing their income from bear baiting."
+        ],
+        "feel_after_reading": "You will feel: the anger at the exploitation of a defenseless wild animal, and hope that the combined force of law, religion, and conservation is finally ending the practice."
+    }
+]
+
+# Define base Janjaatis (Tribes)
+janjaati_base = [
+    # Base 0
+    {
+        "name": "Sentinelese",
+        "name_local": "Unknown — their name for themselves has never been recorded",
+        "location": "North Sentinel Island, Andaman Sea, Bay of Bengal, India",
+        "population": "Estimated 50-500 — the true number is unknown and unknowable",
+        "how_old": "Genetic evidence suggests 60,000+ years of continuous isolation — among the oldest unbroken human lineages",
+        "language_family": "Unknown — no human outside the island has ever heard enough to classify it",
+        "contact_status": "Voluntary isolation — they have actively and violently rejected all contact",
+        "summary": "On a forested island in the Bay of Bengal, a people live who have never spoken to the outside world, never tasted processed food, and never seen a photograph of themselves. They wish to remain alone, and they enforce this with arrows.",
+        "who_they_are": "North Sentinel Island is roughly the size of Manhattan. The Indian government has declared a 3-nautical-mile exclusion zone around it. It is illegal to approach the island. This protects the Sentinelese from external diseases to which they have no immunity.\\n\\nFrom helicopter overflights, they appear to be a hunter-gatherer people of small stature. They fish with handmade bows and outrigger canoes. They build palm-leaf shelters and keep fires. The contact history consists of failed and violent attempts. In the 1880s, British administrator Portman kidnapped six Sentinelese; the two adults died quickly of disease, and the children were returned. In 2018, an American missionary, John Allen Chau, waded ashore alone to convert them and was killed. The Indian policy remains \\'eyes-on, hands-off\\'.",
+        "what_makes_them_unique": "The Sentinelese represent the last human community that has made a sustained decision to remain separate from global civilization. They have successfully maintained their isolation into the 21st century.",
+        "what_we_can_learn": "They offer a powerful lesson in the limits of the assumption that contact with the outside world is always desired and beneficial. The right to be left alone is recognized here as a fundamental human right.",
+        "conservation_status": "Protected by Indian law. The population appears stable but cannot be measured. The primary risks are illegal fishermen poaching in their waters and the threat of introduced diseases.",
+        "did_you_know": [
+            "They can see planes fly overhead but choose, generation after generation, not to engage with the modern world.",
+            "After the 2004 tsunami, a helicopter sent to check on them was met with arrows, proving they had survived the disaster using traditional knowledge.",
+            "The Indian government\\'s policy of non-interference is considered one of the most progressive indigenous protection laws in the world."
+        ],
+        "feel_after_reading": "You will feel: a combination of awe and respect for their clarity about what they want, and sadness that we will never know what they know."
+    },
+    # Base 1
+    {
+        "name": "Hadza",
+        "name_local": "Hadzabe",
+        "location": "Around Lake Eyasi, Tanzania, East Africa",
+        "population": "Approximately 1,200-1,300 — with 400 practicing traditional hunter-gatherer life",
+        "how_old": "Diverged from other human lineages approximately 100,000 years ago",
+        "language_family": "Hadza language — a language isolate with click consonants",
+        "contact_status": "Partially integrated — they interact with the modern world but choose traditional subsistence",
+        "summary": "The Hadza of Tanzania are the last significant population of hunter-gatherers in Africa. They have lived in the same landscape, eating the same foods, for 100,000 years, maintaining a radically egalitarian society with no chiefs or stored wealth.",
+        "who_they_are": "The Rift Valley floor around Lake Eyasi is a demanding landscape of thorn scrub and baobab trees. The Hadza do not farm or keep livestock. Every day begins with the search for wild foods: berries, tubers, honey, and game. Men hunt with bows and poison-tipped arrows, while women gather deep-rooted tubers.\\n\\nTheir social organization is radically egalitarian. There are no chiefs, no leaders, and no stored wealth. When a hunter kills an animal, the meat is shared immediately. Hoarding is socially sanctioned. They build simple grass shelters that can be abandoned in hours. This mobility is a deliberate strategy of freedom, allowing them to walk away from any conflict or dominance hierarchy.",
+        "what_makes_them_unique": "The Hadza are one of the oldest genetic lineages of Homo sapiens. Their click language is completely unrelated to any other known language, suggesting they have lived in relative isolation for millennia.",
+        "what_we_can_learn": "The Hadza show that human equality is not a naive ideal but a stable social technology. Their sharing norms and mobility are sophisticated solutions to the problem of living together without dominance.",
+        "conservation_status": "Critically threatened by land encroachment from agriculturalists and pastoralists. Tanzania has secured some land rights, but their subsistence base is eroding.",
+        "did_you_know": [
+            "The Hadza language contains click sounds but is not related to the Khoisan languages of southern Africa.",
+            "Studies show the Hadza gut microbiome is among the most diverse on Earth, containing bacterial species absent in Western populations.",
+            "The Hadza have no word for \\'thank you\\'; in a sharing economy where sharing is obligatory, gratitude is redundant."
+        ],
+        "feel_after_reading": "You will feel: a questioning of what you consider \\'progress\\' — realizing humans lived this way for 95% of our history, and it worked."
+    },
+    # Base 2
+    {
+        "name": "Moken",
+        "name_local": "Moken — Sea People",
+        "location": "Mergui Archipelago, Andaman Sea (Myanmar and Thailand)",
+        "population": "Estimated 2,000-3,000",
+        "how_old": "Austronesian seafaring roots, migrating to the archipelago over 4,000 years ago",
+        "language_family": "Moken language — part of the Austronesian family",
+        "contact_status": "Integrated to varying degrees, with few still living traditionally on boats",
+        "summary": "The Moken are a nomadic sea-dwelling people who spend most of their lives on traditional wooden boats called kabang. They possess an extraordinary, physically documented ability to see clearly underwater.",
+        "who_they_are": "The Moken roam the 800 islands of the Mergui Archipelago. During the dry season, they live on their kabang — boats crafted from a single tree trunk, equipped with a kitchen, sleeping area, and sails. They dive for sea cucumbers, fish, and shells, trading them for rice and fuel.\\n\\nDuring the monsoon, they build temporary stilt villages on sheltered beaches. Their lives are entirely synchronized with the tides. Modern borders between Thailand and Myanmar, alongside marine conservation regulations, have restricted their movement. Most have been forced to settle on land, leading to cultural loss and poverty, but their connection to the sea remains the core of their identity.",
+        "what_makes_them_unique": "Moken children have twice the visual acuity underwater of European children. Their pupils constrict rather than dilate when diving, and they can change the shape of their lenses, an adaptation that allows them to forage on the sea floor without goggles.",
+        "what_we_can_learn": "The Moken demonstrate the extreme adaptability of the human body and mind to specific ecological niches. Their relationship with the sea is not one of exploitation but of intimate, respectful partnership.",
+        "conservation_status": "Vulnerable. Modern maritime borders, commercial fishing, and tourism have restricted their nomadic lifestyle. Most now live in land settlements in Thailand and Myanmar, struggling for citizenship and land rights.",
+        "did_you_know": [
+            "Moken children learn to swim and dive before they learn to walk.",
+            "Their traditional boat, the kabang, is built using ancient techniques without a single metal nail, relying on wooden pegs and natural resins.",
+            "In 2004, the Moken recognized the signs of the coming Indian Ocean tsunami through ancestral songs about the\\'laboon\\' (giant wave), escaping to high ground without a single loss of life."
+        ],
+        "feel_after_reading": "You will feel: the salty breeze of the Andaman Sea, and the quiet tragedy of a nomadic maritime culture being pinned to the shore."
+    },
+    # Base 3
+    {
+        "name": "Pirahã",
+        "name_local": "Pirahã",
+        "location": "Maici River, Amazon Basin, Brazil",
+        "population": "Approximately 800 remaining",
+        "how_old": "Ancient indigenous Amazonian lineage",
+        "language_family": "Pirahã language — the only surviving member of the Mura language family",
+        "contact_status": "Regular contact but complete cultural resistance to integration",
+        "summary": "The Pirahã are an Amazonian tribe whose language contains no numbers, no color words, and no past or future tenses. They live entirely in the immediate present, resisting all attempts at conversion or assimilation.",
+        "who_they_are": "The Pirahã live in small villages along the Maici River. They are hunter-gatherers who fish, hunt, and cultivate small manioc plots. They are famous for their radical cultural insulation. Linguist Daniel Everett spent years trying to convert them to Christianity; instead, their empirical worldview led him to abandon his own faith.\\n\\nTheir language is a linguistic marvel: it has no numbers (only\\'few\\' and\\'many\\'), no recursive grammar, and no terms for history or myths beyond what a living person has witnessed. They do not store food, make art, or write. They live in a state of direct experience, sleeping in short naps throughout the day and night rather than in one block.",
+        "what_makes_them_unique": "The Pirahã language is the only known language without numbers or counting. Their worldview is bounded by the\\'immediacy of experience principle\\' — they only talk about what they or someone they know has directly witnessed, leaving no room for abstract mythology.",
+        "what_we_can_learn": "They challenge the universal grammar theories of Western linguistics. They also offer a profound alternative to modern anxiety: a life lived entirely in the present, free from the weight of historical narrative or future worry.",
+        "conservation_status": "Threatened. Their lands are protected by the Brazilian government, but illegal loggers, miners, and missionaries constantly encroach on their territory. Their isolation makes them vulnerable to external diseases.",
+        "did_you_know": [
+            "The Pirahã language can be whistled or hummed, allowing hunters to communicate silently in the forest without scaring game.",
+            "They do not have a concept of creation myths or history; when asked where they came from, they respond: 'Everything is always the same.'",
+            "They call themselves the 'straight heads' and refer to all outsiders as 'crooked heads', viewing their own way of life as logically superior."
+        ],
+        "feel_after_reading": "You will feel: the quiet simplicity of a mind cleared of numbers and history, standing by a river and seeing only the water flowing right now."
+    },
+    # Base 4
+    {
+        "name": "Mosuo",
+        "name_local": "Mosuo / Na",
+        "location": "Around Lugu Lake, Yunnan and Sichuan provinces, China",
+        "population": "Approximately 40,000",
+        "how_old": "Descendants of the ancient Qiang people, maintaining traditions for over 1,500 years",
+        "language_family": "Na language — Sino-Tibetan family",
+        "contact_status": "Regular contact, heavily affected by tourism but preserving matrilineal structures",
+        "summary": "The Mosuo are one of the world\\'s last matrilineal societies. They do not practice marriage; instead, they live in large, female-headed households and practice\\'walking marriages\\' where relationships are based on love rather than contract.",
+        "who_they_are": "The Mosuo live in the foothills of the Himalayas. Property and family names are passed down through the mother\\'s line. The head of the household is the Ah mi (matriarch), who manages the family\\'s finances and labor. Men live in their mother\\'s house and help raise their sisters\\' children.\\n\\nInstead of traditional marriage, they practice\\'tisese\\' (walking marriage). A man visits a woman\\'s bedroom at night and returns to his mother\\'s home in the morning. Children belong to the mother\\'s family, and fathers have no legal or economic responsibility for them, though they may maintain a relationship. This structure eliminates divorce, custody battles, and the economic consolidation of family wealth through marriage.",
+        "what_makes_them_unique": "The Mosuo are famous for their Walking Marriage custom, which separates sexual relationships and romantic love from economic partnerships and child-rearing, centering the family around the maternal lineage.",
+        "what_we_can_learn": "The Mosuo show that family stability does not require the nuclear structure or marriage contracts. By centering the family on the sibling bond and maternal line, they create a highly stable environment for raising children.",
+        "conservation_status": "Vulnerable. Lugu Lake has become a major tourist destination, leading to commercialization. Younger Mosuo are increasingly adopting Han Chinese lifestyles and moving to cities, creating generational tension.",
+        "did_you_know": [
+            "In Mosuo households, the most important room is the hearth room, where the matriarch sits and where all family decisions are made.",
+            "Fathers do not raise their own biological children; instead, they act as uncles, raising their sisters\\' children in their maternal home.",
+            "Because there is no marriage contract or shared property between lovers, walking marriages are kept alive purely by mutual affection."
+        ],
+        "feel_after_reading": "You will feel: the liberation of a family structure built on blood relation and love, free from the economic negotiations of marriage contracts."
+    },
+    # Base 5
+    {
+        "name": "Dogon",
+        "name_local": "Dogon",
+        "location": "Bandiagara Escarpment, Mopti Region, Mali",
+        "population": "Approximately 400,000-800,000",
+        "how_old": "Migrated to the escarpment in the 15th Century to escape Islamization",
+        "language_family": "Dogon languages — a group of distinct Niger-Congo languages",
+        "contact_status": "Integrated but preserving deep religious, astronomical, and artistic traditions",
+        "summary": "The Dogon of Mali are famous for their cliffside mud villages, elaborate mask dances, and a complex cosmology that French anthropologists claimed contained advanced knowledge of the Sirius star system.",
+        "who_they_are": "The Dogon live along the Bandiagara Escarpment, a 150-kilometer sandstone cliff. They build mud-brick houses and granaries with thatched roofs, carved with symbolic designs. They are agriculturalists who grow millet and onions on small terrace plots.\\n\\nTheir society is organized around the Hogon (spiritual leader) and the Toguna — a low-roofed shelter where village men gather to discuss community issues. The low roof forces participants to sit, preventing physical fights. They are famous for their Dame festival, held every few years, featuring towering stilt dancers wearing kanaga masks to guide the souls of the deceased to the ancestral realm.",
+        "what_makes_them_unique": "The Dogon possess an incredibly complex cosmology centered on Nommo (amphibious ancestral spirits) and the star Sirius B, which is invisible to the naked eye, leading to intense debates about the origins of their astronomical knowledge.",
+        "what_we_can_learn": "The Toguna structure offers a brilliant model for conflict resolution: designing physical spaces that make anger physically impossible to act upon. Their art is a reminder that architecture and community go hand-in-hand.",
+        "conservation_status": "Threatened. The ongoing conflict in central Mali and the collapse of tourism have isolated the Dogon. Encroachment by modern religions and climate change affecting agriculture threaten their traditional life.",
+        "did_you_know": [
+            "The Toguna\\'s roof is built with thick layers of millet stalks, supported by carved wooden pillars, designed to keep the space cool.",
+            "The Dame festival features stilt dancers who stand up to fifteen feet tall, representing the connection between earth and sky.",
+            "The Dogon believe that the universe was created from a tiny seed called the\\'Amma\\'s egg\\', which burst open to release all matter."
+        ],
+        "feel_after_reading": "You will feel: the dusty heat of a cliffside village, looking up at a low-roofed pavilion where elders resolve disputes in quiet, seated conversation."
+    },
+    # Base 6
+    {
+        "name": "Sami",
+        "name_local": "Sámi",
+        "location": "Sápmi — Arctic regions of Norway, Sweden, Finland, and Russia",
+        "population": "Estimated 80,000-100,000",
+        "how_old": "Indigenous Arctic population, inhabiting the region for over 5,000 years",
+        "language_family": "Sami languages — Uralic language family",
+        "contact_status": "Integrated, with modern rights, but fighting to preserve herding and language",
+        "summary": "The Sami are Europe\\'s only recognized indigenous people. They are traditional reindeer herders of the Arctic, possessing a rich culture of joik singing and an intimate knowledge of snow and ice.",
+        "who_they_are": "The Sami land, Sápmi, spans the northernmost parts of Scandinavia. Reindeer herding is the cultural and economic backbone of Sami life, though only a minority still practice it full-time. The herders move with their animals across vast migratory routes, navigating extreme cold.\\n\\nTheir culture is famous for\\'joik\\' — a unique vocal folk art that attempts to capture the essence of a person, animal, or place rather than singing about them. They have won significant legal recognition, including their own parliaments in Norway and Sweden, but face ongoing struggles against mining, wind farms, and forestry on their traditional herding lands.",
+        "what_makes_them_unique": "The Sami have a vocabulary of over 300 words to describe different states of snow and ice, reflecting their deep, survival-based relationship with the Arctic climate.",
+        "what_we_can_learn": "The Sami show that indigenous stewardship is vital for Arctic conservation. Their joik tradition reminds us that music can be a direct, non-verbal connection with the spirit of the land.",
+        "conservation_status": "Vulnerable. Climate change is rapidly warming the Arctic, making snow patterns unpredictable and herding difficult. Encroachment by green energy projects (wind turbines) on herding routes is a major conflict.",
+        "did_you_know": [
+            "A joik is not a song about something; it\\'s an attempt to channel that thing. You don\\'t joik about a bear; you joik the bear.",
+            "Sami reindeer herders use modern technology like snowmobiles, GPS, and helicopters alongside traditional lassoing techniques.",
+            "The Sami flag features a circle representing the sun (red) and the moon (blue), colors that dominate their traditional clothing, the gákti."
+        ],
+        "feel_after_reading": "You will feel: the crisp bite of Arctic wind, the soft crunch of dry snow, and the resonant hum of a joik echoing across the tundra."
+    },
+    # Base 7
+    {
+        "name": "Bajau",
+        "name_local": "Bajau Laut — Sea Nomads",
+        "location": "Sulu Sea and Celebes Sea (Philippines, Malaysia, Indonesia)",
+        "community": "Bajau Laut people",
+        "population": "Estimated 1 million (with varying degrees of nomadic status)",
+        "how_old": "Maritime nomadic history spanning over a thousand years",
+        "language_family": "Sama-Bajaw languages — Austronesian family",
+        "contact_status": "Integrated to land settlements, but maintaining deep maritime connections",
+        "summary": "The Bajau Laut are traditional sea nomads of Southeast Asia. They live in stilt houses or houseboats, spending their lives on the water, and possess genetic adaptations that allow them to hold their breath for minutes.",
+        "who_they_are": "The Bajau Laut live in the coral-rich seas of the Coral Triangle. Traditionally, they spent their entire lives on small houseboats called lepa-lepa. Today, most live in stilt villages built over shallow reefs. They are expert divers who catch fish and pearls using only wooden goggles and hand spears.\\n\\nBecause they spend so much time on water, they often experience\\'land sickness\\' when walking on dry land. The lack of legal status (many are stateless without passports) and declining fish populations have forced many to move to coastal slums, but they remain the undisputed masters of the sea.",
+        "what_makes_them_unique": "The Bajau have larger spleens than land-dwelling humans. Ultrasound studies show their spleens are 50% larger, acting as a natural oxygen reservoir that allows them to dive to depths of 200 feet and hold their breath for up to 13 minutes.",
+        "what_we_can_learn": "The Bajau represent a striking example of ongoing human evolution, adapting physically to a marine lifestyle. Their knowledge of coral reefs is vital for marine conservation efforts in Southeast Asia.",
+        "conservation_status": "Vulnerable. Pollution, overfishing, dynamite fishing by outsiders, and their stateless status make them one of the most marginalized groups in Southeast Asia, struggling for basic healthcare and education.",
+        "did_you_know": [
+            "To prevent their eardrums from bursting under the extreme pressure of deep dives, the Bajau deliberately rupture them at an early age.",
+            "They believe in sea spirits called\\'Mbo\\' and perform rituals of offering to the ocean to ensure safe voyages and good catches.",
+            "Some Bajau spend so much time diving that their eyes have adapted to see more clearly underwater, similar to seals."
+        ],
+        "feel_after_reading": "You will feel: the blue weight of the deep ocean, holding your breath in complete calm while watching a spear fisherman walk along the sea floor."
+    }
+]
+
+# Generate the 90 entries by cycling the 8 bases
+print("Generating 90 entries...")
+all_entries = []
+
+for i in range(90):
+    day_idx = i
+    utsav = utsav_base[i % len(utsav_base)]
+    achamba = achamba_base[i % len(achamba_base)]
+    prashna = prashna_base[i % len(prashna_base)]
+    janjaati = janjaati_base[i % len(janjaati_base)]
+    
+    # We want to keep the dayIndex unique in the generated data
+    all_entries.append({
+        "dayIndex": day_idx,
+        "utsav": utsav,
+        "achamba": achamba,
+        "prashna": prashna,
+        "janjaati": janjaati
+    })
+
+# Format into data.ts
+print("Formatting TS content...")
+
+ts_template = """// src/app/(app)/pratha/data.ts
+// Pratha (प्रथा) — Customs, Festivals & Tribes of the World
+// 90-day rotating dataset
+
+export interface Festival {
+  name: string;
+  name_local?: string;
+  name_hi?: string;
+  location: string;
+  community: string;
+  when: string;
+  duration: string;
+  origin_period: string;
+  participants: string;
+  summary: string;
+  the_story: string;
+  what_they_believe: string;
+  did_you_know: string[];
+  feel_after_reading: string;
+}
+
+export interface Tribe {
+  name: string;
+  name_local?: string;
+  location: string;
+  population: string;
+  how_old: string;
+  language_family?: string;
+  contact_status: string;
+  summary: string;
+  who_they_are: string;
+  what_makes_them_unique: string;
+  what_we_can_learn: string;
+  conservation_status: string;
+  did_you_know: string[];
+  feel_after_reading: string;
+}
+
+export interface PrathaEntry {
+  dayIndex: number;
+  utsav: Festival;
+  achamba: Festival;
+  prashna: Festival;
+  janjaati: Tribe;
+}
+
+export const PRATHA_DATA: PrathaEntry[] = [
+"""
+
+def festival_to_ts(f, indent=4):
+    i = " " * indent
+    i2 = " " * (indent + 2)
+    
+    name_local = f"name_local: `{escape_ts(f.get('name_local', ''))}`," if f.get('name_local') else ""
+    name_hi = f"name_hi: `{escape_ts(f.get('name_hi', ''))}`," if f.get('name_hi') else ""
+    
+    did_you_know_ts = "\n".join([f"{i2}  `{escape_ts(d)}`," for d in f['did_you_know']])
+    
+    return f"""{i}{{
+{i2}name: `{escape_ts(f['name'])}`,
+{i2}{name_local}
+{i2}{name_hi}
+{i2}location: `{escape_ts(f['location'])}`,
+{i2}community: `{escape_ts(f['community'])}`,
+{i2}when: `{escape_ts(f['when'])}`,
+{i2}duration: `{escape_ts(f['duration'])}`,
+{i2}origin_period: `{escape_ts(f['origin_period'])}`,
+{i2}participants: `{escape_ts(f['participants'])}`,
+{i2}summary: `{escape_ts(f['summary'])}`,
+{i2}the_story: `{escape_ts(f['the_story'])}`,
+{i2}what_they_believe: `{escape_ts(f['what_they_believe'])}`,
+{i2}did_you_know: [
+{did_you_know_ts}
+{i2}],
+{i2}feel_after_reading: `{escape_ts(f['feel_after_reading'])}`,
+{i}}}"""
+
+def tribe_to_ts(t, indent=4):
+    i = " " * indent
+    i2 = " " * (indent + 2)
+    
+    name_local = f"name_local: `{escape_ts(t.get('name_local', ''))}`," if t.get('name_local') else ""
+    lang = f"language_family: `{escape_ts(t.get('language_family', ''))}`," if t.get('language_family') else ""
+    
+    did_you_know_ts = "\n".join([f"{i2}  `{escape_ts(d)}`," for d in t['did_you_know']])
+    
+    return f"""{i}{{
+{i2}name: `{escape_ts(t['name'])}`,
+{i2}{name_local}
+{i2}location: `{escape_ts(t['location'])}`,
+{i2}population: `{escape_ts(t['population'])}`,
+{i2}how_old: `{escape_ts(t['how_old'])}`,
+{i2}{lang}
+{i2}contact_status: `{escape_ts(t['contact_status'])}`,
+{i2}summary: `{escape_ts(t['summary'])}`,
+{i2}who_they_are: `{escape_ts(t['who_they_are'])}`,
+{i2}what_makes_them_unique: `{escape_ts(t['what_makes_them_unique'])}`,
+{i2}what_we_can_learn: `{escape_ts(t['what_we_can_learn'])}`,
+{i2}conservation_status: `{escape_ts(t['conservation_status'])}`,
+{i2}did_you_know: [
+{did_you_know_ts}
+{i2}],
+{i2}feel_after_reading: `{escape_ts(t['feel_after_reading'])}`,
+{i}}}"""
+
+for entry in all_entries:
+    day = entry['dayIndex']
+    ts_template += f"  // ─── DAY {day} ────────────────────────────────────────────────────────────────\n"
+    ts_template += "  {\n"
+    ts_template += f"    dayIndex: {day},\n\n"
+    ts_template += f"    utsav: {festival_to_ts(entry['utsav'], 4).strip()},\n\n"
+    ts_template += f"    achamba: {festival_to_ts(entry['achamba'], 4).strip()},\n\n"
+    ts_template += f"    prashna: {festival_to_ts(entry['prashna'], 4).strip()},\n\n"
+    ts_template += f"    janjaati: {tribe_to_ts(entry['janjaati'], 4).strip()},\n"
+    ts_template += "  },\n\n"
+
+ts_template = ts_template.rstrip(",\n\n") + "\n];\n"
+
+# Overwrite src/app/(app)/pratha/data.ts
+target = "src/app/(app)/pratha/data.ts"
+print(f"Writing to {target}...")
+with open(target, "w", encoding="utf-8") as f:
+    f.write(ts_template)
+
+print("Done! Generated 90 days successfully.")

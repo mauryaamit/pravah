@@ -9,7 +9,7 @@ import {
   Lightbulb, Brain, Telescope, Landmark, MessageSquare, Library,
   Globe2, Sparkles, PlaneTakeoff, Leaf, Flag,
   ScrollText, UserRound, BookMarked, Heart, BookOpen,
-  Mic2, Type, Puzzle, Keyboard,
+  Mic2, Type, Puzzle, Keyboard, LandPlot,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ROOMS, ROOMS_BY_CLUSTER, CLUSTER_LABELS, type RoomCluster } from '@/lib/constants/rooms';
@@ -28,6 +28,7 @@ const ROOM_ICONS: Record<string, React.ComponentType<any>> = {
   typewriter: Keyboard,
   vani: Mic2, paradox: Puzzle,
   duniya: Globe2, neelakurinji: Sparkles, safar: PlaneTakeoff, aranya: Leaf, bharati: Flag,
+  pratha: LandPlot,
   kathakar: ScrollText, vibhav: UserRound, lekhak: BookMarked, anand: Heart,
 };
 

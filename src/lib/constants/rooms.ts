@@ -47,10 +47,11 @@ export const ROOMS: Room[] = [
 
   // WORLD
   { id: 'duniya',      name: 'Duniya',       nameHi: 'दुनिया',     nameHindi: 'दुनिया',    emoji: '🌍', description: '3 world stories, explained deeply',             route: '/duniya',       colorVar: '--room-duniya',       colorHex: '#4A7C59', cluster: 'world' },
-  { id: 'neelakurinji',name: 'Neelakurinji', nameHi: 'नीलकुरिंजी',nameHindi: 'नीलकुरिंजी',emoji: '💫', description: 'Wonder room - daily surprise',                route: '/neelakurinji', colorVar: '--room-neelakurinji', colorHex: '#7B6BA6', cluster: 'world' },
   { id: 'safar',       name: 'Safar',        nameHi: 'सफ़र',        nameHindi: 'सफ़र',       emoji: '✈️', description: 'Travel the world from here',                  route: '/safar',        colorVar: '--room-safar',        colorHex: '#3A8A8A', cluster: 'world' },
-  { id: 'aranya',      name: 'Aranya',       nameHi: 'अरण्य',      nameHindi: 'अरण्य',     emoji: '🌿', description: 'Nature room - flora, fauna, Earth',            route: '/aranya',       colorVar: '--room-aranya',       colorHex: '#4A7C59', cluster: 'world' },
   { id: 'bharati',     name: 'Bharati',      nameHi: 'भारती',      nameHindi: 'भारती',     emoji: '🇮🇳', description: 'Discover India - history, culture, wonder',   route: '/bharati',      colorVar: '--room-bharati',      colorHex: '#8A3A3A', cluster: 'world' },
+  { id: 'aranya',      name: 'Aranya',       nameHi: 'अरण्य',      nameHindi: 'अरण्य',     emoji: '🌿', description: 'Nature room - flora, fauna, Earth',            route: '/aranya',       colorVar: '--room-aranya',       colorHex: '#4A7C59', cluster: 'world' },
+  { id: 'pratha',      name: 'Pratha',       nameHi: 'प्रथा',      nameHindi: 'प्रथा',     emoji: '🏺', description: 'Customs, Festivals & Tribes of the World',     route: '/pratha',       colorVar: '--room-pratha',       colorHex: '#8B5E3C', cluster: 'world' },
+  { id: 'neelakurinji',name: 'Neelakurinji', nameHi: 'नीलकुरिंजी',nameHindi: 'नीलकुरिंजी',emoji: '💫', description: 'Wonder room - daily surprise',                route: '/neelakurinji', colorVar: '--room-neelakurinji', colorHex: '#7B6BA6', cluster: 'world' },
 
   // CREATIVE
   { id: 'kathakar',    name: 'Kathakar',     nameHi: 'कथाकार',     nameHindi: 'कथाकार',    emoji: '📜', description: 'Stories across genres and centuries',          route: '/kathakar',     colorVar: '--room-kathakar',     colorHex: '#8A5A3A', cluster: 'creative' },
