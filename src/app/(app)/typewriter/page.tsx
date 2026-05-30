@@ -8,8 +8,7 @@ import DayNavigator from '@/components/shared/DayNavigator';
 import ReadAloudButton from '@/components/shared/ReadAloudButton';
 import SutraNoteButton from '@/components/shared/SutraNoteButton';
 import RevisitButton from '@/components/shared/RevisitButton';
-import { selectDailyPieces, type TetwArticle } from './utils';
-import { getCompanion } from './companions';
+import { buildDailySelection, type TypewriterPiece, type ParsedArticle } from './selection';
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
@@ -34,7 +33,7 @@ const CATEGORIES = [
 
 interface FetchState {
   status: 'idle' | 'loading' | 'live' | 'fallback' | 'error';
-  articles: TetwArticle[];
+  articles: ParsedArticle[];
   error?: string;
 }
 
@@ -69,7 +68,7 @@ export default function TypewriterPage() {
     status: 'idle',
     articles: [],
   });
-  const [readingPiece, setReadingPiece] = useState<TetwArticle | null>(null);
+  const [readingPiece, setReadingPiece] = useState<TypewriterPiece | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [focusMode, setFocusMode] = useState(false);
 
@@ -86,9 +85,9 @@ export default function TypewriterPage() {
     fetch('/api/typewriter')
       .then(res => res.json())
       .then(data => {
-        const articles: TetwArticle[] = data.articles ?? [];
+        const articles: ParsedArticle[] = data.articles ?? [];
         setFetchState({
-          status: data.source === 'fallback' ? 'fallback' : 'live',
+          status: data.source === 'failed' ? 'fallback' : 'live',
           articles,
         });
       })
@@ -99,12 +98,12 @@ export default function TypewriterPage() {
   }, []);
 
   // ── Daily selection ──────────────────────────────────────────────────────
-  const selection = selectDailyPieces(fetchState.articles, currentDate);
+  const selection = buildDailySelection(fetchState.articles, currentDate);
   const displayPieces = section === 'essays' ? selection.essays : selection.articles;
 
   const filteredPieces = selectedCategory === 'All'
     ? displayPieces
-    : displayPieces.filter(p => p.category === selectedCategory);
+    : displayPieces.filter(p => p.genre === selectedCategory);
 
   // ── Reading overlay scroll progress ─────────────────────────────────────
   const handleScroll = useCallback(() => {
@@ -127,9 +126,8 @@ export default function TypewriterPage() {
   }, [readingPiece]);
 
   // ── Speak text ───────────────────────────────────────────────────────────
-  const getSpeakText = (piece: TetwArticle) => {
-    const companion = getCompanion(piece);
-    return `${piece.title} — ${piece.author ? `by ${piece.author}. ` : ''}Why this piece: ${companion.why_this_piece.slice(0, 400)}`;
+  const getSpeakText = (piece: TypewriterPiece) => {
+    return `${piece.title} — ${piece.author ? `by ${piece.author}. ` : ''}Why this piece: ${piece.companion.why_this_piece.slice(0, 400)}`;
   };
 
   // ─── Render ──────────────────────────────────────────────────────────────
@@ -383,11 +381,9 @@ function TypewriterCard({
   piece,
   onOpen,
 }: {
-  piece: TetwArticle;
+  piece: TypewriterPiece;
   onOpen: () => void;
 }) {
-  const companion = getCompanion(piece);
-
   return (
     <motion.div
       whileHover={{ y: -2 }}
@@ -404,8 +400,8 @@ function TypewriterCard({
           className="flex justify-between items-center text-[9px] uppercase tracking-[0.15em] font-mono"
           style={{ color: 'var(--text-muted)' }}
         >
-          <span style={{ color: FOREST_LIGHT }}>{piece.category}</span>
-          <span style={{ color: 'var(--text-faint)' }}>{piece.estimatedRead ?? '~15 min'}</span>
+          <span style={{ color: FOREST_LIGHT }}>{piece.genre}</span>
+          <span style={{ color: 'var(--text-faint)' }}>~15 min</span>
         </div>
 
         {/* Title */}
@@ -430,7 +426,7 @@ function TypewriterCard({
             borderColor: 'var(--border-default)',
           }}
         >
-          &ldquo;{companion.introduction.slice(0, 160)}…&rdquo;
+          &ldquo;{piece.introduction.slice(0, 160)}…&rdquo;
         </p>
       </div>
 
@@ -454,9 +450,7 @@ function TypewriterCard({
 
 // ─── Reading Overlay Content ──────────────────────────────────────────────────
 
-function ReadingContent({ piece }: { piece: TetwArticle }) {
-  const companion = getCompanion(piece);
-
+function ReadingContent({ piece }: { piece: TypewriterPiece }) {
   return (
     <>
       {/* Meta */}
@@ -465,7 +459,7 @@ function ReadingContent({ piece }: { piece: TetwArticle }) {
           className="text-[9px] uppercase tracking-[0.2em] font-mono"
           style={{ color: FOREST_GREEN }}
         >
-          {piece.category}
+          {piece.genre}
         </p>
         <h2
           className="text-3xl md:text-4xl leading-tight font-normal"
@@ -492,7 +486,7 @@ function ReadingContent({ piece }: { piece: TetwArticle }) {
         }}
       >
         <p className="text-sm leading-relaxed" style={{ color: 'var(--text-primary)' }}>
-          {companion.introduction}
+          {piece.introduction}
         </p>
       </div>
 
@@ -501,23 +495,31 @@ function ReadingContent({ piece }: { piece: TetwArticle }) {
 
         <CompanionSection
           label="क्यों पढ़ें · Why This Piece"
-          text={companion.why_this_piece}
+          text={piece.companion.why_this_piece}
         />
         <CompanionSection
           label="संदर्भ · Context"
-          text={companion.context}
+          text={piece.companion.context}
         />
         <CompanionSection
           label="मुख्य विचार · Main Ideas"
-          text={companion.main_ideas}
+          text={piece.companion.main_ideas}
         />
         <CompanionSection
           label="बौद्धिक परंपरा · Intellectual Lineage"
-          text={companion.intellectual_lineage}
+          text={piece.companion.intellectual_lineage}
         />
         <CompanionSection
           label="प्रभाव · Why Influential"
-          text={companion.why_influential}
+          text={piece.companion.why_influential}
+        />
+        <CompanionSection
+          label="पढ़ने से पहले · Before You Read"
+          text={piece.before_you_read}
+        />
+        <CompanionSection
+          label="पढ़ने के बाद · After You Read"
+          text={piece.after_you_read}
         />
 
       </div>
@@ -545,7 +547,7 @@ function ReadingContent({ piece }: { piece: TetwArticle }) {
       {/* Tags */}
       <div className="space-y-4">
         <div className="flex flex-wrap gap-2 justify-center">
-          {companion.related_thinkers.map(t => (
+          {piece.companion.related_thinkers && piece.companion.related_thinkers.map(t => (
             <span
               key={t}
               className="text-[9px] font-mono px-2.5 py-1 border"
@@ -558,7 +560,7 @@ function ReadingContent({ piece }: { piece: TetwArticle }) {
               👤 {t}
             </span>
           ))}
-          {companion.related_books.map(b => (
+          {piece.companion.related_books && piece.companion.related_books.map(b => (
             <span
               key={b}
               className="text-[9px] font-mono px-2.5 py-1"
@@ -570,7 +572,7 @@ function ReadingContent({ piece }: { piece: TetwArticle }) {
               📖 {b}
             </span>
           ))}
-          {companion.related_concepts.map(c => (
+          {piece.companion.related_concepts && piece.companion.related_concepts.map(c => (
             <span
               key={c}
               className="text-[9px] font-mono px-2.5 py-1"

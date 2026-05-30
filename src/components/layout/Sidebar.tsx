@@ -24,7 +24,7 @@ const ROOM_ICONS: Record<string, React.ComponentType<any>> = {
   aarambh: Sunrise, agni: Flame, antarman: PenLine, bargad: TreePine,
   sukoon: CloudRain, manthan: Waves, noor: Zap, riyaz: Music2,
   bodh: Lightbulb, neurolab: Brain, cosmos: Telescope, darshan: Landmark,
-  angrezi: Type, lekh: BookOpen, srot: Library,
+  angrezi: Type, srot: Library,
   typewriter: Keyboard,
   vani: Mic2, paradox: Puzzle,
   duniya: Globe2, neelakurinji: Sparkles, safar: PlaneTakeoff, aranya: Leaf, bharati: Flag,

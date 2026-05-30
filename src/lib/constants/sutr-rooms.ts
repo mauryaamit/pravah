@@ -108,13 +108,6 @@ export const SUTR_ROOMS: SutrRoomDescription[] = [
     contemplativeText: 'A word you did not know this morning. An idiom with a 300-year history. A grammar structure that separates good English from fluent English. And daily drills that train you to think in English rather than translate from Hindi. Language is not just communication - it is the shape of thought.'
   },
   {
-    id: 'lekh',
-    name: 'Lekh',
-    nameHindi: 'लेख',
-    oneLiner: 'The finest longform writing across every domain of human thought',
-    contemplativeText: 'Ten essays. Ten articles. Every day. From the science of dying to the politics of language, from the ecology of cities to the philosophy of love - Lekh is where you read the kind of writing that changes how you think about something you thought you already understood. A Pravah Companion walks you through each piece before you read it and leaves you with a question after.'
-  },
-  {
     id: 'srot',
     name: 'Srot',
     nameHindi: 'स्रोत',
@@ -202,8 +195,8 @@ export const SUTR_ROOMS: SutrRoomDescription[] = [
     id: 'typewriter',
     name: 'Typewriter',
     nameHindi: 'टाइपराइटर',
-    oneLiner: 'The internet\'s finest longform essays, fetched fresh every day',
-    contemplativeText: 'The Electric Typewriter is a curated archive of the greatest essays, articles, and longform journalism ever published on the web. Every day, Typewriter surfaces a fresh selection from its vast library — essays that change how you think, articles that challenge what you assume, prose that rewards unhurried reading. No algorithm. No clickbait. Just the finest writing, accompanied by a Pravah Companion that prepares you for the text and stays with you after.'
+    oneLiner: 'The finest longform essays and articles across every domain of human thought',
+    contemplativeText: 'Typewriter draws from a merged registry of 27 of the world\'s leading intellectual publications and archives, combining live parallel scraping with a deep, pre-curated seed library. Every day, it selects a guaranteed array of pieces covering all ten umbrella genres — from the science of dying to the politics of language, from the ecology of cities to the philosophy of love. Each piece is accompanied by a custom Pravah Companion that sets the context before you read, highlights main ideas, and leaves you with reflection questions after.'
   },
   {
     id: 'pratha',
