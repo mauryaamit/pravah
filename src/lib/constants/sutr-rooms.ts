@@ -38,11 +38,11 @@ export const SUTR_ROOMS: SutrRoomDescription[] = [
     contemplativeText: 'Not a task list of things to do, but a forest of the things you want to grow into. Under the shade of Bargad, you set intentions that span months and years, and return to them when the noise of the day gets too loud.'
   },
   {
-    id: 'sukoon',
-    name: 'Sukoon',
-    nameHindi: 'सुकून',
-    oneLiner: 'A quiet shelter in the rhythm of verses',
-    contemplativeText: 'Timeless poems in Hindi, Roman Hindustani, and English. Sukoon is not for scanning or speed-reading. It is a room to sit in for ten minutes, letting the resonance of Ghalib, Faiz, or Mahadevi Varma slow your breathing and restore your vocabulary of feeling.'
+    id: 'kavitalay',
+    name: 'Kavitalay',
+    nameHindi: 'कवितालय',
+    oneLiner: 'Poetry in four languages — Hindi, Urdu, English, and the world — three poems each, daily',
+    contemplativeText: `कवितालय is the house of poetry. Every day: three Hindi poems, three Urdu poems (in Devanagari), three English poems, and three from the world's other languages — Neruda, Rilke, Akhmatova, Rumi, Basho. Choose modern or classical. Choose your script. The order rearranges itself accordingly. Each poem opens fully; the poet's life folds beneath it, available when you want it. Twelve poems a day. The whole human range of feeling, held in language.`,
   },
   {
     id: 'manthan',

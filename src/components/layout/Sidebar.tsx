@@ -22,7 +22,7 @@ import SettingsModal from '@/components/shared/SettingsModal';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ROOM_ICONS: Record<string, React.ComponentType<any>> = {
   aarambh: Sunrise, agni: Flame, antarman: PenLine, bargad: TreePine,
-  sukoon: CloudRain, manthan: Waves, noor: Zap, riyaz: Music2,
+  kavitalay: CloudRain, manthan: Waves, noor: Zap, riyaz: Music2,
   darshan: Compass, darshanik: Landmark, neurolab: Brain, cosmos: Telescope,
   angrezi: Type, sahitya: Library,
   typewriter: Keyboard,

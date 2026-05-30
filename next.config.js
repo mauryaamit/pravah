@@ -39,6 +39,7 @@ const nextConfig = {
       { source: '/vibhav', destination: '/vyakti', permanent: true },
       { source: '/kathakar', destination: '/kahani', permanent: true },
       { source: '/lekhak', destination: '/write', permanent: true },
+      { source: '/sukoon', destination: '/kavitalay', permanent: true },
     ];
   },
   async headers() {

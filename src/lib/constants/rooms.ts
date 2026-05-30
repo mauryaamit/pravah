@@ -28,7 +28,7 @@ export const ROOMS: Room[] = [
   { id: 'bargad',      name: 'Bargad',       nameHi: 'बरगद',       nameHindi: 'बरगद',      emoji: '🌳', description: 'Your Sankalps - deep long-term goals',         route: '/bargad',       colorVar: '--room-bargad',       colorHex: '#4A7A4A', cluster: 'daily' },
 
   // INNER
-  { id: 'sukoon',      name: 'Sukoon',       nameHi: 'सुकून',      nameHindi: 'सुकून',     emoji: '🌧️', description: 'Poetry - Hindi, Roman Urdu, English',         route: '/sukoon',       colorVar: '--room-sukoon',       colorHex: '#5B6B8A', cluster: 'inner' },
+  { id: 'kavitalay',  name: 'Kavitalay',    nameHi: 'कवितालय',    nameHindi: 'कवितालय',   emoji: '🌧️', description: 'Poetry - Hindi, Roman Urdu, English, and World', route: '/kavitalay',    colorVar: '--room-sukoon',       colorHex: '#5B6B8A', cluster: 'inner' },
   { id: 'noor',        name: 'Prerna',       nameHi: 'प्रेरणा',    nameHindi: 'प्रेरणा',   emoji: '✨', description: 'One person. One moment. One ignition.',        route: '/noor',         colorVar: '--room-noor',         colorHex: '#D4A853', cluster: 'inner' },
   { id: 'riyaz',       name: 'Riyaz',        nameHi: 'रियाज़',     nameHindi: 'रियाज़',    emoji: '🎵', description: 'Music and arts - the practice of beauty',      route: '/riyaz',        colorVar: '--room-riyaz',        colorHex: '#8A4A8A', cluster: 'inner' },
   // KNOWLEDGE
