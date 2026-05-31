@@ -8,37 +8,36 @@ const OUT_DIR = path.join(process.cwd(), 'public/icons');
 
 const SIZES = [72, 96, 128, 144, 152, 180, 192, 384, 512];
 
+const NAVY_BG = { r: 11, g: 22, b: 40 }; // #0B1628
+
 async function generate() {
   // Ensure output directory exists
   if (!fs.existsSync(OUT_DIR)) {
     fs.mkdirSync(OUT_DIR, { recursive: true });
   }
 
+  // Standard sizes with flattened dark navy background (removes transparent corners)
   for (const size of SIZES) {
     await sharp(SVG_PATH)
       .resize(size, size)
+      .flatten({ background: NAVY_BG })
       .png()
       .toFile(path.join(OUT_DIR, `icon-${size}x${size}.png`));
     console.log(`Generated icon-${size}x${size}.png`);
   }
 
-  // Maskable icon — add 20% padding (safe zone for Android)
+  // Maskable icon — full bleed (no padding gap), matching the navy background
   await sharp(SVG_PATH)
-    .resize(410, 410)  // logo within 512px canvas with padding
-    .extend({ 
-      top: 51, 
-      bottom: 51, 
-      left: 51, 
-      right: 51,
-      background: { r: 245, g: 240, b: 232, alpha: 1 } // --bg-primary color
-    }) 
+    .resize(512, 512)
+    .flatten({ background: NAVY_BG })
     .png()
     .toFile(path.join(OUT_DIR, 'maskable-icon-512x512.png'));
   console.log('Generated maskable-icon-512x512.png');
 
-  // Apple touch icon (180x180)
+  // Apple touch icon (180x180) - full bleed
   await sharp(SVG_PATH)
     .resize(180, 180)
+    .flatten({ background: NAVY_BG })
     .png()
     .toFile(path.join(OUT_DIR, 'apple-touch-icon.png'));
   console.log('Generated apple-touch-icon.png');
@@ -56,7 +55,7 @@ async function generate() {
     .toFile(path.join(OUT_DIR, 'favicon-16x16.png'));
   console.log('Generated favicon-16x16.png');
 
-  console.log('All icons generated successfully.');
+  console.log('All icons generated successfully with full bleed dark navy background.');
 }
 
 generate().catch(err => {
