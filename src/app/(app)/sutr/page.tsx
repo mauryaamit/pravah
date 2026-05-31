@@ -33,7 +33,7 @@ export default function SutrPage() {
           >
             {/* Background painting - 8% opacity so text wins */}
             <div
-              className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center"
+              className="sutr-opening-bg absolute inset-0 z-0 pointer-events-none flex items-center justify-center"
               style={{
                 opacity: 0.08,
                 backgroundImage: 'url("/paintings/wanderer-fog.png")',
@@ -200,7 +200,7 @@ export default function SutrPage() {
           >
             {/* Closing Painting - 8% */}
             <div
-              className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center"
+              className="sutr-closing-bg absolute inset-0 z-0 pointer-events-none flex items-center justify-center"
               style={{
                 opacity: 0.08,
                 backgroundImage: 'url("/paintings/tree-of-life.png")',
@@ -327,6 +327,9 @@ export default function SutrPage() {
 
           /* ── Mobile Spacing Refinements ── */
           @media (max-width: 768px) {
+            .sutr-opening-bg, .sutr-closing-bg {
+              background-size: cover !important;
+            }
             .sutr-page {
               padding-top: 24px !important;
               padding-bottom: 24px !important;
