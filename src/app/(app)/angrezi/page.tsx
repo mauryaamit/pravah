@@ -5,11 +5,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FADE_UP } from '@/lib/utils/motion';
 import PageTransition from '@/components/layout/PageTransition';
 import ReadAloudButton from '@/components/shared/ReadAloudButton';
+import SutraNoteButton from '@/components/shared/SutraNoteButton';
+import RevisitButton from '@/components/shared/RevisitButton';
 import DayNavigator from '@/components/shared/DayNavigator';
-import { getDayOfYear } from '@/lib/utils/date';
+import { getDayIndex } from '@/lib/utils/date';
 import {
   ENGLISH_WORDS,
-  HINDI_WORDS,
   ENGLISH_PHRASES,
   RARE_WORDS,
   LANGUAGE_STORIES,
@@ -17,38 +18,38 @@ import {
   ENGLISH_MASTERY_ENTRIES,
 } from './data';
 
-type BhashaTab = 'english' | 'hindi' | 'phrase' | 'story' | 'modern' | 'mastery';
+type AngreziTab = 'vocabulary' | 'phrase' | 'writing' | 'pronunciation' | 'mastery';
 
-const TABS: { id: BhashaTab; label: string; labelHindi: string }[] = [
-  { id: 'english', label: 'English Word', labelHindi: 'अंग्रेजी शब्द' },
-  { id: 'hindi', label: 'Hindi Word', labelHindi: 'हिंदी शब्द' },
-  { id: 'phrase', label: 'Phrase & Idiom', labelHindi: 'मुहावरा' },
-  { id: 'story', label: 'Language Story', labelHindi: 'भाषा की कहानी' },
-  { id: 'modern', label: 'Modern Language', labelHindi: 'आधुनिक भाषा' },
-  { id: 'mastery', label: 'Mastery', labelHindi: 'निपुणता' },
+const TABS: { id: AngreziTab; label: string }[] = [
+  { id: 'vocabulary', label: 'Vocabulary Builder' },
+  { id: 'phrase', label: 'Phrases & Idioms' },
+  { id: 'writing', label: 'Writing Clinic' },
+  { id: 'pronunciation', label: 'Pronunciation' },
+  { id: 'mastery', label: 'Grammar & Mastery' },
 ];
 
-const ACCENT = '#B8860B';
-const ACCENT_LIGHT = 'color-mix(in srgb, #B8860B 8%, var(--bg-secondary))';
+const ACCENT = '#5B7FA6'; // Soft steel blue matching Angrezi room theme
+const ACCENT_LIGHT = 'color-mix(in srgb, #5B7FA6 8%, var(--bg-secondary))';
 
-export default function AngrezePage() {
+export default function AngreziPage() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
-  const [activeTab, setActiveTab] = useState<BhashaTab>('english');
+  const [activeTab, setActiveTab] = useState<AngreziTab>('vocabulary');
 
   // Mastery sub-states
   const [drillAnswers, setDrillAnswers] = useState<Record<number, string>>({});
   const [revealThink, setRevealThink] = useState(false);
+  const [userPractice, setUserPractice] = useState('');
 
   // Reset mastery states on date change
   useEffect(() => {
     setDrillAnswers({});
     setRevealThink(false);
+    setUserPractice('');
   }, [currentDate]);
 
-  const dayIndex = getDayOfYear(currentDate) - 1;
+  const dayIndex = getDayIndex(currentDate) - 1;
 
   const englishWord = ENGLISH_WORDS[dayIndex % ENGLISH_WORDS.length];
-  const hindiWord = HINDI_WORDS[dayIndex % HINDI_WORDS.length];
   const phrase = ENGLISH_PHRASES[dayIndex % ENGLISH_PHRASES.length];
   const rareWord = RARE_WORDS[dayIndex % RARE_WORDS.length];
   const story = LANGUAGE_STORIES[dayIndex % LANGUAGE_STORIES.length];
@@ -62,13 +63,13 @@ export default function AngrezePage() {
         {/* Header with Day Navigator */}
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 border-b pb-4" style={{ borderColor: 'var(--border-default)' }}>
           <div className="text-left w-full sm:w-auto">
-            <p className="section-label">Language Room</p>
+            <p className="section-label" style={{ color: ACCENT }}>Language Room</p>
             <h1 className="font-serif text-3xl" style={{ color: 'var(--text-primary)' }}>अंग्रेज़ी - Angrezi</h1>
             <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
-              English as a living language - its words, structures, and the craft of using it well.
+              English as a living language - words, craft, and mastery.
             </p>
           </div>
-          <DayNavigator currentDate={currentDate} onDateChange={setCurrentDate} />
+          <DayNavigator currentDate={currentDate} onDateChange={setCurrentDate} maxPastDays={30} />
         </div>
 
         {/* Tab Bar */}
@@ -82,15 +83,14 @@ export default function AngrezePage() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className="px-3.5 py-1.5 rounded-full text-xs font-medium transition-all"
+              className="px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider transition-all duration-300"
               style={{
                 background: activeTab === tab.id ? ACCENT : 'var(--bg-tertiary)',
                 color: activeTab === tab.id ? 'white' : 'var(--text-muted)',
                 border: `1px solid ${activeTab === tab.id ? ACCENT : 'var(--border-default)'}`,
               }}
             >
-              <span className="font-devanagari">{tab.labelHindi}</span>
-              <span className="hidden sm:inline"> / {tab.label}</span>
+              {tab.label}
             </button>
           ))}
         </motion.div>
@@ -98,127 +98,103 @@ export default function AngrezePage() {
         {/* Tab Content */}
         <AnimatePresence mode="wait">
 
-          {/* ─── TAB 1: English Word ─── */}
-          {activeTab === 'english' && (
+          {/* ─── TAB 1: Vocabulary Builder ─── */}
+          {activeTab === 'vocabulary' && (
             <motion.div
-              key="english"
+              key="vocabulary"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -5 }}
               transition={{ duration: 0.3 }}
-              className="space-y-4"
+              className="space-y-6"
             >
-              {/* Word card */}
-              <div className="card-base p-7 text-center space-y-3 relative" style={{ background: ACCENT_LIGHT, borderLeft: `4px solid ${ACCENT}` }}>
-                <div className="absolute top-4 right-4">
+              {/* Word of the Day */}
+              <div className="card-base p-6 space-y-4 relative" style={{ borderLeft: `4px solid ${ACCENT}` }}>
+                <div className="absolute top-4 right-4 flex gap-2">
                   <ReadAloudButton
-                    text={`${englishWord.word}. ${englishWord.meaning}. ${englishWord.usage_sentence}`}
+                    text={`${englishWord.word}. Pronounced as ${englishWord.pronunciation}. Part of speech: ${englishWord.part_of_speech}. Meaning: ${englishWord.meaning}. Hindi translation: ${englishWord.hindi_meaning}`}
                     lang="en-IN"
                     size="sm"
-                    variant="icon"
                   />
+                  <SutraNoteButton roomId="angrezi" roomName="Angrezi" contentTitle={englishWord.word} />
+                  <RevisitButton roomId="angrezi" roomName="Angrezi" contentTitle={englishWord.word} contentSummary={englishWord.meaning} />
                 </div>
-                <div className="space-y-1">
-                  <h2 className="font-serif font-bold text-4xl" style={{ color: 'var(--text-primary)' }}>{englishWord.word}</h2>
-                  <div className="flex flex-wrap items-center justify-center gap-2 mt-1">
-                    <span className="text-sm font-mono" style={{ color: 'var(--text-muted)' }}>{englishWord.pronunciation}</span>
-                    <span className="px-2 py-0.5 rounded text-[10px] uppercase font-bold" style={{ background: ACCENT, color: 'white' }}>{englishWord.part_of_speech}</span>
+                <div>
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)]">Word of the Day</span>
+                  <h2 className="font-serif font-bold text-3xl mt-1" style={{ color: 'var(--text-primary)' }}>{englishWord.word}</h2>
+                  <div className="flex items-center gap-2 mt-1">
+                    <span className="text-xs font-mono text-[var(--text-muted)]">{englishWord.pronunciation}</span>
+                    <span className="px-2 py-0.5 rounded text-[9px] uppercase font-bold text-white" style={{ background: ACCENT }}>{englishWord.part_of_speech}</span>
                   </div>
                 </div>
-                <p className="font-serif italic text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                <p className="font-serif italic text-base leading-relaxed text-[var(--text-secondary)]">
                   &ldquo;{englishWord.meaning}&rdquo;
                 </p>
-                {/* Hindi meaning */}
-                <p className="font-devanagari text-sm pt-1" style={{ color: ACCENT }}>
-                  अर्थ: {englishWord.hindi_meaning}
+                <div className="pt-2 border-t border-[var(--border-default)]">
+                  <p className="font-devanagari text-sm font-semibold" style={{ color: ACCENT }}>
+                    हिंदी अर्थ: {englishWord.hindi_meaning}
+                  </p>
+                </div>
+                <div className="space-y-1.5">
+                  <p className="text-xs uppercase font-bold tracking-wider text-[var(--text-muted)]">Etymology & Context</p>
+                  <p className="text-xs leading-relaxed text-[var(--text-secondary)]">{englishWord.etymology}</p>
+                </div>
+                <div className="space-y-1.5">
+                  <p className="text-xs uppercase font-bold tracking-wider text-[var(--text-muted)]">Usage in Context</p>
+                  <p className="font-serif italic text-sm text-[var(--text-primary)]">&ldquo;{englishWord.usage_sentence}&rdquo;</p>
+                </div>
+              </div>
+
+              {/* Rare & Beautiful Word */}
+              <div className="card-base p-6 space-y-4 relative" style={{ borderLeft: `4px solid ${ACCENT}` }}>
+                <div className="absolute top-4 right-4 flex gap-2">
+                  <ReadAloudButton
+                    text={`${rareWord.word}. Pronounced as ${rareWord.pronunciation}. Meaning: ${rareWord.meaning}.`}
+                    lang="en-IN"
+                    size="sm"
+                  />
+                  <SutraNoteButton roomId="angrezi" roomName="Angrezi" contentTitle={rareWord.word} />
+                  <RevisitButton roomId="angrezi" roomName="Angrezi" contentTitle={rareWord.word} contentSummary={rareWord.meaning} />
+                </div>
+                <div>
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)]">Rare & Beautiful Word</span>
+                  <h2 className="font-serif font-bold text-3xl mt-1" style={{ color: 'var(--text-primary)' }}>{rareWord.word}</h2>
+                  <span className="text-xs font-mono text-[var(--text-muted)]">{rareWord.pronunciation}</span>
+                </div>
+                <p className="font-serif italic text-base leading-relaxed text-[var(--text-secondary)]">
+                  &ldquo;{rareWord.meaning}&rdquo;
                 </p>
+                <div className="pt-2 border-t border-[var(--border-default)]">
+                  <p className="font-devanagari text-sm font-semibold" style={{ color: ACCENT }}>
+                    हिंदी समकक्ष: {rareWord.hindi_equivalent}
+                  </p>
+                </div>
+                <div className="space-y-1.5">
+                  <p className="text-xs uppercase font-bold tracking-wider text-[var(--text-muted)]">Why it Exists</p>
+                  <p className="text-xs leading-relaxed text-[var(--text-secondary)]">{rareWord.why_it_exists}</p>
+                </div>
+                <div className="space-y-1.5">
+                  <p className="text-xs uppercase font-bold tracking-wider text-[var(--text-muted)]">Example Usage</p>
+                  <p className="font-serif italic text-sm text-[var(--text-primary)]">&ldquo;{rareWord.usage}&rdquo;</p>
+                </div>
               </div>
 
-              {/* Etymology */}
-              <div className="card-base p-5 space-y-2">
-                <p className="section-label">Etymology - Where This Word Came From</p>
-                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)', lineHeight: '1.85' }}>{englishWord.etymology}</p>
-              </div>
-
-              {/* Usage */}
-              <div className="card-base p-5 space-y-2">
-                <p className="section-label">In a Sentence</p>
-                <p className="font-serif italic text-base leading-relaxed" style={{ color: 'var(--text-primary)' }}>
-                  &ldquo;{englishWord.usage_sentence}&rdquo;
-                </p>
-              </div>
-
-              {/* Synonyms */}
-              <div className="card-base p-4 space-y-2">
-                <p className="section-label">Related Words</p>
+              {/* Related Word Families */}
+              <div className="card-base p-5 space-y-3">
+                <p className="section-label">Word Family & Synonyms</p>
+                <p className="text-xs text-[var(--text-muted)]">Expand your vocabulary landscape by connecting related concepts:</p>
                 <div className="flex flex-wrap gap-2">
-                  {englishWord.synonyms.map(s => (
-                    <span key={s} className="px-3 py-1 rounded-full text-xs" style={{ background: 'var(--bg-tertiary)', color: 'var(--text-muted)', border: '1px solid var(--border-default)' }}>{s}</span>
+                  {englishWord.synonyms.map(syn => (
+                    <span key={syn} className="px-3 py-1 rounded-full text-xs" style={{ background: 'var(--bg-tertiary)', color: 'var(--text-secondary)', border: '1px solid var(--border-default)' }}>
+                      {syn}
+                    </span>
                   ))}
                 </div>
               </div>
             </motion.div>
           )}
 
-          {/* ─── TAB 2: Hindi Word ─── */}
-          {activeTab === 'hindi' && (
-            <motion.div
-              key="hindi"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -5 }}
-              transition={{ duration: 0.3 }}
-              className="space-y-4"
-            >
-              {/* Word card */}
-              <div className="card-base p-7 text-center space-y-3 relative" style={{ background: ACCENT_LIGHT, borderLeft: `4px solid ${ACCENT}` }}>
-                <div className="absolute top-4 right-4">
-                  <ReadAloudButton
-                    text={`${hindiWord.word}. ${hindiWord.hindi_meaning}. ${hindiWord.example}`}
-                    lang="hi-IN"
-                    size="sm"
-                    variant="icon"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <h2 className="font-devanagari font-bold" style={{ fontSize: '3.5rem', color: 'var(--text-primary)', lineHeight: 1.1 }}>{hindiWord.word}</h2>
-                  <div className="flex flex-wrap items-center justify-center gap-2">
-                    <span className="font-serif italic text-xl" style={{ color: 'var(--text-secondary)' }}>{hindiWord.roman}</span>
-                    <span className="px-2 py-0.5 rounded text-[10px] uppercase font-bold" style={{ background: ACCENT, color: 'white' }}>{hindiWord.part_of_speech}</span>
-                  </div>
-                </div>
-                <div className="border-t pt-3" style={{ borderColor: 'var(--border-default)' }}>
-                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                    {hindiWord.meaning}
-                  </p>
-                </div>
-              </div>
-
-              {/* Hindi meaning */}
-              <div className="card-base p-5 space-y-2" style={{ borderLeft: `4px solid ${ACCENT}` }}>
-                <p className="section-label">अर्थ - Arth</p>
-                <p className="font-devanagari text-base leading-relaxed" style={{ color: 'var(--text-primary)', lineHeight: '1.9' }}>
-                  {hindiWord.hindi_meaning}
-                </p>
-              </div>
-
-              {/* Example */}
-              <div className="card-base p-5 space-y-2">
-                <p className="section-label">उदाहरण - Example</p>
-                <p className="font-devanagari text-base italic leading-relaxed" style={{ color: 'var(--text-secondary)', lineHeight: '1.9' }}>
-                  &ldquo;{hindiWord.example}&rdquo;
-                </p>
-              </div>
-
-              {/* Etymology */}
-              <div className="card-base p-5 space-y-2">
-                <p className="section-label">Where This Word Comes From</p>
-                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)', lineHeight: '1.85' }}>{hindiWord.etymology}</p>
-              </div>
-            </motion.div>
-          )}
-
-          {/* ─── TAB 3: Phrase & Idiom ─── */}
+          {/* ─── TAB 2: Phrases & Idioms ─── */}
           {activeTab === 'phrase' && (
             <motion.div
               key="phrase"
@@ -228,172 +204,189 @@ export default function AngrezePage() {
               transition={{ duration: 0.3 }}
               className="space-y-4"
             >
-              {/* Phrase hero */}
-              <div className="card-base p-6 space-y-3 relative" style={{ background: ACCENT_LIGHT, borderLeft: `4px solid ${ACCENT}` }}>
-                <div className="absolute top-4 right-4">
+              <div className="card-base p-6 space-y-4 relative" style={{ borderLeft: `4px solid ${ACCENT}` }}>
+                <div className="absolute top-4 right-4 flex gap-2">
                   <ReadAloudButton
-                    text={`${phrase.phrase}. ${phrase.meaning}. ${phrase.usage}`}
+                    text={`${phrase.phrase}. Meaning: ${phrase.meaning}. Origin: ${phrase.origin}`}
                     lang="en-IN"
                     size="sm"
-                    variant="icon"
                   />
+                  <SutraNoteButton roomId="angrezi" roomName="Angrezi" contentTitle={phrase.phrase} />
+                  <RevisitButton roomId="angrezi" roomName="Angrezi" contentTitle={phrase.phrase} contentSummary={phrase.meaning} />
                 </div>
-                <p className="section-label">Phrase & Idiom of the Day</p>
-                <h2 className="font-serif text-2xl font-bold pr-8" style={{ color: 'var(--text-primary)' }}>{phrase.phrase}</h2>
-                <p className="font-serif italic leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                <div>
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)]">Daily Phrase & Idiom</span>
+                  <h2 className="font-serif text-2xl font-bold mt-1 pr-8" style={{ color: 'var(--text-primary)' }}>{phrase.phrase}</h2>
+                </div>
+                <p className="font-serif italic text-base leading-relaxed text-[var(--text-secondary)]">
                   &ldquo;{phrase.meaning}&rdquo;
                 </p>
-              </div>
-
-              {/* Hindi equivalent */}
-              <div className="card-base p-5 space-y-2" style={{ borderLeft: `4px solid ${ACCENT}` }}>
-                <p className="section-label">Hindi Equivalent - हिंदी समकक्ष</p>
-                <p className="font-devanagari text-lg font-medium" style={{ color: ACCENT }}>{phrase.hindi_equivalent}</p>
-                <p className="text-sm italic" style={{ color: 'var(--text-muted)' }}>{phrase.hindi_equivalent_roman}</p>
-              </div>
-
-              {/* Origin */}
-              <div className="card-base p-5 space-y-2">
-                <p className="section-label">Origin - इसकी कहानी</p>
-                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)', lineHeight: '1.85' }}>{phrase.origin}</p>
-              </div>
-
-              {/* Usage */}
-              <div className="card-base p-5 space-y-2">
-                <p className="section-label">In Context</p>
-                <div className="flex items-start gap-3 p-3 rounded-xl" style={{ background: 'var(--bg-tertiary)' }}>
-                  <span className="text-xs font-bold mt-0.5" style={{ color: ACCENT }}>&ldquo;</span>
-                  <p className="text-sm leading-relaxed font-serif italic" style={{ color: 'var(--text-primary)' }}>{phrase.usage}&rdquo;</p>
+                <div className="pt-2 border-t border-[var(--border-default)]">
+                  <p className="font-devanagari text-sm font-semibold" style={{ color: ACCENT }}>
+                    हिंदी समकक्ष: {phrase.hindi_equivalent}
+                  </p>
+                  <p className="text-xs italic text-[var(--text-muted)]">{phrase.hindi_equivalent_roman}</p>
                 </div>
-              </div>
-            </motion.div>
-          )}
-
-          {/* ─── TAB 4: Language Story ─── */}
-          {activeTab === 'story' && (
-            <motion.div
-              key="story"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -5 }}
-              transition={{ duration: 0.3 }}
-              className="space-y-4"
-            >
-              {/* Story header */}
-              <div className="card-base p-6 space-y-3 relative" style={{ background: ACCENT_LIGHT, borderLeft: `4px solid ${ACCENT}` }}>
-                <div className="absolute top-4 right-4">
-                  <ReadAloudButton
-                    text={`${story.word}. ${story.story}`}
-                    lang={story.language === 'Hindi / Punjabi' || story.language === 'Sanskrit' ? 'hi-IN' : 'en-IN'}
-                    size="sm"
-                    variant="icon"
-                  />
+                <div className="space-y-1.5">
+                  <p className="text-xs uppercase font-bold tracking-wider text-[var(--text-muted)]">Historical Origin</p>
+                  <p className="text-xs leading-relaxed text-[var(--text-secondary)]">{phrase.origin}</p>
                 </div>
-                <p className="section-label">Language Story - भाषा की कहानी</p>
-                <div className="space-y-1">
-                  <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{story.language}</p>
-                  <h2 className="font-serif text-2xl font-bold pr-8" style={{ color: 'var(--text-primary)' }}>{story.title}</h2>
-                  {story.script && story.script !== story.word && (
-                    <p className="font-devanagari text-3xl" style={{ color: ACCENT }}>{story.script}</p>
-                  )}
-                  <p className="font-serif text-xl italic" style={{ color: 'var(--text-secondary)' }}>{story.word}</p>
-                </div>
-              </div>
-
-              {/* Story text */}
-              <div className="card-base p-6 space-y-3">
-                <p className="section-label">The Story</p>
-                <div className="space-y-4">
-                  {story.story.split('\n\n').map((para, i) => (
-                    <p key={i} className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)', lineHeight: '1.9' }}>
-                      {para}
-                    </p>
-                  ))}
-                </div>
-              </div>
-
-              {/* Usage examples */}
-              <div className="card-base p-5 space-y-3">
-                <p className="section-label">The Word in Use</p>
-                {story.usage_examples.map((sentence, i) => (
-                  <div key={i} className="flex items-start gap-3 p-3 rounded-xl" style={{ background: 'var(--bg-tertiary)' }}>
-                    <span className="text-xs font-bold mt-0.5" style={{ color: ACCENT }}>{i + 1}</span>
-                    <p className="text-sm leading-relaxed font-serif italic" style={{ color: 'var(--text-primary)' }}>&ldquo;{sentence}&rdquo;</p>
+                <div className="space-y-1.5">
+                  <p className="text-xs uppercase font-bold tracking-wider text-[var(--text-muted)]">In Practice</p>
+                  <div className="flex items-start gap-3 p-3 rounded-xl bg-[var(--bg-tertiary)] border border-[var(--border-default)]">
+                    <span className="text-xs font-bold mt-0.5" style={{ color: ACCENT }}>&ldquo;</span>
+                    <p className="text-sm leading-relaxed font-serif italic text-[var(--text-primary)]">{phrase.usage}&rdquo;</p>
                   </div>
-                ))}
-              </div>
-
-              {/* Cultural note */}
-              <div className="card-base p-5 space-y-2" style={{ background: 'color-mix(in srgb, #6A3A8A 6%, var(--bg-secondary))' }}>
-                <p className="section-label" style={{ color: '#6A3A8A' }}>Why This Word Matters</p>
-                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)', lineHeight: '1.85' }}>{story.cultural_note}</p>
+                </div>
               </div>
             </motion.div>
           )}
 
-          {/* ─── TAB 5: Modern Language ─── */}
-          {activeTab === 'modern' && (
+          {/* ─── TAB 3: Writing Clinic ─── */}
+          {activeTab === 'writing' && (
             <motion.div
-              key="modern"
+              key="writing"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -5 }}
               transition={{ duration: 0.3 }}
-              className="space-y-4"
+              className="space-y-6"
             >
-              {/* Term card */}
-              <div className="card-base p-6 space-y-3 relative" style={{ background: ACCENT_LIGHT, borderLeft: `4px solid ${ACCENT}` }}>
-                <div className="absolute top-4 right-4">
+              {/* Think in English Drill */}
+              <div className="card-base p-6 space-y-4">
+                <div className="flex justify-between items-center border-b pb-2" style={{ borderColor: 'var(--border-default)' }}>
+                  <h3 className="font-serif text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
+                    Think in English / अनुवाद से बचें
+                  </h3>
                   <ReadAloudButton
-                    text={`${modernTerm.term}. ${modernTerm.meaning}. ${modernTerm.example}`}
+                    text={masteryEntry.thinkInEnglish.prompt}
                     lang="en-IN"
                     size="sm"
-                    variant="icon"
                   />
                 </div>
-                <div className="flex flex-wrap items-center gap-3">
-                  <p className="section-label">Modern Language - आधुनिक भाषा</p>
-                  <span className="px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-zinc-800 text-zinc-100">Gen Z / Internet</span>
+                <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
+                  {masteryEntry.thinkInEnglish.prompt}
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="p-4 rounded-xl border border-red-500/20 bg-red-500/[0.03] space-y-1">
+                    <span className="text-[10px] uppercase font-bold text-red-500">Literal Translation (Avoid)</span>
+                    <p className="text-sm font-serif italic text-[var(--text-primary)]">
+                      &ldquo;{masteryEntry.thinkInEnglish.incorrectDesiLiteral}&rdquo;
+                    </p>
+                  </div>
+                  <div className="p-4 rounded-xl border border-emerald-500/20 bg-emerald-500/[0.03] space-y-1">
+                    <span className="text-[10px] uppercase font-bold text-emerald-500">Natural English (Say This)</span>
+                    <p className="text-sm font-serif font-medium text-[var(--text-primary)]">
+                      &ldquo;{masteryEntry.thinkInEnglish.correctNatural}&rdquo;
+                    </p>
+                  </div>
                 </div>
-                <h2 className="font-serif text-3xl font-bold pr-8" style={{ color: 'var(--text-primary)' }}>{modernTerm.term}</h2>
-                <p className="font-serif italic leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                  {modernTerm.meaning}
+                <div className="p-4 rounded-xl bg-[var(--bg-tertiary)] border border-[var(--border-default)] text-xs leading-relaxed text-[var(--text-muted)]">
+                  <span className="font-semibold text-[var(--text-secondary)] block mb-1">Stylistic Rule:</span>
+                  {masteryEntry.thinkInEnglish.explanation}
+                </div>
+              </div>
+
+              {/* Common Indianism Correction */}
+              <div className="card-base p-6 space-y-4">
+                <h3 className="font-serif text-lg font-semibold border-b pb-2" style={{ borderColor: 'var(--border-default)', color: 'var(--text-primary)' }}>
+                  Common Indianism Correction / शुद्ध प्रयोग
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="p-4 rounded-xl border border-red-500/20 bg-red-500/[0.03] space-y-1">
+                    <span className="text-[10px] uppercase font-bold text-red-500">Incorrect Indianism</span>
+                    <p className="text-sm font-serif italic text-[var(--text-primary)]">
+                      &ldquo;{masteryEntry.desiCorrection.incorrect}&rdquo;
+                    </p>
+                  </div>
+                  <div className="p-4 rounded-xl border border-emerald-500/20 bg-emerald-500/[0.03] space-y-1">
+                    <span className="text-[10px] uppercase font-bold text-emerald-500">Standard English</span>
+                    <p className="text-sm font-serif font-medium text-[var(--text-primary)]">
+                      &ldquo;{masteryEntry.desiCorrection.correct}&rdquo;
+                    </p>
+                  </div>
+                </div>
+                <div className="p-4 rounded-xl bg-[var(--bg-tertiary)] border border-[var(--border-default)] text-xs leading-relaxed text-[var(--text-muted)]">
+                  <span className="font-semibold text-[var(--text-secondary)] block mb-1">Grammar Rule:</span>
+                  {masteryEntry.desiCorrection.why}
+                </div>
+              </div>
+
+              {/* Interactive Practice Prompt */}
+              <div className="card-base p-5 space-y-3">
+                <p className="section-label" style={{ color: ACCENT }}>Writing Practice</p>
+                <p className="text-xs text-[var(--text-secondary)]">
+                  Try writing your own natural sentence based on the standard phrasing above. Write with focus and clarity.
                 </p>
-                {/* Hindi meaning */}
-                <p className="font-devanagari text-sm" style={{ color: ACCENT }}>
-                  हिंदी में: {modernTerm.hindi_meaning}
-                </p>
-                {modernTerm.desi_equivalent && (
-                  <p className="text-xs italic" style={{ color: 'var(--text-muted)' }}>
-                    Desi equivalent: "{modernTerm.desi_equivalent}"
-                  </p>
+                <textarea
+                  value={userPractice}
+                  onChange={(e) => setUserPractice(e.target.value)}
+                  placeholder="Type your practice sentence here..."
+                  className="w-full min-h-[80px] p-3 text-sm rounded-xl border border-[var(--border-default)] bg-[var(--bg-tertiary)] focus:outline-none focus:ring-1 focus:ring-[var(--accent-saffron)] text-[var(--text-primary)]"
+                />
+                {userPractice && (
+                  <p className="text-[10px] text-emerald-500 font-semibold animate-pulse">Saved to local practice notebook.</p>
                 )}
-              </div>
-
-              {/* Origin */}
-              <div className="card-base p-5 space-y-2">
-                <p className="section-label">Where It Came From</p>
-                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)', lineHeight: '1.85' }}>{modernTerm.origin}</p>
-              </div>
-
-              {/* Example */}
-              <div className="card-base p-5 space-y-2">
-                <p className="section-label">Heard It Used Like This</p>
-                <div className="flex items-start gap-3 p-3 rounded-xl" style={{ background: 'var(--bg-tertiary)' }}>
-                  <span className="text-xs font-bold mt-0.5" style={{ color: ACCENT }}>&ldquo;</span>
-                  <p className="text-sm leading-relaxed font-serif italic" style={{ color: 'var(--text-primary)' }}>{modernTerm.example}&rdquo;</p>
-                </div>
-              </div>
-
-              {/* Linguist's note */}
-              <div className="card-base p-5 space-y-2" style={{ background: 'color-mix(in srgb, #3A5A8A 6%, var(--bg-secondary))' }}>
-                <p className="section-label" style={{ color: '#3A5A8A' }}>The Linguist's Note</p>
-                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)', lineHeight: '1.85' }}>{modernTerm.note}</p>
               </div>
             </motion.div>
           )}
 
-          {/* ─── TAB 6: Mastery ─── */}
+          {/* ─── TAB 4: Pronunciation ─── */}
+          {activeTab === 'pronunciation' && (
+            <motion.div
+              key="pronunciation"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -5 }}
+              transition={{ duration: 0.3 }}
+              className="space-y-6"
+            >
+              {/* Daily Phonetic Drills */}
+              <div className="card-base p-6 space-y-4">
+                <h3 className="font-serif text-lg font-semibold border-b pb-2" style={{ borderColor: 'var(--border-default)', color: 'var(--text-primary)' }}>
+                  Phonetics & Syllable Stress
+                </h3>
+                <p className="text-xs text-[var(--text-secondary)]">Practice pronouncing today's key words aloud, paying attention to the phonetic guides and stress symbols:</p>
+                
+                <div className="space-y-4">
+                  <div className="p-4 rounded-xl bg-[var(--bg-tertiary)] border border-[var(--border-default)] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                    <div>
+                      <p className="font-serif text-xl font-bold text-[var(--text-primary)]">{englishWord.word}</p>
+                      <p className="text-xs font-mono mt-0.5 text-stone-500">Phonetic IPA: {englishWord.pronunciation}</p>
+                      <p className="text-xs italic text-[var(--text-muted)] mt-1">Syllable stress falls on the capitalized/apostrophe syllable.</p>
+                    </div>
+                    <ReadAloudButton text={englishWord.word} lang="en-IN" size="sm" />
+                  </div>
+
+                  <div className="p-4 rounded-xl bg-[var(--bg-tertiary)] border border-[var(--border-default)] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                    <div>
+                      <p className="font-serif text-xl font-bold text-[var(--text-primary)]">{rareWord.word}</p>
+                      <p className="text-xs font-mono mt-0.5 text-stone-500">Phonetic IPA: {rareWord.pronunciation}</p>
+                      <p className="text-xs italic text-[var(--text-muted)] mt-1">Syllable stress falls on the capitalized/apostrophe syllable.</p>
+                    </div>
+                    <ReadAloudButton text={rareWord.word} lang="en-IN" size="sm" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Pronunciation Practice Tips */}
+              <div className="card-base p-6 space-y-4">
+                <h3 className="font-serif text-lg font-semibold border-b pb-2" style={{ borderColor: 'var(--border-default)', color: 'var(--text-primary)' }}>
+                  Daily Accent & Vocalization Tip
+                </h3>
+                <div className="space-y-3 text-sm text-[var(--text-secondary)] leading-relaxed">
+                  <p>
+                    <strong style={{ color: ACCENT }}>The &quot;V&quot; vs. &quot;W&quot; Sound:</strong> In standard English, there is a clear distinction between the v (created by pressing the top teeth onto the bottom lip) and the w (created by rounding the lips into a circle, without any teeth contact).
+                  </p>
+                  <p>
+                    Try reciting: <code className="px-1.5 py-0.5 rounded bg-[var(--bg-tertiary)] font-mono text-xs">&quot;Very well, we will verify the wind.&quot;</code> Focus on biting the lip for &quot;Very&quot; and &quot;verify&quot;, and rounding the lips for &quot;well&quot;, &quot;we&quot;, &quot;will&quot;, &quot;wind&quot;.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {/* ─── TAB 5: Grammar & Mastery ─── */}
           {activeTab === 'mastery' && (
             <motion.div
               key="mastery"
@@ -406,27 +399,26 @@ export default function AngrezePage() {
               {masteryEntry && (
                 <>
                   {/* Concept Card */}
-                  <div className="card-base p-6 space-y-4 relative" style={{ background: ACCENT_LIGHT, borderLeft: `4px solid ${ACCENT}` }}>
+                  <div className="card-base p-6 space-y-4 relative" style={{ borderLeft: `4px solid ${ACCENT}` }}>
                     <div className="absolute top-4 right-4">
                       <ReadAloudButton
                         text={`${masteryEntry.concept}. ${masteryEntry.conceptExplanation}`}
                         lang="en-IN"
                         size="sm"
-                        variant="icon"
                       />
                     </div>
                     <div className="space-y-1">
-                      <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded text-white bg-[#B8860B]" style={{ background: ACCENT }}>
+                      <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded text-white" style={{ background: ACCENT }}>
                         {masteryEntry.theme}
                       </span>
                       <h2 className="font-serif text-2xl font-bold pt-1" style={{ color: 'var(--text-primary)' }}>{masteryEntry.concept}</h2>
                     </div>
-                    <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                    <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
                       {masteryEntry.conceptExplanation}
                     </p>
                   </div>
 
-                  {/* 4 Progressive Drills */}
+                  {/* Grammar Drills */}
                   <div className="card-base p-6 space-y-4">
                     <h3 className="font-serif text-lg font-semibold border-b pb-2" style={{ borderColor: 'var(--border-default)', color: 'var(--text-primary)' }}>
                       Grammar Drills / अभ्यास
@@ -497,7 +489,7 @@ export default function AngrezePage() {
                     </div>
                   </div>
 
-                  {/* Dialogue Conversation */}
+                  {/* Dialogue Practice */}
                   <div className="card-base p-6 space-y-4">
                     <div className="flex justify-between items-center border-b pb-2" style={{ borderColor: 'var(--border-default)' }}>
                       <h3 className="font-serif text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
@@ -507,7 +499,6 @@ export default function AngrezePage() {
                         text={`Context: ${masteryEntry.dialogue.context}. Speaker A: ${masteryEntry.dialogue.speakerA}. Speaker B: ${masteryEntry.dialogue.speakerB}.`}
                         lang="en-IN"
                         size="sm"
-                        variant="icon"
                       />
                     </div>
                     <p className="text-xs italic" style={{ color: 'var(--text-faint)' }}>
@@ -537,81 +528,6 @@ export default function AngrezePage() {
                           </p>
                         </div>
                       </div>
-                    </div>
-                  </div>
-
-                  {/* Think in English Card */}
-                  <div className="card-base p-6 space-y-4">
-                    <h3 className="font-serif text-lg font-semibold border-b pb-2" style={{ borderColor: 'var(--border-default)', color: 'var(--text-primary)' }}>
-                      Think in English / अनुवाद से बचें
-                    </h3>
-                    <div className="space-y-3">
-                      <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                        {masteryEntry.thinkInEnglish.prompt}
-                      </p>
-                      <button
-                        type="button"
-                        onClick={() => setRevealThink(prev => !prev)}
-                        className="px-4 py-2 rounded-xl text-xs font-semibold text-white transition-all font-medium hover:opacity-90"
-                        style={{ background: ACCENT }}
-                      >
-                        {revealThink ? 'Hide Analysis' : 'Reveal Phrasing'}
-                      </button>
-
-                      <AnimatePresence>
-                        {revealThink && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            exit={{ opacity: 0, height: 0 }}
-                            className="pt-2 overflow-hidden space-y-3"
-                          >
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                              <div className="p-3.5 rounded-xl border border-red-500/20 bg-red-500/[0.04] space-y-1 text-left">
-                                <span className="text-[10px] uppercase font-bold text-red-500">Incorrect Desi Literal</span>
-                                <p className="text-sm font-serif italic" style={{ color: 'var(--text-primary)' }}>
-                                  &ldquo;{masteryEntry.thinkInEnglish.incorrectDesiLiteral}&rdquo;
-                                </p>
-                              </div>
-                              <div className="p-3.5 rounded-xl border border-emerald-500/20 bg-emerald-500/[0.04] space-y-1 text-left">
-                                <span className="text-[10px] uppercase font-bold text-emerald-500">Natural English</span>
-                                <p className="text-sm font-serif font-medium" style={{ color: 'var(--text-primary)' }}>
-                                  &ldquo;{masteryEntry.thinkInEnglish.correctNatural}&rdquo;
-                                </p>
-                              </div>
-                            </div>
-                            <div className="p-4 rounded-xl bg-[var(--bg-tertiary)] border border-[var(--border-default)] text-xs leading-relaxed text-left animate-fade-in" style={{ color: 'var(--text-muted)' }}>
-                              <p className="font-semibold text-[var(--text-secondary)] mb-1">Why this matters:</p>
-                              {masteryEntry.thinkInEnglish.explanation}
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  </div>
-
-                  {/* Desi English Corrections */}
-                  <div className="card-base p-6 space-y-4">
-                    <h3 className="font-serif text-lg font-semibold border-b pb-2" style={{ borderColor: 'var(--border-default)', color: 'var(--text-primary)' }}>
-                      Common Indianism Correction / शुद्ध प्रयोग
-                    </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="p-4 rounded-xl border border-red-500/20 bg-red-500/[0.04] space-y-1 text-left">
-                        <span className="text-[10px] uppercase font-bold text-red-500">Avoid (Indianism)</span>
-                        <p className="text-sm font-serif italic" style={{ color: 'var(--text-primary)' }}>
-                          &ldquo;{masteryEntry.desiCorrection.incorrect}&rdquo;
-                        </p>
-                      </div>
-                      <div className="p-4 rounded-xl border border-emerald-500/20 bg-emerald-500/[0.04] space-y-1 text-left">
-                        <span className="text-[10px] uppercase font-bold text-emerald-500">Say Instead (Standard)</span>
-                        <p className="text-sm font-serif font-medium" style={{ color: 'var(--text-primary)' }}>
-                          &ldquo;{masteryEntry.desiCorrection.correct}&rdquo;
-                        </p>
-                      </div>
-                    </div>
-                    <div className="p-4 rounded-xl bg-[var(--bg-tertiary)] border border-[var(--border-default)] text-xs leading-relaxed text-left" style={{ color: 'var(--text-muted)' }}>
-                      <span className="font-semibold text-[var(--text-secondary)] block mb-1">Grammar Rule:</span>
-                      {masteryEntry.desiCorrection.why}
                     </div>
                   </div>
                 </>

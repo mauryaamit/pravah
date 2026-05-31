@@ -195,8 +195,29 @@ export const SUTR_ROOMS: SutrRoomDescription[] = [
     id: 'pratha',
     name: 'Pratha',
     nameHindi: 'प्रथा',
-    oneLiner: 'The beautiful, the bewildering, the troubling, and the human — one of each, every day',
-    contemplativeText: 'Every culture has developed practices that make complete sense from inside and look incomprehensible from outside. Pratha does not judge — it witnesses. Each day: one festival so beautiful it makes you wish you were there, one so bewildering it makes you question what you know about human nature, one troubling enough to sit with honestly. And one tribe — a human community that has found a completely different answer to the question of how to live. Pratha is not about exotic curiosity. It is about the radical act of understanding the world as it actually is — all of it.'
+    oneLiner: 'The beautiful, the bewildering, the troubling, and the human - one of each, every day',
+    contemplativeText: 'Every culture has developed practices that make complete sense from inside and look incomprehensible from outside. Pratha does not judge - it witnesses. Each day: one festival so beautiful it makes you wish you were there, one so bewildering it makes you question what you know about human nature, one troubling enough to sit with honestly. And one tribe - a human community that has found a completely different answer to the question of how to live. Pratha is not about exotic curiosity. It is about the radical act of understanding the world as it actually is - all of it.'
+  },
+  {
+    id: 'chalchitr',
+    name: 'Chalchitr',
+    nameHindi: 'चलचित्र',
+    oneLiner: 'Cinephile - Critically Acclaimed Cinema',
+    contemplativeText: 'A sanctuary for critically acclaimed cinema. Discover independent, foreign, documentary, and short films that challenge the medium\'s conventions. Daily recommendations include details of direction, editing, themes, and why each film matters. Experience film not as passive entertainment, but as visual art.'
+  },
+  {
+    id: 'kitab',
+    name: 'Kitab',
+    nameHindi: 'किताब',
+    oneLiner: 'Books - Daily Recommendations Across Every Language',
+    contemplativeText: 'A daily guide to books that expand your world. Recommendations cover fiction, philosophy, history, poetry, and science. Each entry includes translation notes, key takeaways, recommended reading companions, and the book\'s famous first line. Build your personal library, one volume at a time.'
+  },
+  {
+    id: 'itihas',
+    name: 'Itihas-Bhugoal',
+    nameHindi: 'इतिहास-भूगोल',
+    oneLiner: 'History & Geography - India and the World, daily, in depth',
+    contemplativeText: 'Every day: two histories and two geographies. Indian history - the Mauryan postal system, the Vijayanagara trade network, the 1857 uprising\'s regional complexity, the constitutional debates - told as narrative, not syllabus. World history - the fall of Constantinople, the Atlantic slave trade\'s economics, the Congress of Vienna, the Cold War\'s proxy conflicts - explained with the forgotten details included. Indian geography - the Lonar crater, the Brahmaputra\'s gorge, the Sundarbans ecosystem. World geography - the Atacama Desert, the Danube basin, the Mekong Delta. Parchment feel. Explorer\'s curiosity.'
   }
 ];
 

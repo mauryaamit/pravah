@@ -43,6 +43,8 @@ export const ROOMS: Room[] = [
   { id: 'vani',        name: 'Vani',          nameHi: 'वाणी',       nameHindi: 'वाणी',      emoji: '🪔', description: 'Sanskrit shlokas, dohas, and living folk wisdom', route: '/vani',         colorVar: '--room-vani',         colorHex: '#8B3A3A', cluster: 'knowledge' },
   { id: 'paradox',     name: 'Paradox',       nameHi: 'विरोधाभास',   nameHindi: 'विरोधाभास', emoji: '🧩', description: 'One paradox per day - fully explained',          route: '/paradox',      colorVar: '--room-paradox',      colorHex: '#4A3570', cluster: 'knowledge' },
   { id: 'kahani',      name: 'Kahani',       nameHi: 'कहानी',      nameHindi: 'कहानी',     emoji: '📜', description: 'Stories across genres and centuries',          route: '/kahani',       colorVar: '--room-kathakar',     colorHex: '#8A5A3A', cluster: 'knowledge' },
+  { id: 'chalchitr',   name: 'Chalchitr',    nameHi: 'चलचित्र',    nameHindi: 'चलचित्र',   emoji: '🎬', description: 'Cinephile — Critically Acclaimed Cinema',          route: '/chalchitr',   colorVar: '--room-chalchitr',    colorHex: '#1C1C2E', cluster: 'knowledge', ambientSound: 'vinyl' },
+  { id: 'kitab',       name: 'Kitab',        nameHi: 'किताब',      nameHindi: 'किताब',      emoji: '📚', description: 'Books — Daily Recommendations Across Every Language', route: '/kitab',       colorVar: '--room-kitab',        colorHex: '#3D2B1F', cluster: 'knowledge', ambientSound: 'library' },
 
   // WORLD
   { id: 'vaishwik',    name: 'Vaishwik',     nameHi: 'वैश्विक',    nameHindi: 'वैश्विक',   emoji: '🌐', description: 'World Intelligence — Global Situations & Systems Explained', route: '/vaishwik', colorVar: '--room-duniya',       colorHex: '#4A7C59', cluster: 'world' },
@@ -51,6 +53,7 @@ export const ROOMS: Room[] = [
   { id: 'aranya',      name: 'Aranya',       nameHi: 'अरण्य',      nameHindi: 'अरण्य',     emoji: '🌿', description: 'Nature room - flora, fauna, Earth',            route: '/aranya',       colorVar: '--room-aranya',       colorHex: '#4A7C59', cluster: 'world' },
   { id: 'pratha',      name: 'Pratha',       nameHi: 'प्रथा',      nameHindi: 'प्रथा',     emoji: '🏺', description: 'Customs, Festivals & Tribes of the World',     route: '/pratha',       colorVar: '--room-pratha',       colorHex: '#8B5E3C', cluster: 'world' },
   { id: 'neelakurinji',name: 'Neelakurinji', nameHi: 'नीलकुरिंजी',nameHindi: 'नीलकुरिंजी',emoji: '💫', description: 'Wonder room - daily surprise',                route: '/neelakurinji', colorVar: '--room-neelakurinji', colorHex: '#7B6BA6', cluster: 'world' },
+  { id: 'itihas',      name: 'Itihas-Bhugoal', nameHi: 'इतिहास-भूगोल', nameHindi: 'इतिहास-भूगोल', emoji: '🗺️', description: 'History & Geography — India and the World',       route: '/itihas',      colorVar: '--room-itihas',       colorHex: '#2D3A1F', cluster: 'world', ambientSound: 'forest' },
 
   // CREATIVE
   { id: 'vyaktiva',    name: 'Vyaktiva',     nameHi: 'व्यक्तित्व',  nameHindi: ' व्यक्तित्व', emoji: '👤', description: 'Person of the day - their life, their way',    route: '/vyaktiva',     colorVar: '--room-vibhav',       colorHex: '#6A8A4A', cluster: 'creative' },

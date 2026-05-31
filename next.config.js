@@ -90,6 +90,10 @@ const nextConfig = {
       { source: '/kathakar', destination: '/kahani', permanent: true },
       { source: '/lekhak', destination: '/write', permanent: true },
       { source: '/sukoon', destination: '/kavitalay', permanent: true },
+      { source: '/cinema', destination: '/chalchitr', permanent: false },
+      { source: '/books', destination: '/kitab', permanent: false },
+      { source: '/history', destination: '/itihas', permanent: false },
+      { source: '/itihas-bhugoal', destination: '/itihas', permanent: false },
     ];
   },
   async headers() {
