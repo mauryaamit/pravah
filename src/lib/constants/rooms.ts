@@ -53,7 +53,7 @@ export const ROOMS: Room[] = [
   { id: 'neelakurinji',name: 'Neelakurinji', nameHi: 'नीलकुरिंजी',nameHindi: 'नीलकुरिंजी',emoji: '💫', description: 'Wonder room - daily surprise',                route: '/neelakurinji', colorVar: '--room-neelakurinji', colorHex: '#7B6BA6', cluster: 'world' },
 
   // CREATIVE
-  { id: 'vyakti',      name: 'Vyakti',       nameHi: 'व्यक्ति',    nameHindi: 'व्यक्ति',   emoji: '👤', description: 'Person of the day - their life, their way',    route: '/vyakti',       colorVar: '--room-vibhav',       colorHex: '#6A8A4A', cluster: 'creative' },
+  { id: 'vyaktiva',    name: 'Vyaktiva',     nameHi: 'व्यक्तित्व',  nameHindi: ' व्यक्तित्व', emoji: '👤', description: 'Person of the day - their life, their way',    route: '/vyaktiva',     colorVar: '--room-vibhav',       colorHex: '#6A8A4A', cluster: 'creative' },
   { id: 'write',       name: 'Write',        nameHi: 'लिखो',       nameHindi: 'लिखो',      emoji: '✍️', description: 'Your writing space - stories, thoughts, anything', route: '/write',  colorVar: '--room-lekhak',       colorHex: '#7A5A8A', cluster: 'creative' },
   { id: 'anand',       name: 'Anand',        nameHi: 'आनंद',       nameHindi: 'आनंद',      emoji: '🎨', description: 'Joy room - humor, illusions, wonder, delight', route: '/anand',        colorVar: '--room-anand',        colorHex: '#C47A3A', cluster: 'creative' },
 ];

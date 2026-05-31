@@ -10,7 +10,7 @@ import ReadAloudButton from '@/components/shared/ReadAloudButton';
 import DayNavigator from '@/components/shared/DayNavigator';
 import { PEOPLE, Person } from './data';
 
-export default function VyaktiPage() {
+export default function VyaktivaPage() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [expandedSection, setExpandedSection] = useState<string | null>('biography');
 
@@ -24,7 +24,7 @@ export default function VyaktiPage() {
         {/* Header */}
         <div className="border-b pb-4" style={{ borderColor: 'var(--border-default)' }}>
           <p className="section-label">Person of the Day</p>
-          <h1 className="font-serif text-2xl" style={{ color: 'var(--text-primary)' }}>व्यक्ति - Vyakti</h1>
+          <h1 className="font-serif text-2xl" style={{ color: 'var(--text-primary)' }}>व्यक्तित्व - Vyaktiva</h1>
           <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>
             One extraordinary life, explored deeply. A different person each day.
           </p>

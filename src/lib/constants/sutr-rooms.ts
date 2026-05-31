@@ -150,11 +150,11 @@ export const SUTR_ROOMS: SutrRoomDescription[] = [
     contemplativeText: `Kahani holds two things: the world's stories and yours. Every day, one story from the oldest traditions of human narrative — Panchatantra, Jataka tales, Zen koans, West African Anansi stories, Norse myths, Sufi teaching tales, Greek myths retold without the sanitization. Each story comes with what it knows about human nature — not the moral, which you can find yourself, but the observation the story is built around. And in the second tab: your own space to write. A title, a thread, a blank page. A calendar with dots for the days you wrote. The story of the day and the story you are writing are not separate things.`,
   },
   {
-    id: 'vyakti',
-    name: 'Vyakti',
-    nameHindi: 'व्यक्ति',
-    oneLiner: 'One person every day — the human beneath the achievement',
-    contemplativeText: `Vyakti is not a biography room. It does not give you birth dates and award lists. It gives you one person per day — the specific thing they knew about being alive, the moment that defined them, the idea their life embodied. Scientists, poets, revolutionaries, philosophers, rulers, reformers, artists — from every culture and era, with deliberate attention to the overlooked: women who changed their fields and weren't credited, thinkers from traditions outside Europe, Indians who should be household names but aren't. One person. One portrait. One question their life leaves open for yours.`,
+    id: 'vyaktiva',
+    name: 'Vyaktiva',
+    nameHindi: 'व्यक्तित्व',
+    oneLiner: 'One extraordinary life, explored deeply',
+    contemplativeText: `Vyaktiva is not a biography room. It does not give you birth dates and award lists. It gives you one person per day — the specific thing they knew about being alive, the moment that defined them, the idea their life embodied. Scientists, poets, revolutionaries, philosophers, rulers, reformers, artists — from every culture and era, with deliberate attention to the overlooked: women who changed their fields and weren't credited, thinkers from traditions outside Europe, Indians who should be household names but aren't. One person. One portrait. One question their life leaves open for yours.`,
   },
   {
     id: 'write',

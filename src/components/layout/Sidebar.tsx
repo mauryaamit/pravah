@@ -29,7 +29,7 @@ const ROOM_ICONS: Record<string, React.ComponentType<any>> = {
   vani: Mic2, paradox: Puzzle,
   vaishwik: Globe2, neelakurinji: Sparkles, safar: PlaneTakeoff, aranya: Leaf, bharat: Flag,
   pratha: LandPlot,
-  kahani: ScrollText, vyakti: UserRound, write: BookMarked, anand: Heart,
+  kahani: ScrollText, vyaktiva: UserRound, write: BookMarked, anand: Heart,
 };
 
 const EXPANDED_W = 260;
