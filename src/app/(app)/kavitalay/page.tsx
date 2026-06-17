@@ -65,10 +65,14 @@ export default function KavitalayPage() {
     fetch(`/api/kavitalay?date=${dateStr}`)
       .then(res => res.json())
       .then(data => {
-        if (active && data.entry) {
+        if (!active) return;
+        if (data.entry) {
           setDayEntry(data.entry);
-          setApiLoading(false);
+        } else {
+          // Use local fallback if API returned unexpected shape
+          setDayEntry(localFallbackEntry);
         }
+        setApiLoading(false);
       })
       .catch(err => {
         console.error('Failed to load daily poems from API:', err);

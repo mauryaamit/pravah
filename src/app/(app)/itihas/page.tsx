@@ -8,7 +8,7 @@ import DayNavigator from '@/components/shared/DayNavigator';
 import ReadAloudButton from '@/components/shared/ReadAloudButton';
 import SutraNoteButton from '@/components/shared/SutraNoteButton';
 import RevisitButton from '@/components/shared/RevisitButton';
-import { getDayIndex } from '@/lib/utils/date';
+import { getDayIndexForArray } from '@/lib/utils/date';
 import { ITIHAAS_DATA, type ItihaasDayEntry, type ItihaasCard } from './data';
 
 type MainTab = 'history' | 'geography';
@@ -24,8 +24,9 @@ export default function ItihasPage() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [activeTab, setActiveTab] = useState<MainTab>('history');
 
-  const dayIndex = getDayIndex(currentDate);
-  const entry: ItihaasDayEntry = ITIHAAS_DATA[(dayIndex - 1) % ITIHAAS_DATA.length];
+  // Use full dataset — covers all 366 entries without repeating every 90 days
+  const dayIndex = getDayIndexForArray(currentDate, ITIHAAS_DATA.length);
+  const entry: ItihaasDayEntry = ITIHAAS_DATA[dayIndex];
 
   const sectionData = entry[activeTab];
   const indian = sectionData.indian;

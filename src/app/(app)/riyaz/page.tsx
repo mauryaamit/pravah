@@ -8,7 +8,7 @@ import DayNavigator from '@/components/shared/DayNavigator';
 import ReadAloudButton from '@/components/shared/ReadAloudButton';
 import SutraNoteButton from '@/components/shared/SutraNoteButton';
 import RevisitButton from '@/components/shared/RevisitButton';
-import { getDayIndex } from '@/lib/utils/date';
+import { getDayIndexForArray } from '@/lib/utils/date';
 import { RIYAZ_DATA, type RiyazDayEntry } from './data';
 
 type RiyazTab = 'featured' | 'raga' | 'songs';
@@ -215,12 +215,14 @@ export default function RiyazPage() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [activeTab, setActiveTab] = useState<RiyazTab>('featured');
 
-  const dayIndex = getDayIndex(currentDate);
-  const entry: RiyazDayEntry = RIYAZ_DATA[(dayIndex - 1) % RIYAZ_DATA.length];
+  // Use full dataset — covers all 365+ entries without repeating every 90 days
+  const dayIndex = getDayIndexForArray(currentDate, RIYAZ_DATA.length);
+  const entry: RiyazDayEntry = RIYAZ_DATA[dayIndex];
   const featured = entry.featured;
 
-  // Fetch daily Raga profile
-  const raga: RagaProfile = RAGAS[(dayIndex - 1) % RAGAS.length];
+  // Fetch daily Raga profile — rotate independently through full raga list
+  const ragaIndex = getDayIndexForArray(currentDate, RAGAS.length);
+  const raga: RagaProfile = RAGAS[ragaIndex];
 
   const getRagaTtsText = (r: RagaProfile) => {
     return `${r.name}, or ${r.nameHi}, belonging to the ${r.thaat} thaat. Best performed during ${r.time}. Rasa is ${r.rasa}. Ascending scale: ${r.aaroh}. Descending scale: ${r.avroh}. Catch phrase is ${r.pakad}. Description: ${r.description}`;

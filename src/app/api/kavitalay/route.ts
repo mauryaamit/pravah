@@ -1,17 +1,20 @@
 // src/app/api/kavitalay/route.ts
+// Simplified: direct deterministic indexing into 365-day dataset.
+// Each date maps uniquely to one KAVITALAY_DATA entry — no repetition within a year.
 
 import { NextRequest, NextResponse } from 'next/server';
 import { KAVITALAY_DATA, Poem, KavitalayDayEntry } from '@/app/(app)/kavitalay/data';
 import { getAdminDb } from '@/lib/firebase/admin';
-import { differenceInDays, parseISO, format } from 'date-fns';
+import { differenceInDays, parseISO } from 'date-fns';
 
 export const dynamic = 'force-dynamic';
 
 const EPOCH = new Date('2024-01-01');
 
-function getDayIndex(modulo: number, date: Date) {
+function getDayIndex(date: Date): number {
+  // Returns 0 to (KAVITALAY_DATA.length - 1)
   const diff = differenceInDays(date, EPOCH);
-  return Math.abs(diff % modulo);
+  return Math.abs(diff % KAVITALAY_DATA.length);
 }
 
 function getTodayString(date: Date) {
@@ -21,19 +24,30 @@ function getTodayString(date: Date) {
   return `${year}-${month}-${day}`;
 }
 
+const RESONANCE_WORDS = ["timeless", "contemplative", "lyric", "resonance", "harmony", "pulse", "silence", "luminous", "tender", "vast"];
+
+function seededResonance(seed: number): string[] {
+  const words: string[] = [];
+  let s = seed;
+  while (words.length < 3) {
+    s = (s * 1664525 + 1013904223) & 0xffffffff;
+    const w = RESONANCE_WORDS[Math.abs(s) % RESONANCE_WORDS.length];
+    if (!words.includes(w)) words.push(w);
+  }
+  return words;
+}
+
 export async function GET(request: NextRequest) {
   try {
     const db = getAdminDb();
-    
+
     // Parse requested date
     const dateParam = request.nextUrl.searchParams.get('date');
     let date = new Date();
     if (dateParam) {
       try {
         date = parseISO(dateParam);
-        if (isNaN(date.getTime())) {
-          date = new Date();
-        }
+        if (isNaN(date.getTime())) date = new Date();
       } catch (e) {
         date = new Date();
       }
@@ -42,214 +56,78 @@ export async function GET(request: NextRequest) {
     const dateStr = getTodayString(date);
     const cacheRef = db.collection('kavitalay_cache').doc(dateStr);
 
-    // Try reading cache first
-    let cachedDoc = null;
+    // Serve from Firestore cache if available
     try {
       const doc = await cacheRef.get();
-      if (doc.exists) {
-        cachedDoc = doc.data();
+      if (doc.exists && doc.data()?.entry) {
+        return NextResponse.json({
+          entry: doc.data()!.entry,
+          fetchedAt: doc.data()!.fetchedAt,
+          source: 'cache'
+        });
       }
     } catch (dbError) {
       console.error('Firestore cache read error:', dbError);
     }
 
-    if (cachedDoc && cachedDoc.entry) {
-      return NextResponse.json({
-        entry: cachedDoc.entry,
-        fetchedAt: cachedDoc.fetchedAt,
-        source: 'cache'
-      });
-    }
+    // Deterministic index: each date → unique entry in the 365-day dataset
+    const baseIdx = getDayIndex(date);
+    const seedEntry = KAVITALAY_DATA[baseIdx];
 
-    // Determine seed base index
-    const baseIdx = getDayIndex(365, date);
-    
-    // Build the daily entry
+    // Build entry directly from the deterministic seed — no used_poems tracking needed
+    // since KAVITALAY_DATA has 365 unique entries indexed by day
     const entry: KavitalayDayEntry = {
       dayIndex: baseIdx,
-      hindi: { poem_of_day: {} as Poem, others: [{} as Poem, {} as Poem] },
-      urdu: { poem_of_day: {} as Poem, others: [{} as Poem, {} as Poem] },
+      hindi: seedEntry.hindi,
+      urdu: seedEntry.urdu,
+      other: seedEntry.other,
       english: { poem_of_day: {} as Poem, others: [{} as Poem, {} as Poem] },
-      other: { poem_of_day: {} as Poem, others: [{} as Poem, {} as Poem] }
     };
 
-    const usedRef = db.collection('used_poems');
-
-    // Helper to find a unique poem from static seed for a language tab
-    const getUniqueSeedPoems = async (lang: 'hindi' | 'urdu' | 'english' | 'other', count: number): Promise<Poem[]> => {
-      const selected: Poem[] = [];
-      let offset = 0;
-      
-      while (selected.length < count && offset < 365) {
-        const idx = (baseIdx + offset) % KAVITALAY_DATA.length;
-        const seedEntry = KAVITALAY_DATA[idx];
-        const tabData = seedEntry[lang];
-        const candidates = [tabData.poem_of_day, ...tabData.others];
-        
-        for (const candidate of candidates) {
-          if (selected.length >= count) break;
-          if (selected.some(p => p.id === candidate.id)) continue;
-          
-          // Check in Firestore registry
-          let isUsed = false;
-          try {
-            const usedDoc = await usedRef.doc(candidate.id).get();
-            if (usedDoc.exists) {
-              const data = usedDoc.data();
-              if (data && data.usedDate && data.usedDate !== dateStr) {
-                isUsed = true;
-              }
-            }
-          } catch (e) {
-            console.error('Error checking used_poems:', e);
-          }
-          
-          if (!isUsed) {
-            selected.push(candidate);
-          }
-        }
-        offset++;
-      }
-
-      // If we couldn't find enough unique ones, just fill with standard seeds
-      if (selected.length < count) {
-        const seedEntry = KAVITALAY_DATA[baseIdx % KAVITALAY_DATA.length];
-        const tabData = seedEntry[lang];
-        const candidates = [tabData.poem_of_day, ...tabData.others];
-        for (const candidate of candidates) {
-          if (selected.length >= count) break;
-          if (!selected.some(p => p.id === candidate.id)) {
-            selected.push(candidate);
-          }
-        }
-      }
-      
-      return selected;
-    };
-
-    // 1. Fetch Hindi poems (seed-based uniqueness)
-    const hindiPoems = await getUniqueSeedPoems('hindi', 3);
-    entry.hindi = {
-      poem_of_day: hindiPoems[0],
-      others: [hindiPoems[1], hindiPoems[2]]
-    };
-
-    // 2. Fetch Urdu poems (seed-based uniqueness)
-    const urduPoems = await getUniqueSeedPoems('urdu', 3);
-    entry.urdu = {
-      poem_of_day: urduPoems[0],
-      others: [urduPoems[1], urduPoems[2]]
-    };
-
-    // 3. Fetch Other poems (seed-based uniqueness)
-    const otherPoems = await getUniqueSeedPoems('other', 3);
-    entry.other = {
-      poem_of_day: otherPoems[0],
-      others: [otherPoems[1], otherPoems[2]]
-    };
-
-    // 4. Fetch English poems (Try PoetryDB, fallback to seed-based uniqueness)
+    // English: try PoetryDB for fresh content, fallback to seed
     let englishPoems: Poem[] = [];
     try {
       const res = await fetch('https://poetrydb.org/random/3', {
-        next: { revalidate: 86400 }
+        signal: AbortSignal.timeout(4000),
       });
       if (res.ok) {
         const data = await res.json();
         if (Array.isArray(data) && data.length >= 3) {
-          for (const item of data) {
-            const poemId = `poetrydb-${item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
-            
-            // Check if used
-            let isUsed = false;
-            try {
-              const usedDoc = await usedRef.doc(poemId).get();
-              if (usedDoc.exists) {
-                const docData = usedDoc.data();
-                if (docData && docData.usedDate && docData.usedDate !== dateStr) {
-                  isUsed = true;
-                }
-              }
-            } catch (e) {
-              console.error('Error checking used_poems for PoetryDB:', e);
-            }
-            
-            if (!isUsed) {
-              const resonanceWords = ["timeless", "contemplative", "lyric", "resonance", "harmony", "pulse", "silence"];
-              const randomResonance = () => {
-                const words: string[] = [];
-                while (words.length < 3) {
-                  const w = resonanceWords[Math.floor(Math.random() * resonanceWords.length)];
-                  if (!words.includes(w)) words.push(w);
-                }
-                return words;
-              };
-
-              englishPoems.push({
-                id: poemId,
-                title: item.title,
-                poet: `अंग्रेजी कवि / ${item.author}`,
-                poet_bio: `${item.author} is a celebrated figure in English literature, known for their expressive verse, technical mastery, and exploring the landscape of human emotion.`,
-                language: 'english',
-                script: 'roman',
-                text_roman: item.lines.join('\n'),
-                era: item.lines.length > 30 ? 'classical' : 'modern',
-                meaning: `This poem by ${item.author} is a beautiful meditation on life, nature, and the quiet spaces in between.`,
-                resonance_words: randomResonance()
-              });
-            }
-          }
+          englishPoems = data.slice(0, 3).map((item: any, i: number) => ({
+            id: `poetrydb-${baseIdx}-${i}-${item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 30)}`,
+            title: item.title,
+            poet: `अंग्रेजी कवि / ${item.author}`,
+            poet_bio: `${item.author} is a celebrated figure in English literature, known for their expressive verse and exploration of the human condition.`,
+            language: 'english' as const,
+            script: 'roman' as const,
+            text_roman: item.lines.join('\n'),
+            era: item.lines.length > 30 ? 'classical' as const : 'modern' as const,
+            meaning: `This poem by ${item.author} is a meditation on life, nature, and the quiet spaces in between.`,
+            resonance_words: seededResonance(baseIdx * 100 + i),
+          }));
         }
       }
     } catch (e) {
       console.error('PoetryDB fetch failed, using seed fallback:', e);
     }
 
-    // Fallback/fill English using seed database if PoetryDB gave less than 3 poems
+    // Fallback to seed English poems if PoetryDB unavailable
     if (englishPoems.length < 3) {
-      const seedEng = await getUniqueSeedPoems('english', 3 - englishPoems.length);
-      englishPoems = [...englishPoems, ...seedEng];
+      const seedEng = seedEntry.english;
+      englishPoems = [seedEng.poem_of_day, ...seedEng.others].slice(0, 3);
     }
 
     entry.english = {
       poem_of_day: englishPoems[0],
-      others: [englishPoems[1], englishPoems[2]]
+      others: [englishPoems[1], englishPoems[2]],
     };
-
-    // Register all chosen poems in the used_poems registry
-    const batch = db.batch();
-    const allSelected = [
-      entry.hindi.poem_of_day, ...entry.hindi.others,
-      entry.urdu.poem_of_day, ...entry.urdu.others,
-      entry.english.poem_of_day, ...entry.english.others,
-      entry.other.poem_of_day, ...entry.other.others
-    ];
-
-    allSelected.forEach(p => {
-      if (p && p.id) {
-        batch.set(usedRef.doc(p.id), {
-          usedDate: dateStr,
-          title: p.title,
-          language: p.language
-        }, { merge: true });
-      }
-    });
 
     const fetchedAtStr = new Date().toISOString();
 
-    // Cache the day's entry
-    try {
-      await cacheRef.set({
-        entry,
-        fetchedAt: fetchedAtStr
-      });
-      await batch.commit();
-
-      // Async cleanup of old cache
-      cleanupOldCache(db).catch(err => console.error('Cache cleanup error:', err));
-    } catch (dbError) {
-      console.error('Firestore write error:', dbError);
-    }
+    // Cache and cleanup (non-blocking)
+    cacheRef.set({ entry, fetchedAt: fetchedAtStr })
+      .then(() => cleanupOldCache(db))
+      .catch(err => console.error('Firestore cache write error:', err));
 
     return NextResponse.json({
       entry,
@@ -265,16 +143,18 @@ export async function GET(request: NextRequest) {
 async function cleanupOldCache(db: any) {
   const thirtyDaysAgo = new Date();
   thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-  
-  const snap = await db.collection('kavitalay_cache')
-    .where('fetchedAt', '<', thirtyDaysAgo.toISOString())
-    .get();
-    
-  if (snap.empty) return;
-  
-  const batch = db.batch();
-  snap.docs.forEach((doc: any) => {
-    batch.delete(doc.ref);
-  });
-  await batch.commit();
+
+  try {
+    const snap = await db.collection('kavitalay_cache')
+      .where('fetchedAt', '<', thirtyDaysAgo.toISOString())
+      .get();
+
+    if (snap.empty) return;
+    const batch = db.batch();
+    snap.docs.forEach((doc: any) => batch.delete(doc.ref));
+    await batch.commit();
+    console.log(`Cleaned up ${snap.size} old kavitalay cache documents.`);
+  } catch (e) {
+    console.error('Cache cleanup error:', e);
+  }
 }
