@@ -10,6 +10,7 @@ import SutraNoteButton from '@/components/shared/SutraNoteButton';
 import RevisitButton from '@/components/shared/RevisitButton';
 import { getDayIndexForArray } from '@/lib/utils/date';
 import { RIYAZ_DATA, type RiyazDayEntry } from './data';
+import { HINDI_SONGS, REGIONAL_SONGS, ENGLISH_SONGS, WORLD_SONGS } from './songs-pool';
 
 type RiyazTab = 'featured' | 'raga' | 'songs';
 
@@ -219,6 +220,15 @@ export default function RiyazPage() {
   const dayIndex = getDayIndexForArray(currentDate, RIYAZ_DATA.length);
   const entry: RiyazDayEntry = RIYAZ_DATA[dayIndex];
   const featured = entry.featured;
+
+  // Use unique songs from the pool to strictly avoid repetitions in 30 days
+  const poolDayIndex = getDayIndexForArray(currentDate, 30); // 30-day rotation
+  const poolSongs = [
+    HINDI_SONGS[poolDayIndex % HINDI_SONGS.length],
+    REGIONAL_SONGS[poolDayIndex % REGIONAL_SONGS.length],
+    ENGLISH_SONGS[poolDayIndex % ENGLISH_SONGS.length],
+    WORLD_SONGS[poolDayIndex % WORLD_SONGS.length]
+  ];
 
   // Fetch daily Raga profile — rotate independently through full raga list
   const ragaIndex = getDayIndexForArray(currentDate, RAGAS.length);
@@ -459,7 +469,7 @@ export default function RiyazPage() {
               transition={{ duration: 0.35 }}
               className="grid grid-cols-1 md:grid-cols-2 gap-4"
             >
-              {entry.songs.map((song, idx) => {
+              {poolSongs.map((song, idx) => {
                 const songId = `song_${idx}`;
                 return (
                   <div 

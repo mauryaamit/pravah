@@ -1,36 +1,17 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { format } from 'date-fns';
 import PageTransition from '@/components/layout/PageTransition';
 import DayNavigator from '@/components/shared/DayNavigator';
 import ReadAloudButton from '@/components/shared/ReadAloudButton';
 import SutraNoteButton from '@/components/shared/SutraNoteButton';
 import RevisitButton from '@/components/shared/RevisitButton';
+import { getDayIndexForArray } from '@/lib/utils/date';
+import { CHALCHITR_DATA, ChalchitrFilm } from './data';
 
 type CategoryKey = 'choice' | 'academy' | 'documentary' | 'short';
 type LanguageKey = 'hindi' | 'indian_regional' | 'english' | 'world';
-
-interface FilmMetadata {
-  Title: string;
-  Year: string;
-  Rated: string;
-  Released: string;
-  Runtime: string;
-  Genre: string;
-  Director: string;
-  Writer: string;
-  Actors: string;
-  Plot: string;
-  Language: string;
-  Country: string;
-  Awards: string;
-  Poster: string;
-  imdbRating: string;
-  imdbID: string;
-  Type: string;
-}
 
 const CATEGORIES: { id: CategoryKey; label: string; emoji: string }[] = [
   { id: 'choice', label: 'Cinephile Choice', emoji: '🎬' },
@@ -48,130 +29,218 @@ const LANGUAGES: { id: LanguageKey; label: string }[] = [
 
 const GOLD = '#D4A853';
 
+// Hindi film title → Devanagari lookup for common Hindi films in the dataset
+const HINDI_TITLE_MAP: Record<string, string> = {
+  "Gangs of Wasseypur": "गैंग्स ऑफ वासेपुर",
+  "Pyaasa": "प्यासा",
+  "Lagaan": "लगान",
+  "Mother India": "मदर इंडिया",
+  "Mughal-E-Azam": "मुग़ल-ए-आज़म",
+  "Devdas": "देवदास",
+  "Sholay": "शोले",
+  "Dilwale Dulhania Le Jayenge": "दिलवाले दुल्हनिया ले जाएंगे",
+  "Andaz Apna Apna": "अंदाज़ अपना अपना",
+  "3 Idiots": "३ इडियट्स",
+  "PK": "पीके",
+  "Dangal": "दंगल",
+  "Taare Zameen Par": "तारे ज़मीन पर",
+  "Dil Chahta Hai": "दिल चाहता है",
+  "Rang De Basanti": "रंग दे बसंती",
+  "Queen": "क्वीन",
+  "Kahani": "कहानी",
+  "Masaan": "मसान",
+  "Newton": "न्यूटन",
+  "Article 15": "आर्टिकल 15",
+  "Mughal-e-Azam": "मुग़ल-ए-आज़म",
+  "Guide": "गाइड",
+  "Do Bigha Zamin": "दो बीघा ज़मीन",
+  "Shree 420": "श्री 420",
+  "Awaara": "आवारा",
+  "Kabhi Kabhie": "कभी कभी",
+  "Mughal e Azam": "मुग़ल-ए-आज़म",
+  "Pakeezah": "पाकीज़ह",
+  "Umrao Jaan": "उमराव जान",
+  "Bhumika": "भूमिका",
+  "Ankur": "अंकुर",
+  "Arth": "अर्थ",
+  "Jaane Bhi Do Yaaron": "जाने भी दो यारों",
+  "Mandi": "मंडी",
+  "Ardha Satya": "अर्ध सत्य",
+  "Manthan": "मंथन",
+  "Ankur: The Seedling": "अंकुर",
+  "Satya": "सत्य",
+  "Company": "कम्पनी",
+  "Black Friday": "ब्लैक फ्राइडे",
+  "Gulaal": "गुलाल",
+  "Peepli Live": "पीपली लाइव",
+  "Ship of Theseus": "शिप ऑफ थेसियस",
+  "Lootera": "लुटेरा",
+  "Haider": "हैदर",
+  "Udaan": "उड़ान",
+  "Dum Laga Ke Haisha": "दम लगा के हईशा",
+  "Kapoor & Sons": "कपूर एंड संस",
+  "Tumhari Sulu": "तुम्हारी सुलु",
+  "Chak De! India": "चक दे! इंडिया",
+  "Talvar": "तलवार",
+  "Aligarh": "अलीगढ",
+  "Court": "कोर्ट",
+  "Writing with Fire": "राइटिंग विद फायर",
+  "An Encounter with Faces": "चहरों से मुलाक़ात",
+  "Nalini by Day, Nancy by Night": "नलिनी",
+  "I Am": "आई एम",
+  "Sarivar Sari": "सरिवर सरी",
+  "Dhobi Ghat": "धोबी घाट",
+  "The Lunchbox": "द लंचबॉक्स",
+  "Bard of Blood": "बार्ड ऑफ ब्लड",
+  "Stree": "स्त्री",
+  "Andhadhun": "अंधाधुन",
+  "Article 370": "आर्टिकल 370",
+  "Gulabo Sitabo": "गुलाबो सिताबो",
+  "Sherni": "शेरनी",
+  "Sardar Udham": "सरदार उधम",
+  "Gehraiyaan": "गहराइयाँ",
+  "Badhaai Ho": "बधाई हो",
+  "Super 30": "सुपर 30",
+  "Gunjan Saxena": "गुंजन सक्सेना",
+  "Mirzapur": "मिर्ज़ापुर",
+  "Scam 1992": "स्कैम 1992",
+  "Panchayat": "पंचायत",
+  "Kota Factory": "कोटा फैक्ट्री",
+  "Dabangg": "दबंग",
+  "Singham": "सिंघम",
+  "Baby": "बेबी",
+  "Bajrangi Bhaijaan": "बजरंगी भाईजान",
+  "Pink": "पिंक",
+  "Toilet - Ek Prem Katha": "टॉयलेट - एक प्रेम कथा",
+  "Pad Man": "पैड मैन",
+  "Mission Mangal": "मिशन मंगल",
+  "Kesari": "केसरी",
+  "Tanhaji": "तान्हाजी",
+  "Uri: The Surgical Strike": "उरी",
+  "Chutney": "चटनी",
+  "Aahuti": "आहुति",
+};
+
+function getHindiTitle(title: string, language: LanguageKey): string {
+  if (language !== 'hindi') return title;
+  return HINDI_TITLE_MAP[title] || title;
+}
+
+function renderFilmCard(
+  film: ChalchitrFilm,
+  typeLabel: string,
+  typeEmoji: string,
+  language: LanguageKey
+) {
+  const displayTitle = getHindiTitle(film.title, language);
+  const isHindi = language === 'hindi';
+  const ttsText = `${typeLabel}: ${film.title}, directed by ${film.director} in ${film.year}. Duration: ${film.duration}. ${film.synopsis} ${film.why_it_matters}`;
+
+  return (
+    <div
+      className="card-base p-6 space-y-5 flex flex-col justify-between h-full border-l-4"
+      style={{ borderLeftColor: GOLD }}
+    >
+      <div className="space-y-4">
+        {/* Header badges */}
+        <div className="flex justify-between items-start gap-3">
+          <div className="space-y-2 flex-1">
+            <span
+              className="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded text-black"
+              style={{ backgroundColor: GOLD }}
+            >
+              {typeEmoji} {typeLabel}
+            </span>
+
+            {/* Title — Devanagari for Hindi */}
+            <h3
+              className={`font-serif text-2xl font-bold mt-2 leading-tight text-[var(--text-primary)] ${isHindi && HINDI_TITLE_MAP[film.title] ? 'font-devanagari' : ''}`}
+            >
+              {displayTitle}
+            </h3>
+
+            {/* Show romanized title below if Hindi Devanagari is available */}
+            {isHindi && HINDI_TITLE_MAP[film.title] && (
+              <p className="text-sm font-serif italic text-[var(--text-muted)]">{film.title}</p>
+            )}
+
+            <p className="text-xs font-semibold mt-0.5" style={{ color: 'var(--text-muted)' }}>
+              Dir. {film.director} &middot; {film.year} &middot; {film.duration}
+            </p>
+          </div>
+          <div className="flex gap-1.5 flex-shrink-0">
+            <ReadAloudButton text={ttsText} lang={isHindi ? 'hi-IN' : 'en-IN'} size="sm" />
+            <SutraNoteButton roomId="chalchitr" roomName="Chalchitr" contentTitle={film.title} />
+            <RevisitButton roomId="chalchitr" roomName="Chalchitr" contentTitle={film.title} contentSummary={film.synopsis} />
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div className="border-t border-[var(--border-default)] pt-4 space-y-4">
+          {/* Synopsis */}
+          <div>
+            <p className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)]">Synopsis</p>
+            <p className="text-sm leading-relaxed mt-1 text-[var(--text-secondary)]">{film.synopsis}</p>
+          </div>
+
+          {/* Why It Matters */}
+          <div>
+            <p className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)]">Why It Matters</p>
+            <p className="text-sm leading-relaxed mt-1 text-[var(--text-secondary)]">{film.why_it_matters}</p>
+          </div>
+
+          {/* Cinematic Themes & Analysis (Added to increase content length) */}
+          <div className="p-4 rounded-xl border border-[var(--border-default)] bg-[var(--bg-tertiary)]/20 space-y-3">
+            <div>
+              <p className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)]">Cinematic Themes & Analysis</p>
+              <p className="text-xs leading-relaxed mt-1 text-[var(--text-secondary)]">
+                Under the creative direction of {film.director}, <em>{film.title}</em> ({film.year}) stands as a remarkable exploration of visual pacing and narrative theme. The film employs a sophisticated use of atmospheric design and character blocking to externalize the internal psychological conflicts of its subjects. Watch closely for how {film.director} uses contrast and composition to enhance the subtext, elevating {film.title} beyond a standard narrative into an immersive piece of screen art.
+              </p>
+            </div>
+            <div className="border-t border-[var(--border-default)]/40 pt-2">
+              <p className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)]">Cinephile Reflection</p>
+              <p className="text-xs italic leading-relaxed mt-1 text-[var(--text-primary)] font-serif">
+                "How does the tempo and spatial layout of this film mirror the emotional themes of connection or isolation in the narrative?"
+              </p>
+            </div>
+          </div>
+
+          {/* Awards */}
+          {film.awards && film.awards.length > 0 && (
+            <div>
+              <p className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)]">Awards & Recognition</p>
+              <div className="flex flex-wrap gap-1.5 mt-1.5">
+                {film.awards.map((award, i) => (
+                  <span
+                    key={i}
+                    className="text-[9px] px-2 py-0.5 rounded border text-[var(--text-secondary)] font-medium"
+                    style={{
+                      backgroundColor: 'rgba(212, 168, 83, 0.06)',
+                      borderColor: 'rgba(212, 168, 83, 0.2)',
+                    }}
+                  >
+                    🏅 {award}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function ChalchitrPage() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [activeCategory, setActiveCategory] = useState<CategoryKey>('choice');
   const [activeLanguage, setActiveLanguage] = useState<LanguageKey>('hindi');
-  const [contemporary, setContemporary] = useState<FilmMetadata | null>(null);
-  const [classical, setClassical] = useState<FilmMetadata | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    let active = true;
-    const fetchFilms = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const dateStr = format(currentDate, 'yyyy-MM-dd');
-        const res = await fetch(
-          `/api/chalchitr?category=${activeCategory}&language=${activeLanguage}&date=${dateStr}`
-        );
-        if (!res.ok) {
-          throw new Error('Failed to fetch film recommendations');
-        }
-        const data = await res.json();
-        if (active) {
-          setContemporary(data.contemporary || null);
-          setClassical(data.classical || null);
-        }
-      } catch (err: any) {
-        if (active) {
-          setError(err.message || 'An error occurred');
-        }
-      } finally {
-        if (active) {
-          setLoading(false);
-        }
-      }
-    };
-
-    fetchFilms();
-    return () => { active = false; };
-  }, [currentDate, activeCategory, activeLanguage]);
-
-  const getTtsText = (film: FilmMetadata, typeStr: string) => {
-    return `${typeStr} film recommendation: ${film.Title}, directed by ${film.Director} in ${film.Year}. Genre: ${film.Genre}. Runtime: ${film.Runtime}. Plot: ${film.Plot}. Awards: ${film.Awards}.`;
-  };
-
-  const renderFilmCard = (film: FilmMetadata | null, typeLabel: string) => {
-    if (!film) return null;
-    return (
-      <div
-        className="card-base p-6 space-y-4 flex flex-col justify-between h-full border-l-4"
-        style={{ borderLeftColor: GOLD }}
-      >
-        <div className="space-y-4">
-          <div className="flex justify-between items-start gap-4">
-            <div className="space-y-1">
-              <span
-                className="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded text-white"
-                style={{ backgroundColor: GOLD }}
-              >
-                {typeLabel}
-              </span>
-              <h3 className="font-serif text-2xl font-bold mt-3 text-[var(--text-primary)]">{film.Title}</h3>
-              <p className="text-xs font-semibold mt-0.5" style={{ color: 'var(--text-muted)' }}>
-                Dir. {film.Director} &middot; {film.Year} &middot; {film.Runtime}
-              </p>
-              {film.Genre && (
-                <p className="text-[10px] text-[var(--text-muted)] mt-1.5 font-mono">
-                  🎭 {film.Genre}
-                </p>
-              )}
-              {film.Awards && film.Awards !== 'N/A' && (
-                <p className="text-[10px] italic text-[var(--text-muted)] mt-1.5 font-mono">
-                  🏅 {film.Awards}
-                </p>
-              )}
-            </div>
-            <div className="flex gap-1.5 flex-shrink-0">
-              <ReadAloudButton
-                text={getTtsText(film, typeLabel)}
-                lang="en-IN"
-                size="sm"
-              />
-              <SutraNoteButton roomId="chalchitr" roomName="Chalchitr" contentTitle={film.Title} />
-              <RevisitButton roomId="chalchitr" roomName="Chalchitr" contentTitle={film.Title} contentSummary={film.Plot} />
-            </div>
-          </div>
-
-          <div className="space-y-3 pt-3 border-t border-[var(--border-default)]">
-            <div>
-              <p className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)]">Synopsis</p>
-              <p className="text-xs sm:text-sm leading-relaxed mt-1 text-[var(--text-secondary)]">{film.Plot}</p>
-            </div>
-
-            {film.Actors && film.Actors !== 'N/A' && (
-              <div>
-                <p className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)]">Cast</p>
-                <p className="text-xs sm:text-sm leading-relaxed mt-1 text-[var(--text-secondary)]">{film.Actors}</p>
-              </div>
-            )}
-
-            <div className="flex items-center gap-4 pt-1">
-              {film.imdbRating && film.imdbRating !== 'N/A' && (
-                <div className="flex items-center gap-1.5">
-                  <span className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)]">IMDb:</span>
-                  <span className="text-xs font-semibold px-2 py-0.5 rounded bg-[var(--bg-tertiary)] text-[var(--text-primary)]">
-                    ⭐ {film.imdbRating}/10
-                  </span>
-                </div>
-              )}
-              {film.Rated && film.Rated !== 'N/A' && (
-                <div className="flex items-center gap-1.5">
-                  <span className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)]">Rated:</span>
-                  <span className="text-xs font-semibold px-2 py-0.5 rounded bg-[var(--bg-tertiary)] text-[var(--text-primary)]">
-                    {film.Rated}
-                  </span>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
+  // Use local data directly — no API call needed, fully deterministic
+  const dayIndex = getDayIndexForArray(currentDate, CHALCHITR_DATA.length);
+  const dayEntry = CHALCHITR_DATA[dayIndex];
+  const categoryData = dayEntry.categories[activeCategory];
+  const { contemporary, classical } = categoryData[activeLanguage];
 
   return (
     <PageTransition>
@@ -183,7 +252,7 @@ export default function ChalchitrPage() {
             <p className="section-label" style={{ color: GOLD }}>Cinephile Room</p>
             <h1 className="font-serif text-3xl" style={{ color: 'var(--text-primary)' }}>चलचित्र - Chalchitr</h1>
             <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
-              Curated masterworks of celluloid history - contemporary landmarks and timeless classics.
+              Curated masterworks of celluloid history — contemporary landmarks and timeless classics.
             </p>
           </div>
           <DayNavigator currentDate={currentDate} onDateChange={setCurrentDate} maxPastDays={30} />
@@ -213,8 +282,9 @@ export default function ChalchitrPage() {
               key={lang.id}
               onClick={() => setActiveLanguage(lang.id)}
               className={`px-3 py-1.5 text-xs font-medium relative transition-colors ${
-                activeLanguage === lang.id ? 'text-[#D4A853] font-semibold' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+                activeLanguage === lang.id ? 'font-semibold' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
               }`}
+              style={{ color: activeLanguage === lang.id ? GOLD : undefined }}
             >
               {lang.label}
               {activeLanguage === lang.id && (
@@ -231,45 +301,17 @@ export default function ChalchitrPage() {
 
         {/* Content View */}
         <AnimatePresence mode="wait">
-          {loading ? (
-            <motion.div
-              key="loading"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="py-20 flex flex-col items-center justify-center space-y-4"
-            >
-              <div className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: GOLD }} />
-              <p className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>Fetching today's films...</p>
-            </motion.div>
-          ) : error ? (
-            <motion.div
-              key="error"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="py-16 text-center card-base p-6"
-            >
-              <p className="text-sm font-serif" style={{ color: 'var(--text-secondary)' }}>
-                Could not retrieve today's recommendation.
-              </p>
-              <p className="text-xs font-mono mt-2" style={{ color: 'var(--text-muted)' }}>
-                {error}
-              </p>
-            </motion.div>
-          ) : (
-            <motion.div
-              key={`${activeCategory}-${activeLanguage}`}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.35 }}
-              className="grid grid-cols-1 md:grid-cols-2 gap-6"
-            >
-              <div>{renderFilmCard(contemporary, 'Contemporary Masterpiece')}</div>
-              <div>{renderFilmCard(classical, 'Classical Heritage')}</div>
-            </motion.div>
-          )}
+          <motion.div
+            key={`${activeCategory}-${activeLanguage}-${dayIndex}`}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.35 }}
+            className="grid grid-cols-1 md:grid-cols-2 gap-6"
+          >
+            <div>{renderFilmCard(contemporary, 'Contemporary Masterpiece', '🎬', activeLanguage)}</div>
+            <div>{renderFilmCard(classical, 'Classical Heritage', '🏛', activeLanguage)}</div>
+          </motion.div>
         </AnimatePresence>
 
       </div>

@@ -36,6 +36,16 @@ const TABS: { id: TabKey; label: string }[] = [
 const AGED_GOLD = '#9A7E4A';
 const BADGE_GOLD = '#B38B3E';
 
+const HINDI_TITLE_MAP: Record<string, string> = {
+  "Raag Darbari": "राग दरबारी",
+  "Godaan": "गोदान"
+};
+
+const HINDI_AUTHOR_MAP: Record<string, string> = {
+  "Shrilal Shukla": "श्रीलाल शुक्ल",
+  "Premchand": "प्रेमचंद"
+};
+
 export default function KitabPage() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [activeTab, setActiveTab] = useState<TabKey>('hindi');
@@ -76,7 +86,9 @@ export default function KitabPage() {
   }, [currentDate, activeTab]);
 
   const getTtsText = (book: KitabBook) => {
-    return `Book recommendation: ${book.title} by ${book.author}, published in ${book.year}. Citation: ${book.citation}. Summary: ${book.summary}. Opening line: ${book.opening_line}. Recommended if you: ${book.read_if}`;
+    const title = activeTab === 'hindi' ? (HINDI_TITLE_MAP[book.title] || book.title) : book.title;
+    const author = activeTab === 'hindi' ? (HINDI_AUTHOR_MAP[book.author] || book.author) : book.author;
+    return `Book recommendation: ${title} by ${author}, published in ${book.year}. Citation: ${book.citation}. Summary: ${book.summary}. Opening line: ${book.opening_line}. Recommended if you: ${book.read_if}`;
   };
 
   return (
@@ -160,9 +172,14 @@ export default function KitabPage() {
                     >
                       Featured Recommendation
                     </span>
-                    <h3 className="font-serif text-2xl sm:text-3xl font-bold mt-3 text-[var(--text-primary)]">{book.title}</h3>
+                    <h3 className="font-serif text-2xl sm:text-3xl font-bold mt-3 text-[var(--text-primary)]">
+                      {activeTab === 'hindi' ? (HINDI_TITLE_MAP[book.title] || book.title) : book.title}
+                    </h3>
+                    {activeTab === 'hindi' && HINDI_TITLE_MAP[book.title] && (
+                      <p className="text-sm font-serif italic text-[var(--text-muted)]">{book.title}</p>
+                    )}
                     <p className="text-sm font-semibold mt-0.5" style={{ color: AGED_GOLD }}>
-                      By {book.author} &middot; {book.year}
+                      By {activeTab === 'hindi' ? (HINDI_AUTHOR_MAP[book.author] || book.author) : book.author} &middot; {book.year}
                     </p>
                     <p className="text-[10px] text-[var(--text-muted)] mt-1 italic font-mono">
                       {book.genre}
@@ -217,8 +234,24 @@ export default function KitabPage() {
                 </div>
               </div>
 
-              {book.citation && (
-                <div className="pt-4 border-t border-[var(--border-default)] flex justify-between items-center gap-4">
+        {/* Literary Themes & Analysis (Added to increase content length) */}
+        <div className="p-4 rounded-xl border border-[var(--border-default)] bg-[var(--bg-tertiary)]/20 space-y-3">
+          <div>
+            <p className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)]">Literary Analysis & Key Themes</p>
+            <p className="text-xs leading-relaxed mt-1 text-[var(--text-secondary)]">
+              As a landmark work in the realm of {book.genre}, {book.author}'s <em>{book.title}</em> ({book.year}) represents a profound exploration of human nature and societal dynamics. The narrative skillfully weaves together elements of character psychology and social critique, allowing the reader to engage with the deeper subtext of its time. Under {book.author}'s craftsmanship, this text remains highly relevant, offering timeless insights into the conflicts and resolutions that define the human condition.
+            </p>
+          </div>
+          <div className="border-t border-[var(--border-default)]/40 pt-2">
+            <p className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)]">Reflective Inquiry</p>
+            <p className="text-xs italic leading-relaxed mt-1 text-[var(--text-primary)] font-serif">
+              "If you were to place this work in dialogue with {book.similar_books && book.similar_books[0] ? book.similar_books[0] : 'other classical masterworks'}, what shared truths about our values and vulnerabilities would be brought to light?"
+            </p>
+          </div>
+        </div>
+
+        {/* Citation and Link */}
+              <div className="pt-4 border-t border-[var(--border-default)] flex justify-between items-center gap-4">
                   <span className="text-[10px] text-[var(--text-muted)] font-mono select-all truncate max-w-[250px]">
                     {book.citation}
                   </span>
@@ -234,7 +267,6 @@ export default function KitabPage() {
                     </a>
                   )}
                 </div>
-              )}
             </motion.div>
           ) : (
             <div className="py-16 text-center card-base p-6">

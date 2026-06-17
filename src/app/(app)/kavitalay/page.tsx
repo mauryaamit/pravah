@@ -15,7 +15,8 @@ import { db } from '@/lib/firebase/client';
 import { doc, setDoc, deleteDoc, collection, onSnapshot, getDoc } from 'firebase/firestore';
 import { useAuth } from '@/lib/hooks/useAuth';
 import FocusMode from '@/components/shared/FocusMode';
-import { KAVITALAY_DATA, Poem, KavitalayDayEntry } from './data';
+import { Poem, KavitalayDayEntry } from './data';
+import { HINDI_POEMS, URDU_POEMS, ENGLISH_POEMS, WORLD_POEMS } from './poems-pool';
 
 type Script = 'hi' | 'roman' | 'en';
 type EraFilter = 'all' | 'modern' | 'classical';
@@ -50,8 +51,38 @@ export default function KavitalayPage() {
     localStorage.setItem('kavitalay_era_filter', e);
   };
 
-  const activeDayIndex = getDayIndexForArray(currentDate, KAVITALAY_DATA.length);
-  const localFallbackEntry = KAVITALAY_DATA[activeDayIndex];
+  const dayIdx = getDayIndexForArray(currentDate, 30);
+  const localFallbackEntry: KavitalayDayEntry = {
+    dayIndex: dayIdx,
+    hindi: {
+      poem_of_day: HINDI_POEMS[dayIdx % HINDI_POEMS.length],
+      others: [
+        HINDI_POEMS[(dayIdx + 1) % HINDI_POEMS.length],
+        HINDI_POEMS[(dayIdx + 2) % HINDI_POEMS.length]
+      ]
+    },
+    urdu: {
+      poem_of_day: URDU_POEMS[dayIdx % URDU_POEMS.length],
+      others: [
+        URDU_POEMS[(dayIdx + 1) % URDU_POEMS.length],
+        URDU_POEMS[(dayIdx + 2) % URDU_POEMS.length]
+      ]
+    },
+    english: {
+      poem_of_day: ENGLISH_POEMS[dayIdx % ENGLISH_POEMS.length],
+      others: [
+        ENGLISH_POEMS[(dayIdx + 1) % ENGLISH_POEMS.length],
+        ENGLISH_POEMS[(dayIdx + 2) % ENGLISH_POEMS.length]
+      ]
+    },
+    other: {
+      poem_of_day: WORLD_POEMS[dayIdx % WORLD_POEMS.length],
+      others: [
+        WORLD_POEMS[(dayIdx + 1) % WORLD_POEMS.length],
+        WORLD_POEMS[(dayIdx + 2) % WORLD_POEMS.length]
+      ]
+    }
+  };
 
   const [dayEntry, setDayEntry] = useState<KavitalayDayEntry>(localFallbackEntry);
   const [apiLoading, setApiLoading] = useState(true);

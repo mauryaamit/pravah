@@ -10,6 +10,7 @@ import SutraNoteButton from '@/components/shared/SutraNoteButton';
 import RevisitButton from '@/components/shared/RevisitButton';
 import { getDayIndexForArray } from '@/lib/utils/date';
 import { ITIHAAS_DATA, type ItihaasDayEntry, type ItihaasCard } from './data';
+import { INDIAN_HISTORY_POOL, WORLD_HISTORY_POOL, INDIAN_GEOGRAPHY_POOL, WORLD_GEOGRAPHY_POOL } from './itihas-pool';
 
 type MainTab = 'history' | 'geography';
 
@@ -24,13 +25,14 @@ export default function ItihasPage() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [activeTab, setActiveTab] = useState<MainTab>('history');
 
-  // Use full dataset — covers all 366 entries without repeating every 90 days
-  const dayIndex = getDayIndexForArray(currentDate, ITIHAAS_DATA.length);
-  const entry: ItihaasDayEntry = ITIHAAS_DATA[dayIndex];
-
-  const sectionData = entry[activeTab];
-  const indian = sectionData.indian;
-  const world = sectionData.world;
+  // Use unique history/geography pool to strictly avoid repetitions in 30 days
+  const poolDayIndex = getDayIndexForArray(currentDate, 30); // 30-day rotation
+  const indian = activeTab === 'history' 
+    ? INDIAN_HISTORY_POOL[poolDayIndex % INDIAN_HISTORY_POOL.length]
+    : INDIAN_GEOGRAPHY_POOL[poolDayIndex % INDIAN_GEOGRAPHY_POOL.length];
+  const world = activeTab === 'history' 
+    ? WORLD_HISTORY_POOL[poolDayIndex % WORLD_HISTORY_POOL.length]
+    : WORLD_GEOGRAPHY_POOL[poolDayIndex % WORLD_GEOGRAPHY_POOL.length];
 
   const getTtsText = (card: ItihaasCard, contextLabel: string) => {
     return `${contextLabel} exploration: ${card.title}. Period or Location: ${card.period_or_coordinates}. Narrative: ${card.narrative}. Did you know: ${card.did_you_know}. Why it matters: ${card.why_it_matters}`;
@@ -152,7 +154,7 @@ export default function ItihasPage() {
         {/* Content Columns */}
         <AnimatePresence mode="wait">
           <motion.div
-            key={`${activeTab}-${dayIndex}`}
+            key={`${activeTab}-${poolDayIndex}`}
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -15 }}
