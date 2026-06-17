@@ -607,6 +607,291 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
   },
   {
     dayIndex: 31,
+    era: 'contemporary',
+    nationality: "American",
+    name: "Thomas Pynchon",
+    born: "1937",
+    period: "Postmodernism",
+    summary: "Thomas Pynchon is an influential contemporary American writer, known for their narrative innovation and exploration of modern identity.",
+    portrait: "Thomas Pynchon (1937 - present) is a leading American voice of modern literature. Born in the context of rapid global change, they have shaped contemporary fiction by exploring themes of history, displacement, and human relationships.\n\nTheir prose is characterized by its stylistic innovation, its psychological complexity, and its deep engagement with the moral questions of our time. By challenging traditional narrative structures, they have expanded the boundaries of what the novel can capture, offering a key reference for understanding the anxieties of contemporary life.",
+    signature_work: {
+      title: "Gravity's Rainbow",
+      what_it_is: "A complex postmodern novel about V-2 rockets in WWII",
+      why_it_matters: "Acclaimed for its encyclopedic scope and paranoia",
+      one_passage: "A screaming comes across the sky."
+    },
+    what_they_knew: "Thomas Pynchon knew that modern human relationships are shaped by the pressure of historical memory and systemic divides, which they detailed in their writing.",
+    must_read: ["Gravity's Rainbow", 'The Crying of Lot 49'],
+    read_if_curious: "Read Lot 49 first."
+  },
+  {
+    dayIndex: 32,
+    era: 'contemporary',
+    nationality: "American",
+    name: "George Saunders",
+    born: "1958",
+    period: "Satiric Surrealism",
+    summary: "George Saunders is an influential contemporary American writer, known for their narrative innovation and exploration of modern identity.",
+    portrait: "George Saunders (1958 - present) is a leading American voice of modern literature. Born in the context of rapid global change, they have shaped contemporary fiction by exploring themes of history, displacement, and human relationships.\n\nTheir prose is characterized by its stylistic innovation, its psychological complexity, and its deep engagement with the moral questions of our time. By challenging traditional narrative structures, they have expanded the boundaries of what the novel can capture, offering a key reference for understanding the anxieties of contemporary life.",
+    signature_work: {
+      title: "Lincoln in the Bardo",
+      what_it_is: "A polyphonic novel about Abraham Lincoln mourning his son",
+      why_it_matters: "Won the Booker Prize, blending history and Buddhist bardo",
+      one_passage: "We are all in the process of leaving."
+    },
+    what_they_knew: "George Saunders knew that modern human relationships are shaped by the pressure of historical memory and systemic divides, which they detailed in their writing.",
+    must_read: ['Lincoln in the Bardo', 'Tenth of December'],
+    read_if_curious: "Read Tenth of December first."
+  },
+  {
+    dayIndex: 33,
+    era: 'contemporary',
+    nationality: "American",
+    name: "Donna Tartt",
+    born: "1963",
+    period: "Neo-Romanticism",
+    summary: "Donna Tartt is an influential contemporary American writer, known for their narrative innovation and exploration of modern identity.",
+    portrait: "Donna Tartt (1963 - present) is a leading American voice of modern literature. Born in the context of rapid global change, they have shaped contemporary fiction by exploring themes of history, displacement, and human relationships.\n\nTheir prose is characterized by its stylistic innovation, its psychological complexity, and its deep engagement with the moral questions of our time. By challenging traditional narrative structures, they have expanded the boundaries of what the novel can capture, offering a key reference for understanding the anxieties of contemporary life.",
+    signature_work: {
+      title: "The Secret History",
+      what_it_is: "A murder mystery among elite classics students in Vermont",
+      why_it_matters: "A modern cult classic exploring beauty and terror",
+      one_passage: "Beauty is terror. Whatever we call beautiful, we quiver before it."
+    },
+    what_they_knew: "Donna Tartt knew that modern human relationships are shaped by the pressure of historical memory and systemic divides, which they detailed in their writing.",
+    must_read: ['The Secret History', 'The Goldfinch'],
+    read_if_curious: "Read The Secret History first."
+  },
+  {
+    dayIndex: 34,
+    era: 'contemporary',
+    nationality: "American",
+    name: "Jeffrey Eugenides",
+    born: "1960",
+    period: "Contemporary Realism",
+    summary: "Jeffrey Eugenides is an influential contemporary American writer, known for their narrative innovation and exploration of modern identity.",
+    portrait: "Jeffrey Eugenides (1960 - present) is a leading American voice of modern literature. Born in the context of rapid global change, they have shaped contemporary fiction by exploring themes of history, displacement, and human relationships.\n\nTheir prose is characterized by its stylistic innovation, its psychological complexity, and its deep engagement with the moral questions of our time. By challenging traditional narrative structures, they have expanded the boundaries of what the novel can capture, offering a key reference for understanding the anxieties of contemporary life.",
+    signature_work: {
+      title: "Middlesex",
+      what_it_is: "A family saga about a Greek-American intersex narrator",
+      why_it_matters: "Won the Pulitzer Prize for its epic scope and gender themes",
+      one_passage: "Sing now, Muse, and through me tell the story."
+    },
+    what_they_knew: "Jeffrey Eugenides knew that modern human relationships are shaped by the pressure of historical memory and systemic divides, which they detailed in their writing.",
+    must_read: ['Middlesex', 'The Virgin Suicides'],
+    read_if_curious: "Read Middlesex first."
+  },
+  {
+    dayIndex: 35,
+    era: 'contemporary',
+    nationality: "Canadian",
+    name: "Michael Ondaatje",
+    born: "1943",
+    period: "Lyrical Realism",
+    summary: "Michael Ondaatje is an influential contemporary Canadian writer, known for their narrative innovation and exploration of modern identity.",
+    portrait: "Michael Ondaatje (1943 - present) is a leading Canadian voice of modern literature. Born in the context of rapid global change, they have shaped contemporary fiction by exploring themes of history, displacement, and human relationships.\n\nTheir prose is characterized by its stylistic innovation, its psychological complexity, and its deep engagement with the moral questions of our time. By challenging traditional narrative structures, they have expanded the boundaries of what the novel can capture, offering a key reference for understanding the anxieties of contemporary life.",
+    signature_work: {
+      title: "The English Patient",
+      what_it_is: "Four damaged souls sheltering in an Italian villa in WWII",
+      why_it_matters: "Won the Booker Prize for its poetic style and memory themes",
+      one_passage: "We are the real countries, not the boundaries."
+    },
+    what_they_knew: "Michael Ondaatje knew that modern human relationships are shaped by the pressure of historical memory and systemic divides, which they detailed in their writing.",
+    must_read: ['The English Patient', "Anil's Ghost"],
+    read_if_curious: "Read The English Patient first."
+  },
+  {
+    dayIndex: 36,
+    era: 'contemporary',
+    nationality: "British",
+    name: "David Mitchell",
+    born: "1969",
+    period: "Postmodern Polyphony",
+    summary: "David Mitchell is an influential contemporary British writer, known for their narrative innovation and exploration of modern identity.",
+    portrait: "David Mitchell (1969 - present) is a leading British voice of modern literature. Born in the context of rapid global change, they have shaped contemporary fiction by exploring themes of history, displacement, and human relationships.\n\nTheir prose is characterized by its stylistic innovation, its psychological complexity, and its deep engagement with the moral questions of our time. By challenging traditional narrative structures, they have expanded the boundaries of what the novel can capture, offering a key reference for understanding the anxieties of contemporary life.",
+    signature_work: {
+      title: "Cloud Atlas",
+      what_it_is: "Six nested stories tracing human connection across time",
+      why_it_matters: "Famous for its nested, genre-bending structural design",
+      one_passage: "What is an ocean but a multitude of drops?"
+    },
+    what_they_knew: "David Mitchell knew that modern human relationships are shaped by the pressure of historical memory and systemic divides, which they detailed in their writing.",
+    must_read: ['Cloud Atlas', 'The Bone Clocks'],
+    read_if_curious: "Read Cloud Atlas first."
+  },
+  {
+    dayIndex: 37,
+    era: 'contemporary',
+    nationality: "American",
+    name: "Jonathan Lethem",
+    born: "1964",
+    period: "Contemporary Realism / Noir",
+    summary: "Jonathan Lethem is an influential contemporary American writer, known for their narrative innovation and exploration of modern identity.",
+    portrait: "Jonathan Lethem (1964 - present) is a leading American voice of modern literature. Born in the context of rapid global change, they have shaped contemporary fiction by exploring themes of history, displacement, and human relationships.\n\nTheir prose is characterized by its stylistic innovation, its psychological complexity, and its deep engagement with the moral questions of our time. By challenging traditional narrative structures, they have expanded the boundaries of what the novel can capture, offering a key reference for understanding the anxieties of contemporary life.",
+    signature_work: {
+      title: "Motherless Brooklyn",
+      what_it_is: "A detective with Tourette's investigates his mentor's murder",
+      why_it_matters: "Won the National Book Critics Circle Award, blending noir and psychology",
+      one_passage: "Language is a series of corrections we make to silence."
+    },
+    what_they_knew: "Jonathan Lethem knew that modern human relationships are shaped by the pressure of historical memory and systemic divides, which they detailed in their writing.",
+    must_read: ['Motherless Brooklyn', 'The Fortress of Solitude'],
+    read_if_curious: "Read Motherless Brooklyn first."
+  },
+  {
+    dayIndex: 38,
+    era: 'contemporary',
+    nationality: "British",
+    name: "Neil Gaiman",
+    born: "1960",
+    period: "Modern Fantasy",
+    summary: "Neil Gaiman is an influential contemporary British writer, known for their narrative innovation and exploration of modern identity.",
+    portrait: "Neil Gaiman (1960 - present) is a leading British voice of modern literature. Born in the context of rapid global change, they have shaped contemporary fiction by exploring themes of history, displacement, and human relationships.\n\nTheir prose is characterized by its stylistic innovation, its psychological complexity, and its deep engagement with the moral questions of our time. By challenging traditional narrative structures, they have expanded the boundaries of what the novel can capture, offering a key reference for understanding the anxieties of contemporary life.",
+    signature_work: {
+      title: "American Gods",
+      what_it_is: "A battle between old and new gods in modern America",
+      why_it_matters: "A premier modern fantasy, celebrating myth and belief",
+      one_passage: "A town is not a place; it is a state of mind."
+    },
+    what_they_knew: "Neil Gaiman knew that modern human relationships are shaped by the pressure of historical memory and systemic divides, which they detailed in their writing.",
+    must_read: ['American Gods', 'The Ocean at the End of the Lane'],
+    read_if_curious: "Read The Ocean first."
+  },
+  {
+    dayIndex: 39,
+    era: 'contemporary',
+    nationality: "American",
+    name: "Dave Eggers",
+    born: "1970",
+    period: "Experimental Memoir / Satire",
+    summary: "Dave Eggers is an influential contemporary American writer, known for their narrative innovation and exploration of modern identity.",
+    portrait: "Dave Eggers (1970 - present) is a leading American voice of modern literature. Born in the context of rapid global change, they have shaped contemporary fiction by exploring themes of history, displacement, and human relationships.\n\nTheir prose is characterized by its stylistic innovation, its psychological complexity, and its deep engagement with the moral questions of our time. By challenging traditional narrative structures, they have expanded the boundaries of what the novel can capture, offering a key reference for understanding the anxieties of contemporary life.",
+    signature_work: {
+      title: "A Heartbreaking Work of Staggering Genius",
+      what_it_is: "A memoir of raising his younger brother after their parents' death",
+      why_it_matters: "Revolutionized contemporary memoir with self-referential irony",
+      one_passage: "We are all writing the same book of memory."
+    },
+    what_they_knew: "Dave Eggers knew that modern human relationships are shaped by the pressure of historical memory and systemic divides, which they detailed in their writing.",
+    must_read: ['A Heartbreaking Work', 'The Circle'],
+    read_if_curious: "Read the memoir first."
+  },
+  {
+    dayIndex: 40,
+    era: 'contemporary',
+    nationality: "American",
+    name: "Ted Chiang",
+    born: "1967",
+    period: "Speculative Fiction",
+    summary: "Ted Chiang is an influential contemporary American writer, known for their narrative innovation and exploration of modern identity.",
+    portrait: "Ted Chiang (1967 - present) is a leading American voice of modern literature. Born in the context of rapid global change, they have shaped contemporary fiction by exploring themes of history, displacement, and human relationships.\n\nTheir prose is characterized by its stylistic innovation, its psychological complexity, and its deep engagement with the moral questions of our time. By challenging traditional narrative structures, they have expanded the boundaries of what the novel can capture, offering a key reference for understanding the anxieties of contemporary life.",
+    signature_work: {
+      title: "Stories of Your Life and Others",
+      what_it_is: "A collection of mind-bending science fiction stories",
+      why_it_matters: "Acclaimed for combining deep science with human emotion",
+      one_passage: "Language is the thread that binds time."
+    },
+    what_they_knew: "Ted Chiang knew that modern human relationships are shaped by the pressure of historical memory and systemic divides, which they detailed in their writing.",
+    must_read: ['Stories of Your Life', 'Exhalation'],
+    read_if_curious: "Read Stories of Your Life first."
+  },
+  {
+    dayIndex: 41,
+    era: 'contemporary',
+    nationality: "American",
+    name: "Elizabeth Strout",
+    born: "1956",
+    period: "Minimalist Realism",
+    summary: "Elizabeth Strout is an influential contemporary American writer, known for their narrative innovation and exploration of modern identity.",
+    portrait: "Elizabeth Strout (1956 - present) is a leading American voice of modern literature. Born in the context of rapid global change, they have shaped contemporary fiction by exploring themes of history, displacement, and human relationships.\n\nTheir prose is characterized by its stylistic innovation, its psychological complexity, and its deep engagement with the moral questions of our time. By challenging traditional narrative structures, they have expanded the boundaries of what the novel can capture, offering a key reference for understanding the anxieties of contemporary life.",
+    signature_work: {
+      title: "Olive Kitteridge",
+      what_it_is: "Thirteen connected stories about a retired teacher in Maine",
+      why_it_matters: "Won the Pulitzer Prize, capturing small-town human complexity",
+      one_passage: "There is no life that is not simple and tragic."
+    },
+    what_they_knew: "Elizabeth Strout knew that modern human relationships are shaped by the pressure of historical memory and systemic divides, which they detailed in their writing.",
+    must_read: ['Olive Kitteridge', 'My Name is Lucy Barton'],
+    read_if_curious: "Read Olive Kitteridge first."
+  },
+  {
+    dayIndex: 42,
+    era: 'contemporary',
+    nationality: "American",
+    name: "Barbara Kingsolver",
+    born: "1955",
+    period: "Social Realism",
+    summary: "Barbara Kingsolver is an influential contemporary American writer, known for their narrative innovation and exploration of modern identity.",
+    portrait: "Barbara Kingsolver (1955 - present) is a leading American voice of modern literature. Born in the context of rapid global change, they have shaped contemporary fiction by exploring themes of history, displacement, and human relationships.\n\nTheir prose is characterized by its stylistic innovation, its psychological complexity, and its deep engagement with the moral questions of our time. By challenging traditional narrative structures, they have expanded the boundaries of what the novel can capture, offering a key reference for understanding the anxieties of contemporary life.",
+    signature_work: {
+      title: "The Poisonwood Bible",
+      what_it_is: "A missionary family's tragedy in the Belgian Congo",
+      why_it_matters: "A powerful post-colonial critique of cultural arrogance",
+      one_passage: "The forest does not ask you for your name."
+    },
+    what_they_knew: "Barbara Kingsolver knew that modern human relationships are shaped by the pressure of historical memory and systemic divides, which they detailed in their writing.",
+    must_read: ['The Poisonwood Bible', 'Demon Copperhead'],
+    read_if_curious: "Read Poisonwood Bible first."
+  },
+  {
+    dayIndex: 43,
+    era: 'contemporary',
+    nationality: "American",
+    name: "Anthony Doerr",
+    born: "1973",
+    period: "Lyrical Realism",
+    summary: "Anthony Doerr is an influential contemporary American writer, known for their narrative innovation and exploration of modern identity.",
+    portrait: "Anthony Doerr (1973 - present) is a leading American voice of modern literature. Born in the context of rapid global change, they have shaped contemporary fiction by exploring themes of history, displacement, and human relationships.\n\nTheir prose is characterized by its stylistic innovation, its psychological complexity, and its deep engagement with the moral questions of our time. By challenging traditional narrative structures, they have expanded the boundaries of what the novel can capture, offering a key reference for understanding the anxieties of contemporary life.",
+    signature_work: {
+      title: "All the Light We Cannot See",
+      what_it_is: "A blind French girl and a German orphan boy in occupied France",
+      why_it_matters: "Won the Pulitzer Prize for its structural design and prose",
+      one_passage: "The brain is locked in total darkness, yet it constructs light."
+    },
+    what_they_knew: "Anthony Doerr knew that modern human relationships are shaped by the pressure of historical memory and systemic divides, which they detailed in their writing.",
+    must_read: ['All the Light We Cannot See', 'Cloud Cuckoo Land'],
+    read_if_curious: "Read All the Light first."
+  },
+  {
+    dayIndex: 44,
+    era: 'contemporary',
+    nationality: "American",
+    name: "Karen Russell",
+    born: "1981",
+    period: "Magical Realism",
+    summary: "Karen Russell is an influential contemporary American writer, known for their narrative innovation and exploration of modern identity.",
+    portrait: "Karen Russell (1981 - present) is a leading American voice of modern literature. Born in the context of rapid global change, they have shaped contemporary fiction by exploring themes of history, displacement, and human relationships.\n\nTheir prose is characterized by its stylistic innovation, its psychological complexity, and its deep engagement with the moral questions of our time. By challenging traditional narrative structures, they have expanded the boundaries of what the novel can capture, offering a key reference for understanding the anxieties of contemporary life.",
+    signature_work: {
+      title: "Swamplandia!",
+      what_it_is: "A family of alligator wrestlers dealing with grief in Florida",
+      why_it_matters: "Finalist for the Pulitzer Prize, blending myth and ecology",
+      one_passage: "The swamp is a place where boundaries melt."
+    },
+    what_they_knew: "Karen Russell knew that modern human relationships are shaped by the pressure of historical memory and systemic divides, which they detailed in their writing.",
+    must_read: ['Swamplandia!', 'Vampires in the Lemon Grove'],
+    read_if_curious: "Read the short stories first."
+  },
+  {
+    dayIndex: 45,
+    era: 'contemporary',
+    nationality: "American",
+    name: "Paul Beatty",
+    born: "1962",
+    period: "Satire",
+    summary: "Paul Beatty is an influential contemporary American writer, known for their narrative innovation and exploration of modern identity.",
+    portrait: "Paul Beatty (1962 - present) is a leading American voice of modern literature. Born in the context of rapid global change, they have shaped contemporary fiction by exploring themes of history, displacement, and human relationships.\n\nTheir prose is characterized by its stylistic innovation, its psychological complexity, and its deep engagement with the moral questions of our time. By challenging traditional narrative structures, they have expanded the boundaries of what the novel can capture, offering a key reference for understanding the anxieties of contemporary life.",
+    signature_work: {
+      title: "The Sellout",
+      what_it_is: "A biting satire on race and segregation in a California town",
+      why_it_matters: "First American writer to win the Booker Prize",
+      one_passage: "Memory is a room with a lock."
+    },
+    what_they_knew: "Paul Beatty knew that modern human relationships are shaped by the pressure of historical memory and systemic divides, which they detailed in their writing.",
+    must_read: ['The Sellout'],
+    read_if_curious: "Read The Sellout first."
+  },
+  {
+    dayIndex: 46,
     era: 'classical',
     nationality: "British",
     name: "Shakespeare",
@@ -626,7 +911,7 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
     read_if_curious: "Read Hamlet first."
   },
   {
-    dayIndex: 32,
+    dayIndex: 47,
     era: 'classical',
     nationality: "British",
     name: "Milton",
@@ -646,7 +931,7 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
     read_if_curious: "Read Paradise Lost first."
   },
   {
-    dayIndex: 33,
+    dayIndex: 48,
     era: 'classical',
     nationality: "British",
     name: "Chaucer",
@@ -666,7 +951,7 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
     read_if_curious: "Read the General Prologue first."
   },
   {
-    dayIndex: 34,
+    dayIndex: 49,
     era: 'classical',
     nationality: "British",
     name: "John Donne",
@@ -686,7 +971,7 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
     read_if_curious: "Read 'A Valediction' first."
   },
   {
-    dayIndex: 35,
+    dayIndex: 50,
     era: 'classical',
     nationality: "British",
     name: "Alexander Pope",
@@ -706,7 +991,7 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
     read_if_curious: "Read Rape of the Lock first."
   },
   {
-    dayIndex: 36,
+    dayIndex: 51,
     era: 'classical',
     nationality: "Irish / British",
     name: "Jonathan Swift",
@@ -726,7 +1011,7 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
     read_if_curious: "Read Gulliver's Travels first."
   },
   {
-    dayIndex: 37,
+    dayIndex: 52,
     era: 'classical',
     nationality: "British",
     name: "Samuel Johnson",
@@ -746,7 +1031,7 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
     read_if_curious: "Read Rasselas first."
   },
   {
-    dayIndex: 38,
+    dayIndex: 53,
     era: 'classical',
     nationality: "British",
     name: "William Blake",
@@ -766,7 +1051,7 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
     read_if_curious: "Read Songs of Experience first."
   },
   {
-    dayIndex: 39,
+    dayIndex: 54,
     era: 'classical',
     nationality: "British",
     name: "Jane Austen",
@@ -786,7 +1071,7 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
     read_if_curious: "Read Pride and Prejudice first."
   },
   {
-    dayIndex: 40,
+    dayIndex: 55,
     era: 'classical',
     nationality: "British",
     name: "Charles Dickens",
@@ -806,7 +1091,7 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
     read_if_curious: "Read Great Expectations first."
   },
   {
-    dayIndex: 41,
+    dayIndex: 56,
     era: 'classical',
     nationality: "British",
     name: "George Eliot",
@@ -826,7 +1111,7 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
     read_if_curious: "Read Middlemarch — it is a masterpiece."
   },
   {
-    dayIndex: 42,
+    dayIndex: 57,
     era: 'classical',
     nationality: "British",
     name: "Thomas Hardy",
@@ -846,7 +1131,7 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
     read_if_curious: "Read Tess first."
   },
   {
-    dayIndex: 43,
+    dayIndex: 58,
     era: 'classical',
     nationality: "British / Polish",
     name: "Joseph Conrad",
@@ -866,7 +1151,7 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
     read_if_curious: "Read Heart of Darkness first."
   },
   {
-    dayIndex: 44,
+    dayIndex: 59,
     era: 'classical',
     nationality: "American / British",
     name: "Henry James",
@@ -886,7 +1171,7 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
     read_if_curious: "Read Turn of the Screw first."
   },
   {
-    dayIndex: 45,
+    dayIndex: 60,
     era: 'classical',
     nationality: "British",
     name: "Virginia Woolf",
@@ -906,7 +1191,7 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
     read_if_curious: "Read To the Lighthouse first."
   },
   {
-    dayIndex: 46,
+    dayIndex: 61,
     era: 'classical',
     nationality: "Irish",
     name: "James Joyce",
@@ -926,7 +1211,7 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
     read_if_curious: "Read Dubliners first to understand his realism."
   },
   {
-    dayIndex: 47,
+    dayIndex: 62,
     era: 'classical',
     nationality: "British",
     name: "D.H. Lawrence",
@@ -946,7 +1231,7 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
     read_if_curious: "Read Sons and Lovers first."
   },
   {
-    dayIndex: 48,
+    dayIndex: 63,
     era: 'classical',
     nationality: "British / American",
     name: "T.S. Eliot",
@@ -966,7 +1251,7 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
     read_if_curious: "Read Waste Land first."
   },
   {
-    dayIndex: 49,
+    dayIndex: 64,
     era: 'classical',
     nationality: "Irish",
     name: "W.B. Yeats",
@@ -986,7 +1271,7 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
     read_if_curious: "Read 'The Second Coming' first."
   },
   {
-    dayIndex: 50,
+    dayIndex: 65,
     era: 'classical',
     nationality: "Irish / French",
     name: "Samuel Beckett",
@@ -1006,7 +1291,7 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
     read_if_curious: "Read Waiting for Godot first."
   },
   {
-    dayIndex: 51,
+    dayIndex: 66,
     era: 'classical',
     nationality: "British",
     name: "George Orwell",
@@ -1026,7 +1311,7 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
     read_if_curious: "Read his essays on language first."
   },
   {
-    dayIndex: 52,
+    dayIndex: 67,
     era: 'classical',
     nationality: "British",
     name: "Graham Greene",
@@ -1046,7 +1331,7 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
     read_if_curious: "Read The Quiet American first."
   },
   {
-    dayIndex: 53,
+    dayIndex: 68,
     era: 'classical',
     nationality: "British",
     name: "Evelyn Waugh",
@@ -1066,7 +1351,7 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
     read_if_curious: "Read Brideshead first."
   },
   {
-    dayIndex: 54,
+    dayIndex: 69,
     era: 'classical',
     nationality: "American",
     name: "F. Scott Fitzgerald",
@@ -1086,7 +1371,7 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
     read_if_curious: "Read Gatsby first."
   },
   {
-    dayIndex: 55,
+    dayIndex: 70,
     era: 'classical',
     nationality: "American",
     name: "Ernest Hemingway",
@@ -1106,7 +1391,7 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
     read_if_curious: "Read The Old Man and the Sea first."
   },
   {
-    dayIndex: 56,
+    dayIndex: 71,
     era: 'classical',
     nationality: "American",
     name: "William Faulkner",
@@ -1126,7 +1411,7 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
     read_if_curious: "Read As I Lay Dying first."
   },
   {
-    dayIndex: 57,
+    dayIndex: 72,
     era: 'classical',
     nationality: "American",
     name: "Flannery O'Connor",
@@ -1146,7 +1431,7 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
     read_if_curious: "Read the short stories first."
   },
   {
-    dayIndex: 58,
+    dayIndex: 73,
     era: 'classical',
     nationality: "American",
     name: "Ralph Ellison",
@@ -1166,7 +1451,7 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
     read_if_curious: "Read Invisible Man first."
   },
   {
-    dayIndex: 59,
+    dayIndex: 74,
     era: 'classical',
     nationality: "American",
     name: "James Baldwin (early)",
@@ -1186,7 +1471,7 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
     read_if_curious: "Read Notes of a Native Son first."
   },
   {
-    dayIndex: 60,
+    dayIndex: 75,
     era: 'classical',
     nationality: "American",
     name: "Langston Hughes",
@@ -1204,5 +1489,305 @@ export const ENGLISH_WRITERS: EnglishWriter[] = [
     what_they_knew: "Langston Hughes knew that the human heart contains enduring, classical contradictions of desire, duty, and mortality, which they expressed in timeless language.",
     must_read: ['Selected Poems', 'The Ways of White Folks'],
     read_if_curious: "Read the poetry first."
+  },
+  {
+    dayIndex: 76,
+    era: 'classical',
+    nationality: "British",
+    name: "Christopher Marlowe",
+    born: "1564",
+    died: "1593",
+    period: "Elizabethan Drama",
+    summary: "Christopher Marlowe is a legendary classical figure of English literature, whose work defined the formal and linguistic parameters of the tradition.",
+    portrait: "Christopher Marlowe (1564 - 1593) was a monumental figure in the history of English literature. Belonging to the Elizabethan Drama era, they defined the language, form, and moral scope of the literary tradition.\n\nTheir work is celebrated for its linguistic beauty, its formal mastery, and its profound exploration of the human condition. Whether writing drama, epic poetry, or realistic fiction, they captured the psychological, social, and philosophical currents of their time, leaving behind a body of work that continues to shape how we think and speak today.",
+    signature_work: {
+      title: "Doctor Faustus",
+      what_it_is: "A scholar sells his soul to the Devil for knowledge",
+      why_it_matters: "Pioneered the use of blank verse in Elizabethan theater",
+      one_passage: "Was this the face that launch'd a thousand ships?"
+    },
+    what_they_knew: "Christopher Marlowe knew that the human heart contains enduring, classical contradictions of desire, duty, and mortality, which they expressed in timeless language.",
+    must_read: ['Doctor Faustus', 'Tamburlaine'],
+    read_if_curious: "Read Doctor Faustus first."
+  },
+  {
+    dayIndex: 77,
+    era: 'classical',
+    nationality: "British",
+    name: "Ben Jonson",
+    born: "1572",
+    died: "1637",
+    period: "Elizabethan Comedy",
+    summary: "Ben Jonson is a legendary classical figure of English literature, whose work defined the formal and linguistic parameters of the tradition.",
+    portrait: "Ben Jonson (1572 - 1637) was a monumental figure in the history of English literature. Belonging to the Elizabethan Comedy era, they defined the language, form, and moral scope of the literary tradition.\n\nTheir work is celebrated for its linguistic beauty, its formal mastery, and its profound exploration of the human condition. Whether writing drama, epic poetry, or realistic fiction, they captured the psychological, social, and philosophical currents of their time, leaving behind a body of work that continues to shape how we think and speak today.",
+    signature_work: {
+      title: "Volpone",
+      what_it_is: "A wealthy Venetian fakes illness to trick greedy suitors",
+      why_it_matters: "Master of satire and the comedy of humors",
+      one_passage: "Mischiefs feed like beasts when they are young."
+    },
+    what_they_knew: "Ben Jonson knew that the human heart contains enduring, classical contradictions of desire, duty, and mortality, which they expressed in timeless language.",
+    must_read: ['Volpone', 'The Alchemist'],
+    read_if_curious: "Read Volpone first."
+  },
+  {
+    dayIndex: 78,
+    era: 'classical',
+    nationality: "British",
+    name: "John Keats",
+    born: "1795",
+    died: "1821",
+    period: "Romantic Poetry",
+    summary: "John Keats is a legendary classical figure of English literature, whose work defined the formal and linguistic parameters of the tradition.",
+    portrait: "John Keats (1795 - 1821) was a monumental figure in the history of English literature. Belonging to the Romantic Poetry era, they defined the language, form, and moral scope of the literary tradition.\n\nTheir work is celebrated for its linguistic beauty, its formal mastery, and its profound exploration of the human condition. Whether writing drama, epic poetry, or realistic fiction, they captured the psychological, social, and philosophical currents of their time, leaving behind a body of work that continues to shape how we think and speak today.",
+    signature_work: {
+      title: "Ode on a Grecian Urn",
+      what_it_is: "A poem reflecting on art, beauty, and mortality",
+      why_it_matters: "A key Romantic poet celebrated for his sensory imagery",
+      one_passage: "Beauty is truth, truth beauty,-that is all ye know."
+    },
+    what_they_knew: "John Keats knew that the human heart contains enduring, classical contradictions of desire, duty, and mortality, which they expressed in timeless language.",
+    must_read: ['Ode on a Grecian Urn', 'Ode to a Nightingale'],
+    read_if_curious: "Read the Odes first."
+  },
+  {
+    dayIndex: 79,
+    era: 'classical',
+    nationality: "British",
+    name: "Percy Bysshe Shelley",
+    born: "1792",
+    died: "1822",
+    period: "Romantic Poetry",
+    summary: "Percy Bysshe Shelley is a legendary classical figure of English literature, whose work defined the formal and linguistic parameters of the tradition.",
+    portrait: "Percy Bysshe Shelley (1792 - 1822) was a monumental figure in the history of English literature. Belonging to the Romantic Poetry era, they defined the language, form, and moral scope of the literary tradition.\n\nTheir work is celebrated for its linguistic beauty, its formal mastery, and its profound exploration of the human condition. Whether writing drama, epic poetry, or realistic fiction, they captured the psychological, social, and philosophical currents of their time, leaving behind a body of work that continues to shape how we think and speak today.",
+    signature_work: {
+      title: "Ozymandias",
+      what_it_is: "A sonnet reflecting on the ruins of an ancient king's statue",
+      why_it_matters: "A visionary Romantic poet who advocated political reform",
+      one_passage: "Look on my Works, ye Mighty, and despair!"
+    },
+    what_they_knew: "Percy Bysshe Shelley knew that the human heart contains enduring, classical contradictions of desire, duty, and mortality, which they expressed in timeless language.",
+    must_read: ['Ozymandias', 'Prometheus Unbound'],
+    read_if_curious: "Read Ozymandias first."
+  },
+  {
+    dayIndex: 80,
+    era: 'classical',
+    nationality: "British",
+    name: "Lord Byron",
+    born: "1788",
+    died: "1824",
+    period: "Romantic Poetry",
+    summary: "Lord Byron is a legendary classical figure of English literature, whose work defined the formal and linguistic parameters of the tradition.",
+    portrait: "Lord Byron (1788 - 1824) was a monumental figure in the history of English literature. Belonging to the Romantic Poetry era, they defined the language, form, and moral scope of the literary tradition.\n\nTheir work is celebrated for its linguistic beauty, its formal mastery, and its profound exploration of the human condition. Whether writing drama, epic poetry, or realistic fiction, they captured the psychological, social, and philosophical currents of their time, leaving behind a body of work that continues to shape how we think and speak today.",
+    signature_work: {
+      title: "Don Juan",
+      what_it_is: "A satirical epic poem reversing the legendary libertine's story",
+      why_it_matters: "Pioneered the 'Byronic hero', combining cynicism and passion",
+      one_passage: "Man's love is of man's life a thing apart."
+    },
+    what_they_knew: "Lord Byron knew that the human heart contains enduring, classical contradictions of desire, duty, and mortality, which they expressed in timeless language.",
+    must_read: ['Don Juan', "Childe Harold's Pilgrimage"],
+    read_if_curious: "Read Don Juan first."
+  },
+  {
+    dayIndex: 81,
+    era: 'classical',
+    nationality: "British",
+    name: "William Wordsworth",
+    born: "1770",
+    died: "1850",
+    period: "Romantic Poetry",
+    summary: "William Wordsworth is a legendary classical figure of English literature, whose work defined the formal and linguistic parameters of the tradition.",
+    portrait: "William Wordsworth (1770 - 1850) was a monumental figure in the history of English literature. Belonging to the Romantic Poetry era, they defined the language, form, and moral scope of the literary tradition.\n\nTheir work is celebrated for its linguistic beauty, its formal mastery, and its profound exploration of the human condition. Whether writing drama, epic poetry, or realistic fiction, they captured the psychological, social, and philosophical currents of their time, leaving behind a body of work that continues to shape how we think and speak today.",
+    signature_work: {
+      title: "Lyrical Ballads",
+      what_it_is: "A poetry collection celebrating nature and ordinary language",
+      why_it_matters: "Co-founded English Romanticism, advocating nature reflection",
+      one_passage: "The child is father of the man."
+    },
+    what_they_knew: "William Wordsworth knew that the human heart contains enduring, classical contradictions of desire, duty, and mortality, which they expressed in timeless language.",
+    must_read: ['Lyrical Ballads', 'The Prelude'],
+    read_if_curious: "Read Lyrical Ballads first."
+  },
+  {
+    dayIndex: 82,
+    era: 'classical',
+    nationality: "British",
+    name: "Samuel Taylor Coleridge",
+    born: "1772",
+    died: "1834",
+    period: "Romantic Poetry",
+    summary: "Samuel Taylor Coleridge is a legendary classical figure of English literature, whose work defined the formal and linguistic parameters of the tradition.",
+    portrait: "Samuel Taylor Coleridge (1772 - 1834) was a monumental figure in the history of English literature. Belonging to the Romantic Poetry era, they defined the language, form, and moral scope of the literary tradition.\n\nTheir work is celebrated for its linguistic beauty, its formal mastery, and its profound exploration of the human condition. Whether writing drama, epic poetry, or realistic fiction, they captured the psychological, social, and philosophical currents of their time, leaving behind a body of work that continues to shape how we think and speak today.",
+    signature_work: {
+      title: "The Rime of the Ancient Mariner",
+      what_it_is: "An epic poem about a sailor who kills an albatross",
+      why_it_matters: "Co-founded English Romanticism, blending supernatural and morals",
+      one_passage: "Water, water, everywhere, nor any drop to drink."
+    },
+    what_they_knew: "Samuel Taylor Coleridge knew that the human heart contains enduring, classical contradictions of desire, duty, and mortality, which they expressed in timeless language.",
+    must_read: ['The Rime', 'Kubla Khan'],
+    read_if_curious: "Read Kubla Khan first."
+  },
+  {
+    dayIndex: 83,
+    era: 'classical',
+    nationality: "British",
+    name: "Charlotte Brontë",
+    born: "1816",
+    died: "1855",
+    period: "Victorian Gothic Realism",
+    summary: "Charlotte Brontë is a legendary classical figure of English literature, whose work defined the formal and linguistic parameters of the tradition.",
+    portrait: "Charlotte Brontë (1816 - 1855) was a monumental figure in the history of English literature. Belonging to the Victorian Gothic Realism era, they defined the language, form, and moral scope of the literary tradition.\n\nTheir work is celebrated for its linguistic beauty, its formal mastery, and its profound exploration of the human condition. Whether writing drama, epic poetry, or realistic fiction, they captured the psychological, social, and philosophical currents of their time, leaving behind a body of work that continues to shape how we think and speak today.",
+    signature_work: {
+      title: "Jane Eyre",
+      what_it_is: "The story of an orphaned governess seeking independence",
+      why_it_matters: "A classic Victorian novel exploring female integrity and class",
+      one_passage: "I am no bird; and no net ensnares me."
+    },
+    what_they_knew: "Charlotte Brontë knew that the human heart contains enduring, classical contradictions of desire, duty, and mortality, which they expressed in timeless language.",
+    must_read: ['Jane Eyre', 'Villette'],
+    read_if_curious: "Read Jane Eyre first."
+  },
+  {
+    dayIndex: 84,
+    era: 'classical',
+    nationality: "British",
+    name: "Emily Brontë",
+    born: "1818",
+    died: "1848",
+    period: "Victorian Gothic",
+    summary: "Emily Brontë is a legendary classical figure of English literature, whose work defined the formal and linguistic parameters of the tradition.",
+    portrait: "Emily Brontë (1818 - 1848) was a monumental figure in the history of English literature. Belonging to the Victorian Gothic era, they defined the language, form, and moral scope of the literary tradition.\n\nTheir work is celebrated for its linguistic beauty, its formal mastery, and its profound exploration of the human condition. Whether writing drama, epic poetry, or realistic fiction, they captured the psychological, social, and philosophical currents of their time, leaving behind a body of work that continues to shape how we think and speak today.",
+    signature_work: {
+      title: "Wuthering Heights",
+      what_it_is: "A passionate, dark tale of love and revenge in the moors",
+      why_it_matters: "A masterpiece of Gothic romance and psychological intensity",
+      one_passage: "Whatever our souls are made of, his and mine are the same."
+    },
+    what_they_knew: "Emily Brontë knew that the human heart contains enduring, classical contradictions of desire, duty, and mortality, which they expressed in timeless language.",
+    must_read: ['Wuthering Heights'],
+    read_if_curious: "Read Wuthering Heights first."
+  },
+  {
+    dayIndex: 85,
+    era: 'classical',
+    nationality: "British",
+    name: "Mary Shelley",
+    born: "1797",
+    died: "1851",
+    period: "Gothic Science Fiction",
+    summary: "Mary Shelley is a legendary classical figure of English literature, whose work defined the formal and linguistic parameters of the tradition.",
+    portrait: "Mary Shelley (1797 - 1851) was a monumental figure in the history of English literature. Belonging to the Gothic Science Fiction era, they defined the language, form, and moral scope of the literary tradition.\n\nTheir work is celebrated for its linguistic beauty, its formal mastery, and its profound exploration of the human condition. Whether writing drama, epic poetry, or realistic fiction, they captured the psychological, social, and philosophical currents of their time, leaving behind a body of work that continues to shape how we think and speak today.",
+    signature_work: {
+      title: "Frankenstein",
+      what_it_is: "A scientist creates a living creature from dead matter",
+      why_it_matters: "Pioneered science fiction, exploring creation and morals",
+      one_passage: "Beware; for I am fearless, and therefore powerful."
+    },
+    what_they_knew: "Mary Shelley knew that the human heart contains enduring, classical contradictions of desire, duty, and mortality, which they expressed in timeless language.",
+    must_read: ['Frankenstein', 'The Last Man'],
+    read_if_curious: "Read Frankenstein first."
+  },
+  {
+    dayIndex: 86,
+    era: 'classical',
+    nationality: "American",
+    name: "Edgar Allan Poe",
+    born: "1809",
+    died: "1849",
+    period: "Gothic Romantism",
+    summary: "Edgar Allan Poe is a legendary classical figure of English literature, whose work defined the formal and linguistic parameters of the tradition.",
+    portrait: "Edgar Allan Poe (1809 - 1849) was a monumental figure in the history of English literature. Belonging to the Gothic Romantism era, they defined the language, form, and moral scope of the literary tradition.\n\nTheir work is celebrated for its linguistic beauty, its formal mastery, and its profound exploration of the human condition. Whether writing drama, epic poetry, or realistic fiction, they captured the psychological, social, and philosophical currents of their time, leaving behind a body of work that continues to shape how we think and speak today.",
+    signature_work: {
+      title: "The Raven",
+      what_it_is: "A narrative poem depicting a lover's descent into madness",
+      why_it_matters: "Pioneered the short story, detective fiction, and Gothic horror",
+      one_passage: "Quoth the Raven 'Nevermore.'"
+    },
+    what_they_knew: "Edgar Allan Poe knew that the human heart contains enduring, classical contradictions of desire, duty, and mortality, which they expressed in timeless language.",
+    must_read: ['The Raven', 'Tales of the Grotesque and Arabesque'],
+    read_if_curious: "Read the short stories first."
+  },
+  {
+    dayIndex: 87,
+    era: 'classical',
+    nationality: "American",
+    name: "Walt Whitman",
+    born: "1819",
+    died: "1892",
+    period: "Transcendental Poetry",
+    summary: "Walt Whitman is a legendary classical figure of English literature, whose work defined the formal and linguistic parameters of the tradition.",
+    portrait: "Walt Whitman (1819 - 1892) was a monumental figure in the history of English literature. Belonging to the Transcendental Poetry era, they defined the language, form, and moral scope of the literary tradition.\n\nTheir work is celebrated for its linguistic beauty, its formal mastery, and its profound exploration of the human condition. Whether writing drama, epic poetry, or realistic fiction, they captured the psychological, social, and philosophical currents of their time, leaving behind a body of work that continues to shape how we think and speak today.",
+    signature_work: {
+      title: "Leaves of Grass",
+      what_it_is: "A monumental poetry collection celebrating democracy and self",
+      why_it_matters: "Pioneered free verse and American transcendentalism",
+      one_passage: "I contain multitudes."
+    },
+    what_they_knew: "Walt Whitman knew that the human heart contains enduring, classical contradictions of desire, duty, and mortality, which they expressed in timeless language.",
+    must_read: ['Leaves of Grass', 'Song of Myself'],
+    read_if_curious: "Read Song of Myself first."
+  },
+  {
+    dayIndex: 88,
+    era: 'classical',
+    nationality: "American",
+    name: "Herman Melville",
+    born: "1819",
+    died: "1891",
+    period: "Romantic / Adventure",
+    summary: "Herman Melville is a legendary classical figure of English literature, whose work defined the formal and linguistic parameters of the tradition.",
+    portrait: "Herman Melville (1819 - 1891) was a monumental figure in the history of English literature. Belonging to the Romantic / Adventure era, they defined the language, form, and moral scope of the literary tradition.\n\nTheir work is celebrated for its linguistic beauty, its formal mastery, and its profound exploration of the human condition. Whether writing drama, epic poetry, or realistic fiction, they captured the psychological, social, and philosophical currents of their time, leaving behind a body of work that continues to shape how we think and speak today.",
+    signature_work: {
+      title: "Moby-Dick",
+      what_it_is: "A captain's obsessive hunt for a white whale",
+      why_it_matters: "An epic American novel exploring fate, nature, and obsession",
+      one_passage: "Call me Ishmael."
+    },
+    what_they_knew: "Herman Melville knew that the human heart contains enduring, classical contradictions of desire, duty, and mortality, which they expressed in timeless language.",
+    must_read: ['Moby-Dick', 'Bartleby, the Scrivener'],
+    read_if_curious: "Read Bartleby first."
+  },
+  {
+    dayIndex: 89,
+    era: 'classical',
+    nationality: "American",
+    name: "Mark Twain",
+    born: "1835",
+    died: "1910",
+    period: "American Realism",
+    summary: "Mark Twain is a legendary classical figure of English literature, whose work defined the formal and linguistic parameters of the tradition.",
+    portrait: "Mark Twain (1835 - 1910) was a monumental figure in the history of English literature. Belonging to the American Realism era, they defined the language, form, and moral scope of the literary tradition.\n\nTheir work is celebrated for its linguistic beauty, its formal mastery, and its profound exploration of the human condition. Whether writing drama, epic poetry, or realistic fiction, they captured the psychological, social, and philosophical currents of their time, leaving behind a body of work that continues to shape how we think and speak today.",
+    signature_work: {
+      title: "Adventures of Huckleberry Finn",
+      what_it_is: "A boy and a runaway slave float down the Mississippi",
+      why_it_matters: "A foundational American novel exploring race and freedom",
+      one_passage: "You don't know about me without you have read a book."
+    },
+    what_they_knew: "Mark Twain knew that the human heart contains enduring, classical contradictions of desire, duty, and mortality, which they expressed in timeless language.",
+    must_read: ['Huckleberry Finn', 'The Adventures of Tom Sawyer'],
+    read_if_curious: "Read Huckleberry Finn first."
+  },
+  {
+    dayIndex: 90,
+    era: 'classical',
+    nationality: "American",
+    name: "Emily Dickinson",
+    born: "1830",
+    died: "1886",
+    period: "Minimalist Poetry",
+    summary: "Emily Dickinson is a legendary classical figure of English literature, whose work defined the formal and linguistic parameters of the tradition.",
+    portrait: "Emily Dickinson (1830 - 1886) was a monumental figure in the history of English literature. Belonging to the Minimalist Poetry era, they defined the language, form, and moral scope of the literary tradition.\n\nTheir work is celebrated for its linguistic beauty, its formal mastery, and its profound exploration of the human condition. Whether writing drama, epic poetry, or realistic fiction, they captured the psychological, social, and philosophical currents of their time, leaving behind a body of work that continues to shape how we think and speak today.",
+    signature_work: {
+      title: "Selected Poems",
+      what_it_is: "Short, intense poems exploring death, nature, and self",
+      why_it_matters: "A leading American poet, using unique punctuation and lines",
+      one_passage: "Hope is the thing with feathers."
+    },
+    what_they_knew: "Emily Dickinson knew that the human heart contains enduring, classical contradictions of desire, duty, and mortality, which they expressed in timeless language.",
+    must_read: ['Selected Poems'],
+    read_if_curious: "Read any collection first."
   }
 ];

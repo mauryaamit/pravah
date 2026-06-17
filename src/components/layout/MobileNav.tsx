@@ -17,7 +17,7 @@ const MOBILE_TABS = [
 export default function MobileNav() {
   const pathname = usePathname();
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const activeRoomId = ROOMS.find(r => pathname && pathname.startsWith(r.route))?.id;
+  const activeRoomId = ROOMS.find(r => pathname && (pathname === r.route || pathname.startsWith(r.route + '/')) )?.id;
 
   return (
     <>
@@ -30,7 +30,7 @@ export default function MobileNav() {
           const isActive = activeRoomId === tab.id;
           const room = ROOMS.find(r => r.id === tab.id);
           return (
-            <Link key={tab.id} href={tab.route} className="flex flex-col items-center gap-1 py-2 px-3 min-w-0">
+            <Link key={tab.id} href={tab.route} prefetch={true} className="flex flex-col items-center gap-1 py-2 px-3 min-w-0">
               <tab.Icon
                 size={22}
                 style={{ color: isActive ? room?.colorHex : 'var(--text-muted)' }}
@@ -60,7 +60,7 @@ export default function MobileNav() {
           <span className="text-xs" style={{ color: 'var(--text-muted)' }}>All</span>
         </button>
       </nav>
-
+ 
       {/* All Rooms Drawer */}
       <AnimatePresence>
         {drawerOpen && (
@@ -93,6 +93,7 @@ export default function MobileNav() {
                   return (
                     <Link
                       href={sutr.route}
+                      prefetch={true}
                       onClick={() => setDrawerOpen(false)}
                       className="block mb-4"
                     >
@@ -118,9 +119,9 @@ export default function MobileNav() {
                     </Link>
                   );
                 })()}
-
+ 
                 <div className="border-b mb-4" style={{ borderColor: 'var(--border-default)' }} />
-
+ 
                 <div className="grid grid-cols-3 gap-3">
                   {ROOMS.filter(r => r.id !== 'sutr').map(room => {
                     const isActive = room.id === activeRoomId;
@@ -128,6 +129,7 @@ export default function MobileNav() {
                       <Link
                         key={room.id}
                         href={room.route}
+                        prefetch={true}
                         onClick={() => setDrawerOpen(false)}
                       >
                         <div

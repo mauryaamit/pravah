@@ -213,6 +213,13 @@ export const SUTR_ROOMS: SutrRoomDescription[] = [
     contemplativeText: 'A daily guide to books that expand your world. Recommendations cover fiction, philosophy, history, poetry, and science. Each entry includes translation notes, key takeaways, recommended reading companions, and the book\'s famous first line. Build your personal library, one volume at a time.'
   },
   {
+    id: 'anusandhan',
+    name: 'Anusandhan',
+    nameHindi: 'अनुसंधान',
+    oneLiner: 'Scientific research, mathematics, psychology, and social science papers, curated daily',
+    contemplativeText: 'A sanctuary for the frontiers of human discovery. Every day: curated academic papers across seven domains — Science, Psychology, Mathematics, Economics, Sociology, Environment, and Technology. Accessible breakdowns detail the core methodology, major findings, real-world implications, and the unresolved questions that define the next horizon of knowledge.'
+  },
+  {
     id: 'itihas',
     name: 'Itihas-Bhugoal',
     nameHindi: 'इतिहास-भूगोल',

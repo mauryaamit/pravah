@@ -15,7 +15,7 @@ import { db } from '@/lib/firebase/client';
 import { doc, setDoc, deleteDoc, collection, onSnapshot, getDoc } from 'firebase/firestore';
 import { useAuth } from '@/lib/hooks/useAuth';
 import FocusMode from '@/components/shared/FocusMode';
-import { KAVITALAY_DATA, Poem } from './data';
+import { KAVITALAY_DATA, Poem, KavitalayDayEntry } from './data';
 
 type Script = 'hi' | 'roman' | 'en';
 type EraFilter = 'all' | 'modern' | 'classical';
@@ -51,7 +51,37 @@ export default function KavitalayPage() {
   };
 
   const activeDayIndex = getDayIndexForArray(currentDate, KAVITALAY_DATA.length);
-  const dayEntry = KAVITALAY_DATA[activeDayIndex];
+  const localFallbackEntry = KAVITALAY_DATA[activeDayIndex];
+
+  const [dayEntry, setDayEntry] = useState<KavitalayDayEntry>(localFallbackEntry);
+  const [apiLoading, setApiLoading] = useState(true);
+
+  // Fetch unique day entry from API
+  useEffect(() => {
+    let active = true;
+    const dateStr = toDateString(currentDate);
+    setApiLoading(true);
+
+    fetch(`/api/kavitalay?date=${dateStr}`)
+      .then(res => res.json())
+      .then(data => {
+        if (active && data.entry) {
+          setDayEntry(data.entry);
+          setApiLoading(false);
+        }
+      })
+      .catch(err => {
+        console.error('Failed to load daily poems from API:', err);
+        if (active) {
+          setDayEntry(localFallbackEntry);
+          setApiLoading(false);
+        }
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [currentDate]);
 
   const [expandedPoems, setExpandedPoems] = useState<Record<string, boolean>>({});
   const [copiedId, setCopiedId] = useState<string | null>(null);

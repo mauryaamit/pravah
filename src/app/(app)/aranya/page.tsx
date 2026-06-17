@@ -7,8 +7,8 @@ import PageTransition from '@/components/layout/PageTransition';
 import { getDayIndexForArray } from '@/lib/utils/date';
 import ReadAloudButton from '@/components/shared/ReadAloudButton';
 import DayNavigator from '@/components/shared/DayNavigator';
-import { ARANYA_ENTRIES, AranyaEntry } from './data';
-import { Leaf, PawPrint, Microscope, Wind, HelpCircle } from 'lucide-react';
+import { ARANYA_ENTRIES, AranyaEntry, birdsData, flowersData } from './data';
+import { Leaf, PawPrint, Microscope, Wind, HelpCircle, Bird, Flower } from 'lucide-react';
 
 export default function AranyaPage() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
@@ -16,13 +16,21 @@ export default function AranyaPage() {
   const activeIndex = getDayIndexForArray(currentDate, ARANYA_ENTRIES.length);
   const entry = ARANYA_ENTRIES[activeIndex];
 
-  const textToSpeak = `Nature today. Plant: ${entry.plant.title}. Animal: ${entry.animal.title}. Organism: ${entry.organism.title}. Phenomenon: ${entry.phenomenon.title}.`;
+  const birdIndex = getDayIndexForArray(currentDate, birdsData.length);
+  const bird = birdsData[birdIndex];
+
+  const flowerIndex = getDayIndexForArray(currentDate, flowersData.length);
+  const flower = flowersData[flowerIndex];
+
+  const textToSpeak = `Nature today. Plant: ${entry.plant.title}. Animal: ${entry.animal.title}. Organism: ${entry.organism.title}. Phenomenon: ${entry.phenomenon.title}. Bird: ${bird.title}. Flower: ${flower.title}.`;
 
   const cards = [
     { key: 'plant', data: entry.plant, label: 'Plant', labelHi: 'वनस्पति', icon: <Leaf size={18} className="text-emerald-700" />, bg: 'color-mix(in srgb, #4A7C59 4%, var(--bg-secondary))' },
     { key: 'animal', data: entry.animal, label: 'Animal', labelHi: 'प्राणी', icon: <PawPrint size={18} className="text-amber-700" />, bg: 'color-mix(in srgb, #8A6A3A 4%, var(--bg-secondary))' },
     { key: 'organism', data: entry.organism, label: 'Organism', labelHi: 'सूक्ष्मजीव', icon: <Microscope size={18} className="text-purple-700" />, bg: 'color-mix(in srgb, #6A3A8A 4%, var(--bg-secondary))' },
     { key: 'phenomenon', data: entry.phenomenon, label: 'Phenomenon', labelHi: 'प्राकृतिक घटना', icon: <Wind size={18} className="text-blue-700" />, bg: 'color-mix(in srgb, #3A5A8A 4%, var(--bg-secondary))' },
+    { key: 'bird', data: bird, label: 'Bird', labelHi: 'पक्षी', icon: <Bird size={18} className="text-sky-700" />, bg: 'color-mix(in srgb, #0284c7 4%, var(--bg-secondary))' },
+    { key: 'flower', data: flower, label: 'Flower', labelHi: 'फूल', icon: <Flower size={18} className="text-pink-700" />, bg: 'color-mix(in srgb, #db2777 4%, var(--bg-secondary))' },
   ];
 
   return (

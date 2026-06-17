@@ -1,6 +1,6 @@
 // src/lib/firebase/client.ts
 import { initializeApp, getApps, type FirebaseApp } from 'firebase/app';
-import { getFirestore, type Firestore } from 'firebase/firestore';
+import { initializeFirestore, persistentLocalCache, persistentMultipleTabManager, type Firestore } from 'firebase/firestore';
 import { getAuth, type Auth } from 'firebase/auth';
 import { getStorage, type FirebaseStorage } from 'firebase/storage';
 
@@ -21,7 +21,11 @@ let storage: FirebaseStorage | null = null;
 if (firebaseConfig.apiKey) {
   try {
     app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
-    db = getFirestore(app);
+    db = initializeFirestore(app, {
+      localCache: persistentLocalCache({
+        tabManager: persistentMultipleTabManager()
+      })
+    });
     auth = getAuth(app);
     storage = getStorage(app);
   } catch (err) {

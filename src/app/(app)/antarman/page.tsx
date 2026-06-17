@@ -453,6 +453,30 @@ export default function AntarmanPage() {
     };
   }, [isFullScreen, activeSection]);
 
+  // Reset all fields and editor content when selectedDate changes to prevent stale flash or dirty lock
+  useEffect(() => {
+    setIsDirty(false);
+    setDiaryContent('');
+    setDiaryMood(3);
+    setNuancedEmotion('');
+    setDiaryGratitude(['', '', '']);
+    setDiaryLearned('');
+    setDiaryIntention('');
+    setDiaryTags([]);
+    setJournalContent('');
+    setPoetryContent('');
+    setPoetryTitle('');
+    setStoryContent('');
+    setStoryTitle('');
+    setGratitudeLine1('');
+    setGratitudeLine2('');
+    setGratitudeLine3('');
+    setGratitudeReflection('');
+    if (editorRef.current) {
+      editorRef.current.innerHTML = '';
+    }
+  }, [selectedDate]);
+
   // Load section data when selectedDate or Firestore data updates
   useEffect(() => {
     if (loading) return;

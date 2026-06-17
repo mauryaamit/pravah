@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Settings, ChevronDown } from 'lucide-react';
 import {
@@ -10,7 +10,7 @@ import {
   Globe2, Sparkles, PlaneTakeoff, Leaf, Flag,
   ScrollText, UserRound, BookMarked, Heart, BookOpen,
   Mic2, Type, Puzzle, Keyboard, LandPlot,
-  Film, Book, Map,
+  Film, Book, Map, FlaskConical,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ROOMS, ROOMS_BY_CLUSTER, CLUSTER_LABELS, type RoomCluster } from '@/lib/constants/rooms';
@@ -31,7 +31,7 @@ const ROOM_ICONS: Record<string, React.ComponentType<any>> = {
   vaishwik: Globe2, neelakurinji: Sparkles, safar: PlaneTakeoff, aranya: Leaf, bharat: Flag,
   pratha: LandPlot,
   kahani: ScrollText, vyaktiva: UserRound, write: BookMarked, anand: Heart,
-  chalchitr: Film, kitab: Book, itihas: Map,
+  chalchitr: Film, kitab: Book, itihas: Map, anusandhan: FlaskConical,
 };
 
 const EXPANDED_W = 260;
@@ -40,6 +40,7 @@ const DEFAULT_OPEN: RoomCluster[] = ['daily'];
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
   const { user } = useUser();
   const { isDark } = useTheme();
   const [collapsed, setCollapsed] = useState(false);
@@ -47,7 +48,17 @@ export default function Sidebar() {
   const [pendingRoom, setPendingRoom] = useState<string | null>(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
-  const activeRoomId = ROOMS.find(r => pathname && pathname.startsWith(r.route))?.id;
+  // On sidebar mount — prefetch all room routes silently:
+  useEffect(() => {
+    const topRooms = [
+      '/aarambh', '/antarman', '/kavitalay', '/agni',
+      '/bargad', '/manthan', '/prerna', '/riyaz',
+      '/darshan', '/neurolab'
+    ];
+    topRooms.forEach(route => router.prefetch(route));
+  }, [router]);
+
+  const activeRoomId = ROOMS.find(r => pathname && (pathname === r.route || pathname.startsWith(r.route + '/')) )?.id;
   const activeRoom = ROOMS.find(r => r.id === activeRoomId);
 
   // Clear pending when route settles

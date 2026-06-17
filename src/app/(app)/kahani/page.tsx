@@ -39,6 +39,7 @@ export default function KahaniPage() {
   const [promptIndex, setPromptIndex] = useState(0);
   const [datesWithStories, setDatesWithStories] = useState<Set<string>>(new Set());
   const [currentMonthDate, setCurrentMonthDate] = useState<Date>(new Date());
+  const [isDirty, setIsDirty] = useState(false);
 
   const saveTimer = useRef<ReturnType<typeof setTimeout>>();
 
@@ -84,6 +85,13 @@ export default function KahaniPage() {
     if (!user || !localDb) return;
     const fetchStory = async () => {
       try {
+        // Clear immediately — no stale flash
+        setStoryTitle('');
+        setStoryThread('');
+        setStoryContent('');
+        setIsDirty(false);
+        setSaveStatus('idle');
+
         const docRef = doc(localDb, `users/${user.uid}/kathakar`, selectedWriteDate);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
@@ -91,11 +99,8 @@ export default function KahaniPage() {
           setStoryTitle(data.title || '');
           setStoryThread(data.thread || '');
           setStoryContent(data.content || '');
-        } else {
-          setStoryTitle('');
-          setStoryThread('');
-          setStoryContent('');
         }
+        setIsDirty(false);
         setSaveStatus('idle');
       } catch (e) {
         console.error("Error loading user story:", e);
@@ -104,10 +109,35 @@ export default function KahaniPage() {
     fetchStory();
   }, [user, selectedWriteDate]);
 
+  // Flush save helper
+  const flushSave = async (dateStr: string) => {
+    const localDb = db;
+    if (!user || !localDb || !isDirty) return;
+    clearTimeout(saveTimer.current);
+    try {
+      await setDoc(doc(localDb, `users/${user.uid}/kathakar`, dateStr), {
+        title: storyTitle,
+        thread: storyThread,
+        content: storyContent,
+        updatedAt: new Date()
+      });
+      setIsDirty(false);
+      setSaveStatus('saved');
+    } catch (e) {
+      console.error("Error flushing save:", e);
+    }
+  };
+
+  const handleDateSelect = async (dateStr: string) => {
+    await flushSave(selectedWriteDate);
+    setSelectedWriteDate(dateStr);
+  };
+
   // Debounced auto-save for user story
   useEffect(() => {
     const localDb = db;
     if (!user || !localDb) return;
+    if (!isDirty) return;
     if (saveStatus === 'saving') return;
 
     // Trigger save only if there's actual content changes compared to what would be loaded
@@ -124,6 +154,7 @@ export default function KahaniPage() {
           content: storyContent,
           updatedAt: new Date()
         });
+        setIsDirty(false);
         setSaveStatus('saved');
         setDatesWithStories(prev => {
           const next = new Set(prev);
@@ -137,7 +168,7 @@ export default function KahaniPage() {
     }, 2000);
 
     return () => clearTimeout(saveTimer.current);
-  }, [storyTitle, storyContent, storyThread, user, selectedWriteDate]);
+  }, [storyTitle, storyContent, storyThread, user, selectedWriteDate, isDirty]);
 
   // Calendar rendering helper
   const getCalendarDays = () => {
@@ -366,7 +397,7 @@ export default function KahaniPage() {
                 type="text"
                 placeholder="Give your story a name..."
                 value={storyTitle}
-                onChange={(e) => { setStoryTitle(e.target.value); setSaveStatus('idle'); }}
+                onChange={(e) => { setStoryTitle(e.target.value); setIsDirty(true); setSaveStatus('idle'); }}
                 className="w-full text-2xl font-serif font-light bg-transparent border-none outline-none focus:ring-0 p-0"
                 style={{ color: 'var(--text-primary)' }}
               />
@@ -378,7 +409,7 @@ export default function KahaniPage() {
                   type="text"
                   placeholder="e.g. Memory, Journey, Fear"
                   value={storyThread}
-                  onChange={(e) => { setStoryThread(e.target.value); setSaveStatus('idle'); }}
+                  onChange={(e) => { setStoryThread(e.target.value); setIsDirty(true); setSaveStatus('idle'); }}
                   className="bg-transparent border-none outline-none focus:ring-0 p-0 text-xs font-semibold text-[var(--text-secondary)]"
                 />
               </div>
@@ -386,7 +417,7 @@ export default function KahaniPage() {
               {/* Main textarea */}
               <textarea
                 value={storyContent}
-                onChange={(e) => { setStoryContent(e.target.value); setSaveStatus('idle'); }}
+                onChange={(e) => { setStoryContent(e.target.value); setIsDirty(true); setSaveStatus('idle'); }}
                 placeholder="Write your story here..."
                 rows={15}
                 className="w-full bg-transparent border-none outline-none focus:ring-0 resize-none font-serif text-lg leading-relaxed p-0"
@@ -406,6 +437,7 @@ export default function KahaniPage() {
                     onClick={() => {
                       setStoryContent(WRITING_PROMPTS[promptIndex]);
                       setPromptIndex((prev) => (prev + 1) % WRITING_PROMPTS.length);
+                      setIsDirty(true);
                       setSaveStatus('idle');
                     }}
                     className="text-[var(--accent-saffron)] font-medium hover:underline cursor-pointer"
@@ -440,7 +472,7 @@ export default function KahaniPage() {
                     return (
                       <button
                         key={day.dateStr}
-                        onClick={() => setSelectedWriteDate(day.dateStr)}
+                        onClick={() => handleDateSelect(day.dateStr)}
                         disabled={!day.isCurrentMonth}
                         className={`h-8 flex flex-col justify-center items-center rounded transition-all cursor-pointer relative ${
                           !day.isCurrentMonth ? 'opacity-20 cursor-default' : 'hover:bg-[var(--bg-tertiary)]'

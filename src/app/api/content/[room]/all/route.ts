@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { adminDb } from '@/lib/firebase/admin';
 
+export const dynamic = 'force-dynamic';
+
+
 export async function GET(req: NextRequest, { params }: { params: { room: string } }) {
   try {
     const { room } = params;

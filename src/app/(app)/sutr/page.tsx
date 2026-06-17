@@ -114,7 +114,7 @@ export default function SutrPage() {
           <section className="sutr-section space-y-8">
             <div className="text-center space-y-3">
               <h2 className="sutr-heading text-2xl sm:text-3xl font-serif" style={{ color: '#3D3560' }}>
-                The Twenty-Nine Rooms
+                The Portals of the Sanctuary
               </h2>
               <p className="sutr-section-label text-xs uppercase tracking-widest">
                 Walk through the portals of the sanctuary

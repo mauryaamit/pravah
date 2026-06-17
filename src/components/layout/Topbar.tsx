@@ -15,7 +15,7 @@ export default function Topbar() {
   const pathname = usePathname();
   const { isMuted, toggleMute, enableAudio } = useAudio();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const room = ROOMS.find(r => pathname && pathname.startsWith(r.route));
+  const room = ROOMS.find(r => pathname && (pathname === r.route || pathname.startsWith(r.route + '/')));
 
   return (
     <header
@@ -29,7 +29,7 @@ export default function Topbar() {
       {/* Left: Room identity */}
       <div className="flex items-center gap-3 min-w-0">
         {/* Pravah logo on mobile only */}
-        <Link href="/aarambh" className="lg:hidden flex items-center gap-2 hover:opacity-80 transition-opacity">
+        <Link href="/aarambh" prefetch={true} className="lg:hidden flex items-center gap-2 hover:opacity-80 transition-opacity">
           <img 
             src="/logo.png" 
             alt="Pravah Logo" 

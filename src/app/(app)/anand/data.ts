@@ -87,8 +87,8 @@ export const ANAND_ENTRIES: AnandEntry[] = [
   {
     dayIndex: 3,
     riddle: {
-      title: "The Hungry Devourer",
-      title_hi: "भूखा भक्षक",
+      title: "The Devourer",
+      title_hi: "भक्षक",
       question: "If you feed me, I grow and live, but if you give me water, I die. What am I?",
       question_hi: "यदि आप मुझे खिलाते हैं, तो मैं बढ़ता हूँ और जीवित रहता हूँ, लेकिन यदि आप मुझे पानी देते हैं, तो मैं मर जाता हूँ। मैं क्या हूँ?",
       reveal: "Fire.",
@@ -311,8 +311,8 @@ export const ANAND_ENTRIES: AnandEntry[] = [
   {
     dayIndex: 11,
     riddle: {
-      title: "The Fragile State",
-      title_hi: "नाजुक अवस्था",
+      title: "The Silence",
+      title_hi: "मौन",
       question: "If you speak my name, you break me. What am I?",
       question_hi: "यदि आप मेरा नाम लेते हैं, तो आप मुझे तोड़ देते हैं। मैं क्या हूँ?",
       reveal: "Silence.",
@@ -1291,12 +1291,12 @@ export const ANAND_ENTRIES: AnandEntry[] = [
   {
     dayIndex: 46,
     riddle: {
-      title: "The Silent Runner",
-      title_hi: "मूक धावक",
-      question: "I have hands but cannot clap, and I run but have no legs. What am I?",
-      question_hi: "मेरे पास हाथ हैं लेकिन मैं ताली नहीं बजा सकता, और मैं दौड़ता हूँ लेकिन मेरे पैर नहीं हैं। मैं क्या हूँ?",
-      reveal: "A clock.",
-      reveal_hi: "एक घड़ी।"
+      title: "The Four Legs",
+      title_hi: "चार पैर",
+      question: "I have four legs but cannot walk, and a flat back but cannot speak. What am I?",
+      question_hi: "मेरे चार पैर हैं लेकिन मैं चल नहीं सकता, और एक सपाट पीठ है लेकिन मैं बोल नहीं सकता। मैं क्या हूँ?",
+      reveal: "A table.",
+      reveal_hi: "एक मेज।"
     },
     joke: {
       setup: "What is the most powerful unit of time in India?",
@@ -1319,12 +1319,12 @@ export const ANAND_ENTRIES: AnandEntry[] = [
   {
     dayIndex: 47,
     riddle: {
-      title: "The Sharp Eye",
-      title_hi: "तेज आंख",
-      question: "I have one eye but cannot see, and a long tail that flows through me. What am I?",
-      question_hi: "मेरी एक आँख है लेकिन मैं देख नहीं सकता, और मेरे माध्यम से एक लंबी पूंछ बहती है। मैं क्या हूँ?",
-      reveal: "A needle.",
-      reveal_hi: "एक सुई।"
+      title: "The Foot Soldier",
+      title_hi: "पैदल सैनिक",
+      question: "I have a heel and a toe but no legs or body. What am I?",
+      question_hi: "मेरी एक एड़ी और एक अंगूठा है लेकिन मेरे पैर या शरीर नहीं है। मैं क्या हूँ?",
+      reveal: "A shoe.",
+      reveal_hi: "एक जूता।"
     },
     joke: {
       setup: "What did the light bulb say to the generator?",
@@ -1347,12 +1347,12 @@ export const ANAND_ENTRIES: AnandEntry[] = [
   {
     dayIndex: 48,
     riddle: {
-      title: "The Four Legs",
-      title_hi: "चार पैर",
-      question: "I have four legs but cannot walk, and a flat back but cannot speak. What am I?",
-      question_hi: "मेरे चार पैर हैं लेकिन मैं चल नहीं सकता, और एक सपाट पीठ है लेकिन मैं बोल नहीं सकता। मैं क्या हूँ?",
-      reveal: "A table.",
-      reveal_hi: "एक मेज।"
+      title: "The Ringing Bell",
+      title_hi: "बजने वाली घंटी",
+      question: "I have a tongue but cannot speak, and a metal body that rings. What am I?",
+      question_hi: "मेरी एक जीभ है लेकिन मैं बोल नहीं सकता, और एक धातु का शरीर है जो बजता है। मैं क्या हूँ?",
+      reveal: "A bell.",
+      reveal_hi: "एक घंटी।"
     },
     joke: {
       setup: "What do you call a line of men waiting to get haircuts?",
@@ -1375,19 +1375,19 @@ export const ANAND_ENTRIES: AnandEntry[] = [
   {
     dayIndex: 49,
     riddle: {
-      title: "The Foot Soldier",
-      title_hi: "पैदल सैनिक",
-      question: "I have a heel and a toe but no legs or body. What am I?",
-      question_hi: "मेरी एक एड़ी और एक अंगूठा है लेकिन मेरे पैर या शरीर नहीं है। मैं क्या हूँ?",
-      reveal: "A shoe.",
-      reveal_hi: "एक जूता।"
+      title: "The Wave Wave",
+      title_hi: "लहर लहर",
+      question: "I have no voice but can roar, and no legs but can sweep the shore. What am I?",
+      question_hi: "मेरी कोई आवाज़ नहीं है लेकिन मैं दहाड़ सकता हूँ, और मेरे पैर नहीं हैं लेकिन मैं किनारे को साफ कर सकता हूँ। मैं क्या हूँ?",
+      reveal: "An ocean wave.",
+      reveal_hi: "समुद्र की लहर।"
     },
     joke: {
-      setup: "Why did the banana go to the doctor?",
-      setup_hi: "केला डॉक्टर के पास क्यों गया?",
-      punchline: "Because it wasn't peeling well, so the doctor turned into a mailbox.",
-      punchline_hi: "क्योंकि वह छिल (peeling/अच्छा महसूस) नहीं रहा था, और डॉक्टर मेलबॉक्स बन गया।",
-      type: "absurdist"
+      setup: "Why is auto-correct sometimes the most dangerous tool on your phone?",
+      setup_hi: "ऑटो-करेक्ट कभी-कभी आपके फोन का सबसे खतरनाक उपकरण क्यों होता है?",
+      punchline: "Because it has its own agenda and wants to replace 'dear mom' with 'dead moth.'",
+      punchline_hi: "क्योंकि उसका अपना एक एजेंडा है और वह 'प्रिय माँ' को 'मरे हुए पतंगे' से बदलना चाहता है।",
+      type: "observational"
     },
     fun_fact: {
       fact: "Sea turtles possess a geomagnetic sense that allows them to return to the exact beach where they were born to lay eggs. They navigate thousands of miles across open ocean by detecting the angle and intensity of Earth's magnetic field.",
@@ -1403,19 +1403,19 @@ export const ANAND_ENTRIES: AnandEntry[] = [
   {
     dayIndex: 50,
     riddle: {
-      title: "The Ringing Bell",
-      title_hi: "बजने वाली घंटी",
-      question: "I have a tongue but cannot speak, and a metal body that rings. What am I?",
-      question_hi: "मेरी एक जीभ है लेकिन मैं बोल नहीं सकता, और एक धातु का शरीर है जो बजता है। मैं क्या हूँ?",
-      reveal: "A bell.",
-      reveal_hi: "एक घंटी।"
+      title: "The Companion",
+      title_hi: "साथी",
+      question: "I follow you in the day, but run away in the dark. What am I?",
+      question_hi: "मैं दिन में आपके पीछे चलता हूँ, लेकिन अंधेरे में भाग जाता हूँ। मैं क्या हूँ?",
+      reveal: "A shadow.",
+      reveal_hi: "एक परछाई।"
     },
     joke: {
-      setup: "Why is auto-correct sometimes the most dangerous tool on your phone?",
-      setup_hi: "ऑटो-करेक्ट कभी-कभी आपके फोन का सबसे खतरनाक उपकरण क्यों होता है?",
-      punchline: "Because it has its own agenda and wants to replace 'dear mom' with 'dead moth.'",
-      punchline_hi: "क्योंकि उसका अपना एक एजेंडा है और वह 'प्रिय माँ' को 'मरे हुए पतंगे' से बदलना चाहता है।",
-      type: "observational"
+      setup: "Why do we tap the bottom of a hot tea glass before drinking at a tapri?",
+      setup_hi: "हम टपरी पर गर्म चाय पीने से पहले गिलास के तले को क्यों थपथपाते हैं?",
+      punchline: "To check if the glass has survived the heat and won't shatter in our hands.",
+      punchline_hi: "यह जांचने के लिए कि क्या ग्लास गर्मी से बच गया है और हमारे हाथों में नहीं बिखरेगा।",
+      type: "desi"
     },
     fun_fact: {
       fact: "Glass is not a slow-flowing liquid but an amorphous solid, meaning its molecules are disordered but locked in place. The myth that old stained-glass windows are thicker at the bottom because of gravity has been disproved by materials scientists.",
@@ -1431,19 +1431,19 @@ export const ANAND_ENTRIES: AnandEntry[] = [
   {
     dayIndex: 51,
     riddle: {
-      title: "The Devourer",
-      title_hi: "भक्षक",
-      question: "If you feed me, I grow and live, but if you give me water, I die. What am I?",
-      question_hi: "यदि आप मुझे खिलाते हैं, तो मैं बढ़ता हूँ और जीवित रहता हूँ, लेकिन यदि आप मुझे पानी देते हैं, तो मैं मर जाता हूँ। मैं क्या हूँ?",
-      reveal: "Fire.",
-      reveal_hi: "आग।"
+      title: "The Truth Teller",
+      title_hi: "सच बताने वाला",
+      question: "I raise my hand when you raise yours, but I cannot touch you. What am I?",
+      question_hi: "जब आप अपना हाथ उठाते हैं तो मैं अपना हाथ उठाता हूँ, लेकिन मैं आपको छू नहीं सकता। मैं क्या हूँ?",
+      reveal: "A mirror.",
+      reveal_hi: "एक दर्पण।"
     },
     joke: {
-      setup: "Why do we tap the bottom of a hot tea glass before drinking at a tapri?",
-      setup_hi: "हम टपरी पर गर्म चाय पीने से पहले गिलास के तले को क्यों थपथपाते हैं?",
-      punchline: "To check if the glass has survived the heat and won't shatter in our hands.",
-      punchline_hi: "यह जांचने के लिए कि क्या ग्लास गर्मी से बच गया है और हमारे हाथों में नहीं बिखरेगा।",
-      type: "desi"
+      setup: "Why is organic chemistry so difficult to study?",
+      setup_hi: "ऑर्गेनिक केमिस्ट्री का अध्ययन करना इतना कठिन क्यों है?",
+      punchline: "Because it contains carbon copies of everything, making it feel highly repetitive.",
+      punchline_hi: "क्योंकि इसमें हर चीज़ की कार्बन कॉपियां होती हैं, जिससे यह बहुत दोहराव वाला महसूस होता।",
+      type: "science"
     },
     fun_fact: {
       fact: "Woodpeckers have an incredibly long tongue that wraps around their brain to act as a shock absorber. This anatomical structure protects their brain from damage when they strike tree bark at forces up to fifteen times gravity.",
@@ -1459,19 +1459,19 @@ export const ANAND_ENTRIES: AnandEntry[] = [
   {
     dayIndex: 52,
     riddle: {
-      title: "The Wave Wave",
-      title_hi: "लहर लहर",
-      question: "I have no voice but can roar, and no legs but can sweep the shore. What am I?",
-      question_hi: "मेरी कोई आवाज़ नहीं है लेकिन मैं दहाड़ सकता हूँ, और मेरे पैर नहीं हैं लेकिन मैं किनारे को साफ कर सकता हूँ। मैं क्या हूँ?",
-      reveal: "An ocean wave.",
-      reveal_hi: "समुद्र की लहर।"
+      title: "The Silent Runner",
+      title_hi: "मूक धावक",
+      question: "I run all day but never get tired, and have hands but no body. What am I?",
+      question_hi: "मैं दिन भर दौड़ता हूँ लेकिन कभी थकता नहीं, और मेरे पास हाथ हैं लेकिन शरीर नहीं। मैं क्या हूँ?",
+      reveal: "A clock.",
+      reveal_hi: "एक घड़ी।"
     },
     joke: {
-      setup: "Why is organic chemistry so difficult to study?",
-      setup_hi: "ऑर्गेनिक केमिस्ट्री का अध्ययन करना इतना कठिन क्यों है?",
-      punchline: "Because it contains carbon copies of everything, making it feel highly repetitive.",
-      punchline_hi: "क्योंकि इसमें हर चीज़ की कार्बन कॉपियां होती हैं, जिससे यह बहुत दोहराव वाला महसूस होता।",
-      type: "science"
+      setup: "Why do we tell actors to break a leg before going on stage?",
+      setup_hi: "हम अभिनेताओं को मंच पर जाने से पहले पैर तोड़ने (शुभकामना देने) के लिए क्यों कहते हैं?",
+      punchline: "Because every theatrical play must have a cast to support it.",
+      punchline_hi: "क्योंकि हर नाटक में उसका समर्थन करने के लिए एक कास्ट (कलाकार/प्लास्टर) होनी चाहिए।",
+      type: "wordplay"
     },
     fun_fact: {
       fact: "On Jupiter and Saturn, it rains diamonds due to extreme atmospheric pressure. Methane gas is converted into soot by lightning, which then hardens into graphite and eventually turns into diamonds as it falls through the hot, dense depths.",
@@ -1487,19 +1487,19 @@ export const ANAND_ENTRIES: AnandEntry[] = [
   {
     dayIndex: 53,
     riddle: {
-      title: "The Companion",
-      title_hi: "साथी",
-      question: "I follow you in the day, but run away in the dark. What am I?",
-      question_hi: "मैं दिन में आपके पीछे चलता हूँ, लेकिन अंधेरे में भाग जाता हूँ। मैं क्या हूँ?",
-      reveal: "A shadow.",
-      reveal_hi: "एक परछाई।"
+      title: "The Letter Box",
+      title_hi: "पत्र का डिब्बा",
+      question: "What contains letters but has only three letters itself?",
+      question_hi: "किसमें बहुत सारे अक्षर (letters) होते हैं लेकिन उसमें स्वयं केवल तीन अक्षर होते हैं?",
+      reveal: "Alphabet.",
+      reveal_hi: "वर्णमाला (Alphabet)।"
     },
     joke: {
-      setup: "Why do we tell actors to break a leg before going on stage?",
-      setup_hi: "हम अभिनेताओं को मंच पर जाने से पहले पैर तोड़ने (शुभकामना देने) के लिए क्यों कहते हैं?",
-      punchline: "Because every theatrical play must have a cast to support it.",
-      punchline_hi: "क्योंकि हर नाटक में उसका समर्थन करने के लिए एक कास्ट (कलाकार/प्लास्टर) होनी चाहिए।",
-      type: "wordplay"
+      setup: "A toaster and a refrigerator get into an argument about politics.",
+      setup_hi: "एक टोस्टर और एक रेफ्रिजरेटर के बीच राजनीति को लेकर बहस हो जाती है।",
+      punchline: "The toaster says, 'At least my bread rises,' and the refrigerator replies, 'I am a refrigerator.'",
+      punchline_hi: "टोस्टर कहता है, 'कम से कम मेरी ब्रेड तो उठती है,' और फ्रिज जवाब देता है, 'मैं एक फ्रिज हूँ।'",
+      type: "absurdist"
     },
     fun_fact: {
       fact: "Sunflowers exhibit heliotropism, tracking the movement of the sun from east to west across the sky during the day. At night, they turn back to the east to prepare for the next sunrise, a movement regulated by their internal biological clock.",
@@ -1515,19 +1515,19 @@ export const ANAND_ENTRIES: AnandEntry[] = [
   {
     dayIndex: 54,
     riddle: {
-      title: "The Truth Teller",
-      title_hi: "सच बताने वाला",
-      question: "I raise my hand when you raise yours, but I cannot touch you. What am I?",
-      question_hi: "जब आप अपना हाथ उठाते हैं तो मैं अपना हाथ उठाता हूँ, लेकिन मैं आपको छू नहीं सकता। मैं क्या हूँ?",
-      reveal: "A mirror.",
-      reveal_hi: "एक दर्पण।"
+      title: "The White Path",
+      title_hi: "सफेद मार्ग",
+      question: "I have no wheels but travel far, and I cross the mountains without a car. What am I?",
+      question_hi: "मेरे पास कोई पहिया नहीं है लेकिन मैं दूर तक जाता हूँ, और मैं बिना कार के पहाड़ों को पार करता हूँ। मैं क्या हूँ?",
+      reveal: "A road.",
+      reveal_hi: "एक सड़क।"
     },
     joke: {
-      setup: "A toaster and a refrigerator get into an argument about politics.",
-      setup_hi: "एक टोस्टर और एक रेफ्रिजरेटर के बीच राजनीति को लेकर बहस हो जाती है।",
-      punchline: "The toaster says, 'At least my bread rises,' and the refrigerator replies, 'I am a refrigerator.'",
-      punchline_hi: "टोस्टर कहता है, 'कम से कम मेरी ब्रेड तो उठती है,' और फ्रिज जवाब देता है, 'मैं एक फ्रिज हूँ।'",
-      type: "absurdist"
+      setup: "Why is trying to read your phone screen in direct sunlight so frustrating?",
+      setup_hi: "तेज धूप में अपने फोन की स्क्रीन पढ़ने की कोशिश करना इतना निराशाजनक क्यों है?",
+      punchline: "Because you end up staring at a dark reflection of your own disappointed face instead.",
+      punchline_hi: "क्योंकि अंत में आप अपने ही निराश चेहरे का एक अंधेरा प्रतिबिंब देखने लगते हैं।",
+      type: "observational"
     },
     fun_fact: {
       fact: "Beavers possess iron-rich orange teeth that grow continuously throughout their lives. The iron makes the enamel extremely hard and resistant to acid, allowing them to chew through massive tree trunks without wearing down their teeth to the gums.",
@@ -1543,19 +1543,19 @@ export const ANAND_ENTRIES: AnandEntry[] = [
   {
     dayIndex: 55,
     riddle: {
-      title: "The Silent Runner",
-      title_hi: "मूक धावक",
-      question: "I run all day but never get tired, and have hands but no body. What am I?",
-      question_hi: "मैं दिन भर दौड़ता हूँ लेकिन कभी थकता नहीं, और मेरे पास हाथ हैं लेकिन शरीर नहीं। मैं क्या हूँ?",
-      reveal: "A clock.",
-      reveal_hi: "एक घड़ी।"
+      title: "The Darkness",
+      title_hi: "अंधेरा",
+      question: "The more of me there is, the less you can see. What am I?",
+      question_hi: "मेरी मात्रा जितनी अधिक होगी, आप उतना ही कम देख पाएंगे। मैं क्या हूँ?",
+      reveal: "Darkness.",
+      reveal_hi: "अंधेरा।"
     },
     joke: {
-      setup: "Why is trying to read your phone screen in direct sunlight so frustrating?",
-      setup_hi: "तेज धूप में अपने फोन की स्क्रीन पढ़ने की कोशिश करना इतना निराशाजनक क्यों है?",
-      punchline: "Because you end up staring at a dark reflection of your own disappointed face instead.",
-      punchline_hi: "क्योंकि अंत में आप अपने ही निराश चेहरे का एक अंधेरा प्रतिबिंब देखने लगते हैं।",
-      type: "observational"
+      setup: "Why do we keep empty ice cream boxes in the freezer?",
+      setup_hi: "हम फ्रीज़र में खाली आइसक्रीम के डिब्बे क्यों रखते हैं?",
+      punchline: "Because they are actually filled with frozen green chillies and coriander, the ultimate trust test.",
+      punchline_hi: "क्योंकि वे वास्तव में जमी हुई हरी मिर्च और धनिए से भरे होते हैं, जो विश्वास की परीक्षा है।",
+      type: "desi"
     },
     fun_fact: {
       fact: "Octopuses possess taste receptors inside the suction cups on their arms. This allows them to taste their environment and locate prey simply by touching rocks and crawling through crevices, processing sensory information directly in their nervous system.",
@@ -1571,19 +1571,19 @@ export const ANAND_ENTRIES: AnandEntry[] = [
   {
     dayIndex: 56,
     riddle: {
-      title: "The Letter Box",
-      title_hi: "पत्र का डिब्बा",
-      question: "What contains letters but has only three letters itself?",
-      question_hi: "किसमें बहुत सारे अक्षर (letters) होते हैं लेकिन उसमें स्वयं केवल तीन अक्षर होते हैं?",
-      reveal: "Alphabet.",
-      reveal_hi: "वर्णमाला (Alphabet)।"
+      title: "The Round Shield",
+      title_hi: "गोल ढाल",
+      question: "I have a head and a tail but no body. What am I?",
+      question_hi: "मेरे पास एक सिर और एक पूंछ है लेकिन कोई शरीर नहीं है। मैं क्या हूँ?",
+      reveal: "A coin.",
+      reveal_hi: "एक सिक्का।"
     },
     joke: {
-      setup: "Why do we keep empty ice cream boxes in the freezer?",
-      setup_hi: "हम फ्रीज़र में खाली आइसक्रीम के डिब्बे क्यों रखते हैं?",
-      punchline: "Because they are actually filled with frozen green chillies and coriander, the ultimate trust test.",
-      punchline_hi: "क्योंकि वे वास्तव में जमी हुई हरी मिर्च और धनिए से भरे होते हैं, जो विश्वास की परीक्षा है।",
-      type: "desi"
+      setup: "Why did the Pavlovian scientist jump up when the bar phone rang loudly?",
+      setup_hi: "जब बार का फोन जोर से बजा तो पावलोवियन वैज्ञानिक क्यों उछल पड़ा?",
+      punchline: "He shouted, 'Oh no, I forgot to feed the dog!' showing that reflexes work both ways.",
+      punchline_hi: "वह चिल्लाया, 'अरे नहीं, मैं कुत्ते को खाना खिलाना भूल गया!' यह दिखाता है कि सजगता दोनों तरह से काम करती है।",
+      type: "science"
     },
     fun_fact: {
       fact: "The platypus does not possess a stomach; instead, its esophagus connects directly to its intestines. This anatomical structure means they lack the genes for producing acid and digestive enzymes that other mammals use to process food.",
@@ -1599,18 +1599,18 @@ export const ANAND_ENTRIES: AnandEntry[] = [
   {
     dayIndex: 57,
     riddle: {
-      title: "The White Path",
-      title_hi: "सफेद मार्ग",
-      question: "I have no wheels but travel far, and I cross the mountains without a car. What am I?",
-      question_hi: "मेरे पास कोई पहिया नहीं है लेकिन मैं दूर तक जाता हूँ, और मैं बिना कार के पहाड़ों को पार करता हूँ। मैं क्या हूँ?",
-      reveal: "A road.",
-      reveal_hi: "एक सड़क।"
+      title: "The Great Light",
+      title_hi: "महान प्रकाश",
+      question: "I have a golden head and a golden tail, but no body. I rise in the east and set in the west. What am I?",
+      question_hi: "मेरा एक सुनहरा सिर और एक सुनहरी पूंछ है, लेकिन कोई शरीर नहीं। मैं पूर्व में उगता हूँ और पश्चिम में ढलता हूँ। मैं क्या हूँ?",
+      reveal: "The sun.",
+      reveal_hi: "सूर्य।"
     },
     joke: {
-      setup: "Why did the Pavlovian scientist jump up when the bar phone rang loudly?",
-      setup_hi: "जब बार का फोन जोर से बजा तो पावलोवियन वैज्ञानिक क्यों उछल पड़ा?",
-      punchline: "He shouted, 'Oh no, I forgot to feed the dog!' showing that reflexes work both ways.",
-      punchline_hi: "वह चिल्लाया, 'अरे नहीं, मैं कुत्ते को खाना खिलाना भूल गया!' यह दिखाता है कि सजगता दोनों तरह से काम करती है।",
+      setup: "Why did the computer go to the hospital?",
+      setup_hi: "कंप्यूटर अस्पताल क्यों गया?",
+      punchline: "Because it had a virus that was eating its memory.",
+      punchline_hi: "क्योंकि उसमें एक वायरस था जो उसकी मेमोरी खा रहा था।",
       type: "science"
     },
     fun_fact: {
@@ -1627,19 +1627,19 @@ export const ANAND_ENTRIES: AnandEntry[] = [
   {
     dayIndex: 58,
     riddle: {
-      title: "The Darkness",
-      title_hi: "अंधेरा",
-      question: "The more of me there is, the less you can see. What am I?",
-      question_hi: "मेरी मात्रा जितनी अधिक होगी, आप उतना ही कम देख पाएंगे। मैं क्या हूँ?",
-      reveal: "Darkness.",
-      reveal_hi: "अंधेरा।"
+      title: "The Weightless Box",
+      title_hi: "भारहीन डिब्बा",
+      question: "What can you fill a bucket with to make it lighter?",
+      question_hi: "आप एक बाल्टी को किससे भर सकते हैं कि वह हल्की हो जाए?",
+      reveal: "Holes.",
+      reveal_hi: "छेद।"
     },
     joke: {
-      setup: "Why did the bicycle fall over?",
-      setup_hi: "साइकिल क्यों गिर गई?",
-      punchline: "Because it was two-tired.",
-      punchline_hi: "क्योंकि वह बहुत थक गई थी (दो पहियों वाली थी)।",
-      type: "wordplay"
+      setup: "Why do we say 'two minutes' when we are going to take at least an hour?",
+      setup_hi: "जब हम कम से कम एक घंटा लेने वाले होते हैं तो हम 'दो मिनट' क्यों कहते हैं?",
+      punchline: "It is a diplomatic unit of time designed to maintain domestic peace.",
+      punchline_hi: "यह घरेलू शांति बनाए रखने के लिए डिज़ाइन की गई समय की एक राजनयिक इकाई है।",
+      type: "observational"
     },
     fun_fact: {
       fact: "The Pando colony in Utah is a single organism consisting of over forty thousand aspen trees connected by a single underground root system. This massive colony weighs six million kilograms, making it the heaviest known organism on Earth.",
@@ -1655,19 +1655,19 @@ export const ANAND_ENTRIES: AnandEntry[] = [
   {
     dayIndex: 59,
     riddle: {
-      title: "The Round Shield",
-      title_hi: "गोल ढाल",
-      question: "I have a head and a tail but no body. What am I?",
-      question_hi: "मेरे पास एक सिर और एक पूंछ है लेकिन कोई शरीर नहीं है। मैं क्या हूँ?",
-      reveal: "A coin.",
-      reveal_hi: "एक सिक्का।"
+      title: "The Double Face",
+      title_hi: "दोहरा चेहरा",
+      question: "I have two heads, four eyes, but only one body. The more I stand, the shorter I get. What am I?",
+      question_hi: "मेरे पास दो सिर, चार आँखें हैं, लेकिन केवल एक शरीर है। मैं जितना खड़ा रहता हूँ, उतना ही छोटा होता जाता हूँ। मैं क्या हूँ?",
+      reveal: "A candle with two wicks.",
+      reveal_hi: "दो बत्ती वाली मोमबत्ती।"
     },
     joke: {
-      setup: "Why did the cloud paint itself green?",
-      setup_hi: "बादल ने खुद को हरा रंग क्यों लगाया?",
-      punchline: "Because it wanted to pretend it was a very high-altitude lawn.",
-      punchline_hi: "क्योंकि वह दिखाना चाहता था कि वह बहुत ऊंचाई पर स्थित एक घास का मैदान है।",
-      type: "absurdist"
+      setup: "Why do Indian fathers refuse to use GPS?",
+      setup_hi: "भारतीय पिता जीपीएस का उपयोग करने से क्यों मना करते हैं?",
+      punchline: "Because asking a local paan-wala is a spiritual connection to the land.",
+      punchline_hi: "क्योंकि स्थानीय पान वाले से पूछना मिट्टी से एक आध्यात्मिक जुड़ाव है।",
+      type: "desi"
     },
     fun_fact: {
       fact: "Sharks have been swimming in Earth's oceans for over four hundred million years. This means they have survived five major mass extinction events, making them older than the dinosaurs, and remarkably, even older than the rings of Saturn.",
@@ -1683,19 +1683,19 @@ export const ANAND_ENTRIES: AnandEntry[] = [
   {
     dayIndex: 60,
     riddle: {
-      title: "The Silence",
-      title_hi: "मौन",
-      question: "If you speak my name, you break me. What am I?",
-      question_hi: "यदि आप मेरा नाम लेते हैं, तो आप मुझे तोड़ देते हैं। मैं क्या हूँ?",
-      reveal: "Silence.",
-      reveal_hi: "मौन।"
+      title: "The Footless Traveler",
+      title_hi: "बिना पैर का यात्री",
+      question: "I run through hills, I run through vales, but I never move. What am I?",
+      question_hi: "मैं पहाड़ियों और घाटियों से होकर गुजरता हूँ, लेकिन कभी हिलता नहीं हूँ। मैं क्या हूँ?",
+      reveal: "A road.",
+      reveal_hi: "एक सड़क।"
     },
     joke: {
-      setup: "Why does an auto-rickshaw driver reject three passengers before choosing one?",
-      setup_hi: "एक ऑटो-रिक्शा चालक एक सवारी को चुनने से पहले तीन सवारियों को क्यों मना करता है?",
-      punchline: "He is not driving; he is a philosopher deciding if your destination aligns with his karma.",
-      punchline_hi: "वह गाड़ी नहीं चला रहा है; वह एक दार्शनिक है जो यह तय कर रहा है कि आपका गंतव्य उसके कर्म से मेल खाता है या नहीं।",
-      type: "desi"
+      setup: "Why did the math book look so sad?",
+      setup_hi: "गणित की किताब इतनी दुखी क्यों लग रही थी?",
+      punchline: "Because it had too many problems that nobody wanted to solve.",
+      punchline_hi: "क्योंकि उसमें बहुत सारी समस्याएं थीं जिन्हें कोई हल नहीं करना चाहता था।",
+      type: "wordplay"
     },
     fun_fact: {
       fact: "Sea otters are known to hold hands in groups, called rafts, while they sleep to keep from drifting apart in open water. They also wrap themselves in giant kelp to anchor themselves. This social behavior helps them stay connected to family.",
@@ -1706,6 +1706,846 @@ export const ANAND_ENTRIES: AnandEntry[] = [
       observation: "Checking the refrigerator three times in ten minutes expecting new food to appear is the definition of insanity.",
       observation_hi: "दस मिनट में तीन बार फ्रिज चेक करना और नए खाने की उम्मीद करना पागलपन की परिभाषा है।",
       attribution: "Pravah"
+    }
+  },
+  {
+    dayIndex: 61,
+    riddle: {
+      title: "The White Dress",
+      title_hi: "सफेद पोशाक",
+      question: "I fall from the sky, softer than hair, cold as ice, but when I touch the warm ground I disappear. What am I?",
+      question_hi: "मैं आसमान से गिरता हूँ, बालों से भी मुलायम, बर्फ जैसा ठंडा, लेकिन जब मैं गर्म जमीन को छूता हूँ तो गायब हो जाता हूँ। मैं क्या हूँ?",
+      reveal: "Snow.",
+      reveal_hi: "बर्फ।"
+    },
+    joke: {
+      setup: "Why did the coffee file a police report?",
+      setup_hi: "कॉफी ने पुलिस रिपोर्ट क्यों दर्ज कराई?",
+      punchline: "Because it got mugged in the kitchen.",
+      punchline_hi: "क्योंकि रसोई में उसके साथ मगिंग (mugged) हो गई थी।",
+      type: "wordplay"
+    },
+    fun_fact: {
+      fact: "Wombat poop is cube-shaped, which stops it from rolling away. This allows the animals to mark their territory effectively on flat surfaces without their markers rolling down the hills.",
+      fact_hi: "वोम्बैट का मल चौकोर (क्यूब) आकार का होता है, जिससे यह लुढ़क नहीं पाता।",
+      why_delightful: "It shows how nature solves the problem of rolling signposts with geometric waste design."
+    },
+    sarcasm_or_wit: {
+      observation: "Nothing says 'creative design' quite like putting the power button right next to the delete key on a keyboard.",
+      observation_hi: "कीबोर्ड पर डिलीट की (Delete key) के ठीक बगल में पावर बटन रखने से बेहतर 'रचनात्मक डिजाइन' का कोई उदाहरण नहीं है।",
+      attribution: "Pravah"
+    }
+  },
+  {
+    dayIndex: 62,
+    riddle: {
+      title: "The Silent Watcher",
+      title_hi: "मूक दर्शक",
+      question: "I have an eye but cannot see, I am sharp but have no mind. What am I?",
+      question_hi: "मेरी एक आँख है लेकिन मैं देख नहीं सकता, मैं नुकीला हूँ लेकिन मेरे पास दिमाग नहीं है। मैं क्या हूँ?",
+      reveal: "A needle.",
+      reveal_hi: "एक सुई।"
+    },
+    joke: {
+      setup: "Why did the chicken cross the playground?",
+      setup_hi: "मुर्गी ने खेल का मैदान क्यों पार किया?",
+      punchline: "To get to the other slide and pretend it was flying.",
+      punchline_hi: "दूसरे स्लाइड पर जाने के लिए और नाटक करने के लिए कि वह उड़ रही है।",
+      type: "absurdist"
+    },
+    fun_fact: {
+      fact: "In Switzerland, it is legally forbidden to own just one guinea pig. These animals are highly social, and having only one is considered an act of isolation and animal cruelty under local laws.",
+      fact_hi: "स्विट्जरलैंड में कानूनन केवल एक गिनी पिग रखना मना है क्योंकि वे बहुत सामाजिक जीव होते हैं।",
+      why_delightful: "It is wonderful to live in a country where the social happiness of small pets is protected by national constitution."
+    },
+    sarcasm_or_wit: {
+      observation: "My gym membership is a monthly charitable donation to a building I visited once in January to check the air conditioning.",
+      observation_hi: "मेरी जिम सदस्यता उस इमारत के लिए मासिक दान है जहां मैं जनवरी में एसी चेक करने गया था।",
+      attribution: "Anonymous"
+    }
+  },
+  {
+    dayIndex: 63,
+    riddle: {
+      title: "The Water Companion",
+      title_hi: "जल साथी",
+      question: "I am born in water, I live in water, but if water touches me, I disappear. What am I?",
+      question_hi: "मेरा जन्म पानी में होता है, मैं पानी में रहता हूँ, लेकिन अगर पानी मुझे छूता है, तो मैं गायब हो जाता हूँ। मैं क्या हूँ?",
+      reveal: "Salt.",
+      reveal_hi: "नमक।"
+    },
+    joke: {
+      setup: "Why are developers afraid of the dark?",
+      setup_hi: "डेवलपर्स अंधेरे से क्यों डरते हैं?",
+      punchline: "Because that is when the bugs come out of the code.",
+      punchline_hi: "क्योंकि तभी कोड से कीड़े (bugs) बाहर आते हैं।",
+      type: "science"
+    },
+    fun_fact: {
+      fact: "A single day on the planet Venus is longer than a whole Venusian year. Venus takes 243 Earth days to rotate once on its axis, but only 225 Earth days to travel around the Sun.",
+      fact_hi: "शुक्र ग्रह पर एक दिन उसके पूरे एक वर्ष से भी अधिक लंबा होता है।",
+      why_delightful: "It breaks our standard understanding of time, showing that a day can be longer than a year."
+    },
+    sarcasm_or_wit: {
+      observation: "Adulthood is mostly just checking the weather forecast and then choosing to complain about it regardless of what it says.",
+      observation_hi: "वयस्कता का मतलब मौसम का पूर्वानुमान देखना और फिर चाहे जो भी हो, उसकी शिकायत करना है।",
+      attribution: "Pravah"
+    }
+  },
+  {
+    dayIndex: 64,
+    riddle: {
+      title: "The Growing Space",
+      title_hi: "बढ़ता स्थान",
+      question: "The more you take away from me, the larger I become. What am I?",
+      question_hi: "आप मुझसे जितना अधिक छीनेंगे, मैं उतना ही बड़ा होता जाऊंगा। मैं क्या हूँ?",
+      reveal: "A hole.",
+      reveal_hi: "एक गड्ढा।"
+    },
+    joke: {
+      setup: "Why do we buy books and then just stack them as decorative towers?",
+      setup_hi: "हम किताबें क्यों खरीदते हैं और फिर उन्हें सजावटी मीनारों की तरह ढेर कर देते हैं?",
+      punchline: "We are hoping to absorb the knowledge through geological pressure.",
+      punchline_hi: "हमें उम्मीद है कि हम भूवैज्ञानिक दबाव के माध्यम से ज्ञान को अवशोषित कर लेंगे।",
+      type: "observational"
+    },
+    fun_fact: {
+      fact: "Cleopatra lived closer in time to the launch of the iPhone than she did to the building of the Great Pyramid of Giza. The pyramid was built around 2560 BC, while Cleopatra lived around 30 BC.",
+      fact_hi: "क्लियोपेट्रा का समय मिस्र के पिरामिडों के निर्माण की तुलना में आईफोन के लॉन्च के अधिक करीब है।",
+      why_delightful: "It makes historical timelines feel incredibly close, showing how old human history really is."
+    },
+    sarcasm_or_wit: {
+      observation: "We live in an age where our phones are smart, but we spend hours trying to explain to our auto-correct that we actually meant 'that word'.",
+      observation_hi: "हम उस युग में रहते हैं जहां फोन स्मार्ट हैं, लेकिन हम ऑटो-करेक्ट को समझाने में घंटों बिताते हैं।",
+      attribution: "Anonymous"
+    }
+  },
+  {
+    dayIndex: 65,
+    riddle: {
+      title: "The Safe Box",
+      title_hi: "सुरक्षित डिब्बा",
+      question: "I have no hinges, no key, no lid, yet golden treasure inside is hid. What am I?",
+      question_hi: "मेरा कोई कब्जा (hinge) नहीं है, कोई चाबी नहीं, कोई ढक्कन नहीं, फिर भी अंदर सुनहरा खजाना छिपा है। मैं क्या हूँ?",
+      reveal: "An egg.",
+      reveal_hi: "एक अंडा।"
+    },
+    joke: {
+      setup: "Why do uncles at weddings dance with an invisible plate in their hands?",
+      setup_hi: "शादियों में चाचा-ताऊ अपने हाथों में एक अदृश्य प्लेट लेकर क्यों नाचते हैं?",
+      punchline: "It is the ancient ritual of balancing food intake with dance energy.",
+      punchline_hi: "यह नृत्य ऊर्जा के साथ भोजन सेवन को संतुलित करने की प्राचीन रस्म है।",
+      type: "desi"
+    },
+    fun_fact: {
+      fact: "The heart of a blue whale is so large that a human child could swim through its main arteries. The heart weighs about 400 pounds, similar to the size of a small car.",
+      fact_hi: "ब्लू व्हेल का दिल इतना बड़ा होता है कि एक बच्चा उसकी धमनियों में तैर सकता है।",
+      why_delightful: "It reveals the massive scale of life in our oceans, rendering biological mechanics on a scale of architecture."
+    },
+    sarcasm_or_wit: {
+      observation: "The laundry basket is a magical portal that generates new dirty clothes the moment you finish folding the clean ones.",
+      observation_hi: "कपड़ों की टोकरी एक जादुई द्वार है जो साफ कपड़ों को मोड़ते ही गंदे कपड़े पैदा कर देती है।",
+      attribution: "Pravah"
+    }
+  },
+  {
+    dayIndex: 66,
+    riddle: {
+      title: "The Paper Message",
+      title_hi: "कागज का संदेश",
+      question: "I have wings of paper but I cannot fly, I speak to you from lands far and wide. What am I?",
+      question_hi: "मेरे पास कागज के पंख हैं लेकिन मैं उड़ नहीं सकता, मैं दूर-दूर के देशों से आपसे बात करता हूँ। मैं क्या हूँ?",
+      reveal: "A letter.",
+      reveal_hi: "एक पत्र।"
+    },
+    joke: {
+      setup: "Why did the belt go to jail?",
+      setup_hi: "बेल्ट जेल क्यों गई?",
+      punchline: "For holding up a pair of pants against their will.",
+      punchline_hi: "पेंट को उनकी इच्छा के विरुद्ध पकड़कर रखने के लिए।",
+      type: "wordplay"
+    },
+    fun_fact: {
+      fact: "Honeybees can recognize human faces. Researchers have trained bees to associate specific human faces with sugary rewards, showing that their small brains are capable of detailed pattern recognition.",
+      fact_hi: "मधुमक्खियां इंसानी चेहरों को पहचान सकती हैं और उन्हें याद रख सकती हैं।",
+      why_delightful: "It is sweet to think that a bee might recognize you when you walk in a garden, connecting us to tiny insects."
+    },
+    sarcasm_or_wit: {
+      observation: "Telling your dog 'I will be right back' is a legally binding contract that must be honored at all costs to prevent sadness.",
+      observation_hi: "अपने कुत्ते से 'मैं अभी वापस आऊंगा' कहना एक कानूनी रूप से बाध्यकारी वादा है।",
+      attribution: "Anonymous"
+    }
+  },
+  {
+    dayIndex: 67,
+    riddle: {
+      title: "The Empty Traveler",
+      title_hi: "खाली यात्री",
+      question: "I go in dry and come out wet, the longer I stay, the stronger I get. What am I?",
+      question_hi: "मैं सूखा अंदर जाता हूँ और गीला बाहर आता हूँ, जितना अधिक समय तक मैं रहता हूँ, उतना ही मजबूत होता जाता हूँ। मैं क्या हूँ?",
+      reveal: "A tea bag.",
+      reveal_hi: "चाय का थैला (Tea bag)।"
+    },
+    joke: {
+      setup: "Why did the picture go to jail?",
+      setup_hi: "तस्वीर जेल क्यों गई?",
+      punchline: "Because it was framed for a crime it didn't commit.",
+      punchline_hi: "क्योंकि उसे उस अपराध के लिए फंसाया (framed) गया था जो उसने नहीं किया था।",
+      type: "wordplay"
+    },
+    fun_fact: {
+      fact: "Bananas are slightly radioactive because they contain high levels of potassium, a small portion of which is the isotope potassium-forty. You would need to eat ten million bananas at once to die of radiation.",
+      fact_hi: "केले थोड़े रेडियोधर्मी होते हैं क्योंकि उनमें पोटेशियम होता है।",
+      why_delightful: "It shows that nuclear physics is present in our grocery store, inside a humble yellow fruit."
+    },
+    sarcasm_or_wit: {
+      observation: "The best way to wake up feeling completely exhausted is to go to bed early so you can get a full eight hours of sleep.",
+      observation_hi: "सुबह थका हुआ महसूस करने का सबसे अच्छा तरीका आठ घंटे की नींद के लिए जल्दी सो जाना है।",
+      attribution: "Pravah"
+    }
+  },
+  {
+    dayIndex: 68,
+    riddle: {
+      title: "The Mirror of Time",
+      title_hi: "समय का दर्पण",
+      question: "I can bring back the past, show you the present, and hold your memories forever, yet I am just a sheet of paper. What am I?",
+      question_hi: "मैं अतीत को वापस ला सकता हूँ, आपको वर्तमान दिखा सकता हूँ, और आपकी यादों को हमेशा के लिए संजो सकता हूँ, फिर भी मैं सिर्फ कागज का एक पन्ना हूँ। मैं क्या हूँ?",
+      reveal: "A photograph.",
+      reveal_hi: "एक तस्वीर।"
+    },
+    joke: {
+      setup: "Why did the bicycle refuse to stand up?",
+      setup_hi: "साइकिल ने खड़े होने से क्यों मना कर दिया?",
+      punchline: "Because it was two-tired and needed a rest on the lawn.",
+      punchline_hi: "क्योंकि वह बहुत थक गई थी और उसे घास पर आराम की जरूरत थी।",
+      type: "wordplay"
+    },
+    fun_fact: {
+      fact: "The Eiffel Tower grows up to 15 centimeters taller during the hot summer months due to thermal expansion. The metal structure expands in heat and contracts when the winter cold returns.",
+      fact_hi: "गर्मियों के दौरान एफिल टॉवर थर्मल विस्तार के कारण 15 सेंटीमीटर तक बढ़ सकता है।",
+      why_delightful: "It makes a solid iron monument feel alive, stretching to reach the warm summer sun."
+    },
+    sarcasm_or_wit: {
+      observation: "Nothing is more humbling than searching for your glasses for ten minutes while using their lenses to scan the living room.",
+      observation_hi: "कमरे में चश्मा ढूंढने से ज्यादा विनम्र अनुभव कोई नहीं है जबकि वह आपके चेहरे पर लगा हो।",
+      attribution: "Anonymous"
+    }
+  },
+  {
+    dayIndex: 69,
+    riddle: {
+      title: "The Black Skin",
+      title_hi: "काली त्वचा",
+      question: "I am black when you buy me, red when you use me, and grey when you throw me away. What am I?",
+      question_hi: "जब आप मुझे खरीदते हैं तो मैं काला होता हूँ, जब आप मेरा उपयोग करते हैं तो लाल होता हूँ, और जब आप मुझे फेंकते हैं तो ग्रे होता हूँ। मैं क्या हूँ?",
+      reveal: "Charcoal.",
+      reveal_hi: "कोयला।"
+    },
+    joke: {
+      setup: "Why did the light bulb fail its exam?",
+      setup_hi: "लाइट बल्ब अपनी परीक्षा में क्यों फेल हो गया?",
+      punchline: "Because it wasn't bright enough to understand the questions.",
+      punchline_hi: "क्योंकि वह सवालों को समझने के लिए पर्याप्त समझदार (bright) नहीं था।",
+      type: "wordplay"
+    },
+    fun_fact: {
+      fact: "Apollo astronauts reported that moon dust smells like spent gunpowder when brought into their spacecraft. The scent is likely due to the highly reactive, abrasive nature of fresh lunar dust particles.",
+      fact_hi: "अपोलो अंतरिक्ष यात्रियों के अनुसार चांद की धूल से जले हुए बारूद जैसी गंध आती है।",
+      why_delightful: "It gives a sensory connection to space exploration, showing that even the moon has a specific smell."
+    },
+    sarcasm_or_wit: {
+      observation: "Saying 'no offense' right before saying something incredibly offensive is the ultimate social cheat code of modern communication.",
+      observation_hi: "कोई अपमानजनक बात कहने से ठीक पहले 'बुरा मत मानना' कहना बातचीत का एक शॉर्टकट है।",
+      attribution: "Pravah"
+    }
+  },
+  {
+    dayIndex: 70,
+    riddle: {
+      title: "The One-Way Gate",
+      title_hi: "एकतरफा दरवाजा",
+      question: "What goes up but never comes down?",
+      question_hi: "क्या ऊपर जाता है लेकिन कभी नीचे नहीं आता?",
+      reveal: "Your age.",
+      reveal_hi: "आपकी उम्र।"
+    },
+    joke: {
+      setup: "Why do we keep staring at the loading bar hoping it will move faster?",
+      setup_hi: "हम लोडिंग बार को क्यों घूरते रहते हैं यह उम्मीद करते हुए कि वह तेजी से चलेगा?",
+      punchline: "We believe our intense gaze has a physical force on the bits.",
+      punchline_hi: "हमारा मानना है कि हमारी तीव्र दृष्टि का उन बिट्स पर एक भौतिक प्रभाव पड़ता है।",
+      type: "observational"
+    },
+    fun_fact: {
+      fact: "Sea otters hold hands while they sleep to keep from drifting apart in ocean currents. They form groups called rafts and sometimes anchor themselves to giant kelp beds to stay safe.",
+      fact_hi: "समुद्री ऊदबिलाव सोते समय एक-दूसरे का हाथ पकड़ लेते हैं ताकि वे बह न जाएं।",
+      why_delightful: "It is a beautiful evolutionary solution where companionship is a vital survival mechanism against the sea."
+    },
+    sarcasm_or_wit: {
+      observation: "Using the phrase 'per my last email' is the professional equivalent of asking someone if they actually know how to read words.",
+      observation_hi: "'मेरे पिछले ईमेल के अनुसार' लिखना यह पूछने का सभ्य तरीका है कि क्या आप पढ़ना जानते हैं।",
+      attribution: "Anonymous"
+    }
+  },
+  {
+    dayIndex: 71,
+    riddle: {
+      title: "The Ring of Truth",
+      title_hi: "सच्चाई का छल्ला",
+      question: "I have no voice, but I tell you everything. I have no hands, but I point to the hour. What am I?",
+      question_hi: "मेरी कोई आवाज़ नहीं है, लेकिन मैं आपको सब कुछ बताता हूँ। मेरे पास हाथ नहीं हैं, लेकिन मैं घंटे की ओर इशारा करता हूँ। मैं क्या हूँ?",
+      reveal: "A sundial.",
+      reveal_hi: "एक धूपघड़ी।"
+    },
+    joke: {
+      setup: "Why did the scarecrow become a successful manager?",
+      setup_hi: "पुतला (scarecrow) एक सफल मैनेजर क्यों बन गया?",
+      punchline: "Because he was outstanding in his field and never complained about meetings.",
+      punchline_hi: "क्योंकि वह अपने क्षेत्र में उत्कृष्ट था और कभी बैठकों की शिकायत नहीं करता था।",
+      type: "wordplay"
+    },
+    fun_fact: {
+      fact: "Cows have best friends and experience severe stress when they are separated from their favorite companions. Farmers have measured elevated heart rates in cows kept away from their best buddies.",
+      fact_hi: "गायों के पक्के दोस्त (best friends) होते हैं और अलग होने पर वे तनाव महसूस करती हैं।",
+      why_delightful: "It reveals that emotional bonding and social comfort are not unique to humans but shared across mammals."
+    },
+    sarcasm_or_wit: {
+      observation: "Staring at the food rotating inside the microwave is the ultimate test of human patience and modern domestic entertainment.",
+      observation_hi: "माइक्रोवेव में घूमते हुए भोजन को देखना मानव धैर्य और आधुनिक मनोरंजन की परीक्षा है।",
+      attribution: "Pravah"
+    }
+  },
+  {
+    dayIndex: 72,
+    riddle: {
+      title: "The Tree without Leaves",
+      title_hi: "बिना पत्तों का पेड़",
+      question: "I have branches but no leaves, I have trunk but no bark, I stand in the city to light up the dark. What am I?",
+      question_hi: "मेरी शाखाएँ हैं लेकिन पत्ते नहीं, मेरे पास तना है लेकिन छाल नहीं, मैं अंधेरे को रोशन करने के लिए शहर में खड़ा हूँ। मैं क्या हूँ?",
+      reveal: "A lamppost.",
+      reveal_hi: "एक लैम्पपोस्ट (बिजली का खंभा)।"
+    },
+    joke: {
+      setup: "Why did the astronaut break up with his girlfriend?",
+      setup_hi: "अंतरिक्ष यात्री ने अपनी प्रेमिका से नाता क्यों तोड़ लिया?",
+      punchline: "Because he needed more space to explore other stars.",
+      punchline_hi: "क्योंकि उसे अन्य तारों की खोज के लिए अधिक स्थान (space) की आवश्यकता थी।",
+      type: "science"
+    },
+    fun_fact: {
+      fact: "There are more trees on planet Earth than there are stars in the Milky Way galaxy. The Earth has about three trillion trees, while the galaxy contains between 100 and 400 billion stars.",
+      fact_hi: "पृथ्वी पर मौजूद पेड़ों की संख्या मिल्की वे आकाशगंगा में मौजूद तारों की संख्या से अधिक है।",
+      why_delightful: "It restores our pride in our green home, showing that we have a forest of stars right under our feet."
+    },
+    sarcasm_or_wit: {
+      observation: "Checking your phone for the time, locking it, and then instantly forgetting what time it was is a daily superpower we all possess.",
+      observation_hi: "समय देखने के लिए फोन चेक करना, उसे लॉक करना और तुरंत समय भूल जाना एक दैनिक महाशक्ति है।",
+      attribution: "Anonymous"
+    }
+  },
+  {
+    dayIndex: 73,
+    riddle: {
+      title: "The Heavy Companion",
+      title_hi: "भारी साथी",
+      question: "What weighs more, a pound of feathers or a pound of iron?",
+      question_hi: "किसका वजन अधिक होता है, एक पाउंड पंख या एक पाउंड लोहा?",
+      reveal: "They weigh the same.",
+      reveal_hi: "दोनों का वजन समान होता है।"
+    },
+    joke: {
+      setup: "Why did the cookie go to the doctor?",
+      setup_hi: "कुकी डॉक्टर के पास क्यों गई?",
+      punchline: "Because it was feeling crumbly and weak.",
+      punchline_hi: "क्योंकि वह बहुत कमजोर और टूटी-टूटी (crumbly) महसूस कर रही थी।",
+      type: "wordplay"
+    },
+    fun_fact: {
+      fact: "A cloud can weigh more than a million pounds, which is equivalent to about 100 elephants. It floats because the water droplets are spread out over a volume that is less dense than the surrounding air.",
+      fact_hi: "एक औसत बादल का वजन लगभग ग्यारह लाख पाउंड होता है, जो सौ हाथियों के बराबर है।",
+      why_delightful: "It is amazing to realize that massive weights are floating gracefully right above our heads like soft pillows."
+    },
+    sarcasm_or_wit: {
+      observation: "Lowering the car radio volume while looking for a specific street address is essential to help our eyes see the house numbers.",
+      observation_hi: "गली का पता ढूंढते समय कार रेडियो की आवाज़ कम करना आँखों को देखने में मदद करने के लिए जरूरी है।",
+      attribution: "Pravah"
+    }
+  },
+  {
+    dayIndex: 74,
+    riddle: {
+      title: "The Cold Runner",
+      title_hi: "ठंडा धावक",
+      question: "I run all day but never get hot, I have a mouth but never eat. What am I?",
+      question_hi: "मैं दिन भर दौड़ता हूँ लेकिन कभी गर्म नहीं होता, मेरा एक मुँह है लेकिन कभी खाता नहीं हूँ। मैं क्या हूँ?",
+      reveal: "A river.",
+      reveal_hi: "एक नदी।"
+    },
+    joke: {
+      setup: "Why did the physics teacher jump off the building?",
+      setup_hi: "भौतिकी के शिक्षक ने इमारत से छलांग क्यों लगा दी?",
+      punchline: "To prove that gravity is not just a theory but a physical reality.",
+      punchline_hi: "यह साबित करने के लिए कि गुरुत्वाकर्षण केवल एक सिद्धांत नहीं बल्कि एक भौतिक वास्तविकता है।",
+      type: "science"
+    },
+    fun_fact: {
+      fact: "Sloths can hold their breath underwater for up to 40 minutes by slowing down their heart rate to a third of its normal speed. This is longer than dolphins can stay submerged.",
+      fact_hi: "सुस्त जानवर (sloths) पानी के भीतर अपनी सांस को चालीस मिनट तक रोक सकते हैं।",
+      why_delightful: "It is a funny contrast where the slowest land animal becomes an elite free-diver in tropical rivers."
+    },
+    sarcasm_or_wit: {
+      observation: "Agreeing to a software update's terms of service is our collective modern act of pure, blind faith in unseen corporate engineers.",
+      observation_hi: "सॉफ्टवेयर शर्तों को बिना पढ़े स्वीकार करना आधुनिक समय का सबसे बड़ा अंधविश्वास है।",
+      attribution: "Anonymous"
+    }
+  },
+  {
+    dayIndex: 75,
+    riddle: {
+      title: "The Soft Wall",
+      title_hi: "नरम दीवार",
+      question: "I can hold water but I am full of holes. What am I?",
+      question_hi: "मैं पानी रोक सकता हूँ लेकिन मैं छेदों से भरा हूँ। मैं क्या हूँ?",
+      reveal: "A sponge.",
+      reveal_hi: "एक स्पंज।"
+    },
+    joke: {
+      setup: "Why do we feel the urge to clean the house only when we have an exam next day?",
+      setup_hi: "हमें अगले दिन परीक्षा होने पर ही घर साफ करने की इच्छा क्यों होती है?",
+      punchline: "Because clean desk is the ultimate psychological defense against bad grades.",
+      punchline_hi: "क्योंकि साफ डेस्क खराब ग्रेड के खिलाफ अंतिम मनोवैज्ञानिक ढाल है।",
+      type: "observational"
+    },
+    fun_fact: {
+      fact: "Octopuses have three hearts and their blood is blue because it is rich in copper rather than iron. When they swim, their main heart stops beating, which is why they prefer crawling.",
+      fact_hi: "ऑक्टोपस के पास तीन दिल होते हैं और तांबे की अधिकता के कारण उनका खून नीला होता है।",
+      why_delightful: "It confirms that the ocean depths hold creatures that are biologically alien to our land-based rules."
+    },
+    sarcasm_or_wit: {
+      observation: "Cybersecurity innovation peaked when we started writing our complex passwords on post-it notes and sticking them to our monitors.",
+      observation_hi: "साइबर सुरक्षा तब अपने चरम पर थी जब हमने पासवर्ड को नोट पर लिखकर मॉनिटर पर चिपकाना शुरू किया।",
+      attribution: "Pravah"
+    }
+  },
+  {
+    dayIndex: 76,
+    riddle: {
+      title: "The Lock without Key",
+      title_hi: "बिना चाबी का ताला",
+      question: "I have no door but you can enter me, I have no key but you can unlock me with a click. What am I?",
+      question_hi: "मेरा कोई दरवाजा नहीं है लेकिन आप मुझमें प्रवेश कर सकते हैं, मेरी कोई चाबी नहीं है लेकिन आप एक क्लिक से मुझे अनलॉक कर सकते हैं। मैं क्या हूँ?",
+      reveal: "A website.",
+      reveal_hi: "एक वेबसाइट।"
+    },
+    joke: {
+      setup: "Why do uncles at weddings keep checking their watches every five minutes?",
+      setup_hi: "शादियों में चाचा-ताऊ हर पांच मिनट में अपनी घड़ी क्यों चेक करते रहते हैं?",
+      punchline: "To calculate if they have spent enough time to justify eating the sweets.",
+      punchline_hi: "यह गणना करने के लिए कि क्या उन्होंने मिठाई खाने को सही ठहराने के लिए पर्याप्त समय बिताया है।",
+      type: "desi"
+    },
+    fun_fact: {
+      fact: "Koalas have unique fingerprints that are nearly identical to human fingerprints, even under electron microscopes. This has occasionally confused police detectives at Australian crime scenes.",
+      fact_hi: "कोआला के फिंगरप्रिंट इंसानों के इतने समान होते हैं कि अंतर करना मुश्किल होता है।",
+      why_delightful: "It shows how evolutionary patterns repeat across distant mammal branches, giving marsupials our identifiers."
+    },
+    sarcasm_or_wit: {
+      observation: "Nothing says 'I value your time' quite like scheduling a one-hour meeting to read a three-sentence email out loud to ten people.",
+      observation_hi: "समय की कद्र करने का इससे अच्छा तरीका नहीं है कि एक ईमेल को दस लोगों के सामने मीटिंग में पढ़ा जाए।",
+      attribution: "Anonymous"
+    }
+  },
+  {
+    dayIndex: 77,
+    riddle: {
+      title: "The Small House",
+      title_hi: "छोटा घर",
+      question: "A house of bone, a roof of stone, I carry my home wherever I roam. What am I?",
+      question_hi: "हड्डी का घर, पत्थर की छत, मैं जहाँ भी जाता हूँ अपना घर साथ ले जाता हूँ। मैं क्या हूँ?",
+      reveal: "A turtle.",
+      reveal_hi: "एक कछुआ।"
+    },
+    joke: {
+      setup: "Why did the skeleton refuse to go to the party?",
+      setup_hi: "कंकाल ने पार्टी में जाने से क्यों मना कर दिया?",
+      punchline: "Because he had no body to dance with.",
+      punchline_hi: "क्योंकि उसके पास नाचने के लिए कोई शरीर (nobody) नहीं था।",
+      type: "wordplay"
+    },
+    fun_fact: {
+      fact: "The pleasant smell of dry earth after rain is called petrichor. It is produced by geosmin, an organic compound released by soil bacteria when the humidity rises, triggering human olfactory senses.",
+      fact_hi: "बारिश के बाद सूखी मिट्टी से आने वाली सोंधी महक को पेट्रीचोर कहते हैं।",
+      why_delightful: "It links our senses directly to the ancient chemistry of our soil, signaling life and growth."
+    },
+    sarcasm_or_wit: {
+      observation: "Modern adulthood is mostly just being tired and talking about how tired you are to other tired people in a quiet office.",
+      observation_hi: "आधुनिक वयस्कता सिर्फ थका हुआ महसूस करना और दूसरे थके हुए लोगों से इसकी चर्चा करना है।",
+      attribution: "Pravah"
+    }
+  },
+  {
+    dayIndex: 78,
+    riddle: {
+      title: "The Golden Skin",
+      title_hi: "सुनहरी त्वचा",
+      question: "I wear a yellow coat, I am sweet and soft, monkeys love me, what am I?",
+      question_hi: "मैं पीले रंग का कोट पहनता हूँ, मैं मीठा और नरम हूँ, बंदर मुझे पसंद करते हैं, मैं क्या हूँ?",
+      reveal: "A banana.",
+      reveal_hi: "एक केला।"
+    },
+    joke: {
+      setup: "Why did the computer catch cold?",
+      setup_hi: "कंप्यूटर को सर्दी क्यों लग गई?",
+      punchline: "Because it left its Windows open in the winter breeze.",
+      punchline_hi: "क्योंकि उसने सर्दियों की हवा में अपनी विंडोज खुली छोड़ दी थीं।",
+      type: "science"
+    },
+    fun_fact: {
+      fact: "Flamingos are not born pink. They are born with grey feathers and turn pink over time due to their diet of brine shrimp and blue-green algae, which are rich in organic carotenoid pigments.",
+      fact_hi: "फ्लेमिंगो का जन्म ग्रे पंखों के साथ होता है और उनके विशेष आहार के कारण वे गुलाबी हो जाते हैं।",
+      why_delightful: "It proves that we literally are what we eat, transforming a simple dinner menu into a vibrant pink costume."
+    },
+    sarcasm_or_wit: {
+      observation: "Coffee is the magical potion that turns 'leave me alone or suffer' into 'good morning, dear colleagues, let's collaborate.'",
+      observation_hi: "कॉफी वह जादुई पेय है जो सुबह के गुस्से को 'सुप्रभात सहकर्मियों' में बदल देता है।",
+      attribution: "Anonymous"
+    }
+  },
+  {
+    dayIndex: 79,
+    riddle: {
+      title: "The Unseen Network",
+      title_hi: "अदृश्य जाल",
+      question: "I connect the world but have no wires, I hold all knowledge but have no pages. What am I?",
+      question_hi: "मैं दुनिया को जोड़ता हूँ लेकिन कोई तार नहीं हैं, मैं सारा ज्ञान रखता हूँ लेकिन कोई पन्ने नहीं हैं। मैं क्या हूँ?",
+      reveal: "The internet.",
+      reveal_hi: "इंटरनेट।"
+    },
+    joke: {
+      setup: "Why did the golfer wear two pairs of pants?",
+      setup_hi: "गोल्फर ने दो जोड़ी पैंट क्यों पहनी थी?",
+      punchline: "In case he got a hole in one.",
+      punchline_hi: "यदि उसे एक में छेद (hole in one) हो जाए।",
+      type: "wordplay"
+    },
+    fun_fact: {
+      fact: "Before trees existed on land, the Earth was covered in giant mushrooms that grew up to 24 feet tall and 3 feet wide. These organisms, called Prototaxites, dominated the Devonian landscape.",
+      fact_hi: "पेड़ों के अस्तित्व में आने से पहले पृथ्वी पर 24 फीट ऊंचे विशाल मशरूम मौजूद थे।",
+      why_delightful: "It shows how alien our own planet looked millions of years ago, covered in giant fungal towers."
+    },
+    sarcasm_or_wit: {
+      observation: "I have decided to delete my social media accounts, but I will keep them active just in case I need to log in to tell people I deleted them.",
+      observation_hi: "मैंने सोशल मीडिया अकाउंट डिलीट करने का निर्णय लिया है, लेकिन उन्हें सक्रिय रखूँगा ताकि लोगों को बता सकूँ।",
+      attribution: "Pravah"
+    }
+  },
+  {
+    dayIndex: 80,
+    riddle: {
+      title: "The Sharp Teeth",
+      title_hi: "नुकीले दांत",
+      question: "I have many teeth but cannot bite, I help you keep your hair looking right. What am I?",
+      question_hi: "मेरे कई दांत हैं लेकिन मैं काट नहीं सकता, मैं आपके बालों को ठीक रखने में मदद करता हूँ। मैं क्या हूँ?",
+      reveal: "A comb.",
+      reveal_hi: "एक कंघी।"
+    },
+    joke: {
+      setup: "Why did the clock get punished?",
+      setup_hi: "घड़ी को सजा क्यों मिली?",
+      punchline: "Because it was constantly telling the truth but moving backward.",
+      punchline_hi: "क्योंकि वह लगातार सच बोल रही थी लेकिन पीछे की ओर चल रही थी।",
+      type: "absurdist"
+    },
+    fun_fact: {
+      fact: "The immortal jellyfish, Turritopsis dohrnii, can revert its cells back to their youngest polyp form when damaged or starving, starting its life cycle over and avoiding old age indefinitely.",
+      fact_hi: "टुरिटोप्सिस डोहर्नी नाम की जेलीफिश जैविक रूप से अमर है क्योंकि यह अपनी कोशिकाओं को वापस पुरानी अवस्था में ले जा सकती है।",
+      why_delightful: "It is nature's own reset button, proving that biological aging is not an absolute rule but a process."
+    },
+    sarcasm_or_wit: {
+      observation: "Watching a tutorial video for ten minutes but choosing to do the task by trial and error is our preferred method of self-education.",
+      observation_hi: "ट्यूटोरियल देखना लेकिन काम को ट्रायल और एरर विधि से करना हमारा पसंदीदा तरीका है।",
+      attribution: "Anonymous"
+    }
+  },
+  {
+    dayIndex: 81,
+    riddle: {
+      title: "The Sweet Drop",
+      title_hi: "मीठी बूंद",
+      question: "I am made by bees, sweet as sugar, golden and thick. What am I?",
+      question_hi: "मैं मधुमक्खियों द्वारा बनाया जाता हूँ, चीनी की तरह मीठा, सुनहरा और गाढ़ा। मैं क्या हूँ?",
+      reveal: "Honey.",
+      reveal_hi: "शहद।"
+    },
+    joke: {
+      setup: "Why do we say 'just checking' when we get caught looking at something we shouldn't?",
+      setup_hi: "जब हम किसी ऐसी चीज को देखते हुए पकड़े जाते हैं जिसे हमें नहीं देखना चाहिए, तो हम 'बस चेक कर रहे थे' क्यों कहते हैं?",
+      punchline: "It is the universal linguistic shield for curiosity.",
+      punchline_hi: "यह जिज्ञासा के लिए सार्वभौमिक भाषाई ढाल है।",
+      type: "observational"
+    },
+    fun_fact: {
+      fact: "Woodpecker tongues are so long that they wrap around their skulls to protect their brains from damage when they are drumming on wood. The tongue acts as a biological shock absorber.",
+      fact_hi: "कटफोड़वा (woodpecker) की जीभ उसके पूरे सिर में घूमकर उसके दिमाग को झटके से बचाती है।",
+      why_delightful: "It is an engineering marvel of biology, turning a simple tongue into a protective helmet for the brain."
+    },
+    sarcasm_or_wit: {
+      observation: "Agreeing to meet someone next month is easy because next month's version of you doesn't exist yet to feel the regret of agreeing.",
+      observation_hi: "अगले महीने मिलने के लिए सहमत होना आसान है क्योंकि अगले महीने वाला आप अभी अस्तित्व में नहीं है।",
+      attribution: "Pravah"
+    }
+  },
+  {
+    dayIndex: 82,
+    riddle: {
+      title: "The White Bird",
+      title_hi: "सफेद पक्षी",
+      question: "I have no wings but I can fly, I am made of paper and rise up high in the windy sky. What am I?",
+      question_hi: "मेरे पास पंख नहीं हैं लेकिन मैं उड़ सकता हूँ, मैं कागज से बना हूँ और हवादार आसमान में ऊँचा उठता हूँ। मैं क्या हूँ?",
+      reveal: "A kite.",
+      reveal_hi: "एक पतंग।"
+    },
+    joke: {
+      setup: "Why do mothers keep empty ice cream boxes in the freezer?",
+      setup_hi: "माताएं फ्रीजर में खाली आइसक्रीम के डिब्बे क्यों रखती हैं?",
+      punchline: "To store frozen peas and disappoint their children's hopes.",
+      punchline_hi: "फ्रोजन मटर रखने के लिए और अपने बच्चों की उम्मीदों को निराश करने के लिए।",
+      type: "desi"
+    },
+    fun_fact: {
+      fact: "An average adult human body contains enough iron to forge a metal nail that is three inches long. This iron is primarily found in the hemoglobin of red blood cells to transport oxygen.",
+      fact_hi: "एक वयस्क मानव शरीर में तीन इंच लंबी लोहे की कील बनाने के लिए पर्याप्त लोहा होता है।",
+      why_delightful: "It reminds us that we are literally built from mineral elements forged in the hearts of dying stars."
+    },
+    sarcasm_or_wit: {
+      observation: "Adulthood is just walking into a room, forgetting why you entered, and then walking back out hoping the memory returns in the hallway.",
+      observation_hi: "वयस्कता कमरे में जाना, भूल जाना कि क्यों गए थे, और वापस बाहर आना है।",
+      attribution: "Anonymous"
+    }
+  },
+  {
+    dayIndex: 83,
+    riddle: {
+      title: "The Round Face",
+      title_hi: "गोल चेहरा",
+      question: "I have no eyes, no nose, no mouth, but I have twelve numbers and two hands. What am I?",
+      question_hi: "मेरे पास आँखें, नाक, मुँह नहीं हैं, लेकिन मेरे पास बारह नंबर और दो हाथ हैं। मैं क्या हूँ?",
+      reveal: "A clock.",
+      reveal_hi: "एक घड़ी।"
+    },
+    joke: {
+      setup: "Why did the cell phone wear glasses?",
+      setup_hi: "सेल फोन ने चश्मा क्यों पहना था?",
+      punchline: "Because it lost its contacts in the update.",
+      punchline_hi: "क्योंकि उसने अपडेट में अपने संपर्क (contacts) खो दिए थे।",
+      type: "science"
+    },
+    fun_fact: {
+      fact: "Crows can recognize human faces and can remember them for several years. They also communicate this information to other members of their flock, teaching them which humans to avoid.",
+      fact_hi: "कौवे इंसानी चेहरों को पहचान सकते हैं और कई सालों तक याद रख सकते हैं।",
+      why_delightful: "It reveals a high level of social communication and intelligence inside a bird we see in the city."
+    },
+    sarcasm_or_wit: {
+      observation: "The speed at which a human cleans their house is directly proportional to how close their guests are to the front door.",
+      observation_hi: "घर साफ करने की गति मेहमानों के दरवाजे के कितना पास होने के सीधे आनुपातिक होती है।",
+      attribution: "Pravah"
+    }
+  },
+  {
+    dayIndex: 84,
+    riddle: {
+      title: "The Green Umbrella",
+      title_hi: "हरा छाता",
+      question: "I stand on one leg, wear a green dress, and provide shade to all travelers. What am I?",
+      question_hi: "मैं एक पैर पर खड़ा रहता हूँ, हरी पोशाक पहनता हूँ, और सभी यात्रियों को छाया प्रदान करता हूँ। मैं क्या हूँ?",
+      reveal: "A tree.",
+      reveal_hi: "एक पेड़।"
+    },
+    joke: {
+      setup: "Why did the math class feel like a jungle?",
+      setup_hi: "गणित की कक्षा जंगल जैसी क्यों लग रही थी?",
+      punchline: "Because there were too many roots and exponents hanging around.",
+      punchline_hi: "क्योंकि वहां बहुत सारे रूट्स (roots) और घातांक लटके हुए थे।",
+      type: "science"
+    },
+    fun_fact: {
+      fact: "The total weight of all the ants on Earth is roughly equal to the total weight of all the humans on the planet. Ants outnumber humans by about one million to one, keeping ecosystems balanced.",
+      fact_hi: "पृथ्वी पर सभी चींटियों का कुल वजन लगभग सभी मनुष्यों के कुल वजन के बराबर है।",
+      why_delightful: "It shows the massive collective power of tiny insects, managing the soil right under our feet."
+    },
+    sarcasm_or_wit: {
+      observation: "Nothing makes you realize how old you are quite like making a noise when you sit down and a different noise when you stand up.",
+      observation_hi: "बैठते समय आवाज करना और उठते समय दूसरी आवाज करना उम्र का अहसास कराता है।",
+      attribution: "Anonymous"
+    }
+  },
+  {
+    dayIndex: 85,
+    riddle: {
+      title: "The Black Board",
+      title_hi: "काला बोर्ड",
+      question: "I am clean when I am black, and dirty when I am white. What am I?",
+      question_hi: "जब मैं काला होता हूँ तो साफ होता हूँ, और जब सफेद होता हूँ तो गंदा होता हूँ। मैं क्या हूँ?",
+      reveal: "A blackboard.",
+      reveal_hi: "एक ब्लैकबोर्ड।"
+    },
+    joke: {
+      setup: "Why did the sun refuse to go to college?",
+      setup_hi: "सूर्य ने कॉलेज जाने से क्यों मना कर दिया?",
+      punchline: "Because it already had millions of degrees.",
+      punchline_hi: "क्योंकि उसके पास पहले से ही करोड़ों डिग्री थीं।",
+      type: "science"
+    },
+    fun_fact: {
+      fact: "Puffins use small wooden sticks to scratch their backs, representing one of the few observed cases of seabirds using tools. This behavior shows their problem-solving skills in the wild.",
+      fact_hi: "पफिन (Puffins) अपनी पीठ खुजलाने के लिए छोटी लकड़ी की तीली का उपयोग करते हैं, जो उनके टूल उपयोग को दर्शाता है।",
+      why_delightful: "It is adorable to think of a small sea bird finding a back-scratcher in the ocean driftwood."
+    },
+    sarcasm_or_wit: {
+      observation: "I have a lot of productive things to do today, so I will start by reorganizing my desktop icons for three hours.",
+      observation_hi: "आज मेरे पास बहुत सारे काम हैं, इसलिए मैं तीन घंटे डेस्कटॉप आइकॉन व्यवस्थित करने से शुरुआत करूँगा।",
+      attribution: "Pravah"
+    }
+  },
+  {
+    dayIndex: 86,
+    riddle: {
+      title: "The Cold House",
+      title_hi: "ठंडा घर",
+      question: "I am a box that keeps your food cold and fresh, humming all day. What am I?",
+      question_hi: "मैं एक ऐसा डिब्बा हूँ जो आपके भोजन को ठंडा और ताजा रखता है, दिन भर गुनगुनाता रहता है। मैं क्या हूँ?",
+      reveal: "A refrigerator.",
+      reveal_hi: "एक फ्रिज।"
+    },
+    joke: {
+      setup: "Why did the pillow go to the gym?",
+      setup_hi: "तकिया जिम क्यों गया?",
+      punchline: "To get stuffed and lose some fluff.",
+      punchline_hi: "भरवां होने के लिए और कुछ फुला हुआ हिस्सा कम करने के लिए।",
+      type: "absurdist"
+    },
+    fun_fact: {
+      fact: "The tongue of a blue whale is so heavy that it weighs as much as an entire adult elephant. It is used to push water out of the whale's mouth while keeping small shrimp inside.",
+      fact_hi: "ब्लू व्हेल की जीभ का वजन एक पूरे वयस्क हाथी के बराबर होता है।",
+      why_delightful: "It shows the massive proportions of the blue whale, whose single muscle matches the weight of land giants."
+    },
+    sarcasm_or_wit: {
+      observation: "The first thirty years of childhood are always the hardest, after that you get used to being tired all the time.",
+      observation_hi: "बचपन के पहले तीस साल हमेशा सबसे कठिन होते हैं, उसके बाद आपको थकान की आदत हो जाती है।",
+      attribution: "Anonymous"
+    }
+  },
+  {
+    dayIndex: 87,
+    riddle: {
+      title: "The Fire Carrier",
+      title_hi: "आग ले जाने वाला",
+      question: "I am a small wooden stick with a red head, scratch me and I bring fire. What am I?",
+      question_hi: "मैं लाल सिर वाली लकड़ी की एक छोटी सी तीली हूँ, मुझे रगड़ो और मैं आग लाता हूँ। मैं क्या हूँ?",
+      reveal: "A matchstick.",
+      reveal_hi: "एक माचिस की तीली।"
+    },
+    joke: {
+      setup: "Why do we always buy vegetables that we know we will throw away next week?",
+      setup_hi: "हम हमेशा ऐसी सब्जियां क्यों खरीदते हैं जिन्हें हम जानते हैं कि हम अगले हफ्ते फेंक देंगे?",
+      punchline: "It is a weekly ritual of hoping to become a healthier version of ourselves.",
+      punchline_hi: "यह खुद का एक स्वस्थ संस्करण बनने की उम्मीद का एक साप्ताहिक अनुष्ठान है।",
+      type: "observational"
+    },
+    fun_fact: {
+      fact: "Squirrels are responsible for planting thousands of new trees every year because they bury acorns and seeds in the ground and then forget where they hid them, allowing them to grow.",
+      fact_hi: "गिलहरियां हर साल हजारों पेड़ लगाती हैं क्योंकि वे बीज जमीन में गाड़कर भूल जाती हैं।",
+      why_delightful: "It is a beautiful coincidence where forgetfulness turns into active environmental conservation."
+    },
+    sarcasm_or_wit: {
+      observation: "Buying fresh vegetables is the ultimate act of optimism, usually followed by the realistic act of throwing them away next week.",
+      observation_hi: "ताजी सब्जियां खरीदना आशावाद का चरम है, जिसे अगले हफ्ते फेंक दिया जाता है।",
+      attribution: "Pravah"
+    }
+  },
+  {
+    dayIndex: 88,
+    riddle: {
+      title: "The White Road",
+      title_hi: "सफेद सड़क",
+      question: "I am drawn on a blackboard with chalk, leaving a white path behind me. What am I?",
+      question_hi: "मुझे ब्लैकबोर्ड पर चाक से खींचा जाता है, जिससे मेरे पीछे एक सफेद रास्ता बन जाता है। मैं क्या हूँ?",
+      reveal: "A chalk line.",
+      reveal_hi: "चाक की रेखा।"
+    },
+    joke: {
+      setup: "Why do Indian uncles put their hands on their hips when watching construction works?",
+      setup_hi: "भारतीय चाचा निर्माण कार्यों को देखते समय अपने कूल्हों पर हाथ क्यों रखते हैं?",
+      punchline: "To assume the posture of structural engineering authority.",
+      punchline_hi: "संरचनात्मक इंजीनियरिंग अधिकार की मुद्रा ग्रहण करने के लिए।",
+      type: "desi"
+    },
+    fun_fact: {
+      fact: "Pineapples take almost three years to grow and mature from a single seed or slip. Only one pineapple is produced by a single plant in a year, making them highly valuable fruits.",
+      fact_hi: "एक अनानास को बढ़ने और पकने में लगभग तीन साल का समय लगता है।",
+      why_delightful: "It teaches us patience, reminding us that sweetness requires time and steady nourishment."
+    },
+    sarcasm_or_wit: {
+      observation: "I am not saying I am lazy, I am just on energy-saving mode to help save the planet from unnecessary heat generation.",
+      observation_hi: "मैं आलसी नहीं हूँ, मैं तो बस पृथ्वी को बचाने के लिए ऊर्जा-बचत मोड पर हूँ।",
+      attribution: "Anonymous"
+    }
+  },
+  {
+    dayIndex: 89,
+    riddle: {
+      title: "The Red Liquid",
+      title_hi: "लाल तरल",
+      question: "I flow through your veins, bringing life to your body. What am I?",
+      question_hi: "मैं आपकी नसों में बहता हूँ, आपके शरीर में जीवन लाता हूँ। मैं क्या हूँ?",
+      reveal: "Blood.",
+      reveal_hi: "रक्त।"
+    },
+    joke: {
+      setup: "Why did the moon go to the bank?",
+      setup_hi: "चाँद बैंक क्यों गया?",
+      punchline: "To change its quarters and get a full balance.",
+      punchline_hi: "अपने क्वार्टर बदलने और पूरा बैलेंस प्राप्त करने के लिए।",
+      type: "science"
+    },
+    fun_fact: {
+      fact: "Some sea snails have shells that are made of iron sulfide, which they gather from deep-ocean hydrothermal vents. This armor protects them from predators in extreme deep-sea pressure.",
+      fact_hi: "कुछ समुद्री घोंघों के कवच लोहे के सल्फाइड से बने होते हैं जो उन्हें सुरक्षा देते हैं।",
+      why_delightful: "It proves that nature designs iron-clad soldiers in the hot hydrothermal vents of the dark ocean."
+    },
+    sarcasm_or_wit: {
+      observation: "Adulthood is buying a plant, watching it die slowly, and then buying a plastic version of the same plant to hide your failure.",
+      observation_hi: "वयस्कता पौधा खरीदना, उसे मरते देखना, और फिर असफलता छिपाने के लिए प्लास्टिक का पौधा लाना है।",
+      attribution: "Pravah"
+    }
+  },
+  {
+    dayIndex: 90,
+    riddle: {
+      title: "The Fast Runner",
+      title_hi: "तेज धावक",
+      question: "I fly without wings, and I change everything, but you can never see me. What am I?",
+      question_hi: "मैं बिना पंखों के उड़ता हूँ, और मैं सब कुछ बदल देता हूँ, लेकिन आप मुझे कभी देख नहीं सकते। मैं क्या हूँ?",
+      reveal: "Time.",
+      reveal_hi: "समय।"
+    },
+    joke: {
+      setup: "Why did the book go to the park?",
+      setup_hi: "किताब पार्क क्यों गई?",
+      punchline: "To let its leaves rustle in the wind.",
+      punchline_hi: "हवा में अपने पत्तों को फड़फड़ाने देने के लिए।",
+      type: "wordplay"
+    },
+    fun_fact: {
+      fact: "Water can boil and freeze at the same time under specific temperature and pressure conditions, known as the triple point. At this point, the solid, liquid, and gas phases exist in balance.",
+      fact_hi: "पानी एक ही समय में उबल भी सकता है और जम भी सकता है जिसे त्रिक बिंदु (triple point) कहते हैं।",
+      why_delightful: "It breaks our binary logic of ice and fire, showing that opposites can meet in physical harmony."
+    },
+    sarcasm_or_wit: {
+      observation: "We spend the first half of our lives wanting to be older, and the second half trying to figure out how to reset our knees.",
+      observation_hi: "हम आधा जीवन बड़ा होने की इच्छा में बिताते हैं, और आधा जीवन घुटनों को ठीक करने में।",
+      attribution: "Anonymous"
     }
   }
 ];

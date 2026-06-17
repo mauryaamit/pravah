@@ -710,6 +710,346 @@ export const WORLD_WRITERS: WorldWriter[] = [
   },
   {
     dayIndex: 31,
+    era: 'contemporary',
+    language: "Spanish/Chilean",
+    nationality: "Chilean",
+    name: "Roberto Bolaño",
+    born: "1953",
+    died: "2003",
+    period: "Visceral Realism",
+    summary: "Roberto Bolaño is an internationally acclaimed contemporary voice writing in Spanish/Chilean, known for their deep cultural and historical engagement.",
+    portrait: "Roberto Bolaño (1953 - 2003) is a premier modern writer writing in Spanish/Chilean. Their work represents a key contribution to the global dialogue of letters, exploring the cultural and political history of their nation.\n\nTheir prose is celebrated for its structural complexity, its unique perspective on history, and its stylistic innovation. By exploring themes of exile, identity, and memory, they have created a body of work that challenges the conventions of realism and bridges local experience with universal concerns.",
+    translation_note: "Natasha Wimmer translations.",
+    signature_work: {
+      title: "The Savage Detectives",
+      what_it_is: "A novel searching for a lost poet in Mexico",
+      why_it_matters: "Acclaimed for his depiction of Latin American avant-garde",
+      one_passage: "Lost in the desert of memory."
+    },
+    what_they_knew: "Roberto Bolaño knew that cultural memory is the only shield against historical erasure, and that the writer's task is to keep that shield intact.",
+    must_read: ['The Savage Detectives', '2666'],
+    read_if_curious: "Read The Savage Detectives first.",
+    why_they_matter_globally: "Bolaño is a towering post-Boom writer, exploring the beauty, tragedy, and violence of Latin American literature."
+  },
+  {
+    dayIndex: 32,
+    era: 'contemporary',
+    language: "Italian",
+    nationality: "Italian",
+    name: "Elena Ferrante",
+    born: "1943",
+    period: "Neapolitan Realism",
+    summary: "Elena Ferrante is an internationally acclaimed contemporary voice writing in Italian, known for their deep cultural and historical engagement.",
+    portrait: "Elena Ferrante (1943 - present) is a premier modern writer writing in Italian. Their work represents a key contribution to the global dialogue of letters, exploring the cultural and political history of their nation.\n\nTheir prose is celebrated for its structural complexity, its unique perspective on history, and its stylistic innovation. By exploring themes of exile, identity, and memory, they have created a body of work that challenges the conventions of realism and bridges local experience with universal concerns.",
+    translation_note: "Ann Goldstein translations.",
+    signature_work: {
+      title: "My Brilliant Friend",
+      what_it_is: "A decades-long friendship between two girls in Naples",
+      why_it_matters: "Acclaimed for her raw, intense Neapolitan Novels",
+      one_passage: "There is no art without passion."
+    },
+    what_they_knew: "Elena Ferrante knew that cultural memory is the only shield against historical erasure, and that the writer's task is to keep that shield intact.",
+    must_read: ['My Brilliant Friend', 'The Story of a New Name'],
+    read_if_curious: "Read My Brilliant Friend first.",
+    why_they_matter_globally: "Ferrante writes with intense psychological realism, mapping how class, patriarchy, and domestic violence shape female lives."
+  },
+  {
+    dayIndex: 33,
+    era: 'contemporary',
+    language: "Norwegian",
+    nationality: "Norwegian",
+    name: "Karl Ove Knausgaard",
+    born: "1968",
+    period: "Autofiction",
+    summary: "Karl Ove Knausgaard is an internationally acclaimed contemporary voice writing in Norwegian, known for their deep cultural and historical engagement.",
+    portrait: "Karl Ove Knausgaard (1968 - present) is a premier modern writer writing in Norwegian. Their work represents a key contribution to the global dialogue of letters, exploring the cultural and political history of their nation.\n\nTheir prose is celebrated for its structural complexity, its unique perspective on history, and its stylistic innovation. By exploring themes of exile, identity, and memory, they have created a body of work that challenges the conventions of realism and bridges local experience with universal concerns.",
+    translation_note: "Don Bartlett translations.",
+    signature_work: {
+      title: "My Struggle",
+      what_it_is: "A massive six-volume detailed autobiography of daily life",
+      why_it_matters: "Sparked a global autofiction trend with raw, clinical detail",
+      one_passage: "To live is to be in the world as it is."
+    },
+    what_they_knew: "Karl Ove Knausgaard knew that cultural memory is the only shield against historical erasure, and that the writer's task is to keep that shield intact.",
+    must_read: ['My Struggle', 'A Death in the Family'],
+    read_if_curious: "Read My Struggle first.",
+    why_they_matter_globally: "Knausgaard pioneered contemporary autofiction, detailing the banality and weight of daily existence with absolute honesty."
+  },
+  {
+    dayIndex: 34,
+    era: 'contemporary',
+    language: "Polish",
+    nationality: "Polish",
+    name: "Olga Tokarczuk",
+    born: "1962",
+    period: "Constellation Fiction",
+    summary: "Olga Tokarczuk is an internationally acclaimed contemporary voice writing in Polish, known for their deep cultural and historical engagement.",
+    portrait: "Olga Tokarczuk (1962 - present) is a premier modern writer writing in Polish. Their work represents a key contribution to the global dialogue of letters, exploring the cultural and political history of their nation.\n\nTheir prose is celebrated for its structural complexity, its unique perspective on history, and its stylistic innovation. By exploring themes of exile, identity, and memory, they have created a body of work that challenges the conventions of realism and bridges local experience with universal concerns.",
+    translation_note: "Antonia Lloyd-Jones translations.",
+    signature_work: {
+      title: "Flights",
+      what_it_is: "Interconnected stories exploring travel, anatomy, and time",
+      why_it_matters: "Won the Nobel Prize, using a constellation structure",
+      one_passage: "We are travelers in a fluid world."
+    },
+    what_they_knew: "Olga Tokarczuk knew that cultural memory is the only shield against historical erasure, and that the writer's task is to keep that shield intact.",
+    must_read: ['Flights', 'The Books of Jacob'],
+    read_if_curious: "Read Flights first.",
+    why_they_matter_globally: "Tokarczuk writes with mythic depth, creating narrative constellations that map the fluid history and geography of Europe."
+  },
+  {
+    dayIndex: 35,
+    era: 'contemporary',
+    language: "Korean",
+    nationality: "Korean",
+    name: "Han Kang",
+    born: "1970",
+    period: "Lyrical / Surreal Realism",
+    summary: "Han Kang is an internationally acclaimed contemporary voice writing in Korean, known for their deep cultural and historical engagement.",
+    portrait: "Han Kang (1970 - present) is a premier modern writer writing in Korean. Their work represents a key contribution to the global dialogue of letters, exploring the cultural and political history of their nation.\n\nTheir prose is celebrated for its structural complexity, its unique perspective on history, and its stylistic innovation. By exploring themes of exile, identity, and memory, they have created a body of work that challenges the conventions of realism and bridges local experience with universal concerns.",
+    translation_note: "Deborah Smith translations.",
+    signature_work: {
+      title: "The Vegetarian",
+      what_it_is: "A woman decides to stop eating meat, leading to family crisis",
+      why_it_matters: "Won the International Booker Prize, depicting bodily protest",
+      one_passage: "She believed she was becoming a tree."
+    },
+    what_they_knew: "Han Kang knew that cultural memory is the only shield against historical erasure, and that the writer's task is to keep that shield intact.",
+    must_read: ['The Vegetarian', 'Human Acts'],
+    read_if_curious: "Read The Vegetarian first.",
+    why_they_matter_globally: "Han Kang writes with intense, poetic violence, exploring how historical trauma and social conformity register on the body."
+  },
+  {
+    dayIndex: 36,
+    era: 'contemporary',
+    language: "German",
+    nationality: "German",
+    name: "W.G. Sebald",
+    born: "1944",
+    died: "2001",
+    period: "Hybrid Memory Fiction",
+    summary: "W.G. Sebald is an internationally acclaimed contemporary voice writing in German, known for their deep cultural and historical engagement.",
+    portrait: "W.G. Sebald (1944 - 2001) is a premier modern writer writing in German. Their work represents a key contribution to the global dialogue of letters, exploring the cultural and political history of their nation.\n\nTheir prose is celebrated for its structural complexity, its unique perspective on history, and its stylistic innovation. By exploring themes of exile, identity, and memory, they have created a body of work that challenges the conventions of realism and bridges local experience with universal concerns.",
+    translation_note: "Michael Hulse translations.",
+    signature_work: {
+      title: "The Rings of Saturn",
+      what_it_is: "A walking tour of Suffolk, reflecting on history and decay",
+      why_it_matters: "Revolutionized literature, blending travelogue, essay, and photos",
+      one_passage: "The history of human progress is a history of destruction."
+    },
+    what_they_knew: "W.G. Sebald knew that cultural memory is the only shield against historical erasure, and that the writer's task is to keep that shield intact.",
+    must_read: ['The Rings of Saturn', 'Austerlitz'],
+    read_if_curious: "Read The Rings of Saturn first.",
+    why_they_matter_globally: "Sebald was the chronicler of historical trauma and memory, writing dense, melancholic prose that maps the ghosts of Europe."
+  },
+  {
+    dayIndex: 37,
+    era: 'contemporary',
+    language: "French",
+    nationality: "French",
+    name: "Michel Houellebecq",
+    born: "1956",
+    period: "Cynic Realism",
+    summary: "Michel Houellebecq is an internationally acclaimed contemporary voice writing in French, known for their deep cultural and historical engagement.",
+    portrait: "Michel Houellebecq (1956 - present) is a premier modern writer writing in French. Their work represents a key contribution to the global dialogue of letters, exploring the cultural and political history of their nation.\n\nTheir prose is celebrated for its structural complexity, its unique perspective on history, and its stylistic innovation. By exploring themes of exile, identity, and memory, they have created a body of work that challenges the conventions of realism and bridges local experience with universal concerns.",
+    translation_note: "Frank Wynne translations.",
+    signature_work: {
+      title: "The Elementary Particles",
+      what_it_is: "Two half-brothers navigating sexual decay and science",
+      why_it_matters: "A highly controversial satirist of Western consumerism",
+      one_passage: "The world is a supermarket of desires."
+    },
+    what_they_knew: "Michel Houellebecq knew that cultural memory is the only shield against historical erasure, and that the writer's task is to keep that shield intact.",
+    must_read: ['The Elementary Particles', 'Submission'],
+    read_if_curious: "Read The Elementary Particles first.",
+    why_they_matter_globally: "Houellebecq writes with clinical, provocative cynicism, detailing the existential vacuum and decay of modern liberal societies."
+  },
+  {
+    dayIndex: 38,
+    era: 'contemporary',
+    language: "Spanish",
+    nationality: "Spanish",
+    name: "Javier Marías",
+    born: "1951",
+    died: "2022",
+    period: "Digressive Realism",
+    summary: "Javier Marías is an internationally acclaimed contemporary voice writing in Spanish, known for their deep cultural and historical engagement.",
+    portrait: "Javier Marías (1951 - 2022) is a premier modern writer writing in Spanish. Their work represents a key contribution to the global dialogue of letters, exploring the cultural and political history of their nation.\n\nTheir prose is celebrated for its structural complexity, its unique perspective on history, and its stylistic innovation. By exploring themes of exile, identity, and memory, they have created a body of work that challenges the conventions of realism and bridges local experience with universal concerns.",
+    translation_note: "Margaret Jull Costa translations.",
+    signature_work: {
+      title: "A Heart So White",
+      what_it_is: "A translator investigating his family's dark secret",
+      why_it_matters: "Master of digressive, philosophical mystery prose",
+      one_passage: "Words are a way of not saying the truth."
+    },
+    what_they_knew: "Javier Marías knew that cultural memory is the only shield against historical erasure, and that the writer's task is to keep that shield intact.",
+    must_read: ['A Heart So White', 'Your Face Tomorrow'],
+    read_if_curious: "Read A Heart So White first.",
+    why_they_matter_globally: "Marías was Spain's master stylist, writing dense, looping sentences that examine memory, secrecy, and moral choices."
+  },
+  {
+    dayIndex: 39,
+    era: 'contemporary',
+    language: "Hebrew/Israeli",
+    nationality: "Israeli",
+    name: "Amos Oz",
+    born: "1939",
+    died: "2018",
+    period: "Social Realism",
+    summary: "Amos Oz is an internationally acclaimed contemporary voice writing in Hebrew/Israeli, known for their deep cultural and historical engagement.",
+    portrait: "Amos Oz (1939 - 2018) is a premier modern writer writing in Hebrew/Israeli. Their work represents a key contribution to the global dialogue of letters, exploring the cultural and political history of their nation.\n\nTheir prose is celebrated for its structural complexity, its unique perspective on history, and its stylistic innovation. By exploring themes of exile, identity, and memory, they have created a body of work that challenges the conventions of realism and bridges local experience with universal concerns.",
+    translation_note: "Nicholas de Lange translations.",
+    signature_work: {
+      title: "A Tale of Love and Darkness",
+      what_it_is: "A memoir tracing his childhood in Jerusalem and family tragedy",
+      why_it_matters: "One of Israel's premier writers, advocating peace",
+      one_passage: "Where there is no compromise, there is fanaticism."
+    },
+    what_they_knew: "Amos Oz knew that cultural memory is the only shield against historical erasure, and that the writer's task is to keep that shield intact.",
+    must_read: ['A Tale of Love and Darkness', 'Black Box'],
+    read_if_curious: "Read A Tale of Love and Darkness first.",
+    why_they_matter_globally: "Oz wrote with deep historical empathy, mapping the personal tragedies, dreams, and political conflicts of the Middle East."
+  },
+  {
+    dayIndex: 40,
+    era: 'contemporary',
+    language: "Polish / American",
+    nationality: " American",
+    name: "Czesław Miłosz",
+    born: "1911",
+    died: "2004",
+    period: "Poetry & Essays",
+    summary: "Czesław Miłosz is an internationally acclaimed contemporary voice writing in Polish / American, known for their deep cultural and historical engagement.",
+    portrait: "Czesław Miłosz (1911 - 2004) is a premier modern writer writing in Polish / American. Their work represents a key contribution to the global dialogue of letters, exploring the cultural and political history of their nation.\n\nTheir prose is celebrated for its structural complexity, its unique perspective on history, and its stylistic innovation. By exploring themes of exile, identity, and memory, they have created a body of work that challenges the conventions of realism and bridges local experience with universal concerns.",
+    translation_note: "Original translations.",
+    signature_work: {
+      title: "The Captive Mind",
+      what_it_is: "Essays examining intellectual collaboration with totalitarianism",
+      why_it_matters: "Won the Nobel Prize for his defense of intellectual freedom",
+      one_passage: "In a room where people unanimously maintain a conspiracy."
+    },
+    what_they_knew: "Czesław Miłosz knew that cultural memory is the only shield against historical erasure, and that the writer's task is to keep that shield intact.",
+    must_read: ['The Captive Mind', 'Selected Poems'],
+    read_if_curious: "Read The Captive Mind first.",
+    why_they_matter_globally: "Miłosz was a towering moral voice, translating the political trauma of WWII and the Cold War into profound poetry and essays."
+  },
+  {
+    dayIndex: 41,
+    era: 'contemporary',
+    language: "Japanese",
+    nationality: "Japanese",
+    name: "Yasunari Kawabata",
+    born: "1899",
+    died: "1972",
+    period: "Shinto Lyrical",
+    summary: "Yasunari Kawabata is an internationally acclaimed contemporary voice writing in Japanese, known for their deep cultural and historical engagement.",
+    portrait: "Yasunari Kawabata (1899 - 1972) is a premier modern writer writing in Japanese. Their work represents a key contribution to the global dialogue of letters, exploring the cultural and political history of their nation.\n\nTheir prose is celebrated for its structural complexity, its unique perspective on history, and its stylistic innovation. By exploring themes of exile, identity, and memory, they have created a body of work that challenges the conventions of realism and bridges local experience with universal concerns.",
+    translation_note: "Edward Seidensticker translations.",
+    signature_work: {
+      title: "Snow Country",
+      what_it_is: "A love affair at a remote hot spring town in isolated Japan",
+      why_it_matters: "Won the Nobel Prize, pioneering lonely, beautiful Japanese modernism",
+      one_passage: "The sky was filled with a deep, silent light."
+    },
+    what_they_knew: "Yasunari Kawabata knew that cultural memory is the only shield against historical erasure, and that the writer's task is to keep that shield intact.",
+    must_read: ['Snow Country', 'Thousand Cranes'],
+    read_if_curious: "Read Snow Country first.",
+    why_they_matter_globally: "Kawabata wrote with quiet sensory elegance, capturing the fleeting nature of beauty and Shinto connections to nature."
+  },
+  {
+    dayIndex: 42,
+    era: 'contemporary',
+    language: "Japanese",
+    nationality: "Japanese",
+    name: "Kōbō Abe",
+    born: "1924",
+    died: "1993",
+    period: "Surrealism",
+    summary: "Kōbō Abe is an internationally acclaimed contemporary voice writing in Japanese, known for their deep cultural and historical engagement.",
+    portrait: "Kōbō Abe (1924 - 1993) is a premier modern writer writing in Japanese. Their work represents a key contribution to the global dialogue of letters, exploring the cultural and political history of their nation.\n\nTheir prose is celebrated for its structural complexity, its unique perspective on history, and its stylistic innovation. By exploring themes of exile, identity, and memory, they have created a body of work that challenges the conventions of realism and bridges local experience with universal concerns.",
+    translation_note: "E. Dale Saunders translations.",
+    signature_work: {
+      title: "The Woman in the Dunes",
+      what_it_is: "A schoolteacher trapped in a sand quarry with a strange woman",
+      why_it_matters: "Celebrated for surreal allegories of modern alienation",
+      one_passage: "Sand is a fluid that eats away your identity."
+    },
+    what_they_knew: "Kōbō Abe knew that cultural memory is the only shield against historical erasure, and that the writer's task is to keep that shield intact.",
+    must_read: ['The Woman in the Dunes', 'The Ruined Map'],
+    read_if_curious: "Read The Woman in the Dunes first.",
+    why_they_matter_globally: "Abe was Japan's Kafka, writing tense, surreal novels about identity and existential traps."
+  },
+  {
+    dayIndex: 43,
+    era: 'contemporary',
+    language: "Japanese",
+    nationality: "Japanese",
+    name: "Yukio Mishima",
+    born: "1925",
+    died: "1970",
+    period: "Aesthetic Decadence",
+    summary: "Yukio Mishima is an internationally acclaimed contemporary voice writing in Japanese, known for their deep cultural and historical engagement.",
+    portrait: "Yukio Mishima (1925 - 1970) is a premier modern writer writing in Japanese. Their work represents a key contribution to the global dialogue of letters, exploring the cultural and political history of their nation.\n\nTheir prose is celebrated for its structural complexity, its unique perspective on history, and its stylistic innovation. By exploring themes of exile, identity, and memory, they have created a body of work that challenges the conventions of realism and bridges local experience with universal concerns.",
+    translation_note: "Ivan Morris translations.",
+    signature_work: {
+      title: "The Temple of the Golden Pavilion",
+      what_it_is: "A stuttering acolyte burns down the beautiful temple he loves",
+      why_it_matters: "A premier post-war Japanese writer who lived a highly dramatic life",
+      one_passage: "Beauty is an obstacle that must be destroyed."
+    },
+    what_they_knew: "Yukio Mishima knew that cultural memory is the only shield against historical erasure, and that the writer's task is to keep that shield intact.",
+    must_read: ['The Temple', 'The Sea of Fertility'],
+    read_if_curious: "Read The Temple first.",
+    why_they_matter_globally: "Mishima wrote with fierce, visceral aestheticism, exploring the relationship between beauty, purity, and death."
+  },
+  {
+    dayIndex: 44,
+    era: 'contemporary',
+    language: "Portuguese",
+    nationality: "Portuguese",
+    name: "José Saramago",
+    born: "1922",
+    died: "2010",
+    period: "Allegorical Realism",
+    summary: "José Saramago is an internationally acclaimed contemporary voice writing in Portuguese, known for their deep cultural and historical engagement.",
+    portrait: "José Saramago (1922 - 2010) is a premier modern writer writing in Portuguese. Their work represents a key contribution to the global dialogue of letters, exploring the cultural and political history of their nation.\n\nTheir prose is celebrated for its structural complexity, its unique perspective on history, and its stylistic innovation. By exploring themes of exile, identity, and memory, they have created a body of work that challenges the conventions of realism and bridges local experience with universal concerns.",
+    translation_note: "Giovanni Pontiero translations.",
+    signature_work: {
+      title: "Blindness",
+      what_it_is: "An epidemic of sudden blindness strikes a city",
+      why_it_matters: "Won the Nobel Prize, using allegorical style without punctuation",
+      one_passage: "Inside us is a darkness that sees nothing."
+    },
+    what_they_knew: "José Saramago knew that cultural memory is the only shield against historical erasure, and that the writer's task is to keep that shield intact.",
+    must_read: ['Blindness', 'The Gospel According to Jesus Christ'],
+    read_if_curious: "Read Blindness first.",
+    why_they_matter_globally: "Saramago used grand allegories and unique prose syntax to explore human nature and political structures."
+  },
+  {
+    dayIndex: 45,
+    era: 'contemporary',
+    language: "Spanish/Argentine",
+    nationality: "Argentine",
+    name: "Julio Cortázar",
+    born: "1914",
+    died: "1984",
+    period: "Avant-Garde",
+    summary: "Julio Cortázar is an internationally acclaimed contemporary voice writing in Spanish/Argentine, known for their deep cultural and historical engagement.",
+    portrait: "Julio Cortázar (1914 - 1984) is a premier modern writer writing in Spanish/Argentine. Their work represents a key contribution to the global dialogue of letters, exploring the cultural and political history of their nation.\n\nTheir prose is celebrated for its structural complexity, its unique perspective on history, and its stylistic innovation. By exploring themes of exile, identity, and memory, they have created a body of work that challenges the conventions of realism and bridges local experience with universal concerns.",
+    translation_note: "Gregory Rabassa translations.",
+    signature_work: {
+      title: "Hopscotch",
+      what_it_is: "A counter-novel that can be read in multiple sequences",
+      why_it_matters: "A central figure of the Latin American Boom",
+      one_passage: "You look for what you don't find."
+    },
+    what_they_knew: "Julio Cortázar knew that cultural memory is the only shield against historical erasure, and that the writer's task is to keep that shield intact.",
+    must_read: ['Hopscotch', 'Blow-Up'],
+    read_if_curious: "Read Hopscotch first.",
+    why_they_matter_globally: "Cortázar was a master of play and short fiction, writing stories that dissolve the boundaries of reality."
+  },
+  {
+    dayIndex: 46,
     era: 'classical',
     language: "Russian",
     nationality: "Russian",
@@ -732,7 +1072,7 @@ export const WORLD_WRITERS: WorldWriter[] = [
     why_they_matter_globally: "Tolstoy writes with a god-like observation, capturing both the massive movements of history and the tiniest shifts in human emotion."
   },
   {
-    dayIndex: 32,
+    dayIndex: 47,
     era: 'classical',
     language: "Russian",
     nationality: "Russian",
@@ -755,7 +1095,7 @@ export const WORLD_WRITERS: WorldWriter[] = [
     why_they_matter_globally: "Dostoevsky is the prophet of the modern soul, writing about characters torn between rational doubt and spiritual redemption."
   },
   {
-    dayIndex: 33,
+    dayIndex: 48,
     era: 'classical',
     language: "Russian",
     nationality: "Russian",
@@ -778,7 +1118,7 @@ export const WORLD_WRITERS: WorldWriter[] = [
     why_they_matter_globally: "Chekhov writes with a gentle, comic melancholy, focusing on the quiet anticlimaxes and unspoken tragedies of ordinary life."
   },
   {
-    dayIndex: 34,
+    dayIndex: 49,
     era: 'classical',
     language: "Russian",
     nationality: "Russian",
@@ -801,7 +1141,7 @@ export const WORLD_WRITERS: WorldWriter[] = [
     why_they_matter_globally: "Turgenev brought a European refinement and clinical detachment to Russian fiction, detailing the ideological shifts of his era."
   },
   {
-    dayIndex: 35,
+    dayIndex: 50,
     era: 'classical',
     language: "Russian",
     nationality: "Russian",
@@ -824,7 +1164,7 @@ export const WORLD_WRITERS: WorldWriter[] = [
     why_they_matter_globally: "Gogol blends folk humor, bureaucracy, and dark surrealism, writing about characters trapped in their own illusions."
   },
   {
-    dayIndex: 36,
+    dayIndex: 51,
     era: 'classical',
     language: "Russian",
     nationality: "Russian",
@@ -847,7 +1187,7 @@ export const WORLD_WRITERS: WorldWriter[] = [
     why_they_matter_globally: "Bulgakov wrote this masterpiece in secret under Stalin's regime, creating a dazzling, multi-layered allegory of art and power."
   },
   {
-    dayIndex: 37,
+    dayIndex: 52,
     era: 'classical',
     language: "Russian",
     nationality: "Russian",
@@ -870,7 +1210,7 @@ export const WORLD_WRITERS: WorldWriter[] = [
     why_they_matter_globally: "Akhmatova wrote with classic, marble-like clarity, bearing witness to the political tragedies of her generation in Russia."
   },
   {
-    dayIndex: 38,
+    dayIndex: 53,
     era: 'classical',
     language: "Russian",
     nationality: "Russian",
@@ -893,7 +1233,7 @@ export const WORLD_WRITERS: WorldWriter[] = [
     why_they_matter_globally: "Pasternak was primarily a poet, writing prose filled with natural description, romantic longing, and spiritual independence."
   },
   {
-    dayIndex: 39,
+    dayIndex: 54,
     era: 'classical',
     language: "Russian",
     nationality: "Russian",
@@ -916,7 +1256,7 @@ export const WORLD_WRITERS: WorldWriter[] = [
     why_they_matter_globally: "Pushkin is the sun of Russian poetry, combining classical elegance with romantic irony and deep psychological insight."
   },
   {
-    dayIndex: 40,
+    dayIndex: 55,
     era: 'classical',
     language: "Ancient Greek",
     nationality: "Ancient Greek",
@@ -938,7 +1278,7 @@ export const WORLD_WRITERS: WorldWriter[] = [
     why_they_matter_globally: "Homer's epics established the Western mythological framework, celebrating heroism, fate, and the search for home."
   },
   {
-    dayIndex: 41,
+    dayIndex: 56,
     era: 'classical',
     language: "Ancient Greek",
     nationality: "Ancient Greek",
@@ -961,7 +1301,7 @@ export const WORLD_WRITERS: WorldWriter[] = [
     why_they_matter_globally: "Sophocles explored the conflict between human free will and divine fate, showing the tragic nobility of self-discovery."
   },
   {
-    dayIndex: 42,
+    dayIndex: 57,
     era: 'classical',
     language: "Ancient Greek",
     nationality: "Ancient Greek",
@@ -984,7 +1324,7 @@ export const WORLD_WRITERS: WorldWriter[] = [
     why_they_matter_globally: "Plato wrote philosophy as drama, using the figure of Socrates to explore ethics, politics, and the nature of reality."
   },
   {
-    dayIndex: 43,
+    dayIndex: 58,
     era: 'classical',
     language: "Latin",
     nationality: "Latin",
@@ -1007,7 +1347,7 @@ export const WORLD_WRITERS: WorldWriter[] = [
     why_they_matter_globally: "Virgil synthesized Homeric epics to create a patriotic, historically conscious epic that celebrates duty, fate, and empire."
   },
   {
-    dayIndex: 44,
+    dayIndex: 59,
     era: 'classical',
     language: "Latin",
     nationality: "Latin",
@@ -1030,7 +1370,7 @@ export const WORLD_WRITERS: WorldWriter[] = [
     why_they_matter_globally: "Ovid wrote with playful, sensuous brilliance, celebrating change and the power of art to survive political exile."
   },
   {
-    dayIndex: 45,
+    dayIndex: 60,
     era: 'classical',
     language: "Italian",
     nationality: "Italian",
@@ -1053,7 +1393,7 @@ export const WORLD_WRITERS: WorldWriter[] = [
     why_they_matter_globally: "Dante synthesized medieval theology, politics, and personal love into a monumental, geometrically structured epic of the soul."
   },
   {
-    dayIndex: 46,
+    dayIndex: 61,
     era: 'classical',
     language: "Spanish",
     nationality: "Spanish",
@@ -1076,7 +1416,7 @@ export const WORLD_WRITERS: WorldWriter[] = [
     why_they_matter_globally: "Cervantes wrote with profound, tragicomic humanity, exploring the relationship between romantic illusion and hard reality."
   },
   {
-    dayIndex: 47,
+    dayIndex: 62,
     era: 'classical',
     language: "Spanish",
     nationality: "Spanish",
@@ -1099,7 +1439,7 @@ export const WORLD_WRITERS: WorldWriter[] = [
     why_they_matter_globally: "Lorca infused modern poetry and drama with Spanish folklore, gypsy music, and surrealist intensity, celebrating vital passion."
   },
   {
-    dayIndex: 48,
+    dayIndex: 63,
     era: 'classical',
     language: "German",
     nationality: "German",
@@ -1122,7 +1462,7 @@ export const WORLD_WRITERS: WorldWriter[] = [
     why_they_matter_globally: "Goethe was a towering figure who synthesized romantic Sturm und Drang with classical order, writing on science, art, and the soul."
   },
   {
-    dayIndex: 49,
+    dayIndex: 64,
     era: 'classical',
     language: "German",
     nationality: "German",
@@ -1145,7 +1485,7 @@ export const WORLD_WRITERS: WorldWriter[] = [
     why_they_matter_globally: "Schiller explored the relationship between political freedom, moral duty, and aesthetic education, writing powerful historical dramas."
   },
   {
-    dayIndex: 50,
+    dayIndex: 65,
     era: 'classical',
     language: "German/Austrian",
     nationality: "Austrian",
@@ -1168,7 +1508,7 @@ export const WORLD_WRITERS: WorldWriter[] = [
     why_they_matter_globally: "Rilke wrote with intense, solitary focus, translating the fleeting inner experience into concrete, enduring images."
   },
   {
-    dayIndex: 51,
+    dayIndex: 66,
     era: 'classical',
     language: "French",
     nationality: "French",
@@ -1191,7 +1531,7 @@ export const WORLD_WRITERS: WorldWriter[] = [
     why_they_matter_globally: "Balzac mapped the entire post-revolutionary French society in a massive sequence of novels, analyzing money, class, and desire."
   },
   {
-    dayIndex: 52,
+    dayIndex: 67,
     era: 'classical',
     language: "French",
     nationality: "French",
@@ -1214,7 +1554,7 @@ export const WORLD_WRITERS: WorldWriter[] = [
     why_they_matter_globally: "Hugo wrote with massive, epic scale, combining romantic passion, social criticism, and historical philosophy in prose and verse."
   },
   {
-    dayIndex: 53,
+    dayIndex: 68,
     era: 'classical',
     language: "French",
     nationality: "French",
@@ -1237,7 +1577,7 @@ export const WORLD_WRITERS: WorldWriter[] = [
     why_they_matter_globally: "Flaubert wrote with clinical detachment and aesthetic obsession, crafting sentences of absolute formal perfection."
   },
   {
-    dayIndex: 54,
+    dayIndex: 69,
     era: 'classical',
     language: "French",
     nationality: "French",
@@ -1260,7 +1600,7 @@ export const WORLD_WRITERS: WorldWriter[] = [
     why_they_matter_globally: "Proust explored how a taste (a madeleine) or a sight can unlock the deep, lost landscapes of our past, reclaiming time through art."
   },
   {
-    dayIndex: 55,
+    dayIndex: 70,
     era: 'classical',
     language: "Persian",
     nationality: "Persian",
@@ -1283,7 +1623,7 @@ export const WORLD_WRITERS: WorldWriter[] = [
     why_they_matter_globally: "Khayyam's quatrains celebrate the present moment and mock the pretensions of theologians, using the tavern as a temple of truth."
   },
   {
-    dayIndex: 56,
+    dayIndex: 71,
     era: 'classical',
     language: "Persian/Sufi",
     nationality: "Sufi",
@@ -1306,7 +1646,7 @@ export const WORLD_WRITERS: WorldWriter[] = [
     why_they_matter_globally: "Rumi's poetry is a roaring fire of divine love, celebrating the soul's journey of release and reunion with the Beloved."
   },
   {
-    dayIndex: 57,
+    dayIndex: 72,
     era: 'classical',
     language: "Persian",
     nationality: "Persian",
@@ -1329,7 +1669,7 @@ export const WORLD_WRITERS: WorldWriter[] = [
     why_they_matter_globally: "Hafiz wrote with multi-layered, ambiguous beauty, where love of the human beloved merges with love of the Divine."
   },
   {
-    dayIndex: 58,
+    dayIndex: 73,
     era: 'classical',
     language: "Sanskrit",
     nationality: "Sanskrit",
@@ -1351,7 +1691,7 @@ export const WORLD_WRITERS: WorldWriter[] = [
     why_they_matter_globally: "Kalidasa's poetry is a peak of sensory description and emotional elegance (rasa), celebrating nature and romantic longing."
   },
   {
-    dayIndex: 59,
+    dayIndex: 74,
     era: 'classical',
     language: "Chinese",
     nationality: "Chinese",
@@ -1374,7 +1714,7 @@ export const WORLD_WRITERS: WorldWriter[] = [
     why_they_matter_globally: "Li Bai wrote with spontaneous, Taoist freedom, celebrating the beauty of the natural world and the release of wine."
   },
   {
-    dayIndex: 60,
+    dayIndex: 75,
     era: 'classical',
     language: "Japanese",
     nationality: "Japanese",
@@ -1395,5 +1735,350 @@ export const WORLD_WRITERS: WorldWriter[] = [
     must_read: ['Narrow Road to the Interior'],
     read_if_curious: "Read Narrow Road to the Interior first.",
     why_they_matter_globally: "Basho synthesized travel, Zen observation, and minimalist poetry to capture the pathos of things (mono no aware) in 17 syllables."
+  },
+  {
+    dayIndex: 76,
+    era: 'classical',
+    language: "Ancient Greek",
+    nationality: "Ancient Greek",
+    name: "Euripides",
+    born: "c. 480 BC",
+    died: "c. 406 BC",
+    period: "Tragedy",
+    summary: "Euripides is a legendary classical figure writing in Ancient Greek, whose work represents a peak of the global literary heritage.",
+    portrait: "Euripides (c. 480 BC - c. 406 BC) was a towering classical figure of world literature writing in Ancient Greek. They defined the formal, thematic, and linguistic parameters of their literary tradition, leaving a legacy that remains alive across generations.\n\nTheir work is celebrated for its philosophical depth, its narrative power, and its timeless exploration of the human condition. By translating the complex historical, religious, and domestic realities of their era into enduring stories, they have created a body of work that continues to influence how humans think about existence, morality, and art.",
+    translation_note: "Philip Vellacott translations.",
+    signature_work: {
+      title: "Medea",
+      what_it_is: "The tragedy of a woman's revenge on her husband",
+      why_it_matters: "One of the three great Greek tragedians, focusing on psychology",
+      one_passage: "Stronger than all my reflections is my rage."
+    },
+    what_they_knew: "Euripides knew that human nature remains unchanged across historical transitions, possessing a classical, tragic, and beautiful continuity.",
+    must_read: ['Medea', 'The Bacchae'],
+    read_if_curious: "Read Medea first.",
+    why_they_matter_globally: "Euripides was a radical playwright who challenged traditional religious myths and focused on female psychology."
+  },
+  {
+    dayIndex: 77,
+    era: 'classical',
+    language: "Ancient Greek",
+    nationality: "Ancient Greek",
+    name: "Aeschylus",
+    born: "c. 525 BC",
+    died: "c. 456 BC",
+    period: "Tragedy",
+    summary: "Aeschylus is a legendary classical figure writing in Ancient Greek, whose work represents a peak of the global literary heritage.",
+    portrait: "Aeschylus (c. 525 BC - c. 456 BC) was a towering classical figure of world literature writing in Ancient Greek. They defined the formal, thematic, and linguistic parameters of their literary tradition, leaving a legacy that remains alive across generations.\n\nTheir work is celebrated for its philosophical depth, its narrative power, and its timeless exploration of the human condition. By translating the complex historical, religious, and domestic realities of their era into enduring stories, they have created a body of work that continues to influence how humans think about existence, morality, and art.",
+    translation_note: "Robert Fagles translations.",
+    signature_work: {
+      title: "The Oresteia",
+      what_it_is: "A trilogy of plays tracing the curse on the House of Atreus",
+      why_it_matters: "The father of tragedy, who introduced the second actor",
+      one_passage: "He who learns must suffer."
+    },
+    what_they_knew: "Aeschylus knew that human nature remains unchanged across historical transitions, possessing a classical, tragic, and beautiful continuity.",
+    must_read: ['The Oresteia', 'Prometheus Bound'],
+    read_if_curious: "Read The Oresteia first.",
+    why_they_matter_globally: "Aeschylus established the dramatic structure of tragedy, exploring themes of justice, civic law, and fate."
+  },
+  {
+    dayIndex: 78,
+    era: 'classical',
+    language: "Latin",
+    nationality: "Latin",
+    name: "Lucretius",
+    born: "c. 99 BC",
+    died: "c. 55 BC",
+    period: "Epicurean Philosophy",
+    summary: "Lucretius is a legendary classical figure writing in Latin, whose work represents a peak of the global literary heritage.",
+    portrait: "Lucretius (c. 99 BC - c. 55 BC) was a towering classical figure of world literature writing in Latin. They defined the formal, thematic, and linguistic parameters of their literary tradition, leaving a legacy that remains alive across generations.\n\nTheir work is celebrated for its philosophical depth, its narrative power, and its timeless exploration of the human condition. By translating the complex historical, religious, and domestic realities of their era into enduring stories, they have created a body of work that continues to influence how humans think about existence, morality, and art.",
+    translation_note: "W.H.D. Rouse translation.",
+    signature_work: {
+      title: "De Rerum Natura",
+      what_it_is: "A philosophical poem explaining Epicurean physics and atomism",
+      why_it_matters: "Synthesized science and poetry to cure fear of death",
+      one_passage: "Nothing arises from nothing."
+    },
+    what_they_knew: "Lucretius knew that human nature remains unchanged across historical transitions, possessing a classical, tragic, and beautiful continuity.",
+    must_read: ['On the Nature of Things'],
+    read_if_curious: "Read On the Nature of Things first.",
+    why_they_matter_globally: "Lucretius wrote a brilliant, poetic defense of materialism and atomism, urging humans to find peace in nature."
+  },
+  {
+    dayIndex: 79,
+    era: 'classical',
+    language: "Latin",
+    nationality: "Latin",
+    name: "Marcus Aurelius",
+    born: "121",
+    died: "180",
+    period: "Stoic Philosophy",
+    summary: "Marcus Aurelius is a legendary classical figure writing in Latin, whose work represents a peak of the global literary heritage.",
+    portrait: "Marcus Aurelius (121 - 180) was a towering classical figure of world literature writing in Latin. They defined the formal, thematic, and linguistic parameters of their literary tradition, leaving a legacy that remains alive across generations.\n\nTheir work is celebrated for its philosophical depth, its narrative power, and its timeless exploration of the human condition. By translating the complex historical, religious, and domestic realities of their era into enduring stories, they have created a body of work that continues to influence how humans think about existence, morality, and art.",
+    translation_note: "Gregory Hays translation.",
+    signature_work: {
+      title: "Meditations",
+      what_it_is: "A private journal of Stoic reflections on duty and mortality",
+      why_it_matters: "A Roman Emperor who practiced Stoicism in the field",
+      one_passage: "The soul is dyed by the color of its thoughts."
+    },
+    what_they_knew: "Marcus Aurelius knew that human nature remains unchanged across historical transitions, possessing a classical, tragic, and beautiful continuity.",
+    must_read: ['Meditations'],
+    read_if_curious: "Read Meditations first.",
+    why_they_matter_globally: "Marcus Aurelius wrote private journals of Stoic reflection, representing a peak of practical ethics and duty."
+  },
+  {
+    dayIndex: 80,
+    era: 'classical',
+    language: "Latin",
+    nationality: "Latin",
+    name: "Saint Augustine",
+    born: "354",
+    died: "430",
+    period: "Early Christian Philosophy",
+    summary: "Saint Augustine is a legendary classical figure writing in Latin, whose work represents a peak of the global literary heritage.",
+    portrait: "Saint Augustine (354 - 430) was a towering classical figure of world literature writing in Latin. They defined the formal, thematic, and linguistic parameters of their literary tradition, leaving a legacy that remains alive across generations.\n\nTheir work is celebrated for its philosophical depth, its narrative power, and its timeless exploration of the human condition. By translating the complex historical, religious, and domestic realities of their era into enduring stories, they have created a body of work that continues to influence how humans think about existence, morality, and art.",
+    translation_note: "R.S. Pine-Coffin translation.",
+    signature_work: {
+      title: "Confessions",
+      what_it_is: "An autobiography tracing his conversion and philosophy of time",
+      why_it_matters: "A foundational theologian of Western Christianity",
+      one_passage: "Make me chaste, but not yet."
+    },
+    what_they_knew: "Saint Augustine knew that human nature remains unchanged across historical transitions, possessing a classical, tragic, and beautiful continuity.",
+    must_read: ['Confessions', 'The City of God'],
+    read_if_curious: "Read Confessions first.",
+    why_they_matter_globally: "Augustine synthesized Platonic philosophy with Christian theology, writing the first psychological autobiography."
+  },
+  {
+    dayIndex: 81,
+    era: 'classical',
+    language: "Japanese",
+    nationality: "Japanese",
+    name: "Sei Shōnagon",
+    born: "c. 966",
+    died: "c. 1025",
+    period: "Edo Period Essays",
+    summary: "Sei Shōnagon is a legendary classical figure writing in Japanese, whose work represents a peak of the global literary heritage.",
+    portrait: "Sei Shōnagon (c. 966 - c. 1025) was a towering classical figure of world literature writing in Japanese. They defined the formal, thematic, and linguistic parameters of their literary tradition, leaving a legacy that remains alive across generations.\n\nTheir work is celebrated for its philosophical depth, its narrative power, and its timeless exploration of the human condition. By translating the complex historical, religious, and domestic realities of their era into enduring stories, they have created a body of work that continues to influence how humans think about existence, morality, and art.",
+    translation_note: "Ivan Morris translation.",
+    signature_work: {
+      title: "The Pillow Book",
+      what_it_is: "A collection of lists, thoughts, and gossip from Heian court",
+      why_it_matters: "Pioneered the zuihitsu genre of essayistic reflections",
+      one_passage: "In spring, the dawn is beautiful."
+    },
+    what_they_knew: "Sei Shōnagon knew that human nature remains unchanged across historical transitions, possessing a classical, tragic, and beautiful continuity.",
+    must_read: ['The Pillow Book'],
+    read_if_curious: "Read The Pillow Book first.",
+    why_they_matter_globally: "Sei Shōnagon wrote a witty, highly personal account of courtly aesthetics and human behavior in Heian Japan."
+  },
+  {
+    dayIndex: 82,
+    era: 'classical',
+    language: "Japanese",
+    nationality: "Japanese",
+    name: "Murasaki Shikibu",
+    born: "c. 973",
+    died: "c. 1014",
+    period: "Classical Japanese Novel",
+    summary: "Murasaki Shikibu is a legendary classical figure writing in Japanese, whose work represents a peak of the global literary heritage.",
+    portrait: "Murasaki Shikibu (c. 973 - c. 1014) was a towering classical figure of world literature writing in Japanese. They defined the formal, thematic, and linguistic parameters of their literary tradition, leaving a legacy that remains alive across generations.\n\nTheir work is celebrated for its philosophical depth, its narrative power, and its timeless exploration of the human condition. By translating the complex historical, religious, and domestic realities of their era into enduring stories, they have created a body of work that continues to influence how humans think about existence, morality, and art.",
+    translation_note: "Edward Seidensticker translation.",
+    signature_work: {
+      title: "The Tale of Genji",
+      what_it_is: "A massive novel tracing the romantic life of Prince Genji",
+      why_it_matters: "Considered the world's first novel, exploring Heian court",
+      one_passage: "The mind that remembers beauty knows no aging."
+    },
+    what_they_knew: "Murasaki Shikibu knew that human nature remains unchanged across historical transitions, possessing a classical, tragic, and beautiful continuity.",
+    must_read: ['The Tale of Genji'],
+    read_if_curious: "Read The Tale of Genji first.",
+    why_they_matter_globally: "Murasaki Shikibu wrote the world's first novel, a masterpiece of psychological realism and aesthetic depth."
+  },
+  {
+    dayIndex: 83,
+    era: 'classical',
+    language: "French",
+    nationality: "French",
+    name: "Francois Rabelais",
+    born: "c. 1494",
+    died: "1553",
+    period: "Renaissance Satire",
+    summary: "Francois Rabelais is a legendary classical figure writing in French, whose work represents a peak of the global literary heritage.",
+    portrait: "Francois Rabelais (c. 1494 - 1553) was a towering classical figure of world literature writing in French. They defined the formal, thematic, and linguistic parameters of their literary tradition, leaving a legacy that remains alive across generations.\n\nTheir work is celebrated for its philosophical depth, its narrative power, and its timeless exploration of the human condition. By translating the complex historical, religious, and domestic realities of their era into enduring stories, they have created a body of work that continues to influence how humans think about existence, morality, and art.",
+    translation_note: "J.M. Cohen translation.",
+    signature_work: {
+      title: "Gargantua and Pantagruel",
+      what_it_is: "A satirical series of books about two giants",
+      why_it_matters: "Pioneered carnavalesque humor and humanist critique",
+      one_passage: "Do what thou wilt."
+    },
+    what_they_knew: "Francois Rabelais knew that human nature remains unchanged across historical transitions, possessing a classical, tragic, and beautiful continuity.",
+    must_read: ['Gargantua and Pantagruel'],
+    read_if_curious: "Read Gargantua and Pantagruel first.",
+    why_they_matter_globally: "Rabelais used grotesque humor, vulgar puns, and humanist ideals to critique medieval scholasticism and church power."
+  },
+  {
+    dayIndex: 84,
+    era: 'classical',
+    language: "French",
+    nationality: "French",
+    name: "Michel de Montaigne",
+    born: "1533",
+    died: "1592",
+    period: "Essays",
+    summary: "Michel de Montaigne is a legendary classical figure writing in French, whose work represents a peak of the global literary heritage.",
+    portrait: "Michel de Montaigne (1533 - 1592) was a towering classical figure of world literature writing in French. They defined the formal, thematic, and linguistic parameters of their literary tradition, leaving a legacy that remains alive across generations.\n\nTheir work is celebrated for its philosophical depth, its narrative power, and its timeless exploration of the human condition. By translating the complex historical, religious, and domestic realities of their era into enduring stories, they have created a body of work that continues to influence how humans think about existence, morality, and art.",
+    translation_note: "M.A. Screech translation.",
+    signature_work: {
+      title: "Essays",
+      what_it_is: "Three books of essays reflecting on his own habits and humanity",
+      why_it_matters: "Pioneered the essay genre, exploring skepticism and self",
+      one_passage: "What do I know? (Que sais-je?)"
+    },
+    what_they_knew: "Michel de Montaigne knew that human nature remains unchanged across historical transitions, possessing a classical, tragic, and beautiful continuity.",
+    must_read: ['Essays'],
+    read_if_curious: "Read Essays first.",
+    why_they_matter_globally: "Montaigne wrote friendly, wandering essays of self-observation, establishing skepticism and humanism in Europe."
+  },
+  {
+    dayIndex: 85,
+    era: 'classical',
+    language: "French",
+    nationality: "French",
+    name: "Molière",
+    born: "1622",
+    died: "1673",
+    period: "Classical Comedy",
+    summary: "Molière is a legendary classical figure writing in French, whose work represents a peak of the global literary heritage.",
+    portrait: "Molière (1622 - 1673) was a towering classical figure of world literature writing in French. They defined the formal, thematic, and linguistic parameters of their literary tradition, leaving a legacy that remains alive across generations.\n\nTheir work is celebrated for its philosophical depth, its narrative power, and its timeless exploration of the human condition. By translating the complex historical, religious, and domestic realities of their era into enduring stories, they have created a body of work that continues to influence how humans think about existence, morality, and art.",
+    translation_note: "Richard Wilbur translations.",
+    signature_work: {
+      title: "Tartuffe",
+      what_it_is: "A play satirizing religious hypocrisy",
+      why_it_matters: "The premier comic playwright of French literature",
+      one_passage: "We die only once, and for such a long time."
+    },
+    what_they_knew: "Molière knew that human nature remains unchanged across historical transitions, possessing a classical, tragic, and beautiful continuity.",
+    must_read: ['Tartuffe', 'The Misanthrope'],
+    read_if_curious: "Read Tartuffe first.",
+    why_they_matter_globally: "Molière wrote biting, witty comedies that exposed the social hypocrisy, greed, and vanity of French society."
+  },
+  {
+    dayIndex: 86,
+    era: 'classical',
+    language: "French",
+    nationality: "French",
+    name: "Jean Racine",
+    born: "1639",
+    died: "1699",
+    period: "Classical Tragedy",
+    summary: "Jean Racine is a legendary classical figure writing in French, whose work represents a peak of the global literary heritage.",
+    portrait: "Jean Racine (1639 - 1699) was a towering classical figure of world literature writing in French. They defined the formal, thematic, and linguistic parameters of their literary tradition, leaving a legacy that remains alive across generations.\n\nTheir work is celebrated for its philosophical depth, its narrative power, and its timeless exploration of the human condition. By translating the complex historical, religious, and domestic realities of their era into enduring stories, they have created a body of work that continues to influence how humans think about existence, morality, and art.",
+    translation_note: "Richard Wilbur translations.",
+    signature_work: {
+      title: "Phèdre",
+      what_it_is: "A neoclassical tragedy depicting a queen's incestuous passion",
+      why_it_matters: "Master of neoclassical tragedy, writing in strict alexandrines",
+      one_passage: "Love is a fire that consumes the soul."
+    },
+    what_they_knew: "Jean Racine knew that human nature remains unchanged across historical transitions, possessing a classical, tragic, and beautiful continuity.",
+    must_read: ['Phèdre', 'Andromaque'],
+    read_if_curious: "Read Phèdre first.",
+    why_they_matter_globally: "Racine wrote intense, geometrically structured tragedies of passion, showing the helplessness of human reason before emotion."
+  },
+  {
+    dayIndex: 87,
+    era: 'classical',
+    language: "Persian",
+    nationality: "Persian",
+    name: "Saadi Shirazi",
+    born: "1210",
+    died: "1291",
+    period: "Sufi Wisdom",
+    summary: "Saadi Shirazi is a legendary classical figure writing in Persian, whose work represents a peak of the global literary heritage.",
+    portrait: "Saadi Shirazi (1210 - 1291) was a towering classical figure of world literature writing in Persian. They defined the formal, thematic, and linguistic parameters of their literary tradition, leaving a legacy that remains alive across generations.\n\nTheir work is celebrated for its philosophical depth, its narrative power, and its timeless exploration of the human condition. By translating the complex historical, religious, and domestic realities of their era into enduring stories, they have created a body of work that continues to influence how humans think about existence, morality, and art.",
+    translation_note: "Eastwick translations.",
+    signature_work: {
+      title: "Gulistan (The Rose Garden)",
+      what_it_is: "A collection of stories, poems, and moral advice",
+      why_it_matters: "One of the great pillars of Persian literature and ethics",
+      one_passage: "The children of Adam are limbs of one body."
+    },
+    what_they_knew: "Saadi Shirazi knew that human nature remains unchanged across historical transitions, possessing a classical, tragic, and beautiful continuity.",
+    must_read: ['Gulistan', 'Bustan'],
+    read_if_curious: "Read Gulistan first.",
+    why_they_matter_globally: "Saadi wrote practical moral advice and stories filled with wit, tolerance, and deep Sufi wisdom."
+  },
+  {
+    dayIndex: 88,
+    era: 'classical',
+    language: "Persian",
+    nationality: "Persian",
+    name: "Ferdowsi",
+    born: "940",
+    died: "1020",
+    period: "Epic Poetry",
+    summary: "Ferdowsi is a legendary classical figure writing in Persian, whose work represents a peak of the global literary heritage.",
+    portrait: "Ferdowsi (940 - 1020) was a towering classical figure of world literature writing in Persian. They defined the formal, thematic, and linguistic parameters of their literary tradition, leaving a legacy that remains alive across generations.\n\nTheir work is celebrated for its philosophical depth, its narrative power, and its timeless exploration of the human condition. By translating the complex historical, religious, and domestic realities of their era into enduring stories, they have created a body of work that continues to influence how humans think about existence, morality, and art.",
+    translation_note: "Dick Davis translations.",
+    signature_work: {
+      title: "Shahnameh (Book of Kings)",
+      what_it_is: "A massive epic poem detailing the history of ancient Persia",
+      why_it_matters: "Preserved the Persian language and national identity",
+      one_passage: "I have built a palace of verse that wind cannot destroy."
+    },
+    what_they_knew: "Ferdowsi knew that human nature remains unchanged across historical transitions, possessing a classical, tragic, and beautiful continuity.",
+    must_read: ['Shahnameh'],
+    read_if_curious: "Read Shahnameh first.",
+    why_they_matter_globally: "Ferdowsi wrote a monumental epic of 50,000 couplets, celebrating the heroes, kings, and myths of ancient Persia."
+  },
+  {
+    dayIndex: 89,
+    era: 'classical',
+    language: "Chinese",
+    nationality: "Chinese",
+    name: "Du Fu",
+    born: "712",
+    died: "770",
+    period: "Tang Dynasty Poetry",
+    summary: "Du Fu is a legendary classical figure writing in Chinese, whose work represents a peak of the global literary heritage.",
+    portrait: "Du Fu (712 - 770) was a towering classical figure of world literature writing in Chinese. They defined the formal, thematic, and linguistic parameters of their literary tradition, leaving a legacy that remains alive across generations.\n\nTheir work is celebrated for its philosophical depth, its narrative power, and its timeless exploration of the human condition. By translating the complex historical, religious, and domestic realities of their era into enduring stories, they have created a body of work that continues to influence how humans think about existence, morality, and art.",
+    translation_note: "Burton Watson translations.",
+    signature_work: {
+      title: "Selected Poems of Tu Fu",
+      what_it_is: "Poetry exploring social suffering, war, and nature",
+      why_it_matters: "China's greatest poet-historian, known for his Confucian empathy",
+      one_passage: "The state is ruined, but mountains and rivers remain."
+    },
+    what_they_knew: "Du Fu knew that human nature remains unchanged across historical transitions, possessing a classical, tragic, and beautiful continuity.",
+    must_read: ['Tu Fu: Selected Poems'],
+    read_if_curious: "Read Tu Fu: Selected Poems first.",
+    why_they_matter_globally: "Du Fu wrote with deep historical consciousness and Confucian empathy, documenting the tragedies of the An Lushan rebellion."
+  },
+  {
+    dayIndex: 90,
+    era: 'classical',
+    language: "Japanese",
+    nationality: "Japanese",
+    name: "Zeami Motokiyo",
+    born: "c. 1363",
+    died: "c. 1443",
+    period: "Noh Theater / Aesthetics",
+    summary: "Zeami Motokiyo is a legendary classical figure writing in Japanese, whose work represents a peak of the global literary heritage.",
+    portrait: "Zeami Motokiyo (c. 1363 - c. 1443) was a towering classical figure of world literature writing in Japanese. They defined the formal, thematic, and linguistic parameters of their literary tradition, leaving a legacy that remains alive across generations.\n\nTheir work is celebrated for its philosophical depth, its narrative power, and its timeless exploration of the human condition. By translating the complex historical, religious, and domestic realities of their era into enduring stories, they have created a body of work that continues to influence how humans think about existence, morality, and art.",
+    translation_note: "J. Thomas Rimer translations.",
+    signature_work: {
+      title: "Fushikaden",
+      what_it_is: "A treatise explaining the training and aesthetics of Noh theater",
+      why_it_matters: "The founder and leading theorist of Noh drama",
+      one_passage: "The flower of Noh is the flower of the present moment."
+    },
+    what_they_knew: "Zeami Motokiyo knew that human nature remains unchanged across historical transitions, possessing a classical, tragic, and beautiful continuity.",
+    must_read: ['Fushikaden', 'Atsumori'],
+    read_if_curious: "Read Fushikaden first.",
+    why_they_matter_globally: "Zeami established Noh theater and its core aesthetic of yugen (mysterious grace), writing plays and treatises of deep beauty."
   }
 ];

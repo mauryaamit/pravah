@@ -1,17 +1,29 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FADE_UP } from '@/lib/utils/motion';
+import { format } from 'date-fns';
 import PageTransition from '@/components/layout/PageTransition';
 import DayNavigator from '@/components/shared/DayNavigator';
 import ReadAloudButton from '@/components/shared/ReadAloudButton';
 import SutraNoteButton from '@/components/shared/SutraNoteButton';
 import RevisitButton from '@/components/shared/RevisitButton';
-import { getDayIndex } from '@/lib/utils/date';
-import { KITAB_DATA, type KitabDayEntry, type KitabBook } from './data';
 
 type TabKey = 'hindi' | 'english' | 'indian_regional' | 'world' | 'classical_heritage';
+
+interface KitabBook {
+  title: string;
+  author: string;
+  year: string;
+  genre: string;
+  citation: string;
+  summary: string;
+  opening_line: string;
+  read_if: string;
+  similar_books?: string[];
+  olid: string;
+  purchase_or_info_link?: string;
+}
 
 const TABS: { id: TabKey; label: string }[] = [
   { id: 'hindi', label: 'हिन्दी · Hindi' },
@@ -27,112 +39,49 @@ const BADGE_GOLD = '#B38B3E';
 export default function KitabPage() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [activeTab, setActiveTab] = useState<TabKey>('hindi');
+  const [book, setBook] = useState<KitabBook | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const dayIndex = getDayIndex(currentDate);
-  const entry: KitabDayEntry = KITAB_DATA[(dayIndex - 1) % KITAB_DATA.length];
+  useEffect(() => {
+    let active = true;
+    const fetchBook = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const dateStr = format(currentDate, 'yyyy-MM-dd');
+        const res = await fetch(`/api/kitab?tab=${activeTab}&date=${dateStr}`);
+        if (!res.ok) {
+          throw new Error('Failed to fetch book recommendation');
+        }
+        const data = await res.json();
+        if (active) {
+          setBook(data.book || null);
+        }
+      } catch (err: any) {
+        if (active) {
+          setError(err.message || 'An error occurred');
+        }
+      } finally {
+        if (active) {
+          setLoading(false);
+        }
+      }
+    };
 
-  const langGroup = entry.tabs[activeTab];
-  const contemporary = langGroup.contemporary;
-  const classical = langGroup.classical;
+    fetchBook();
+    return () => {
+      active = false;
+    };
+  }, [currentDate, activeTab]);
 
-  const getTtsText = (book: KitabBook, typeStr: string) => {
-    return `${typeStr} book recommendation: ${book.title} by ${book.author}, published in ${book.year}. Citation: ${book.citation}. Summary: ${book.summary}. Opening line: ${book.opening_line}. Recommended if you: ${book.read_if}`;
-  };
-
-  const renderBookCard = (book: KitabBook, typeLabel: string) => {
-    return (
-      <div 
-        className="card-base p-6 sm:p-8 space-y-6 flex flex-col justify-between h-full border-l-4 transition-all duration-300 hover:translate-y-[-2px] hover:shadow-md"
-        style={{ 
-          borderLeftColor: AGED_GOLD 
-        }}
-      >
-        <div className="space-y-4">
-          <div className="flex justify-between items-start gap-4">
-            <div>
-              <span 
-                className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded text-white"
-                style={{ backgroundColor: BADGE_GOLD }}
-              >
-                {typeLabel}
-              </span>
-              <h3 className="font-serif text-2xl font-bold mt-3 text-[var(--text-primary)]">{book.title}</h3>
-              <p className="text-sm font-semibold mt-0.5" style={{ color: AGED_GOLD }}>
-                By {book.author} &middot; {book.year}
-              </p>
-              <p className="text-[10px] text-[var(--text-muted)] mt-1 italic font-mono">
-                {book.genre}
-              </p>
-            </div>
-            <div className="flex gap-1.5 flex-shrink-0">
-              <ReadAloudButton 
-                text={getTtsText(book, typeLabel)} 
-                lang="en-IN"
-                size="sm"
-              />
-              <SutraNoteButton roomId="kitab" roomName="Kitab" contentTitle={book.title} />
-              <RevisitButton roomId="kitab" roomName="Kitab" contentTitle={book.title} contentSummary={book.summary} />
-            </div>
-          </div>
-
-          <div className="space-y-4 pt-4 border-t border-[var(--border-default)]">
-            {/* Opening Line Callout */}
-            <div className="p-4 rounded-xl border italic text-xs leading-relaxed text-[var(--text-secondary)] relative bg-[var(--bg-tertiary)]/30" style={{ borderColor: 'var(--border-default)' }}>
-              <span className="absolute -top-3 left-3 text-3xl font-serif leading-none" style={{ color: 'rgba(154, 126, 74, 0.25)' }}>“</span>
-              <p className="pl-4 font-serif">{book.opening_line}</p>
-            </div>
-
-            <div>
-              <p className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)]">Summary</p>
-              <p className="text-xs sm:text-sm leading-relaxed mt-1 text-[var(--text-secondary)]">{book.summary}</p>
-            </div>
-
-            <div>
-              <p className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)]">Read If</p>
-              <p className="text-xs sm:text-sm leading-relaxed mt-1 text-[var(--text-secondary)]">{book.read_if}</p>
-            </div>
-
-            {book.similar_books && book.similar_books.length > 0 && (
-              <div>
-                <p className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)]">Similar Masterworks</p>
-                <div className="flex flex-wrap gap-1.5 mt-1.5">
-                  {book.similar_books.map((s, idx) => (
-                    <span 
-                      key={idx}
-                      className="text-[9px] px-2 py-0.5 rounded bg-[var(--bg-tertiary)] border border-[var(--border-default)] text-[var(--text-primary)]"
-                    >
-                      {s}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {book.purchase_or_info_link && (
-          <div className="pt-4 border-t border-[var(--border-default)] flex justify-between items-center gap-4">
-            <span className="text-[10px] text-[var(--text-muted)] font-mono select-all truncate max-w-[200px]">
-              {book.citation}
-            </span>
-            <a 
-              href={book.purchase_or_info_link} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-xs font-semibold hover:underline flex items-center gap-1 flex-shrink-0"
-              style={{ color: AGED_GOLD }}
-            >
-              Info / Wiki &rarr;
-            </a>
-          </div>
-        )}
-      </div>
-    );
+  const getTtsText = (book: KitabBook) => {
+    return `Book recommendation: ${book.title} by ${book.author}, published in ${book.year}. Citation: ${book.citation}. Summary: ${book.summary}. Opening line: ${book.opening_line}. Recommended if you: ${book.read_if}`;
   };
 
   return (
     <PageTransition>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-6">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 space-y-6">
         
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 border-b pb-4" style={{ borderColor: 'var(--border-default)' }}>
@@ -166,21 +115,132 @@ export default function KitabPage() {
 
         {/* Book recommendations view */}
         <AnimatePresence mode="wait">
-          <motion.div
-            key={`${activeTab}-${dayIndex}`}
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.35 }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-6"
-          >
-            <div>
-              {renderBookCard(contemporary, 'Contemporary Recommendation')}
+          {loading ? (
+            <motion.div
+              key="loading"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="py-20 flex flex-col items-center justify-center space-y-4"
+            >
+              <div className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: BADGE_GOLD }} />
+              <p className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>Fetching recommendation...</p>
+            </motion.div>
+          ) : error ? (
+            <motion.div
+              key="error"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="py-16 text-center card-base p-6"
+            >
+              <p className="text-sm font-serif" style={{ color: 'var(--text-secondary)' }}>
+                Could not retrieve today's book recommendation.
+              </p>
+              <p className="text-xs font-mono mt-2" style={{ color: 'var(--text-muted)' }}>
+                {error}
+              </p>
+            </motion.div>
+          ) : book ? (
+            <motion.div
+              key={`${activeTab}-${book.olid}`}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.35 }}
+              className="card-base p-6 sm:p-8 space-y-6 flex flex-col justify-between h-full border-l-4 transition-all duration-300 hover:translate-y-[-2px] hover:shadow-md"
+              style={{ borderLeftColor: AGED_GOLD }}
+            >
+              <div className="space-y-4">
+                <div className="flex justify-between items-start gap-4">
+                  <div>
+                    <span 
+                      className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded text-white"
+                      style={{ backgroundColor: BADGE_GOLD }}
+                    >
+                      Featured Recommendation
+                    </span>
+                    <h3 className="font-serif text-2xl sm:text-3xl font-bold mt-3 text-[var(--text-primary)]">{book.title}</h3>
+                    <p className="text-sm font-semibold mt-0.5" style={{ color: AGED_GOLD }}>
+                      By {book.author} &middot; {book.year}
+                    </p>
+                    <p className="text-[10px] text-[var(--text-muted)] mt-1 italic font-mono">
+                      {book.genre}
+                    </p>
+                  </div>
+                  <div className="flex gap-1.5 flex-shrink-0">
+                    <ReadAloudButton 
+                      text={getTtsText(book)} 
+                      lang="en-IN"
+                      size="sm"
+                    />
+                    <SutraNoteButton roomId="kitab" roomName="Kitab" contentTitle={book.title} />
+                    <RevisitButton roomId="kitab" roomName="Kitab" contentTitle={book.title} contentSummary={book.summary} />
+                  </div>
+                </div>
+
+                <div className="space-y-4 pt-4 border-t border-[var(--border-default)]">
+                  {book.opening_line && book.opening_line !== 'Not available.' && (
+                    <div className="p-4 rounded-xl border italic text-xs leading-relaxed text-[var(--text-secondary)] relative bg-[var(--bg-tertiary)]/30" style={{ borderColor: 'var(--border-default)' }}>
+                      <span className="absolute -top-3 left-3 text-3xl font-serif leading-none" style={{ color: 'rgba(154, 126, 74, 0.25)' }}>“</span>
+                      <p className="pl-4 font-serif">{book.opening_line}</p>
+                    </div>
+                  )}
+
+                  <div>
+                    <p className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)]">Summary</p>
+                    <p className="text-xs sm:text-sm leading-relaxed mt-1 text-[var(--text-secondary)]">{book.summary}</p>
+                  </div>
+
+                  {book.read_if && (
+                    <div>
+                      <p className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)]">Read If</p>
+                      <p className="text-xs sm:text-sm leading-relaxed mt-1 text-[var(--text-secondary)]">{book.read_if}</p>
+                    </div>
+                  )}
+
+                  {book.similar_books && book.similar_books.length > 0 && (
+                    <div>
+                      <p className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)]">Similar Masterworks</p>
+                      <div className="flex flex-wrap gap-1.5 mt-1.5">
+                        {book.similar_books.map((s, idx) => (
+                          <span 
+                            key={idx}
+                            className="text-[9px] px-2 py-0.5 rounded bg-[var(--bg-tertiary)] border border-[var(--border-default)] text-[var(--text-primary)]"
+                          >
+                            {s}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {book.citation && (
+                <div className="pt-4 border-t border-[var(--border-default)] flex justify-between items-center gap-4">
+                  <span className="text-[10px] text-[var(--text-muted)] font-mono select-all truncate max-w-[250px]">
+                    {book.citation}
+                  </span>
+                  {book.purchase_or_info_link && (
+                    <a 
+                      href={book.purchase_or_info_link} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-xs font-semibold hover:underline flex items-center gap-1 flex-shrink-0"
+                      style={{ color: AGED_GOLD }}
+                    >
+                      Info / Wiki &rarr;
+                    </a>
+                  )}
+                </div>
+              )}
+            </motion.div>
+          ) : (
+            <div className="py-16 text-center card-base p-6">
+              <p className="text-sm font-serif text-[var(--text-secondary)]">No recommendation available for this tab.</p>
             </div>
-            <div>
-              {renderBookCard(classical, 'Classical Landmark')}
-            </div>
-          </motion.div>
+          )}
         </AnimatePresence>
 
       </div>

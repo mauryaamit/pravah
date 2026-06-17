@@ -5,22 +5,31 @@ const withPWA = require('next-pwa')({
   disable: process.env.NODE_ENV === 'development', // Only active in production
   runtimeCaching: [
     {
-      // Cache all page navigations:
-      urlPattern: /^https:\/\/pravah-eight-cyan\.vercel\.app\/.*/i,
-      handler: 'NetworkFirst',
+      // Cache all room pages
+      urlPattern: /^https:\/\/pravah-eight-cyan\.vercel\.app\/.*/,
+      handler: 'StaleWhileRevalidate', // serve cache instantly, update in background
       options: {
         cacheName: 'pravah-pages',
-        expiration: { maxEntries: 50, maxAgeSeconds: 24 * 60 * 60 }, // 24hrs
-        networkTimeoutSeconds: 10,
+        expiration: { maxAgeSeconds: 24 * 60 * 60 }, // 24 hours
       },
     },
     {
-      // Cache static assets (fonts, images, icons):
-      urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp|ico|woff|woff2|ttf)$/i,
+      // Cache static assets forever
+      urlPattern: /\.(?:js|css|woff2|png|svg|ico|jpg|jpeg|gif|webp|ttf)$/,
       handler: 'CacheFirst',
       options: {
         cacheName: 'pravah-static',
-        expiration: { maxEntries: 100, maxAgeSeconds: 30 * 24 * 60 * 60 }, // 30 days
+        expiration: { maxAgeSeconds: 30 * 24 * 60 * 60 }, // 30 days
+      },
+    },
+    {
+      // Cache Firestore API responses
+      urlPattern: /^https:\/\/firestore\.googleapis\.com\/.*/,
+      handler: 'NetworkFirst', // try network, fallback to cache
+      options: {
+        cacheName: 'pravah-firestore',
+        networkTimeoutSeconds: 3, // if network > 3s, use cache
+        expiration: { maxAgeSeconds: 24 * 60 * 60 },
       },
     },
     {
@@ -29,7 +38,7 @@ const withPWA = require('next-pwa')({
       handler: 'CacheFirst',
       options: {
         cacheName: 'pravah-audio',
-        expiration: { maxEntries: 20, maxAgeSeconds: 30 * 24 * 60 * 60 },
+        expiration: { maxAgeSeconds: 30 * 24 * 60 * 60 },
       },
     },
     {
@@ -38,17 +47,7 @@ const withPWA = require('next-pwa')({
       handler: 'CacheFirst',
       options: {
         cacheName: 'pravah-fonts',
-        expiration: { maxEntries: 20, maxAgeSeconds: 365 * 24 * 60 * 60 }, // 1 year
-      },
-    },
-    {
-      // Firebase — Network First (always try live, fall back to cache):
-      urlPattern: /^https:\/\/.*\.firebaseio\.com\/.*/i,
-      handler: 'NetworkFirst',
-      options: {
-        cacheName: 'pravah-firebase',
-        networkTimeoutSeconds: 5,
-        expiration: { maxEntries: 50, maxAgeSeconds: 60 * 60 }, // 1 hr
+        expiration: { maxAgeSeconds: 365 * 24 * 60 * 60 }, // 1 year
       },
     },
   ],
@@ -62,7 +61,14 @@ const nextConfig = {
   },
   experimental: {
     serverComponentsExternalPackages: ['firebase-admin'],
+    optimizePackageImports: [
+      'lucide-react',      // tree-shake icons — huge win
+      'framer-motion',     // tree-shake animation lib
+      'recharts',          // tree-shake charts
+    ],
   },
+  compress: true,
+  swcMinify: true,
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com' },
@@ -70,7 +76,28 @@ const nextConfig = {
       { protocol: 'https', hostname: 'apod.nasa.gov' },
       { protocol: 'https', hostname: 'commons.wikimedia.org' },
       { protocol: 'https', hostname: 'en.wikipedia.org' },
+      { protocol: 'https', hostname: 'index.wikimedia.org' },
     ],
+  },
+  webpack: (config) => {
+    config.optimization.splitChunks = {
+      chunks: 'all',
+      cacheGroups: {
+        firebase: {
+          test: /[\\/]node_modules[\\/]firebase[\\/]/,
+          name: 'firebase',
+          chunks: 'all',
+          priority: 20,
+        },
+        framerMotion: {
+          test: /[\\/]node_modules[\\/]framer-motion[\\/]/,
+          name: 'framer-motion',
+          chunks: 'all',
+          priority: 20,
+        },
+      },
+    };
+    return config;
   },
   async redirects() {
     return [

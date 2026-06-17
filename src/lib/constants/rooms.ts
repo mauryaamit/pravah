@@ -45,6 +45,7 @@ export const ROOMS: Room[] = [
   { id: 'kahani',      name: 'Kahani',       nameHi: 'कहानी',      nameHindi: 'कहानी',     emoji: '📜', description: 'Stories across genres and centuries',          route: '/kahani',       colorVar: '--room-kathakar',     colorHex: '#8A5A3A', cluster: 'knowledge' },
   { id: 'chalchitr',   name: 'Chalchitr',    nameHi: 'चलचित्र',    nameHindi: 'चलचित्र',   emoji: '🎬', description: 'Cinephile — Critically Acclaimed Cinema',          route: '/chalchitr',   colorVar: '--room-chalchitr',    colorHex: '#1C1C2E', cluster: 'knowledge', ambientSound: 'vinyl' },
   { id: 'kitab',       name: 'Kitab',        nameHi: 'किताब',      nameHindi: 'किताब',      emoji: '📚', description: 'Books — Daily Recommendations Across Every Language', route: '/kitab',       colorVar: '--room-kitab',        colorHex: '#3D2B1F', cluster: 'knowledge', ambientSound: 'library' },
+  { id: 'anusandhan',  name: 'Anusandhan',   nameHi: 'अनुसंधान',   nameHindi: 'अनुसंधान',   emoji: '🔬', description: 'Research papers across Science, Psychology, Math, and Social Sciences', route: '/anusandhan', colorVar: '--room-anusandhan', colorHex: '#2D5F5F', cluster: 'knowledge', ambientSound: 'library' },
 
   // WORLD
   { id: 'vaishwik',    name: 'Vaishwik',     nameHi: 'वैश्विक',    nameHindi: 'वैश्विक',   emoji: '🌐', description: 'World Intelligence — Global Situations & Systems Explained', route: '/vaishwik', colorVar: '--room-duniya',       colorHex: '#4A7C59', cluster: 'world' },
