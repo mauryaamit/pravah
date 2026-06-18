@@ -97,7 +97,7 @@ export default function SignupPage() {
         className="text-center mb-8"
       >
         <img 
-          src="/logo.png" 
+          src="/icons/icon-192x192.png" 
           alt="Pravah Logo" 
           className="w-24 h-24 object-contain rounded-3xl mx-auto mb-4" 
           style={{ boxShadow: '0 12px 48px rgba(196,135,58,0.25), 0 4px 16px rgba(0,0,0,0.15)' }}

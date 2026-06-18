@@ -34,7 +34,7 @@ export default function BharatPage() {
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 border-b pb-4" style={{ borderColor: 'var(--border-default)' }}>
           <div className="text-left w-full sm:w-auto">
             <p className="section-label">Discover India</p>
-            <h1 className="font-serif text-2xl" style={{ color: 'var(--text-primary)' }}>भारत — Bharat</h1>
+            <h1 className="font-serif text-2xl" style={{ color: 'var(--text-primary)' }}>भारत - Bharat</h1>
             <p className="text-xs text-[var(--text-muted)] mt-0.5">
               5,000 years of history, 4 language families, 1.4 billion stories. India is a civilization.
             </p>

@@ -11,7 +11,7 @@ import { ReadingModeProvider } from '@/lib/contexts/ReadingModeContext';
 import ReadingMode from '@/components/layout/ReadingMode';
 
 export const metadata: Metadata = {
-  title: 'Pravah — प्रवाह',
+  title: 'Pravah - प्रवाह',
   description: 'A cognitive sanctuary for philosophy, poetry, learning, and reflection.',
   manifest: '/manifest.json',
   appleWebApp: {

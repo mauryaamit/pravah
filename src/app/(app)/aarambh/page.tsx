@@ -76,6 +76,31 @@ const FALLBACK_MANTRAS = [
   { hi: 'शांत मन सब जान लेता है', en: 'A calm mind knows all.' },
   { hi: 'जिज्ञासा ही जीवन है', en: 'Curiosity is life itself.' },
   { hi: 'धीरे चलो, दूर जाओ', en: 'Walk slowly, go far.' },
+  { hi: 'सत्यमेव जयते', en: 'Truth alone triumphs.' },
+  { hi: 'आत्मनो मोक्षार्थम् जगद्धिताय च', en: 'For the liberation of the self and the welfare of the world.' },
+  { hi: 'अहं ब्रह्मास्मि', en: 'I am the absolute reality.' },
+  { hi: 'तत्त्वमसि', en: 'Thou art that.' },
+  { hi: 'वसुधैव कुटुम्बकम्', en: 'The world is one family.' },
+  { hi: 'तमसो मा ज्योतिर्गमय', en: 'Lead me from darkness to light.' },
+  { hi: 'असतो मा सद्गमय', en: 'Lead me from the unreal to the real.' },
+  { hi: 'मृत्योर्मा अमृतं गमय', en: 'Lead me from mortality to immortality.' },
+  { hi: 'अप्प दीपो भव', en: 'Be your own light.' },
+  { hi: 'योगः कर्मसु कौशलम्', en: 'Yoga is skill in action.' },
+  { hi: 'सर्वं खल्विदं ब्रह्म', en: 'All this is indeed Brahman.' },
+  { hi: 'सच्चिदानंद', en: 'Existence, consciousness, and bliss.' },
+  { hi: 'चिदानंद रूपः शिवोऽहम् शिवोऽहम्', en: 'I am consciousness and bliss, I am Shiva.' },
+  { hi: 'अहिंसा परमो धर्मः', en: 'Non-violence is the supreme path.' },
+  { hi: 'कर्मण्येवाधिकारस्ते मा फलेषु कदाचन', en: 'Your right is to action, never to its fruits.' },
+  { hi: 'तेजस्वि नावधीतमस्तु', en: 'May our learning be radiant.' },
+  { hi: 'मा कश्चिद्दुःखभाग्भवेत्', en: 'May no one suffer.' },
+  { hi: 'संतुष्टः सततं योगी', en: 'The yogi is always content.' },
+  { hi: 'मन एव मनुष्याणां कारणं बंधमोक्षयोः', en: 'The mind alone is the cause of bondage and liberation.' },
+  { hi: 'स्वधर्मे निधनं श्रेयः', en: 'It is better to die in one\'s own path than to follow another\'s.' },
+  { hi: 'ईशा वास्यमिदं सर्वम्', en: 'All this is enveloped by the Divine.' },
+  { hi: 'एकं सद् विप्रा बहुधा वदन्ति', en: 'Truth is one, the wise call it by many names.' },
+  { hi: 'कृतज्ञता ही शांति है', en: 'Gratitude is peace itself.' },
+  { hi: 'वर्तमान ही सत्य है', en: 'The present moment is the only truth.' },
+  { hi: 'मौन में ही शक्ति है', en: 'In silence lies strength.' },
 ];
 
 const FALLBACK_CHALLENGES = [
@@ -817,7 +842,7 @@ export default function AarambhPage() {
                   साप्ताहिक चिंतन / Weekly Connections
                 </p>
                 <h3 className="font-serif text-lg mt-1" style={{ color: 'var(--text-primary)' }}>
-                  सूत्र — Connections
+                  सूत्र - Connections
                 </h3>
                 <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
                   Two threads of your attention, gathered this week. How do they speak to each other?
@@ -943,7 +968,7 @@ export default function AarambhPage() {
             transition={{ duration: 0.55, delay: 0.48, ease: [0.22, 0.1, 0.36, 1] }}
             className="space-y-3"
           >
-            <h2 className="section-label px-1">फिर मिलो — Revisit</h2>
+            <h2 className="section-label px-1">फिर मिलो - Revisit</h2>
             <div className="space-y-3">
               {revisitItems.map((item) => {
                 const room = ROOMS.find(r => r.id === item.roomId);

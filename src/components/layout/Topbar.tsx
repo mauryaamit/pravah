@@ -31,7 +31,7 @@ export default function Topbar() {
         {/* Pravah logo on mobile only */}
         <Link href="/aarambh" prefetch={true} className="lg:hidden flex items-center gap-2 hover:opacity-80 transition-opacity">
           <img 
-            src="/logo.png" 
+            src="/icons/icon-192x192.png" 
             alt="Pravah Logo" 
             className="w-9 h-9 object-contain rounded-xl flex-shrink-0" 
             style={{ boxShadow: '0 2px 12px rgba(196,135,58,0.25)' }}

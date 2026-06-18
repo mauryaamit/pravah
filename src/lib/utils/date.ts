@@ -66,3 +66,9 @@ export function getTimeGreeting(): { hi: string; en: string } {
   if (h < 20) return { hi: 'शुभ संध्या', en: 'Good evening' };
   return { hi: 'शुभ रात्रि', en: 'Good night' };
 }
+
+/** Weekly index for Monday-aligned updates */
+export function getWeeklyIndex(date: Date = new Date()): number {
+  const diff = differenceInDays(date, EPOCH);
+  return Math.floor(diff / 7);
+}

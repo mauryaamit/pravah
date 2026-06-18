@@ -12,41 +12,39 @@ export const EASE_GENTLE   = [0.22, 0.1, 0.36, 1] as const;
 
 // ── Page-level transition ─────────────────────────────────────────────────────
 export const PAGE_TRANSITION: Variants = {
-  initial: { opacity: 0, y: 18, filter: 'blur(3px)' },
+  initial: { opacity: 0, y: 8 },
   animate: {
     opacity: 1,
     y: 0,
-    filter: 'blur(0px)',
-    transition: { duration: 0.55, ease: EASE_GENTLE },
+    transition: { duration: 0.22, ease: EASE_GENTLE },
   },
   exit: {
     opacity: 0,
-    y: -10,
-    filter: 'blur(2px)',
-    transition: { duration: 0.3, ease: EASE_IN_OUT },
+    y: -4,
+    transition: { duration: 0.14, ease: EASE_IN_OUT },
   },
 };
 
 // ── Fade up (cards, sections) ─────────────────────────────────────────────────
 export const FADE_UP: Variants = {
-  initial: { opacity: 0, y: 16 },
+  initial: { opacity: 0, y: 10 },
   animate: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: EASE_GENTLE },
+    transition: { duration: 0.25, ease: EASE_GENTLE },
   },
   exit: {
     opacity: 0,
-    y: -8,
-    transition: { duration: 0.25, ease: EASE_IN_OUT },
+    y: -6,
+    transition: { duration: 0.15, ease: EASE_IN_OUT },
   },
 };
 
 // ── Fade in (overlays, tooltips) ──────────────────────────────────────────────
 export const FADE_IN: Variants = {
   initial: { opacity: 0 },
-  animate: { opacity: 1, transition: { duration: 0.4, ease: EASE_OUT } },
-  exit:    { opacity: 0, transition: { duration: 0.25, ease: EASE_IN_OUT } },
+  animate: { opacity: 1, transition: { duration: 0.2, ease: EASE_OUT } },
+  exit:    { opacity: 0, transition: { duration: 0.12, ease: EASE_IN_OUT } },
 };
 
 // ── Stagger container (list of cards) ────────────────────────────────────────
@@ -56,18 +54,18 @@ export const STAGGER_CONTAINER: Variants = {
   initial: {},
   animate: {
     transition: {
-      staggerChildren: 0.08,
-      delayChildren: 0.1,
+      staggerChildren: 0.04,
+      delayChildren: 0.05,
     },
   },
 };
 
 export const STAGGER_ITEM: Variants = {
-  initial: { opacity: 0, y: 14 },
+  initial: { opacity: 0, y: 8 },
   animate: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.45, ease: EASE_GENTLE },
+    transition: { duration: 0.25, ease: EASE_GENTLE },
   },
 };
 

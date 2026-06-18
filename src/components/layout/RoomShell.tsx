@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState, useRef, type ReactNode } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { ROOMS } from '@/lib/constants/rooms';
 import { useAudio } from '@/components/providers/AudioProvider';
 import { useUser } from '@/components/providers/UserProvider';
@@ -140,10 +141,13 @@ export default function RoomShell({ children }: RoomShellProps) {
         className="fixed inset-0 z-0 pointer-events-none transition-opacity duration-300"
         style={{ opacity: opacity }}
       >
-        <img
+        <Image
           src={selectedPainting.file}
           alt={selectedPainting.name}
-          className="w-full h-full object-cover"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
         />
       </div>
 

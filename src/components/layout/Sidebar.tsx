@@ -116,7 +116,7 @@ export default function Sidebar() {
             style={{ borderColor: 'var(--border-default)', minHeight: 64 }}
           >
             <img 
-              src="/logo.png" 
+              src="/icons/icon-192x192.png" 
               alt="Pravah Logo" 
               className="w-8 h-8 object-contain rounded-lg flex-shrink-0" 
               style={{ boxShadow: '0 2px 12px rgba(196,135,58,0.25)' }}
