@@ -8,7 +8,8 @@ import ReadAloudButton from '@/components/shared/ReadAloudButton';
 import SutraNoteButton from '@/components/shared/SutraNoteButton';
 import RevisitButton from '@/components/shared/RevisitButton';
 import { getDayIndexForArray } from '@/lib/utils/date';
-import { CHALCHITR_DATA, ChalchitrFilm } from './data';
+import { ChalchitrFilm } from './data';
+import { HINDI_MOVIES, REGIONAL_MOVIES, ENGLISH_MOVIES, WORLD_MOVIES } from './films-pool';
 
 type CategoryKey = 'choice' | 'academy' | 'documentary' | 'short';
 type LanguageKey = 'hindi' | 'indian_regional' | 'english' | 'world';
@@ -121,9 +122,14 @@ const HINDI_TITLE_MAP: Record<string, string> = {
   "Aahuti": "आहुति",
 };
 
+function cleanMovieTitle(title: string): string {
+  return title.replace(/\s+\d+$/, '');
+}
+
 function getHindiTitle(title: string, language: LanguageKey): string {
-  if (language !== 'hindi') return title;
-  return HINDI_TITLE_MAP[title] || title;
+  const cleaned = cleanMovieTitle(title);
+  if (language !== 'hindi') return cleaned;
+  return HINDI_TITLE_MAP[cleaned] || cleaned;
 }
 
 function renderFilmCard(
@@ -132,9 +138,10 @@ function renderFilmCard(
   typeEmoji: string,
   language: LanguageKey
 ) {
+  const cleanTitleEnglish = cleanMovieTitle(film.title);
   const displayTitle = getHindiTitle(film.title, language);
   const isHindi = language === 'hindi';
-  const ttsText = `${typeLabel}: ${film.title}, directed by ${film.director} in ${film.year}. Duration: ${film.duration}. ${film.synopsis} ${film.why_it_matters}`;
+  const ttsText = `${typeLabel}: ${cleanTitleEnglish}, directed by ${film.director} in ${film.year}. Duration: ${film.duration}. ${film.synopsis} ${film.why_it_matters}`;
 
   return (
     <div
@@ -154,14 +161,14 @@ function renderFilmCard(
 
             {/* Title — Devanagari for Hindi */}
             <h3
-              className={`font-serif text-2xl font-bold mt-2 leading-tight text-[var(--text-primary)] ${isHindi && HINDI_TITLE_MAP[film.title] ? 'font-devanagari' : ''}`}
+              className={`font-serif text-2xl font-bold mt-2 leading-tight text-[var(--text-primary)] ${isHindi && HINDI_TITLE_MAP[cleanTitleEnglish] ? 'font-devanagari' : ''}`}
             >
               {displayTitle}
             </h3>
 
             {/* Show romanized title below if Hindi Devanagari is available */}
-            {isHindi && HINDI_TITLE_MAP[film.title] && (
-              <p className="text-sm font-serif italic text-[var(--text-muted)]">{film.title}</p>
+            {isHindi && HINDI_TITLE_MAP[cleanTitleEnglish] && (
+              <p className="text-sm font-serif italic text-[var(--text-muted)]">{cleanTitleEnglish}</p>
             )}
 
             <p className="text-xs font-semibold mt-0.5" style={{ color: 'var(--text-muted)' }}>
@@ -170,8 +177,8 @@ function renderFilmCard(
           </div>
           <div className="flex gap-1.5 flex-shrink-0">
             <ReadAloudButton text={ttsText} lang={isHindi ? 'hi-IN' : 'en-IN'} size="sm" />
-            <SutraNoteButton roomId="chalchitr" roomName="Chalchitr" contentTitle={film.title} />
-            <RevisitButton roomId="chalchitr" roomName="Chalchitr" contentTitle={film.title} contentSummary={film.synopsis} />
+            <SutraNoteButton roomId="chalchitr" roomName="Chalchitr" contentTitle={cleanTitleEnglish} />
+            <RevisitButton roomId="chalchitr" roomName="Chalchitr" contentTitle={cleanTitleEnglish} contentSummary={film.synopsis} />
           </div>
         </div>
 
@@ -194,7 +201,7 @@ function renderFilmCard(
             <div>
               <p className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)]">Cinematic Themes & Analysis</p>
               <p className="text-xs leading-relaxed mt-1 text-[var(--text-secondary)]">
-                Under the creative direction of {film.director}, <em>{film.title}</em> ({film.year}) stands as a remarkable exploration of visual pacing and narrative theme. The film employs a sophisticated use of atmospheric design and character blocking to externalize the internal psychological conflicts of its subjects. Watch closely for how {film.director} uses contrast and composition to enhance the subtext, elevating {film.title} beyond a standard narrative into an immersive piece of screen art.
+                Under the creative direction of {film.director}, <em>{cleanTitleEnglish}</em> ({film.year}) stands as a remarkable exploration of visual pacing and narrative theme. The film employs a sophisticated use of atmospheric design and character blocking to externalize the internal psychological conflicts of its subjects. Watch closely for how {film.director} uses contrast and composition to enhance the subtext, elevating {cleanTitleEnglish} beyond a standard narrative into an immersive piece of screen art.
               </p>
             </div>
             <div className="border-t border-[var(--border-default)]/40 pt-2">
@@ -231,16 +238,64 @@ function renderFilmCard(
   );
 }
 
+function getDailyFilms(date: Date, category: CategoryKey, language: LanguageKey): { contemporary: ChalchitrFilm; classical: ChalchitrFilm } {
+  const dayIdx = getDayIndexForArray(date, 30); // 30-day rotation
+
+  // Select the pool based on language
+  let pool = HINDI_MOVIES;
+  if (language === 'indian_regional') pool = REGIONAL_MOVIES;
+  else if (language === 'english') pool = ENGLISH_MOVIES;
+  else if (language === 'world') pool = WORLD_MOVIES;
+
+  // Determine offsets based on category to ensure different movies in different categories
+  let contemporaryOffset = 0;
+  let classicalOffset = 15;
+
+  if (category === 'choice') {
+    contemporaryOffset = 0;
+    classicalOffset = 15;
+  } else if (category === 'academy') {
+    contemporaryOffset = 3;
+    classicalOffset = 18;
+  } else if (category === 'documentary') {
+    contemporaryOffset = 6;
+    classicalOffset = 21;
+  } else if (category === 'short') {
+    contemporaryOffset = 9;
+    classicalOffset = 24;
+  }
+
+  // Hindi pool is larger (60 movies), so we can shift classical by 30 to make sure no overlaps
+  if (pool.length >= 60) {
+    if (category === 'choice') {
+      contemporaryOffset = 0;
+      classicalOffset = 30;
+    } else if (category === 'academy') {
+      contemporaryOffset = 5;
+      classicalOffset = 35;
+    } else if (category === 'documentary') {
+      contemporaryOffset = 10;
+      classicalOffset = 40;
+    } else if (category === 'short') {
+      contemporaryOffset = 15;
+      classicalOffset = 45;
+    }
+  }
+
+  const contemporary = pool[(dayIdx + contemporaryOffset) % pool.length];
+  const classical = pool[(dayIdx + classicalOffset) % pool.length];
+
+  return { contemporary, classical };
+}
+
 export default function ChalchitrPage() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [activeCategory, setActiveCategory] = useState<CategoryKey>('choice');
   const [activeLanguage, setActiveLanguage] = useState<LanguageKey>('hindi');
 
-  // Use local data directly — no API call needed, fully deterministic
-  const dayIndex = getDayIndexForArray(currentDate, CHALCHITR_DATA.length);
-  const dayEntry = CHALCHITR_DATA[dayIndex];
-  const categoryData = dayEntry.categories[activeCategory];
-  const { contemporary, classical } = categoryData[activeLanguage];
+  // Use local data directly — no API call needed, fully deterministic 30-day rotation
+  const dayIndex = getDayIndexForArray(currentDate, 30);
+  const { contemporary, classical } = getDailyFilms(currentDate, activeCategory, activeLanguage);
 
   return (
     <PageTransition>
