@@ -186,7 +186,14 @@ export default function RiyazPage() {
                         </div>
                         
                         <div>
-                          <h3 className="font-serif text-lg font-bold text-[var(--text-primary)]">{song.title}</h3>
+                          {activeSubTab === 'bharat' && song.titleRoman ? (
+                            <div className="mb-1">
+                              <h3 className="font-serif text-lg font-bold text-[var(--text-primary)]">{song.title}</h3>
+                              <p className="text-xs text-[var(--text-muted)] opacity-70">{song.titleRoman}</p>
+                            </div>
+                          ) : (
+                            <h3 className="font-serif text-lg font-bold text-[var(--text-primary)]">{song.title}</h3>
+                          )}
                           <p className="text-xs" style={{ color: SAFFRON }}>{song.artist}</p>
                           {song.album && (
                             <p className="text-[10px] text-[var(--text-muted)] mt-1 font-mono">
