@@ -14,6 +14,7 @@ import { Copy, Check, Heart, BookOpen, ChevronDown } from 'lucide-react';
 import { db } from '@/lib/firebase/client';
 import { doc, setDoc, deleteDoc, collection, onSnapshot, getDoc } from 'firebase/firestore';
 import { useAuth } from '@/lib/hooks/useAuth';
+import { useUser } from '@/components/providers/UserProvider';
 import FocusMode from '@/components/shared/FocusMode';
 import { Poem, KavitalayDayEntry } from './data';
 import { HINDI_POEMS, URDU_POEMS, ENGLISH_POEMS, WORLD_POEMS } from './poems-pool';
@@ -23,6 +24,7 @@ type EraFilter = 'all' | 'modern' | 'classical';
 
 export default function KavitalayPage() {
   const { user } = useAuth();
+  const { preferences } = useUser();
   
   // Persistent states per session (localStorage)
   const [script, setScript] = useState<Script>('hi');
@@ -34,12 +36,14 @@ export default function KavitalayPage() {
     const savedScript = localStorage.getItem('kavitalay_script') as Script;
     if (savedScript && ['hi', 'roman', 'en'].includes(savedScript)) {
       setScript(savedScript);
+    } else if (preferences?.script) {
+      setScript(preferences.script === 'devanagari' ? 'hi' : 'roman');
     }
     const savedEra = localStorage.getItem('kavitalay_era_filter') as EraFilter;
     if (savedEra && ['all', 'modern', 'classical'].includes(savedEra)) {
       setEraFilter(savedEra);
     }
-  }, []);
+  }, [preferences?.script]);
 
   const handleScriptChange = (s: Script) => {
     setScript(s);

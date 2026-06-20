@@ -204,7 +204,7 @@ const DAILY_THREADS: { en: string; hi: string }[] = [
 ];
 
 export default function AarambhPage() {
-  const { user } = useUser();
+  const { user, preferences } = useUser();
   const [unlockedLettersCount, setUnlockedLettersCount] = useState(0);
 
   useEffect(() => {
@@ -233,6 +233,13 @@ export default function AarambhPage() {
   const [glowVisible, setGlowVisible] = useState(false);
   const [showBreathing, setShowBreathing] = useState(false);
   const [script, setScript] = useState<'devanagari' | 'roman'>('devanagari');
+
+  useEffect(() => {
+    if (preferences?.script) {
+      setScript(preferences.script);
+    }
+  }, [preferences?.script]);
+
 
   // Evening detection: true after 18:00 IST
   const isEvening = typeof window !== 'undefined' ? new Date().getHours() >= 18 : false;

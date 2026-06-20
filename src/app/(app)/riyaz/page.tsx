@@ -9,6 +9,7 @@ import ReadAloudButton from '@/components/shared/ReadAloudButton';
 import SutraNoteButton from '@/components/shared/SutraNoteButton';
 import RevisitButton from '@/components/shared/RevisitButton';
 import { getDayIndex, getWeeklyIndex, getDayIndexForArray } from '@/lib/utils/date';
+import { useUser } from '@/components/providers/UserProvider';
 import { RIYAZ_DATA, type RiyazDayEntry } from './data';
 import {
   BHARAT_SONGS,
@@ -29,6 +30,7 @@ type SongsSubTab = 'bharat' | 'english' | 'world';
 const SAFFRON = '#C4873A';
 
 export default function RiyazPage() {
+  const { preferences } = useUser();
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [activeTab, setActiveTab] = useState<RiyazTab>('songs');
   const [activeSubTab, setActiveSubTab] = useState<SongsSubTab>('bharat');
@@ -187,10 +189,17 @@ export default function RiyazPage() {
                         
                         <div>
                           {activeSubTab === 'bharat' && song.titleRoman ? (
-                            <div className="mb-1">
-                              <h3 className="font-serif text-lg font-bold text-[var(--text-primary)]">{song.title}</h3>
-                              <p className="text-xs text-[var(--text-muted)] opacity-70">{song.titleRoman}</p>
-                            </div>
+                            preferences?.script === 'roman' ? (
+                              <div className="mb-1">
+                                <h3 className="font-serif text-lg font-bold text-[var(--text-primary)]">{song.titleRoman}</h3>
+                                <p className="text-xs text-[var(--text-muted)] opacity-70">{song.title}</p>
+                              </div>
+                            ) : (
+                              <div className="mb-1">
+                                <h3 className="font-serif text-lg font-bold text-[var(--text-primary)]">{song.title}</h3>
+                                <p className="text-xs text-[var(--text-muted)] opacity-70">{song.titleRoman}</p>
+                              </div>
+                            )
                           ) : (
                             <h3 className="font-serif text-lg font-bold text-[var(--text-primary)]">{song.title}</h3>
                           )}

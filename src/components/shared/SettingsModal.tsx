@@ -487,33 +487,6 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                   </div>
                 </div>
 
-                {/* Language Selector */}
-                <div className="space-y-1.5">
-                  <div className="flex justify-between text-xs">
-                    <span style={{ color: 'var(--text-secondary)' }}>Default Translation Language</span>
-                  </div>
-                  <div className="grid grid-cols-3 gap-2">
-                    {(['en', 'hi', 'ur'] as const).map(lang => {
-                      const labels = { en: 'English', hi: 'Hindi', ur: 'Urdu' };
-                      const isActive = preferences.defaultLang === lang;
-                      return (
-                        <button
-                          key={lang}
-                          onClick={() => updatePreferences({ defaultLang: lang })}
-                          className="px-3 py-2 rounded-xl text-xs transition-all border text-center"
-                          style={{
-                            backgroundColor: isActive ? 'var(--bg-tertiary)' : 'transparent',
-                            borderColor: isActive ? 'var(--accent-saffron)' : 'var(--border-default)',
-                            color: isActive ? 'var(--text-primary)' : 'var(--text-muted)',
-                            fontWeight: isActive ? 600 : 400,
-                          }}
-                        >
-                          {labels[lang]}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
 
                 {/* Theme Selector */}
                 <div className="space-y-1.5 pt-2">
