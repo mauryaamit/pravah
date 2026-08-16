@@ -238,19 +238,27 @@ export default function KavitalayPage() {
     return romanName;
   };
 
-  // Helper to extract lines by language & script rules
+  // Helper to extract lines by language & script rules with complete multi-field fallback
   const getPoemLines = (poem: Poem) => {
     if (poem.language === 'english') {
-      return poem.text_roman ? poem.text_roman.split('\n') : [];
+      const text = poem.text_english || poem.text_roman || '';
+      return text ? text.split('\n') : [];
     }
     if (poem.language === 'other') {
-      return poem.text_english ? poem.text_english.split('\n') : [];
+      const text = poem.text_english || poem.text_roman || poem.text_devanagari || '';
+      return text ? text.split('\n') : [];
     }
     // Hindi & Urdu
     if (script === 'hi') {
-      return poem.text_devanagari ? poem.text_devanagari.split('\n') : [];
+      // Primary: Devanagari, fallback to Roman/English if Devanagari missing or placeholder
+      const primary = poem.text_devanagari && !/\.{4,}/.test(poem.text_devanagari) ? poem.text_devanagari : '';
+      const text = primary || poem.text_roman || poem.text_english || '';
+      return text ? text.split('\n') : [];
     } else {
-      return poem.text_roman ? poem.text_roman.split('\n') : [];
+      // Primary: Roman script, fallback to Devanagari/English if Roman missing or placeholder
+      const primary = poem.text_roman && !/\.{4,}/.test(poem.text_roman) ? poem.text_roman : '';
+      const text = primary || poem.text_devanagari || poem.text_english || '';
+      return text ? text.split('\n') : [];
     }
   };
 

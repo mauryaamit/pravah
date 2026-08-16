@@ -152,7 +152,7 @@ export const HINDI_POEMS: Poem[] = [
       "nature"
     ],
     "text_devanagari": "लहरों से डरकर नौका पार नहीं होती,\nकोशिश करने वालों की कभी हार नहीं होती।\n\nनन्हीं चींटी जब दाना लेकर चलती है,\nचढ़ती दीवारों पर, सौ बार फिसलती है।",
-    "text_roman": "............... ...... ............ ............ ......... ............ ............,\n............... ............ ............... ...... ......... ......... ............ ...............\n\n.................. ............... ...... ............ ............ ............ ......,\n............... ..................... ......, ...... ......... .................. ........."
+    "text_roman": "Lahron se darkar nauka paar nahin hoti,\nKoshish karne walon ki kabhi haar nahin hoti.\n\nNanhin cheenti jab daana lekar chalti hai,\nChadhti deewaron par, sau baar fisalti hai."
   },
   {
     "id": "hindi-9",
@@ -171,7 +171,7 @@ export const HINDI_POEMS: Poem[] = [
       "nature"
     ],
     "text_devanagari": "सच है, विपत्ति जब आती है,\nकायर को ही दहलाती है,\nसूरमा नहीं विचलित होते,\nक्षण एक नहीं धीरज खोते।",
-    "text_roman": "...... ......, ..................... ...... ......... ......,\n............ ...... ...... .................. ......,\n............... ............ .................. ............,\n............ ...... ............ ............ ..............."
+    "text_roman": "Sach hai, vipatti jab aati hai,\nKaayar ko hi dehlaati hai,\nSoorma nahi vichlit hote,\nKshan ek nahi dheeraj khote."
   },
   {
     "id": "hindi-10",
@@ -190,7 +190,7 @@ export const HINDI_POEMS: Poem[] = [
       "nature"
     ],
     "text_devanagari": "नारी! तुम केवल श्रद्धा हो\nविश्वास-रजत-नग पगतल में,\nपियूष-स्रोत सी बहा करो\nजीवन के सुंदर समतल में।",
-    "text_roman": "............! ......... ............ ..................... ......\n.....................-.........-...... ............ .........,\n...............-............... ...... ......... .........\n............ ...... ............... ............ ............"
+    "text_roman": "Naari! Tum keval shraddha ho\nVishwas-rajat-nag pagtal mein,\nPiyush-srot si baha karo\nJeevan ke sundar samtal mein."
   },
   {
     "id": "hindi-11",
@@ -209,7 +209,7 @@ export const HINDI_POEMS: Poem[] = [
       "nature"
     ],
     "text_devanagari": "रघुकुल रीति सदा चलि आई।\nप्राण जाहु बरु बचनु न जाई।\n\nधीर धरहु जनि करहु बिषादा।\nहरि इच्छा सब पूरहिं कामा।",
-    "text_roman": ".................. ............ ......... ......... .........\n............... ............ ......... ............ ... ............\n\n......... ............ ......... ............ .....................\n......... ............... ...... .................. ..............."
+    "text_roman": "Raghukul reeti sada chali aayi.\nPraan jaahu baru bachanu na jaayi.\n\nDheer dharahu jani karahu bishaada.\nHari ichchha sab poorahin kaama."
   },
   {
     "id": "hindi-12",
@@ -228,7 +228,7 @@ export const HINDI_POEMS: Poem[] = [
       "nature"
     ],
     "text_devanagari": "पोथी पढ़ि पढ़ि जग मुआ, पंडित भया न कोइ,\nढाई आखर प्रेम का, पढ़े सो पंडित होइ।\n\nकबीरा खड़ा बाज़ार में, मांगे सबकी खैर,\nना काहू से दोस्ती, ना काहू से बैर।",
-    "text_roman": "............ ............ ............ ...... ........., ............... ......... ... .........,\n......... ......... ............... ......, ............ ...... ............... ............\n\n............... ............ .................. ........., ............... ............ .........,\n...... ............ ...... .................., ...... ............ ...... ............"
+    "text_roman": "Pothi padhi padhi jag mua, pandit bhaya na koi,\nDhai aakhar prem ka, padhe so pandit hoi.\n\nKabira khada bazaar mein, mange sabki khair,\nNa kahu se dosti, na kahu se bair."
   },
   {
     "id": "hindi-13",
@@ -247,7 +247,7 @@ export const HINDI_POEMS: Poem[] = [
       "nature"
     ],
     "text_devanagari": "हरि तुम हरो जन की भीर।\nद्रोपदी की लाज राखी, तुम बढ़ायो चीर।\n\nभक्त कारन रूप नरहरि, धरयो आप सरीर।",
-    "text_roman": "......... ......... ......... ...... ...... ............\n..................... ...... ......... ............, ......... .................. ............\n\n............ ............ ......... ..............., ............ ...... ..............."
+    "text_roman": "Hari tum haro jan ki bheer.\nDropadi ki laaj raakhi, tum badhaayo cheer.\n\nBhakt kaaran roop Narhari, dharyo aap sareer."
   },
   {
     "id": "hindi-14",
@@ -266,7 +266,7 @@ export const HINDI_POEMS: Poem[] = [
       "nature"
     ],
     "text_devanagari": "रहिमन धागा प्रेम का, मत तोड़ो चटकाय,\nटूटे से फिर ना मिले, मिले गाँठ परि जाय।\n\nरहिमन वे नर मर चुके, जे कहूं मांगन जाहिं।",
-    "text_roman": "............... ............ ............... ......, ...... ............... ...............,\n............ ...... ......... ...... ............, ............ ............ ......... ............\n\n............... ...... ...... ...... ............, ...... ............ ............... .................."
+    "text_roman": "Rahiman dhaaga prem ka mat todo chatkaaye\nToote se phir na jude, jude gaanth pari jaaye\n\nRahiman paani raakhiye, bin paani sab soon\nPaani gaye na oobare, moti maanoos choon"
   },
   {
     "id": "hindi-15",
@@ -285,7 +285,7 @@ export const HINDI_POEMS: Poem[] = [
       "nature"
     ],
     "text_devanagari": "इस शहर में वसंत अचानक आता है\nऔर जब आता है तो मैंने देखा है\nलहरतारा या मडुआडीह की तरफ से\nउठता है धूल का एक बवंडर।",
-    "text_roman": "...... ......... ......... ............ ............... ......... ......\n...... ...... ......... ...... ...... ............... ............ ......\n..................... ...... ..................... ...... ......... ......\n............ ...... ......... ...... ...... .................."
+    "text_roman": "Banaras mein shaam dhal rahi hai\nAur ganga ki leharon par deep jal rahe hain\n\nShehar dheere dheere khulta hai aur dheere dheere band hota hai"
   },
   {
     "id": "hindi-16",
@@ -304,7 +304,7 @@ export const HINDI_POEMS: Poem[] = [
       "nature"
     ],
     "text_devanagari": "विचार लो कि मर्त्य हो न मृत्यु से डरो कभी,\nमरो परंतु यों मरो कि याद जो करें सभी।\n\nवही मनुष्य है कि जो मनुष्य के लिए मरे।",
-    "text_roman": "............... ...... ...... .................. ...... ... .................. ...... ......... .........,\n......... ............... ......... ......... ...... ......... ...... ............ ............\n\n......... .................. ...... ...... ...... .................. ...... ......... ............"
+    "text_roman": "Vicharo ki matya ho na mrityu se daro kabhi\nMaro parantu yu maro ki yaad jo kare sabhi\n\nHuyi na yu sumrityu to vritha mare vritha jiye"
   },
   {
     "id": "hindi-17",
@@ -323,7 +323,7 @@ export const HINDI_POEMS: Poem[] = [
       "nature"
     ],
     "text_devanagari": "सखि, वे मुझसे कहकर जाते,\nकह, क्या वे अपनी पथ-बाधा ही पाते?\n\nमुझको बहुत उन्होंने माना,\nफिर भी क्या पूरा पहचाना?",
-    "text_roman": "........., ...... ............... ............ ............,\n......, ............ ...... ............ ......-............ ...... ............?\n\n............... ............ ........................ ............,\n......... ...... ............ ............ ..................?"
+    "text_roman": "Dono or prem palta hai\nSakhi patang bhi jalta hai aur deepak bhi jalta hai\n\nSheetalata milti hai tabhi jab tyaag ka bhav sajta hai"
   },
   {
     "id": "hindi-18",
@@ -342,7 +342,7 @@ export const HINDI_POEMS: Poem[] = [
       "nature"
     ],
     "text_devanagari": "जी हाँ हुज़ूर, मैं गीत बेचता हूँ,\nमैं तरह-तरह के गीत बेचता हूँ;\nजी, माल देखिये दाम बताऊँगा,\nबेकाम नहीं है, काम बताऊँगा।",
-    "text_roman": "...... ......... .................., ......... ......... ............... .........,\n......... .........-......... ...... ......... ............... .........;\n......, ......... .................. ......... .....................,\n............... ............ ......, ......... ........................"
+    "text_roman": "Ji haan huzoor main geet bechta hoon\nMain tarah tarah ke geet bechta hoon\n\nYeh geet subah ka hai, yeh geet shaam ka hai"
   },
   {
     "id": "hindi-19",
@@ -361,7 +361,7 @@ export const HINDI_POEMS: Poem[] = [
       "nature"
     ],
     "text_devanagari": "धन्य मैं पिता निरर्थक था,\nकुछ भी न कर सका तेरे हित,\nअर्थोपार्जन का जो साधन,\nवह भी न कर सका मैं संचित।",
-    "text_roman": "............ ......... ............ ..................... ......,\n......... ...... ... ...... ......... ............ .........,\n................................. ...... ...... ............,\n...... ...... ... ...... ......... ......... .................."
+    "text_roman": "Dukh hi jeevan ki katha rahi\nKya kahoon aaj jo nahi kahi\n\nSaroj mere hriday ki dharohar thi, jise kaal ne cheen liya"
   },
   {
     "id": "hindi-20",
@@ -380,7 +380,7 @@ export const HINDI_POEMS: Poem[] = [
       "nature"
     ],
     "text_devanagari": "प्रतिक्षण नूतन वेश बनाकर रंग-बिरंग निराला,\nरवि के सम्मुख थिरक रही है नभ में वारिद-माला।\n\nनीचे नील समुद्र मनोहर, ऊपर नील गगन है।\nमुक्त रूप से विचरूँ इस पर, यही चाहता मन है।",
-    "text_roman": "........................... ............ ......... ............... .........-............... ..................,\n......... ...... .................. ............ ......... ...... ...... ......... ...............-...............\n\n............ ......... .................. ..............., ......... ......... ......... .........\n............... ......... ...... .................. ...... ......, ......... ............... ...... ........."
+    "text_roman": "Pratikshan nootan vesh bana kar rang-birang niraala\nRavi ke sammukh thirak rahi hai nabh mein vaarid-maala"
   },
   {
     "id": "hindi-21",
@@ -399,7 +399,7 @@ export const HINDI_POEMS: Poem[] = [
       "nature"
     ],
     "text_devanagari": "आ रही हिमालय से पुकार,\nहै उदधि गरजता बार-बार,\nप्राची पश्चिम भू नभ अपार,\nसब पूछ रहे हैं दिग-दिगंत - वीरों का कैसा हो वसंत?",
-    "text_roman": "... ......... .................. ...... ...............,\n...... ............ ............... .........-.........,\n.................. .................. ...... ...... ............,\n...... ......... ......... ......... .........-............... - ............... ...... ............ ...... ............?"
+    "text_roman": "Aa rahi himalaya se pukaar\nHai udadhi garajta baar-baar\nPrachi pashchim bhoo nabh apaar\nSab pooch rahe hain dig-digant - Veeron ka kaisa ho vasant?"
   },
   {
     "id": "hindi-22",
@@ -418,7 +418,7 @@ export const HINDI_POEMS: Poem[] = [
       "nature"
     ],
     "text_devanagari": "जिसको न निज गौरव तथा निज देश का अभिमान है,\nवह नर नहीं, नर-पशु निरा है, और मृतक समान है।\n\nदेश की माटी, देश का जल, हवा देश की, देश का फल।",
-    "text_roman": "............... ... ......... ............ ......... ......... ......... ...... .................. ......,\n...... ...... ............, ......-......... ............ ......, ...... ............ ............ .........\n\n......... ...... ............, ......... ...... ......, ......... ......... ......, ......... ...... ........."
+    "text_roman": "Jisko na nij gaurav tatha nij desh ka abhimaan hai\nWah nar nahi, nar-pashu nira hai, aur mritak samaan hai\n\nDesh ki maati, desh ka jal, hawa desh ki, desh ka phal"
   },
   {
     "id": "hindi-23",
@@ -437,7 +437,7 @@ export const HINDI_POEMS: Poem[] = [
       "nature"
     ],
     "text_devanagari": "क्षमा शोभती उस भुजंग को जिसके पास गरल हो,\nउसको क्या जो दंतहीन, विषरहित, विनीत, सरल हो।\n\nतीन दिवस तक पंथ मांगते रघुपति सिंधु किनारे।",
-    "text_roman": "............... ............... ...... ............... ...... ............... ......... ......... ......,\n............ ............ ...... .................., ....................., ..............., ......... .........\n\n......... ............ ...... ......... .................. .................. ............... ....................."
+    "text_roman": "Kshama shobhti us bhujang ko jiske paas garal ho\nUsko kya jo dantaheen, vishrahit, vineet, saral ho\n\nTeen diwas tak panth maangte raghupati sindhu kinaare"
   },
   {
     "id": "hindi-24",
@@ -456,7 +456,7 @@ export const HINDI_POEMS: Poem[] = [
       "nature"
     ],
     "text_devanagari": "समरस थे जड़ या चेतन,\nसुन्दर साकार बना था,\nचेतनता एक विलसती,\nआनन्द अखण्ड घना था।",
-    "text_roman": "............ ...... ......... ...... ............,\n.................. ............... ......... ......,\n.................. ...... ..................,\n............... ............... ......... ........."
+    "text_roman": "Samras the jad ya chetan\nSundar saakaar bana tha\nChetanta ek vilastee\nAanand akhand ghana tha"
   },
   {
     "id": "hindi-25",
@@ -475,7 +475,7 @@ export const HINDI_POEMS: Poem[] = [
       "nature"
     ],
     "text_devanagari": "मार्ग प्रेम को को समझे हरिचन्द यथारथ होत यथा है।\nलाभ कछू न पुकारन में बदनाम ही होन की सारी कथा है।",
-    "text_roman": "............... ............... ...... ...... ............ ..................... ............... ......... ......... .........\n......... ......... ... .................. ......... ............... ...... ......... ...... ............ ......... ........."
+    "text_roman": "Maarg prem ko ko samujhai harichand yathaarath hot yatha hai\nLaabhan kachhu na pukan mein karanaam buraai hiran ki katha hai"
   },
   {
     "id": "hindi-26",
@@ -494,7 +494,7 @@ export const HINDI_POEMS: Poem[] = [
       "nature"
     ],
     "text_devanagari": "मैय्या मोरी मैं नहीं माखन खायो।\nख्याल परै ये सखा सबै मिलि मेरे मुख लपटायो।\n\nदेखि तुही छीके पर भाजन, मैं छोटा कर पायो।",
-    "text_roman": ".................. ............ ......... ............ ............ ...............\n............... ......... ...... ......... ......... ............ ............ ......... .....................\n\n............ ............ ............ ...... ............, ......... ............ ...... ..............."
+    "text_roman": "Maiya kabahi badhegi choti\nKiti baar mohi doodh piyat bhai, yeh ajahu hai chhoti\n\nSoordas prabhu shyam manohar, roop sundarati moti"
   },
   {
     "id": "hindi-27",
@@ -513,7 +513,7 @@ export const HINDI_POEMS: Poem[] = [
       "nature"
     ],
     "text_devanagari": "झीनी झीनी बीनी चदरिया।\nकाहे कै ताना, काहे कै भरनी, कौन तार से बीनी चदरिया।\n\nइड़ा पिंगला ताना भरनी, सुषमन तार से बीनी चदरिया।",
-    "text_roman": "............ ............ ............ .....................\n............ ...... ............, ............ ...... ............, ......... ......... ...... ............ .....................\n\n............ .................. ............ ............, ............... ......... ...... ............ ....................."
+    "text_roman": "Jheeni jheeni beeni chadariya\nKaahe ke tana kaahe ke bharni, kaun taar se beeni chadariya\n\nDas Kabir jatan se odhi, jyon ki tyon dhar deeni chadariya"
   },
   {
     "id": "hindi-28",
@@ -532,7 +532,7 @@ export const HINDI_POEMS: Poem[] = [
       "nature"
     ],
     "text_devanagari": "कनक कनक ते सौ गुनी, मादकता अधिकाय।\nउही खाये बौराये जग, इही पाये बौराये।\n\nबतरस लालच लाल की, मुरली धरी लुकाय।",
-    "text_roman": "......... ......... ...... ...... ............, .................. .....................\n......... ............ .................. ......, ......... ............ .....................\n\n............ ............ ......... ......, ............... ......... .................."
+    "text_roman": "Meri bhavbaadha haro Radha Naagari soi\nJa tan ki jhaain pare shyaam harit duti hoi\n\nKanak kanak te sau guni maadakta adhikaay"
   },
   {
     "id": "hindi-29",
@@ -551,7 +551,7 @@ export const HINDI_POEMS: Poem[] = [
       "nature"
     ],
     "text_devanagari": "भेजे मनभावन के ऊधौ के आवन की,\nसुधि ब्रजगावनि में पावनि जबै लगीं।",
-    "text_roman": "............ .................. ...... ......... ...... ......... ......,\n............ ........................... ......... ............... ......... ..............."
+    "text_roman": "Nikasi kamandal te shubhra sheetal dhaar\nGanga aavati heeyan haran sankat apaar"
   },
   {
     "id": "hindi-30",
@@ -570,7 +570,7 @@ export const HINDI_POEMS: Poem[] = [
       "nature"
     ],
     "text_devanagari": "यह महान दृश्य है,\nचल रहा मनुष्य है,\nअश्रु-स्वेद-रक्त से लथपथ, लथपथ, लथपथ!\nअग्निपथ! अग्निपथ! अग्निपथ!",
-    "text_roman": "...... ............ ............... ......,\n...... ......... .................. ......,\n...............-...............-............ ...... ............, ............, ............!\n.....................! .....................! .....................!"
+    "text_roman": "Agneepath, agneepath, agneepath\nVriksh hon bhale khade hon ghane hon bade\nEk patr chaanv bhi maang mat maang mat\nAgneepath, agneepath, agneepath"
   }
 ];
 
@@ -649,7 +649,7 @@ export const URDU_POEMS: Poem[] = [
       "ghazal"
     ],
     "text_devanagari": "मुझसे पहली सी मोहब्बत मेरे महबूब न माँग।\nमैंने समझा था कि तू है तो दरख़्शाँ है हयात,\nतेरा ग़म है तो ग़म-ए-दहर का झगड़ा क्या है।",
-    "text_roman": "............... ............ ...... ..................... ............ ............... ... ...............\n............... ............ ...... ...... ...... ...... ...... ........................ ...... ............,\n............ ......... ...... ...... .........-...-......... ...... ............... ............ ........."
+    "text_roman": "Mujhse pehli si mohabbat mere mehboob na maang\nMaine samjha tha ki tu hai to darakhshaan hai hayaat\nTera gham hai to gham-e-dahar ka jhagda kya hai"
   },
   {
     "id": "urdu-5",
@@ -668,7 +668,7 @@ export const URDU_POEMS: Poem[] = [
       "ghazal"
     ],
     "text_devanagari": "बोल कि लब आज़ाद हैं तेरे,\nबोल ज़बाँ अब तक तेरी है,\nतेरा सुतवाँ जिस्म है तेरा, बोल कि जाँ अब तक तेरी है।",
-    "text_roman": "......... ...... ...... ............... ......... ............,\n......... ............... ...... ...... ............ ......,\n............ .................. ............... ...... ............, ......... ...... ......... ...... ...... ............ ........."
+    "text_roman": "Bol ki lab azaad hain tere\nBol zubaan ab tak teri hai\nTera sutwaan jism hai tera, bol ki jaan ab tak teri hai"
   },
   {
     "id": "urdu-6",
@@ -687,7 +687,7 @@ export const URDU_POEMS: Poem[] = [
       "ghazal"
     ],
     "text_devanagari": "लाज़िम है कि हम भी देखेंगे,\nवो दिन कि जिसका वादा है,\nजो लौह-ए-अज़ल में लिक्खा है, जब ज़ुल्म-ओ-सितम के कोह-ए-गिराँ, रुई की तरह उड़ जाएँगे।",
-    "text_roman": ".................. ...... ...... ...... ...... .....................,\n...... ......... ...... ............... ............ ......,\n...... .........-...-............ ......... .................. ......, ...... ..................-...-............ ...... .........-...-..............., ......... ...... ......... ......... ....................."
+    "text_roman": "Laazim hai ki hum bhi dekhenge\nWo din ki jiska waada hai\nJo lauh-e-azal mein likkha hai, jab zulm-o-sitam ke koh-e-giraan, rui ki tarah ud jaayenge"
   },
   {
     "id": "urdu-7",
@@ -706,7 +706,7 @@ export const URDU_POEMS: Poem[] = [
       "ghazal"
     ],
     "text_devanagari": "सारे जहाँ से अच्छा हिन्दोस्ताँ हमारा\nहम बुलबुलें हैं इसकी ये गुलसिताँ हमारा\n\nमज़हब नहीं सिखाता आपस में बैर रखना।",
-    "text_roman": "............ ............ ...... ............... ................................. ...............\n...... ........................ ......... ............ ...... ........................ ...............\n\n............... ............ .................. ......... ......... ......... ..............."
+    "text_roman": "Saare jahaan se achha hindostaan hamaara\nHum bulbulein hain iski ye gulsitaan hamaara\n\nMazhab nahin sikhaata aapas mein bair rakhna"
   },
   {
     "id": "urdu-8",
@@ -725,7 +725,7 @@ export const URDU_POEMS: Poem[] = [
       "ghazal"
     ],
     "text_devanagari": "लब पे आती है दुआ बनके तमन्ना मेरी\nज़िन्दगी शम्मा की सूरत हो ख़ुदाया मेरी\n\nदूर दुनिया का मेरे दम से अँधेरा हो जाये।",
-    "text_roman": "...... ...... ......... ...... ......... ............ .................. ............\n........................ ............... ...... ............ ...... ..................... ............\n\n......... .................. ...... ............ ...... ...... .................. ...... ..............."
+    "text_roman": "Lab pe aati hai dua ban ke tamanna meri\nZindagi shamma ki soorat ho khudaaya meri\n\nDoor duniya ka mere dam se andhera ho jaaye"
   },
   {
     "id": "urdu-9",
@@ -744,7 +744,7 @@ export const URDU_POEMS: Poem[] = [
       "ghazal"
     ],
     "text_devanagari": "हर एक बात पे कहते हो तुम कि तू क्या है\nतुम्हीं कहो कि ये अंदाज़-ए-गुफ़्तगू क्या है\n\nचिपक रहा है बदन पर लहू से पैराहन।",
-    "text_roman": "...... ...... ......... ...... ............ ...... ......... ...... ...... ............ ......\n..................... ......... ...... ...... ..................-...-........................ ............ ......\n\n............ ......... ...... ......... ...... ......... ...... ....................."
+    "text_roman": "Har ek baat pe kehte ho tum ki tu kya hai\nTumhi kaho ki ye andaaz-e-guftagu kya hai\n\nChipak raha hai badan par lahu se pairahan"
   },
   {
     "id": "urdu-10",
@@ -763,7 +763,7 @@ export const URDU_POEMS: Poem[] = [
       "ghazal"
     ],
     "text_devanagari": "ना किसी की आँख का नूर हूँ, ना किसी के दिल का क़रार हूँ\nजो किसी के काम ना आ सके, मैं वो एक मुश्त-ए-ग़ुबार हूँ\n\nमेरा रंग रूप बिगड़ गया, मेरा यार मुझसे बिछड़ गया।",
-    "text_roman": "...... ............ ...... ......... ...... ......... ........., ...... ............ ...... ......... ...... ............... .........\n...... ............ ...... ......... ...... ... ........., ......... ...... ...... ...............-...-.................. .........\n\n............ ......... ......... ............... ........., ............ ......... ............... ............... ............"
+    "text_roman": "Na kisi ki aankh ka noor hoon, na kisi ke dil ka qaraar hoon\nJo kisi ke kaam na aa sake, main wo ek musht-e-ghubaar hoon"
   },
   {
     "id": "urdu-11",
@@ -782,7 +782,7 @@ export const URDU_POEMS: Poem[] = [
       "ghazal"
     ],
     "text_devanagari": "लगता नहीं है दिल मेरा उजड़े दयार में\nकिसकी बनी है आलम-ए-नापायदार में\n\nउम्र-ए-दराज़ माँग के लाये थे चार दिन।",
-    "text_roman": "............ ............ ...... ......... ............ ............... ............ .........\n............... ......... ...... .........-...-........................ .........\n\n............-...-............... ............ ...... ............ ...... ......... ............"
+    "text_roman": "Lagta nahi hai dil mera ujde dayaar mein\nKiski bani hai aalam-e-naa-paayedaar mein\n\nUmr-e-daraaz maang ke laaye the chaar din"
   },
   {
     "id": "urdu-12",
@@ -801,7 +801,7 @@ export const URDU_POEMS: Poem[] = [
       "ghazal"
     ],
     "text_devanagari": "पत्ता पत्ता बूटा बूटा हाल हमारा जाने है\nजाने न जाने गुल ही न जाने बाग़ तो सारा जाने है\n\nचारेगरी बीमारी-ए-दिल की रस्म-ए-शहरी-ए-हुस्न नहीं।",
-    "text_roman": "............... ............... ............ ............ ......... ............... ............ ......\n............ ... ............ ......... ...... ... ............ ............ ...... ............ ............ ......\n\n..................... ..................-...-......... ...... ............-...-............-...-............... ..............."
+    "text_roman": "Patta patta boota boota haal hamaara jaane hai\nJaane na jaane gul hi na jaane, baagh to saara jaane hai"
   },
   {
     "id": "urdu-13",
@@ -820,7 +820,7 @@ export const URDU_POEMS: Poem[] = [
       "ghazal"
     ],
     "text_devanagari": "हस्ती अपनी हबाब की सी है\nये नुमाइश सराब की सी है\n\nनाज़ुकी उस के लब की क्या कहिए, पंखुड़ी एक गुलाब की सी है।",
-    "text_roman": "............... ............ ............ ...... ...... ......\n...... .................. ............ ...... ...... ......\n\n..................... ...... ...... ...... ...... ............ ............, ..................... ...... ............... ...... ...... ........."
+    "text_roman": "Hasti apni habaab ki si hai\nYe numaayish saraab ki si hai\n\nNaazuki uske lab ki kya kahiye, pankhudi ek gulaab ki si hai"
   },
   {
     "id": "urdu-14",
@@ -839,7 +839,7 @@ export const URDU_POEMS: Poem[] = [
       "ghazal"
     ],
     "text_devanagari": "कभी कभी मेरे दिल में ख़याल आता है\nकि जैसे तुझको बनाया गया है मेरे लिए\n\nतू अब से पहले सितारों में बस रही थी कहीं।",
-    "text_roman": "......... ......... ............ ......... ......... ............... ......... ......\n...... ............ ............... ............... ......... ...... ............ .........\n\n...... ...... ...... ............ ..................... ......... ...... ......... ...... ..............."
+    "text_roman": "Kabhi kabhi mere dil mein khayaal aata hai\nKi jaise tujhko banaya gaya hai mere liye\n\nTu ab se pehle sitaron mein bas rahi thi kahin"
   },
   {
     "id": "urdu-15",
@@ -858,7 +858,7 @@ export const URDU_POEMS: Poem[] = [
       "ghazal"
     ],
     "text_devanagari": "ताज तेरे लिए इक महज़र-ए-उल्फ़त ही सही\nतुझको इस वादी-ए-रंगीं से अक़ीदत ही सही\n\nइक शहंशाह ने दौलत का सहारा लेकर, हम ग़रीबों की मोहब्बत का उड़ाया है मज़ाक़।",
-    "text_roman": "......... ............ ......... ...... ...............-...-.................. ...... .........\n............... ...... ............-...-............... ...... .................. ...... .........\n\n...... .................. ...... ............ ...... ............... ............, ...... ..................... ...... ..................... ...... .................. ...... ....................."
+    "text_roman": "Ek shahenshah ne daulat ka sahaara le kar\nHum ghareebon ki mohabbat ka udaaya hai mazaaq\n\nMeri mehboob kahin aur mila kar mujhse"
   },
   {
     "id": "urdu-16",
@@ -877,7 +877,7 @@ export const URDU_POEMS: Poem[] = [
       "ghazal"
     ],
     "text_devanagari": "उज़्र आने में भी है और बुलाते भी नहीं\nबज़्म में अपने बुलाते हैं बिठाते भी नहीं\n\nग़ैर से खेलने का ज़िक्र ही क्या है प्यारे।",
-    "text_roman": "............... ......... ......... ...... ...... ...... .................. ...... ............\n............... ......... ............ .................. ......... .................. ...... ............\n\n............ ...... ............... ...... .................. ...... ............ ...... ....................."
+    "text_roman": "Uzr aane mein bhi hai aur bulaate bhi nahin\nBaaes-e-tark-e-mulaaqaat bataate bhi nahin\n\nKhoob parda hai ki chilman se lage baithe hain"
   },
   {
     "id": "urdu-17",
@@ -896,7 +896,7 @@ export const URDU_POEMS: Poem[] = [
       "ghazal"
     ],
     "text_devanagari": "हमको मिटा सके ये ज़माने में दम नहीं\nहमसे ज़माना ख़ुद है ज़माने से हम नहीं।",
-    "text_roman": "............ ............ ......... ...... .................. ......... ...... ............\n............ .................. ............ ...... .................. ...... ...... ..............."
+    "text_roman": "Humko mita sake ye zamaane mein dam nahin\nHumse zamaana khud hai zamaane se hum nahin"
   },
   {
     "id": "urdu-18",
@@ -915,7 +915,7 @@ export const URDU_POEMS: Poem[] = [
       "ghazal"
     ],
     "text_devanagari": "शायद मुझे किसी से मोहब्बत नहीं हुई\nलेकिन यक़ीन सबको दिलाता रहा हूँ मैं\n\nये ज़हर मेरे हलक़ में किसने उड़ेल दिया।",
-    "text_roman": "............ ............ ............ ...... ..................... ............ .........\n............... ............... ............ .................. ......... ......... .........\n\n...... ............ ............ ............ ......... ............... ............... ..............."
+    "text_roman": "Shayad mujhe kisi se mohabbat nahi hui\nLekin yaqeen sab ko dilaata raha hoon main\n\nEk ajeeb sa rabt hai mere aur tanhai ke darmiyan"
   },
   {
     "id": "urdu-19",
@@ -934,7 +934,7 @@ export const URDU_POEMS: Poem[] = [
       "ghazal"
     ],
     "text_devanagari": "अब मेरी कोई ज़िन्दगी ही नहीं\nमैंने अपनी ज़िन्दगी बर्बाद कर ली\n\nकोई बात नहीं, ये मेरी अपनी पसन्द थी।",
-    "text_roman": "...... ............ ......... ........................ ...... ............\n............... ............ ........................ .................. ...... ......\n\n......... ......... ............, ...... ............ ............ ............... ........."
+    "text_roman": "Umeed to nahi thi magar dekhte rahe\nHum shaam-o-sehar rasta tera dekhte rahe\n\nJo zakhm tune diya tha wahi ilaaj bana"
   },
   {
     "id": "urdu-20",
@@ -953,7 +953,7 @@ export const URDU_POEMS: Poem[] = [
       "ghazal"
     ],
     "text_devanagari": "सुना है लोग उसे आँख भर के देखते हैं\nसो उसके शहर में कुछ दिन ठहर के देखते हैं\n\nअगर वो बोले तो बातों से फूल झड़ते हैं।",
-    "text_roman": "............ ...... ......... ......... ......... ...... ...... ............... .........\n...... ............ ......... ......... ......... ......... ......... ...... ............... .........\n\n......... ...... ............ ...... ............... ...... ......... ............... ............"
+    "text_roman": "Suna hai log use aankh bhar ke dekhte hain\nSo uske shahar mein kuch din thehar ke dekhte hain\n\nSuna hai bole to baaton se phool jhadte hain"
   },
   {
     "id": "urdu-21",
@@ -972,7 +972,7 @@ export const URDU_POEMS: Poem[] = [
       "ghazal"
     ],
     "text_devanagari": "ये दाग़ दाग़ उजाला ये शब-गज़ीदा सहर\nवो इन्तज़ार था जिसका ये वो सहर तो नहीं\n\nये वो सहर तो नहीं जिसकी आरज़ू लेकर चले थे।",
-    "text_roman": "...... ............ ............ ............... ...... ......-.................. .........\n...... ........................ ...... ............... ...... ...... ......... ...... ............\n\n...... ...... ......... ...... ............ ............... ............... ............ ......... ........."
+    "text_roman": "Ye daagh daagh ujaala, ye shab-gazeeda sahar\nWo intezaar tha jiska, ye wo sahar to nahi\n\nYe wo sahar to nahi jiski aarzoo le kar chale the"
   },
   {
     "id": "urdu-22",
@@ -991,7 +991,7 @@ export const URDU_POEMS: Poem[] = [
       "ghazal"
     ],
     "text_devanagari": "ख़ुदी को कर बुलन्द इतना कि हर तक़दीर से पहले\nख़ुदा बन्दे से ख़ुद पूछे, बता तेरी रज़ा क्या है।",
-    "text_roman": "............... ...... ...... .................. ............ ...... ...... .................. ...... ............\n............... ............... ...... ............ ............, ......... ............ ............ ............ ........."
+    "text_roman": "Khudi ko kar buland itna ki har taqdeer se pehle\nKhuda bande se khud pooche bata teri raza kya hai"
   },
   {
     "id": "urdu-23",
@@ -1010,7 +1010,7 @@ export const URDU_POEMS: Poem[] = [
       "ghazal"
     ],
     "text_devanagari": "सफ़र में धूप तो होगी जो चल सको तो चलो\nसभी हैं भीड़ में तुम भी निकल सको तो चलो\n\nकिसी के वास्ते राहें कहाँ बदलती हैं।",
-    "text_roman": "............ ......... ......... ...... ............ ...... ...... ......... ...... .........\n......... ......... ............ ......... ......... ...... ............ ......... ...... .........\n\n............ ...... .................. ............... ............ ............... ............"
+    "text_roman": "Safar mein dhoop to hogi jo chal sako to chalo\nSabhi hain bheed mein tum bhi nikal sako to chalo\n\nKisi ke waaste raahein kahan badalti hain"
   },
   {
     "id": "urdu-24",
@@ -1029,7 +1029,7 @@ export const URDU_POEMS: Poem[] = [
       "ghazal"
     ],
     "text_devanagari": "उठ मेरी जान मेरे साथ ही चलना है तुझे\nक़द्र-ए-सहरा में भटकना नहीं मंज़ूर हमें\n\nज़िन्दगी ज़ुल्फ़ की जंजीर नहीं बन सकती।",
-    "text_roman": "...... ............ ......... ............ ......... ...... ............ ...... ............\n...............-...-............ ......... ............... ............ .................. ............\n\n........................ ..................... ...... ............... ............ ...... ..............."
+    "text_roman": "Uth meri jaan mere saath hi chalna hai tujhe\nQalb-e-maahol mein sulgaan hai utarna hai tujhe\n\nTod kar rasm-e-kuhan aage badhna hai tujhe"
   },
   {
     "id": "urdu-25",
@@ -1048,7 +1048,7 @@ export const URDU_POEMS: Poem[] = [
       "ghazal"
     ],
     "text_devanagari": "मैं अकेला ही चला था जानिब-ए-मंज़िल मगर\nलोग साथ आते गये और कारवाँ बनता गया।",
-    "text_roman": "......... ............... ...... ......... ...... ...............-...-.................. .........\n......... ......... ......... ......... ...... .................. ............ ............"
+    "text_roman": "Main akela hi chala tha jaanib-e-manzil magar\nLog saath aate gaye aur kaarwaan banta gaya"
   },
   {
     "id": "urdu-26",
@@ -1067,7 +1067,7 @@ export const URDU_POEMS: Poem[] = [
       "ghazal"
     ],
     "text_devanagari": "हो गई है पीर पर्वत-सी पिघलनी चाहिए,\nइस हिमालय से कोई गंगा निकलनी चाहिए।\n\nसिर्फ हंगामा खड़ा करना मेरा मक़सद नहीं।",
-    "text_roman": "...... ...... ...... ......... ...............-...... .................. ...............,\n...... .................. ...... ......... ............ .................. ..................\n\n............... .................. ............ ............ ............ ............... ..............."
+    "text_roman": "Kahan to tay tha chiraaghaan har ek ghar ke liye\nKahan chiraagh mayassar nahi shahar ke liye\n\nYahan darakhton ke saaye mein dhoop lagti hai"
   },
   {
     "id": "urdu-27",
@@ -1086,7 +1086,7 @@ export const URDU_POEMS: Poem[] = [
       "ghazal"
     ],
     "text_devanagari": "ग़ज़ब किया तेरे वादे पे ऐतबार किया\nतमाम रात तुम्हारा इन्तज़ार किया।",
-    "text_roman": "............... ............ ............ ............ ...... ............... ............\n............ ......... ........................ ........................ ..............."
+    "text_roman": "Ghazab kiya tere waade pe aitbaar kiya\nTamaam raat bada intezaar kiya\n\nHanse jo dekh ke humko to muskura ke kaha"
   },
   {
     "id": "urdu-28",
@@ -1105,7 +1105,7 @@ export const URDU_POEMS: Poem[] = [
       "ghazal"
     ],
     "text_devanagari": "क्यूँ ज़ियाँ-कार बनूँ, सूद-फ़रामोश रहूँ?\nफ़िक्रे-फ़र्दा न करूँ, महवे-ग़मे-दोष रहूँ?",
-    "text_roman": "............... ..................-......... ............, .........-..................... ............?\n.....................-.................. ... ............, ............-............-......... ............?"
+    "text_roman": "Kyon ziyaan-kaar banoon, sood-faraamosh rahoon\nFikr-e-farda na karoon, mahv-e-gham-e-dosh rahoon\n\nShikwa-e-zulmat-e-shab se to kahin behtar tha"
   },
   {
     "id": "urdu-29",
@@ -1124,7 +1124,7 @@ export const URDU_POEMS: Poem[] = [
       "ghazal"
     ],
     "text_devanagari": "बात करनी मुझे मुश्किल कभी ऐसी तो न थी\nजैसी अब है तेरी महफ़िल कभी ऐसी तो न थी।",
-    "text_roman": "......... ............ ............ ..................... ......... ......... ...... ... ......\n............ ...... ...... ............ .................. ......... ......... ...... ... ........."
+    "text_roman": "Kitna hai bad-naseeb zafar dafn ke liye\nDo gaz zameen bhi na mili koo-e-yaar mein"
   },
   {
     "id": "urdu-30",
@@ -1143,7 +1143,7 @@ export const URDU_POEMS: Poem[] = [
       "ghazal"
     ],
     "text_devanagari": "जो गुज़री हम पे सो गुज़री मगर तुम्हारे लिए\nसबा की चाल में रंगीनियाँ समोते रहे।",
-    "text_roman": "...... .................. ...... ...... ...... .................. ......... ........................ .........\n......... ...... ......... ......... ........................... ............... ............"
+    "text_roman": "Zakhm ko phool to sar-sar ko saba kehte hain\nJaane kis daur mein hum log jiye jaate hain\n\nApne hi chehre se aati hai parayi khushboo"
   }
 ];
 
@@ -1163,7 +1163,8 @@ export const ENGLISH_POEMS: Poem[] = [
       "ruin",
       "time"
     ],
-    "text_english": "I met a traveller from an antique land\nWho said: Two vast and trunkless legs of stone\nStand in the desert... Near them, on the sand,\nHalf sunk, a shattered visage lies, whose frown,\nAnd wrinkled lip, and sneer of cold command...\n\nAnd on the pedestal these words appear:\n'My name is Ozymandias, king of kings:\nLook on my works, ye Mighty, and despair!'\nNothing beside remains. Round the decay\nOf that colossal wreck, boundless and bare\nThe lone and level sands stretch far away."
+    "text_english": "I met a traveller from an antique land\nWho said: Two vast and trunkless legs of stone\nStand in the desert... Near them, on the sand,\nHalf sunk, a shattered visage lies, whose frown,\nAnd wrinkled lip, and sneer of cold command...\n\nAnd on the pedestal these words appear:\n'My name is Ozymandias, king of kings:\nLook on my works, ye Mighty, and despair!'\nNothing beside remains. Round the decay\nOf that colossal wreck, boundless and bare\nThe lone and level sands stretch far away.",
+    "text_roman": "I met a traveller from an antique land\nWho said: Two vast and trunkless legs of stone\nStand in the desert... Near them, on the sand,\nHalf sunk, a shattered visage lies, whose frown,\nAnd wrinkled lip, and sneer of cold command...\n\nAnd on the pedestal these words appear:\n'My name is Ozymandias, king of kings:\nLook on my works, ye Mighty, and despair!'\nNothing beside remains. Round the decay\nOf that colossal wreck, boundless and bare\nThe lone and level sands stretch far away."
   },
   {
     "id": "english-2",
@@ -1180,7 +1181,8 @@ export const ENGLISH_POEMS: Poem[] = [
       "love",
       "art"
     ],
-    "text_english": "Shall I compare thee to a summer's day?\nThou art more lovely and more temperate:\nRough winds do shake the darling buds of May,\nAnd summer's lease hath all too short a date:\n\nBut thy eternal summer shall not fade\nNor lose possession of that fair thou ow'st;\nNor shall Death brag thou wander'st in his shade,\nWhen in eternal lines to time thou grow'st:\nSo long as men can breathe or eyes can see,\nSo long lives this, and this gives life to thee."
+    "text_english": "Shall I compare thee to a summer's day?\nThou art more lovely and more temperate:\nRough winds do shake the darling buds of May,\nAnd summer's lease hath all too short a date:\n\nBut thy eternal summer shall not fade\nNor lose possession of that fair thou ow'st;\nNor shall Death brag thou wander'st in his shade,\nWhen in eternal lines to time thou grow'st:\nSo long as men can breathe or eyes can see,\nSo long lives this, and this gives life to thee.",
+    "text_roman": "Shall I compare thee to a summer's day?\nThou art more lovely and more temperate:\nRough winds do shake the darling buds of May,\nAnd summer's lease hath all too short a date:\n\nBut thy eternal summer shall not fade\nNor lose possession of that fair thou ow'st;\nNor shall Death brag thou wander'st in his shade,\nWhen in eternal lines to time thou grow'st:\nSo long as men can breathe or eyes can see,\nSo long lives this, and this gives life to thee."
   },
   {
     "id": "english-3",
@@ -1197,7 +1199,8 @@ export const ENGLISH_POEMS: Poem[] = [
       "tranquility",
       "journey"
     ],
-    "text_english": "Whose woods these are I think I know.\nHis house is in the village though;\nHe will not see me stopping here\nTo watch his woods fill up with snow.\n\nThe woods are lovely, dark and deep,\nBut I have promises to keep,\nAnd miles to go before I sleep,\nAnd miles to go before I sleep."
+    "text_english": "Whose woods these are I think I know.\nHis house is in the village though;\nHe will not see me stopping here\nTo watch his woods fill up with snow.\n\nThe woods are lovely, dark and deep,\nBut I have promises to keep,\nAnd miles to go before I sleep,\nAnd miles to go before I sleep.",
+    "text_roman": "Whose woods these are I think I know.\nHis house is in the village though;\nHe will not see me stopping here\nTo watch his woods fill up with snow.\n\nThe woods are lovely, dark and deep,\nBut I have promises to keep,\nAnd miles to go before I sleep,\nAnd miles to go before I sleep."
   },
   {
     "id": "english-4",
@@ -1214,7 +1217,8 @@ export const ENGLISH_POEMS: Poem[] = [
       "aesthetics",
       "stillness"
     ],
-    "text_english": "Two roads diverged in a yellow wood,\nAnd sorry I could not travel both\nAnd be one traveler, long I stood\n\nI took the one less traveled by,\nAnd that has made all the difference."
+    "text_english": "Two roads diverged in a yellow wood,\nAnd sorry I could not travel both\nAnd be one traveler, long I stood\n\nI took the one less traveled by,\nAnd that has made all the difference.",
+    "text_roman": "Two roads diverged in a yellow wood,\nAnd sorry I could not travel both\nAnd be one traveler, long I stood\n\nI took the one less traveled by,\nAnd that has made all the difference."
   },
   {
     "id": "english-5",
@@ -1231,7 +1235,8 @@ export const ENGLISH_POEMS: Poem[] = [
       "aesthetics",
       "stillness"
     ],
-    "text_english": "Hope is the thing with feathers\nThat perches in the soul,\nAnd sings the tune without the words,\nAnd never stops at all."
+    "text_english": "Hope is the thing with feathers\nThat perches in the soul,\nAnd sings the tune without the words,\nAnd never stops at all.",
+    "text_roman": "Hope is the thing with feathers\nThat perches in the soul,\nAnd sings the tune without the words,\nAnd never stops at all."
   },
   {
     "id": "english-6",
@@ -1248,7 +1253,8 @@ export const ENGLISH_POEMS: Poem[] = [
       "aesthetics",
       "stillness"
     ],
-    "text_english": "I wandered lonely as a cloud\nThat floats on high o'er vales and hills,\nWhen all at once I saw a crowd,\nA host, of golden daffodils."
+    "text_english": "I wandered lonely as a cloud\nThat floats on high o'er vales and hills,\nWhen all at once I saw a crowd,\nA host, of golden daffodils.",
+    "text_roman": "I wandered lonely as a cloud\nThat floats on high o'er vales and hills,\nWhen all at once I saw a crowd,\nA host, of golden daffodils."
   },
   {
     "id": "english-7",
@@ -1265,7 +1271,8 @@ export const ENGLISH_POEMS: Poem[] = [
       "aesthetics",
       "stillness"
     ],
-    "text_english": "Some say the world will end in fire,\nSome say in ice.\nFrom what I've tasted of desire\nI hold with those who favor fire."
+    "text_english": "Some say the world will end in fire,\nSome say in ice.\nFrom what I've tasted of desire\nI hold with those who favor fire.",
+    "text_roman": "Some say the world will end in fire,\nSome say in ice.\nFrom what I've tasted of desire\nI hold with those who favor fire."
   },
   {
     "id": "english-8",
@@ -1282,7 +1289,8 @@ export const ENGLISH_POEMS: Poem[] = [
       "aesthetics",
       "stillness"
     ],
-    "text_english": "My heart aches, and a drowsy numbness pains\nMy sense, as though of hemlock I had drunk,\nOr emptied some dull opiate to the drains\nOne minute past, and Lethe-wards had sunk."
+    "text_english": "My heart aches, and a drowsy numbness pains\nMy sense, as though of hemlock I had drunk,\nOr emptied some dull opiate to the drains\nOne minute past, and Lethe-wards had sunk.",
+    "text_roman": "My heart aches, and a drowsy numbness pains\nMy sense, as though of hemlock I had drunk,\nOr emptied some dull opiate to the drains\nOne minute past, and Lethe-wards had sunk."
   },
   {
     "id": "english-9",
@@ -1299,7 +1307,8 @@ export const ENGLISH_POEMS: Poem[] = [
       "aesthetics",
       "stillness"
     ],
-    "text_english": "It was many and many a year ago,\nIn a kingdom by the sea,\nThat a maiden there lived whom you may know\nBy the name of Annabel Lee."
+    "text_english": "It was many and many a year ago,\nIn a kingdom by the sea,\nThat a maiden there lived whom you may know\nBy the name of Annabel Lee.",
+    "text_roman": "It was many and many a year ago,\nIn a kingdom by the sea,\nThat a maiden there lived whom you may know\nBy the name of Annabel Lee."
   },
   {
     "id": "english-10",
@@ -1316,7 +1325,8 @@ export const ENGLISH_POEMS: Poem[] = [
       "aesthetics",
       "stillness"
     ],
-    "text_english": "Tho' much is taken, much abides; and tho'\nWe are not now that strength which in old days\nMoved earth and heaven, that which we are, we are;\nOne equal temper of heroic hearts,\nMade weak by time and fate, but strong in will\nTo strive, to seek, to find, and not to yield."
+    "text_english": "Tho' much is taken, much abides; and tho'\nWe are not now that strength which in old days\nMoved earth and heaven, that which we are, we are;\nOne equal temper of heroic hearts,\nMade weak by time and fate, but strong in will\nTo strive, to seek, to find, and not to yield.",
+    "text_roman": "Tho' much is taken, much abides; and tho'\nWe are not now that strength which in old days\nMoved earth and heaven, that which we are, we are;\nOne equal temper of heroic hearts,\nMade weak by time and fate, but strong in will\nTo strive, to seek, to find, and not to yield."
   },
   {
     "id": "english-11",
@@ -1333,7 +1343,8 @@ export const ENGLISH_POEMS: Poem[] = [
       "aesthetics",
       "stillness"
     ],
-    "text_english": "When you are old and grey and full of sleep,\nAnd nodding by the fire, take down this book,\nAnd slowly read, and dream of the soft look\nYour eyes had once, and of their shadows deep."
+    "text_english": "When you are old and grey and full of sleep,\nAnd nodding by the fire, take down this book,\nAnd slowly read, and dream of the soft look\nYour eyes had once, and of their shadows deep.",
+    "text_roman": "When you are old and grey and full of sleep,\nAnd nodding by the fire, take down this book,\nAnd slowly read, and dream of the soft look\nYour eyes had once, and of their shadows deep."
   },
   {
     "id": "english-12",
@@ -1350,7 +1361,8 @@ export const ENGLISH_POEMS: Poem[] = [
       "aesthetics",
       "stillness"
     ],
-    "text_english": "Turning and turning in the widening gyre\nThe falcon cannot hear the falconer;\nThings fall apart; the centre cannot hold;\nMere anarchy is loosed upon the world."
+    "text_english": "Turning and turning in the widening gyre\nThe falcon cannot hear the falconer;\nThings fall apart; the centre cannot hold;\nMere anarchy is loosed upon the world.",
+    "text_roman": "Turning and turning in the widening gyre\nThe falcon cannot hear the falconer;\nThings fall apart; the centre cannot hold;\nMere anarchy is loosed upon the world."
   },
   {
     "id": "english-13",
@@ -1367,7 +1379,8 @@ export const ENGLISH_POEMS: Poem[] = [
       "aesthetics",
       "stillness"
     ],
-    "text_english": "If you can keep your head when all about you\nAre losing theirs and blaming it on you,\nIf you can trust yourself when all men doubt you,\nBut make allowance for their doubting too."
+    "text_english": "If you can keep your head when all about you\nAre losing theirs and blaming it on you,\nIf you can trust yourself when all men doubt you,\nBut make allowance for their doubting too.",
+    "text_roman": "If you can keep your head when all about you\nAre losing theirs and blaming it on you,\nIf you can trust yourself when all men doubt you,\nBut make allowance for their doubting too."
   },
   {
     "id": "english-14",
@@ -1384,7 +1397,8 @@ export const ENGLISH_POEMS: Poem[] = [
       "aesthetics",
       "stillness"
     ],
-    "text_english": "Out of the night that covers me,\nBlack as the Pit from pole to pole,\nI thank whatever gods may be\nFor my unconquerable soul."
+    "text_english": "Out of the night that covers me,\nBlack as the Pit from pole to pole,\nI thank whatever gods may be\nFor my unconquerable soul.",
+    "text_roman": "Out of the night that covers me,\nBlack as the Pit from pole to pole,\nI thank whatever gods may be\nFor my unconquerable soul."
   },
   {
     "id": "english-15",
@@ -1401,7 +1415,8 @@ export const ENGLISH_POEMS: Poem[] = [
       "aesthetics",
       "stillness"
     ],
-    "text_english": "O my Luve is like a red, red rose\nThat’s newly sprung in June;\nO my Luve is like the melody\nThat’s sweetly played in tune."
+    "text_english": "O my Luve is like a red, red rose\nThat’s newly sprung in June;\nO my Luve is like the melody\nThat’s sweetly played in tune.",
+    "text_roman": "O my Luve is like a red, red rose\nThat’s newly sprung in June;\nO my Luve is like the melody\nThat’s sweetly played in tune."
   },
   {
     "id": "english-16",
@@ -1418,7 +1433,8 @@ export const ENGLISH_POEMS: Poem[] = [
       "aesthetics",
       "stillness"
     ],
-    "text_english": "Tyger! Tyger! burning bright\nIn the forests of the night,\nWhat immortal hand or eye\nCould frame thy fearful symmetry?"
+    "text_english": "Tyger! Tyger! burning bright\nIn the forests of the night,\nWhat immortal hand or eye\nCould frame thy fearful symmetry?",
+    "text_roman": "Tyger! Tyger! burning bright\nIn the forests of the night,\nWhat immortal hand or eye\nCould frame thy fearful symmetry?"
   },
   {
     "id": "english-17",
@@ -1435,7 +1451,8 @@ export const ENGLISH_POEMS: Poem[] = [
       "aesthetics",
       "stillness"
     ],
-    "text_english": "She walks in beauty, like the night\nOf cloudless climes and starry skies;\nAnd all that’s best of dark and bright\nMeet in her aspect and her eyes."
+    "text_english": "She walks in beauty, like the night\nOf cloudless climes and starry skies;\nAnd all that’s best of dark and bright\nMeet in her aspect and her eyes.",
+    "text_roman": "She walks in beauty, like the night\nOf cloudless climes and starry skies;\nAnd all that’s best of dark and bright\nMeet in her aspect and her eyes."
   },
   {
     "id": "english-18",
@@ -1452,7 +1469,8 @@ export const ENGLISH_POEMS: Poem[] = [
       "aesthetics",
       "stillness"
     ],
-    "text_english": "I was angry with my friend;\nI told my wrath, my wrath did end.\nI was angry with my foe:\nI told it not, my wrath did grow."
+    "text_english": "I was angry with my friend;\nI told my wrath, my wrath did end.\nI was angry with my foe:\nI told it not, my wrath did grow.",
+    "text_roman": "I was angry with my friend;\nI told my wrath, my wrath did end.\nI was angry with my foe:\nI told it not, my wrath did grow."
   },
   {
     "id": "english-19",
@@ -1469,7 +1487,8 @@ export const ENGLISH_POEMS: Poem[] = [
       "aesthetics",
       "stillness"
     ],
-    "text_english": "Glory be to God for dappled things –\nFor skies of couple-colour as a brinded cow;\nFor rose-moles all in stipple upon trout that swim."
+    "text_english": "Glory be to God for dappled things –\nFor skies of couple-colour as a brinded cow;\nFor rose-moles all in stipple upon trout that swim.",
+    "text_roman": "Glory be to God for dappled things –\nFor skies of couple-colour as a brinded cow;\nFor rose-moles all in stipple upon trout that swim."
   },
   {
     "id": "english-20",
@@ -1486,7 +1505,8 @@ export const ENGLISH_POEMS: Poem[] = [
       "aesthetics",
       "stillness"
     ],
-    "text_english": "Season of mists and mellow fruitfulness,\nClose bosom-friend of the maturing sun;\nConspiring with him how to load and bless\nWith fruit the vines that round the thatch-eves run."
+    "text_english": "Season of mists and mellow fruitfulness,\nClose bosom-friend of the maturing sun;\nConspiring with him how to load and bless\nWith fruit the vines that round the thatch-eves run.",
+    "text_roman": "Season of mists and mellow fruitfulness,\nClose bosom-friend of the maturing sun;\nConspiring with him how to load and bless\nWith fruit the vines that round the thatch-eves run."
   },
   {
     "id": "english-21",
@@ -1503,7 +1523,8 @@ export const ENGLISH_POEMS: Poem[] = [
       "aesthetics",
       "stillness"
     ],
-    "text_english": "Because I could not stop for Death –\nHe kindly stopped for me –\nThe Carriage held but just Ourselves –\nAnd Immortality."
+    "text_english": "Because I could not stop for Death –\nHe kindly stopped for me –\nThe Carriage held but just Ourselves –\nAnd Immortality.",
+    "text_roman": "Because I could not stop for Death –\nHe kindly stopped for me –\nThe Carriage held but just Ourselves –\nAnd Immortality."
   },
   {
     "id": "english-22",
@@ -1520,7 +1541,8 @@ export const ENGLISH_POEMS: Poem[] = [
       "aesthetics",
       "stillness"
     ],
-    "text_english": "O Captain! my Captain! our fearful trip is done,\nThe ship has weather’d every rack, the prize we sought is won,\nThe port is near, the bells I hear, the people all exulting."
+    "text_english": "O Captain! my Captain! our fearful trip is done,\nThe ship has weather’d every rack, the prize we sought is won,\nThe port is near, the bells I hear, the people all exulting.",
+    "text_roman": "O Captain! my Captain! our fearful trip is done,\nThe ship has weather’d every rack, the prize we sought is won,\nThe port is near, the bells I hear, the people all exulting."
   },
   {
     "id": "english-23",
@@ -1537,7 +1559,8 @@ export const ENGLISH_POEMS: Poem[] = [
       "aesthetics",
       "stillness"
     ],
-    "text_english": "Do not go gentle into that good night,\nOld age should burn and rave at close of day;\nRage, rage against the dying of the light."
+    "text_english": "Do not go gentle into that good night,\nOld age should burn and rave at close of day;\nRage, rage against the dying of the light.",
+    "text_roman": "Do not go gentle into that good night,\nOld age should burn and rave at close of day;\nRage, rage against the dying of the light."
   },
   {
     "id": "english-24",
@@ -1554,7 +1577,8 @@ export const ENGLISH_POEMS: Poem[] = [
       "aesthetics",
       "stillness"
     ],
-    "text_english": "Let us go then, you and I,\nWhen the evening is spread out against the sky\nLike a patient etherized upon a table;\nLet us go, through certain half-deserted streets."
+    "text_english": "Let us go then, you and I,\nWhen the evening is spread out against the sky\nLike a patient etherized upon a table;\nLet us go, through certain half-deserted streets.",
+    "text_roman": "Let us go then, you and I,\nWhen the evening is spread out against the sky\nLike a patient etherized upon a table;\nLet us go, through certain half-deserted streets."
   },
   {
     "id": "english-25",
@@ -1571,7 +1595,8 @@ export const ENGLISH_POEMS: Poem[] = [
       "aesthetics",
       "stillness"
     ],
-    "text_english": "What happens to a dream deferred?\nDoes it dry up\nlike a raisin in the sun?\nOr fester like a sore—\nAnd then run?"
+    "text_english": "What happens to a dream deferred?\nDoes it dry up\nlike a raisin in the sun?\nOr fester like a sore—\nAnd then run?",
+    "text_roman": "What happens to a dream deferred?\nDoes it dry up\nlike a raisin in the sun?\nOr fester like a sore—\nAnd then run?"
   },
   {
     "id": "english-26",
@@ -1588,7 +1613,8 @@ export const ENGLISH_POEMS: Poem[] = [
       "aesthetics",
       "stillness"
     ],
-    "text_english": "You may write me down in history\nWith your bitter, twisted lies,\nYou may trod me in the very dirt\nBut still, like dust, I'll rise."
+    "text_english": "You may write me down in history\nWith your bitter, twisted lies,\nYou may trod me in the very dirt\nBut still, like dust, I'll rise.",
+    "text_roman": "You may write me down in history\nWith your bitter, twisted lies,\nYou may trod me in the very dirt\nBut still, like dust, I'll rise."
   },
   {
     "id": "english-27",
@@ -1605,7 +1631,8 @@ export const ENGLISH_POEMS: Poem[] = [
       "aesthetics",
       "stillness"
     ],
-    "text_english": "A free bird leaps\non the back of the wind\nand floats downstream\ntill the current ends\nand dips his wing\nin the orange sun rays\nand dares to claim the sky."
+    "text_english": "A free bird leaps\non the back of the wind\nand floats downstream\ntill the current ends\nand dips his wing\nin the orange sun rays\nand dares to claim the sky.",
+    "text_roman": "A free bird leaps\non the back of the wind\nand floats downstream\ntill the current ends\nand dips his wing\nin the orange sun rays\nand dares to claim the sky."
   },
   {
     "id": "english-28",
@@ -1622,7 +1649,8 @@ export const ENGLISH_POEMS: Poem[] = [
       "aesthetics",
       "stillness"
     ],
-    "text_english": "Bright star, would I were stedfast as thou art—\nNot in lone splendour hung aloft the night\nAnd watching, with eternal lids apart,\nLike nature's patient, sleepless Eremite."
+    "text_english": "Bright star, would I were stedfast as thou art—\nNot in lone splendour hung aloft the night\nAnd watching, with eternal lids apart,\nLike nature's patient, sleepless Eremite.",
+    "text_roman": "Bright star, would I were stedfast as thou art—\nNot in lone splendour hung aloft the night\nAnd watching, with eternal lids apart,\nLike nature's patient, sleepless Eremite."
   },
   {
     "id": "english-29",
@@ -1639,7 +1667,8 @@ export const ENGLISH_POEMS: Poem[] = [
       "aesthetics",
       "stillness"
     ],
-    "text_english": "Break, break, break,\nOn thy cold gray stones, O Sea!\nAnd I would that my tongue could utter\nThe thoughts that arise in me."
+    "text_english": "Break, break, break,\nOn thy cold gray stones, O Sea!\nAnd I would that my tongue could utter\nThe thoughts that arise in me.",
+    "text_roman": "Break, break, break,\nOn thy cold gray stones, O Sea!\nAnd I would that my tongue could utter\nThe thoughts that arise in me."
   },
   {
     "id": "english-30",
@@ -1656,7 +1685,8 @@ export const ENGLISH_POEMS: Poem[] = [
       "aesthetics",
       "stillness"
     ],
-    "text_english": "I will arise and go now, and go to Innisfree,\nAnd a small cabin build there, of clay and wattles made;\nNine bean-rows will I have there, a hive for the honey-bee."
+    "text_english": "I will arise and go now, and go to Innisfree,\nAnd a small cabin build there, of clay and wattles made;\nNine bean-rows will I have there, a hive for the honey-bee.",
+    "text_roman": "I will arise and go now, and go to Innisfree,\nAnd a small cabin build there, of clay and wattles made;\nNine bean-rows will I have there, a hive for the honey-bee."
   }
 ];
 
@@ -1677,7 +1707,8 @@ export const WORLD_POEMS: Poem[] = [
       "truth",
       "heaven"
     ],
-    "text_english": "Where the mind is without fear and the head is held high;\nWhere knowledge is free;\nWhere the world has not been broken up into fragments\nBy narrow domestic walls;\nWhere words come out from the depth of truth;\n\nInto that heaven of freedom, my Father, let my country awake."
+    "text_english": "Where the mind is without fear and the head is held high;\nWhere knowledge is free;\nWhere the world has not been broken up into fragments\nBy narrow domestic walls;\nWhere words come out from the depth of truth;\n\nInto that heaven of freedom, my Father, let my country awake.",
+    "text_roman": "Where the mind is without fear and the head is held high;\nWhere knowledge is free;\nWhere the world has not been broken up into fragments\nBy narrow domestic walls;\nWhere words come out from the depth of truth;\n\nInto that heaven of freedom, my Father, let my country awake."
   },
   {
     "id": "world-2",
@@ -1695,7 +1726,8 @@ export const WORLD_POEMS: Poem[] = [
       "visitor",
       "soul"
     ],
-    "text_english": "This being human is a guest house.\nEvery morning a new arrival.\n\nA joy, a depression, a meanness,\nsome momentary awareness comes\nas an unexpected visitor.\n\nWelcome and entertain them all!"
+    "text_english": "This being human is a guest house.\nEvery morning a new arrival.\n\nA joy, a depression, a meanness,\nsome momentary awareness comes\nas an unexpected visitor.\n\nWelcome and entertain them all!",
+    "text_roman": "This being human is a guest house.\nEvery morning a new arrival.\n\nA joy, a depression, a meanness,\nsome momentary awareness comes\nas an unexpected visitor.\n\nWelcome and entertain them all!"
   },
   {
     "id": "world-3",
@@ -1713,7 +1745,8 @@ export const WORLD_POEMS: Poem[] = [
       "night",
       "stars"
     ],
-    "text_english": "Tonight I can write the saddest lines.\nWrite, for example, 'The night is starry and the blue stars shiver in the distance.'\nThe night wind revolves in the sky and sings.\n\nTonight I can write the saddest lines.\nI loved her, and sometimes she loved me too."
+    "text_english": "Tonight I can write the saddest lines.\nWrite, for example, 'The night is starry and the blue stars shiver in the distance.'\nThe night wind revolves in the sky and sings.\n\nTonight I can write the saddest lines.\nI loved her, and sometimes she loved me too.",
+    "text_roman": "Tonight I can write the saddest lines.\nWrite, for example, 'The night is starry and the blue stars shiver in the distance.'\nThe night wind revolves in the sky and sings.\n\nTonight I can write the saddest lines.\nI loved her, and sometimes she loved me too."
   },
   {
     "id": "world-4",
@@ -1731,7 +1764,8 @@ export const WORLD_POEMS: Poem[] = [
       "nature",
       "peace"
     ],
-    "text_english": "When love beckons to you, follow him,\nThough his ways are hard and steep.\nAnd when his wings enfold you yield to him,\nThough the sword hidden among his pinions may wound you."
+    "text_english": "When love beckons to you, follow him,\nThough his ways are hard and steep.\nAnd when his wings enfold you yield to him,\nThough the sword hidden among his pinions may wound you.",
+    "text_roman": "When love beckons to you, follow him,\nThough his ways are hard and steep.\nAnd when his wings enfold you yield to him,\nThough the sword hidden among his pinions may wound you."
   },
   {
     "id": "world-5",
@@ -1749,7 +1783,8 @@ export const WORLD_POEMS: Poem[] = [
       "nature",
       "peace"
     ],
-    "text_english": "Your joy is your sorrow unmasked.\nAnd the selfsame well from which your laughter rises was oftentimes filled with your tears.\nAnd how else can it be?"
+    "text_english": "Your joy is your sorrow unmasked.\nAnd the selfsame well from which your laughter rises was oftentimes filled with your tears.\nAnd how else can it be?",
+    "text_roman": "Your joy is your sorrow unmasked.\nAnd the selfsame well from which your laughter rises was oftentimes filled with your tears.\nAnd how else can it be?"
   },
   {
     "id": "world-6",
@@ -1767,7 +1802,8 @@ export const WORLD_POEMS: Poem[] = [
       "nature",
       "peace"
     ],
-    "text_english": "On a withered branch\nA crow has settled—\nAutumn nightfall."
+    "text_english": "On a withered branch\nA crow has settled—\nAutumn nightfall.",
+    "text_roman": "On a withered branch\nA crow has settled—\nAutumn nightfall."
   },
   {
     "id": "world-7",
@@ -1785,7 +1821,8 @@ export const WORLD_POEMS: Poem[] = [
       "nature",
       "peace"
     ],
-    "text_english": "A Book of Verses underneath the Bough,\nA Jug of Wine, a Loaf of Bread—and Thou\nBeside me singing in the Wilderness—\nOh, Wilderness were Paradise enow!"
+    "text_english": "A Book of Verses underneath the Bough,\nA Jug of Wine, a Loaf of Bread—and Thou\nBeside me singing in the Wilderness—\nOh, Wilderness were Paradise enow!",
+    "text_roman": "A Book of Verses underneath the Bough,\nA Jug of Wine, a Loaf of Bread—and Thou\nBeside me singing in the Wilderness—\nOh, Wilderness were Paradise enow!"
   },
   {
     "id": "world-8",
@@ -1803,7 +1840,8 @@ export const WORLD_POEMS: Poem[] = [
       "nature",
       "peace"
     ],
-    "text_english": "You start dying slowly\nif you do not travel,\nif you do not read,\nif you do not listen to the sounds of life,\nif you do not appreciate yourself."
+    "text_english": "You start dying slowly\nif you do not travel,\nif you do not read,\nif you do not listen to the sounds of life,\nif you do not appreciate yourself.",
+    "text_roman": "You start dying slowly\nif you do not travel,\nif you do not read,\nif you do not listen to the sounds of life,\nif you do not appreciate yourself."
   },
   {
     "id": "world-9",
@@ -1821,7 +1859,8 @@ export const WORLD_POEMS: Poem[] = [
       "nature",
       "peace"
     ],
-    "text_english": "I loved you; and perhaps I love you still,\nThe flame, maybe, is not extinguished quite;\nBut let not that distress you anymore;\nI do not wish to bring you any grief."
+    "text_english": "I loved you; and perhaps I love you still,\nThe flame, maybe, is not extinguished quite;\nBut let not that distress you anymore;\nI do not wish to bring you any grief.",
+    "text_roman": "I loved you; and perhaps I love you still,\nThe flame, maybe, is not extinguished quite;\nBut let not that distress you anymore;\nI do not wish to bring you any grief."
   },
   {
     "id": "world-10",
@@ -1839,7 +1878,8 @@ export const WORLD_POEMS: Poem[] = [
       "nature",
       "peace"
     ],
-    "text_english": "We cannot know his legendary head\nwith eyes like ripening fruit. And yet his torso\nis still suffused with brilliance from inside,\nlike a lamp, in which his gaze, now turned to low,\ngleams in all its power. Otherwise..."
+    "text_english": "We cannot know his legendary head\nwith eyes like ripening fruit. And yet his torso\nis still suffused with brilliance from inside,\nlike a lamp, in which his gaze, now turned to low,\ngleams in all its power. Otherwise...",
+    "text_roman": "We cannot know his legendary head\nwith eyes like ripening fruit. And yet his torso\nis still suffused with brilliance from inside,\nlike a lamp, in which his gaze, now turned to low,\ngleams in all its power. Otherwise..."
   },
   {
     "id": "world-11",
@@ -1857,7 +1897,8 @@ export const WORLD_POEMS: Poem[] = [
       "nature",
       "peace"
     ],
-    "text_english": "You give but little when you give of your possessions.\nIt is when you give of yourself that you truly give.\nFor what are your possessions but things you keep and guard for fear you may need them tomorrow?"
+    "text_english": "You give but little when you give of your possessions.\nIt is when you give of yourself that you truly give.\nFor what are your possessions but things you keep and guard for fear you may need them tomorrow?",
+    "text_roman": "You give but little when you give of your possessions.\nIt is when you give of yourself that you truly give.\nFor what are your possessions but things you keep and guard for fear you may need them tomorrow?"
   },
   {
     "id": "world-12",
@@ -1875,7 +1916,8 @@ export const WORLD_POEMS: Poem[] = [
       "nature",
       "peace"
     ],
-    "text_english": "The old pond;\nA frog jumps in —\nThe sound of water."
+    "text_english": "The old pond;\nA frog jumps in —\nThe sound of water.",
+    "text_roman": "The old pond;\nA frog jumps in —\nThe sound of water."
   },
   {
     "id": "world-13",
@@ -1893,7 +1935,8 @@ export const WORLD_POEMS: Poem[] = [
       "nature",
       "peace"
     ],
-    "text_english": "Lord: it is time. The summer was immense.\nLay your shadow on the sundials,\nand let the winds go free across the plains.\n\nCommand the last fruits to be full."
+    "text_english": "Lord: it is time. The summer was immense.\nLay your shadow on the sundials,\nand let the winds go free across the plains.\n\nCommand the last fruits to be full.",
+    "text_roman": "Lord: it is time. The summer was immense.\nLay your shadow on the sundials,\nand let the winds go free across the plains.\n\nCommand the last fruits to be full."
   },
   {
     "id": "world-14",
@@ -1911,7 +1954,8 @@ export const WORLD_POEMS: Poem[] = [
       "nature",
       "peace"
     ],
-    "text_english": "Often, to amuse themselves, the men of the crew\nCatch albatrosses, those vast birds of the seas,\nWho follow, lazy companions of the voyage,\nThe ship gliding on the bitter deeps."
+    "text_english": "Often, to amuse themselves, the men of the crew\nCatch albatrosses, those vast birds of the seas,\nWho follow, lazy companions of the voyage,\nThe ship gliding on the bitter deeps.",
+    "text_roman": "Often, to amuse themselves, the men of the crew\nCatch albatrosses, those vast birds of the seas,\nWho follow, lazy companions of the voyage,\nThe ship gliding on the bitter deeps."
   },
   {
     "id": "world-15",
@@ -1929,7 +1973,8 @@ export const WORLD_POEMS: Poem[] = [
       "nature",
       "peace"
     ],
-    "text_english": "Cordoba.\nFar away and alone.\nBlack pony, big moon,\nand olives in my saddlebag.\nAlthough I know the roads\nI'll never reach Cordoba."
+    "text_english": "Cordoba.\nFar away and alone.\nBlack pony, big moon,\nand olives in my saddlebag.\nAlthough I know the roads\nI'll never reach Cordoba.",
+    "text_roman": "Cordoba.\nFar away and alone.\nBlack pony, big moon,\nand olives in my saddlebag.\nAlthough I know the roads\nI'll never reach Cordoba."
   },
   {
     "id": "world-16",
@@ -1947,7 +1992,8 @@ export const WORLD_POEMS: Poem[] = [
       "nature",
       "peace"
     ],
-    "text_english": "Freedom from fear is the freedom I claim for you, my motherland!\nFreedom from the burden of the ages, bending your head,\nbreaking your back, blinding your eyes to the beckoning future."
+    "text_english": "Freedom from fear is the freedom I claim for you, my motherland!\nFreedom from the burden of the ages, bending your head,\nbreaking your back, blinding your eyes to the beckoning future.",
+    "text_roman": "Freedom from fear is the freedom I claim for you, my motherland!\nFreedom from the burden of the ages, bending your head,\nbreaking your back, blinding your eyes to the beckoning future."
   },
   {
     "id": "world-17",
@@ -1965,7 +2011,8 @@ export const WORLD_POEMS: Poem[] = [
       "nature",
       "peace"
     ],
-    "text_english": "I seem to have loved you in numberless forms, numberless times\nIn life after life, in age after age, forever.\nMy spellbound heart has made and remade the necklace of songs,\nYou take them as a gift, wear them round your neck in your many forms."
+    "text_english": "I seem to have loved you in numberless forms, numberless times\nIn life after life, in age after age, forever.\nMy spellbound heart has made and remade the necklace of songs,\nYou take them as a gift, wear them round your neck in your many forms.",
+    "text_roman": "I seem to have loved you in numberless forms, numberless times\nIn life after life, in age after age, forever.\nMy spellbound heart has made and remade the necklace of songs,\nYou take them as a gift, wear them round your neck in your many forms."
   },
   {
     "id": "world-18",
@@ -1983,7 +2030,8 @@ export const WORLD_POEMS: Poem[] = [
       "nature",
       "peace"
     ],
-    "text_english": "There is a way of breathing that's a shame and a suffocation.\nAnd there is another way of expiring, a love-breath,\nthat lets you open infinitely."
+    "text_english": "There is a way of breathing that's a shame and a suffocation.\nAnd there is another way of expiring, a love-breath,\nthat lets you open infinitely.",
+    "text_roman": "There is a way of breathing that's a shame and a suffocation.\nAnd there is another way of expiring, a love-breath,\nthat lets you open infinitely."
   },
   {
     "id": "world-19",
@@ -2001,7 +2049,8 @@ export const WORLD_POEMS: Poem[] = [
       "nature",
       "peace"
     ],
-    "text_english": "If anyone wonders how the mystery of the universe can be contained,\nlook at the night sky and whisper: Like this.\nIf anyone asks how love feels, lay your hand on your heart and say: Like this."
+    "text_english": "If anyone wonders how the mystery of the universe can be contained,\nlook at the night sky and whisper: Like this.\nIf anyone asks how love feels, lay your hand on your heart and say: Like this.",
+    "text_roman": "If anyone wonders how the mystery of the universe can be contained,\nlook at the night sky and whisper: Like this.\nIf anyone asks how love feels, lay your hand on your heart and say: Like this."
   },
   {
     "id": "world-20",
@@ -2019,7 +2068,8 @@ export const WORLD_POEMS: Poem[] = [
       "nature",
       "peace"
     ],
-    "text_english": "This place where you are right now,\nGod circled on a map for you.\nCast all your votes for Love."
+    "text_english": "This place where you are right now,\nGod circled on a map for you.\nCast all your votes for Love.",
+    "text_roman": "This place where you are right now,\nGod circled on a map for you.\nCast all your votes for Love."
   },
   {
     "id": "world-21",
@@ -2037,7 +2087,8 @@ export const WORLD_POEMS: Poem[] = [
       "nature",
       "peace"
     ],
-    "text_english": "Traveler, there is no path,\nThe path is made by walking.\nBy walking you make the path,\nAnd when you look back..."
+    "text_english": "Traveler, there is no path,\nThe path is made by walking.\nBy walking you make the path,\nAnd when you look back...",
+    "text_roman": "Traveler, there is no path,\nThe path is made by walking.\nBy walking you make the path,\nAnd when you look back..."
   },
   {
     "id": "world-22",
@@ -2055,7 +2106,8 @@ export const WORLD_POEMS: Poem[] = [
       "nature",
       "peace"
     ],
-    "text_english": "The street filled with tomatoes,\nmidday, summer,\nlight is halved like a tomato,\nits juice runs through the streets."
+    "text_english": "The street filled with tomatoes,\nmidday, summer,\nlight is halved like a tomato,\nits juice runs through the streets.",
+    "text_roman": "The street filled with tomatoes,\nmidday, summer,\nlight is halved like a tomato,\nits juice runs through the streets."
   },
   {
     "id": "world-23",
@@ -2073,7 +2125,8 @@ export const WORLD_POEMS: Poem[] = [
       "nature",
       "peace"
     ],
-    "text_english": "Keep Ithaka always in your mind.\nArriving there is what you’re destined for.\nBut don’t hurry the journey at all.\nBetter if it lasts for years."
+    "text_english": "Keep Ithaka always in your mind.\nArriving there is what you’re destined for.\nBut don’t hurry the journey at all.\nBetter if it lasts for years.",
+    "text_roman": "Keep Ithaka always in your mind.\nArriving there is what you’re destined for.\nBut don’t hurry the journey at all.\nBetter if it lasts for years."
   },
   {
     "id": "world-24",
@@ -2091,7 +2144,8 @@ export const WORLD_POEMS: Poem[] = [
       "nature",
       "peace"
     ],
-    "text_english": "The same stream of life that runs through my veins night and day runs through the world and dances in rhythmic measures."
+    "text_english": "The same stream of life that runs through my veins night and day runs through the world and dances in rhythmic measures.",
+    "text_roman": "The same stream of life that runs through my veins night and day runs through the world and dances in rhythmic measures."
   },
   {
     "id": "world-25",
@@ -2109,7 +2163,8 @@ export const WORLD_POEMS: Poem[] = [
       "nature",
       "peace"
     ],
-    "text_english": "Summer grasses—\nall that remains\nof soldiers' dreams."
+    "text_english": "Summer grasses—\nall that remains\nof soldiers' dreams.",
+    "text_roman": "Summer grasses—\nall that remains\nof soldiers' dreams."
   },
   {
     "id": "world-26",
@@ -2127,7 +2182,8 @@ export const WORLD_POEMS: Poem[] = [
       "nature",
       "peace"
     ],
-    "text_english": "This dewdrop world —\nIs a dewdrop world,\nAnd yet, and yet..."
+    "text_english": "This dewdrop world —\nIs a dewdrop world,\nAnd yet, and yet...",
+    "text_roman": "This dewdrop world —\nIs a dewdrop world,\nAnd yet, and yet..."
   },
   {
     "id": "world-27",
@@ -2145,7 +2201,8 @@ export const WORLD_POEMS: Poem[] = [
       "nature",
       "peace"
     ],
-    "text_english": "Your friend is your needs answered.\nHe is your field which you sow with love and reap with thanksgiving.\nAnd he is your board and your fireside."
+    "text_english": "Your friend is your needs answered.\nHe is your field which you sow with love and reap with thanksgiving.\nAnd he is your board and your fireside.",
+    "text_roman": "Your friend is your needs answered.\nHe is your field which you sow with love and reap with thanksgiving.\nAnd he is your board and your fireside."
   },
   {
     "id": "world-28",
@@ -2163,7 +2220,8 @@ export const WORLD_POEMS: Poem[] = [
       "nature",
       "peace"
     ],
-    "text_english": "My eyes already touch the sunny hill,\ngoing far ahead of the road I have begun.\nSo we are grasped by what we cannot grasp."
+    "text_english": "My eyes already touch the sunny hill,\ngoing far ahead of the road I have begun.\nSo we are grasped by what we cannot grasp.",
+    "text_roman": "My eyes already touch the sunny hill,\ngoing far ahead of the road I have begun.\nSo we are grasped by what we cannot grasp."
   },
   {
     "id": "world-29",
@@ -2181,7 +2239,8 @@ export const WORLD_POEMS: Poem[] = [
       "nature",
       "peace"
     ],
-    "text_english": "The Moving Finger writes; and, having writ,\nMoves on: nor all thy Piety nor Wit\nShall lure it back to cancel half a Line."
+    "text_english": "The Moving Finger writes; and, having writ,\nMoves on: nor all thy Piety nor Wit\nShall lure it back to cancel half a Line.",
+    "text_roman": "The Moving Finger writes; and, having writ,\nMoves on: nor all thy Piety nor Wit\nShall lure it back to cancel half a Line."
   },
   {
     "id": "world-30",
@@ -2199,6 +2258,7 @@ export const WORLD_POEMS: Poem[] = [
       "nature",
       "peace"
     ],
-    "text_english": "Have you not heard his silent steps?\nHe comes, comes, ever comes.\nEvery moment and every age, every day and every night he comes, comes, ever comes."
+    "text_english": "Have you not heard his silent steps?\nHe comes, comes, ever comes.\nEvery moment and every age, every day and every night he comes, comes, ever comes.",
+    "text_roman": "Have you not heard his silent steps?\nHe comes, comes, ever comes.\nEvery moment and every age, every day and every night he comes, comes, ever comes."
   }
 ];
