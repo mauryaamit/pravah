@@ -20,6 +20,12 @@ import {
   HINDI_VYAKARAN_ENTRIES,
 } from './data-heritage';
 import {
+  getDailyDohasForDay,
+  POET_PROFILES,
+  PoetProfile,
+  DohaEntry,
+} from './data-doha';
+import {
   Scroll,
   BookOpen,
   Sparkles,
@@ -28,14 +34,21 @@ import {
   Layers,
   GraduationCap,
   Flame,
-  Check,
+  Feather,
   ChevronDown,
   ChevronUp,
+  X,
+  User,
+  MapPin,
+  Clock,
+  BookMarked,
+  Lightbulb,
 } from 'lucide-react';
 
-type VaniTab = 'geeta' | 'ramayan' | 'mahabharat' | 'upanishad' | 'veda' | 'purana' | 'bhasha' | 'vyakaran';
+type VaniTab = 'doha' | 'geeta' | 'ramayan' | 'mahabharat' | 'upanishad' | 'veda' | 'purana' | 'bhasha' | 'vyakaran';
 
 const TABS: { id: VaniTab; label: string; labelHi: string; icon: any }[] = [
+  { id: 'doha', label: 'Doha', labelHi: 'दोहा', icon: Feather },
   { id: 'geeta', label: 'Bhagavad Gita', labelHi: 'श्रीमद्भगवद्गीता', icon: Compass },
   { id: 'ramayan', label: 'Ramayan', labelHi: 'श्रीरामचरितमानस', icon: Scroll },
   { id: 'mahabharat', label: 'Mahabharat', labelHi: 'महाभारत', icon: Flame },
@@ -56,26 +69,36 @@ const HERITAGE_THEME = {
 
 export default function VaniPage() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
-  const [activeTab, setActiveTab] = useState<VaniTab>('geeta');
+  const [activeTab, setActiveTab] = useState<VaniTab>('doha');
   const [showIast, setShowIast] = useState(false);
-  const [expandedSection, setExpandedSection] = useState<Record<string, boolean>>({});
   const [vyakaranQuizSelected, setVyakaranQuizSelected] = useState<number | null>(null);
+
+  // Doha State: active contemplation stage per doha ID ('understand' | 'deeper' | 'none')
+  const [expandedDohaStages, setExpandedDohaStages] = useState<Record<string, 'understand' | 'deeper' | 'closed'>>({});
+  const [selectedPoetProfile, setSelectedPoetProfile] = useState<PoetProfile | null>(null);
 
   // Reset interactive states on date or tab change
   useEffect(() => {
     setVyakaranQuizSelected(null);
+    setExpandedDohaStages({});
   }, [currentDate, activeTab]);
 
-  const toggleExpand = (id: string) => {
-    setExpandedSection(prev => ({ ...prev, [id]: !prev[id] }));
+  const toggleDohaStage = (dohaId: string, stage: 'understand' | 'deeper') => {
+    setExpandedDohaStages(prev => {
+      const current = prev[dohaId];
+      if (current === stage) {
+        return { ...prev, [dohaId]: 'closed' };
+      }
+      return { ...prev, [dohaId]: stage };
+    });
   };
 
   // Day index calculations
   const dayIdx = getDayIndexForArray(currentDate, 10000);
 
   // Deterministic daily items
+  const dailyDohas = getDailyDohasForDay(dayIdx);
   const ramayanItem = RAMAYAN_CHAUPAIS[dayIdx % RAMAYAN_CHAUPAIS.length];
-  // Bhagavad Gita: Sequential journey through 700 verses
   const gitaItem = GITA_SHLOKAS[dayIdx % GITA_SHLOKAS.length];
   const mahabharatItem = MAHABHARAT_ENTRIES[dayIdx % MAHABHARAT_ENTRIES.length];
   const upanishadItem = UPANISHAD_ENTRIES[dayIdx % UPANISHAD_ENTRIES.length];
@@ -150,7 +173,210 @@ export default function VaniPage() {
         {/* ─── Main Content Views ─── */}
         <AnimatePresence mode="wait">
 
-          {/* ─────────────── 1. BHAGAVAD GITA (SEQUENTIAL JOURNEY) ─────────────── */}
+          {/* ─────────────── 1. DOHA - दोहा (NEW SECTION) ─────────────── */}
+          {activeTab === 'doha' && (
+            <motion.div
+              key="doha"
+              variants={FADE_UP}
+              initial="initial"
+              animate="animate"
+              exit={{ opacity: 0, y: -10 }}
+              className="space-y-6"
+            >
+              {/* Introduction Banner */}
+              <div className="p-4 rounded-xl border bg-[var(--bg-tertiary)]/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3" style={{ borderColor: 'var(--border-default)' }}>
+                <div>
+                  <h2 className="font-devanagari text-lg font-bold text-[var(--text-primary)]">
+                    दैनिक दोहा अमृत · 3 Daily Couplets
+                  </h2>
+                  <p className="text-xs text-[var(--text-muted)] mt-0.5">
+                    Explore complete authentic dohas with simple meanings, deep contemplation, and poet profiles.
+                  </p>
+                </div>
+                <SutraNoteButton roomId="vani" roomName="Vani" contentTitle="Daily Doha Collection" />
+              </div>
+
+              {/* List of 3-4 Daily Dohas */}
+              <div className="space-y-6">
+                {dailyDohas.map((doha, idx) => {
+                  const currentStage = expandedDohaStages[doha.id] || 'understand';
+                  const poetProfile = POET_PROFILES[doha.poetId];
+
+                  return (
+                    <div
+                      key={doha.id}
+                      className="card-base p-6 sm:p-8 space-y-6 border-l-4 transition-all duration-300 shadow-sm"
+                      style={{ borderLeftColor: HERITAGE_THEME.primary }}
+                    >
+                      {/* Doha Top Header */}
+                      <div className="flex flex-wrap justify-between items-start gap-4 pb-4 border-b" style={{ borderColor: 'var(--border-default)' }}>
+                        <div>
+                          <div className="flex items-center gap-2 flex-wrap">
+                            {/* Clickable Poet Badge */}
+                            <button
+                              onClick={() => {
+                                if (poetProfile) setSelectedPoetProfile(poetProfile);
+                              }}
+                              className="group flex items-center gap-1.5 text-[11px] font-bold px-3 py-1 rounded-full text-white transition-transform hover:scale-105 shadow-sm"
+                              style={{ background: HERITAGE_THEME.primary }}
+                              title="Click to view poet biography"
+                            >
+                              <User size={12} />
+                              <span>{doha.poetNameDevanagari}</span>
+                              <span className="text-[10px] opacity-75 font-serif">({doha.poetNameEnglish})</span>
+                              <span className="text-[9px] bg-white/20 px-1.5 py-0.2 rounded ml-1 group-hover:bg-white/30">कवि परिचय →</span>
+                            </button>
+
+                            <span className="text-[10px] uppercase font-semibold px-2 py-0.5 rounded bg-[var(--bg-tertiary)] text-[var(--text-secondary)] border border-[var(--border-default)]">
+                              {doha.themeHindi}
+                            </span>
+                            <span className="text-[10px] text-[var(--text-muted)] font-mono">
+                              भाषा: {doha.languageDialect}
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-[var(--text-muted)] italic font-serif mt-1.5">
+                            स्रोत: {doha.source} &middot; <span className="text-emerald-600 dark:text-emerald-400 font-medium">✓ {doha.attributionConfidence}</span>
+                          </p>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <ReadAloudButton
+                            text={`${doha.dohaDevanagari.join(' ')}. अर्थ: ${doha.hindiMeaning}`}
+                            lang="hi"
+                            size="md"
+                          />
+                          <SutraNoteButton roomId="vani" roomName="Vani" contentTitle={`Doha: ${doha.poetNameDevanagari}`} />
+                          <RevisitButton roomId="vani" roomName="Vani" contentTitle={`Doha: ${doha.poetNameDevanagari}`} contentSummary={doha.lifeLesson} />
+                        </div>
+                      </div>
+
+                      {/* 1. READ (पढ़ें): Complete Devanagari Couplet */}
+                      <div className="py-4 text-center space-y-2 bg-[var(--bg-tertiary)]/20 p-6 rounded-xl border" style={{ borderColor: 'var(--border-default)' }}>
+                        <div className="font-devanagari text-xl sm:text-2xl font-bold leading-loose text-[var(--text-primary)] space-y-1">
+                          {doha.dohaDevanagari.map((line, lIdx) => (
+                            <p key={lIdx}>{line}</p>
+                          ))}
+                        </div>
+
+                        {showIast && (
+                          <div className="font-serif italic text-sm sm:text-base text-[var(--text-muted)] pt-2 border-t mt-3 space-y-0.5" style={{ borderColor: 'var(--border-default)' }}>
+                            {doha.transliteration.map((line, lIdx) => (
+                              <p key={lIdx}>{line}</p>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* ── 4-Stage Progressive Disclosure Buttons ── */}
+                      <div className="flex flex-wrap items-center gap-2 pt-1 border-t" style={{ borderColor: 'var(--border-default)' }}>
+                        <button
+                          onClick={() => toggleDohaStage(doha.id, 'understand')}
+                          className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
+                            currentStage === 'understand'
+                              ? 'bg-[#8B3A3A] text-white shadow-sm'
+                              : 'bg-[var(--bg-tertiary)] text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] border border-[var(--border-default)]'
+                          }`}
+                        >
+                          <BookOpen size={13} />
+                          <span>समझें · Understand</span>
+                          {currentStage === 'understand' ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
+                        </button>
+
+                        <button
+                          onClick={() => toggleDohaStage(doha.id, 'deeper')}
+                          className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
+                            currentStage === 'deeper'
+                              ? 'bg-[#9A7E4A] text-white shadow-sm'
+                              : 'bg-[var(--bg-tertiary)] text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] border border-[var(--border-default)]'
+                          }`}
+                        >
+                          <Sparkles size={13} />
+                          <span>गहन विचार · Go Deeper</span>
+                          {currentStage === 'deeper' ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
+                        </button>
+                      </div>
+
+                      {/* 2. UNDERSTAND (समझें) Stage Content */}
+                      {currentStage === 'understand' && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+                        >
+                          <div className="p-4 rounded-xl border bg-[var(--bg-secondary)] space-y-1.5" style={{ borderColor: 'var(--border-default)' }}>
+                            <span className="text-[10px] uppercase font-bold tracking-wider text-[#8B3A3A] block">सरल हिंदी भावार्थ</span>
+                            <p className="font-devanagari text-sm leading-relaxed text-[var(--text-primary)]">
+                              {doha.hindiMeaning}
+                            </p>
+                          </div>
+
+                          <div className="p-4 rounded-xl border bg-[var(--bg-secondary)] space-y-1.5" style={{ borderColor: 'var(--border-default)' }}>
+                            <span className="text-[10px] uppercase font-bold tracking-wider text-[#9A7E4A] block">English Translation</span>
+                            <p className="font-serif text-sm leading-relaxed text-[var(--text-primary)]">
+                              {doha.englishMeaning}
+                            </p>
+                          </div>
+                        </motion.div>
+                      )}
+
+                      {/* 3. GO DEEPER (गहन विचार) Stage Content */}
+                      {currentStage === 'deeper' && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          className="space-y-4"
+                        >
+                          {/* Philosophical / Psychological Interpretation */}
+                          <div className="p-5 rounded-xl border bg-[var(--bg-tertiary)]/30 space-y-2" style={{ borderColor: 'var(--border-default)' }}>
+                            <p className="text-[11px] uppercase font-bold tracking-wider text-[#8B3A3A]">दार्शनिक एवं मनोवैज्ञानिक दृष्टि (Deeper Insight)</p>
+                            <p className="text-xs sm:text-sm leading-relaxed text-[var(--text-secondary)] font-serif">
+                              {doha.deeperInterpretation}
+                            </p>
+                            {doha.contextBackground && (
+                              <p className="text-xs text-[var(--text-muted)] italic pt-1 border-t border-[var(--border-default)]">
+                                📜 पृष्ठभूमि: {doha.contextBackground}
+                              </p>
+                            )}
+                          </div>
+
+                          {/* Important Vocabulary Breakdown */}
+                          {doha.importantVocabulary && doha.importantVocabulary.length > 0 && (
+                            <div className="space-y-2">
+                              <p className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)]">महत्वपूर्ण शब्दार्थ (Key Vocabulary)</p>
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                                {doha.importantVocabulary.map((v, vIdx) => (
+                                  <div key={vIdx} className="p-2.5 rounded-lg border bg-[var(--bg-secondary)]" style={{ borderColor: 'var(--border-default)' }}>
+                                    <p className="font-devanagari font-bold text-[var(--text-primary)]">{v.word}</p>
+                                    <p className="text-[11px] text-[var(--text-muted)] mt-0.5">{v.meaning}</p>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </motion.div>
+                      )}
+
+                      {/* 4. REMEMBER (स्मरण रखें): One-Line Takeaway */}
+                      <div className="p-3.5 rounded-xl border border-amber-500/20 bg-amber-500/5 flex items-start gap-2.5">
+                        <Lightbulb size={16} className="text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
+                        <div>
+                          <p className="text-[10px] uppercase font-bold tracking-wider text-amber-700 dark:text-amber-300">स्मरण रखें · Daily Takeaway</p>
+                          <p className="text-xs sm:text-sm font-medium text-[var(--text-primary)] mt-0.5">
+                            {doha.lifeLesson}
+                          </p>
+                        </div>
+                      </div>
+
+                    </div>
+                  );
+                })}
+              </div>
+            </motion.div>
+          )}
+
+          {/* ─────────────── 2. BHAGAVAD GITA (SEQUENTIAL JOURNEY) ─────────────── */}
           {activeTab === 'geeta' && (
             <motion.div
               key="geeta"
@@ -182,7 +408,7 @@ export default function VaniPage() {
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <ReadAloudButton text={`${gitaItem.shlokaSanskrit}. अर्थ: ${gitaItem.hindiTranslation}`} lang="hi-IN" size="md" />
+                    <ReadAloudButton text={`${gitaItem.shlokaSanskrit}. अर्थ: ${gitaItem.hindiTranslation}`} lang="hi" size="md" />
                     <SutraNoteButton roomId="vani" roomName="Vani" contentTitle={`Gita ${gitaItem.chapter}.${gitaItem.verse}`} />
                     <RevisitButton roomId="vani" roomName="Vani" contentTitle={`Gita ${gitaItem.chapter}.${gitaItem.verse}`} contentSummary={gitaItem.englishTranslation} />
                   </div>
@@ -245,7 +471,7 @@ export default function VaniPage() {
             </motion.div>
           )}
 
-          {/* ─────────────── 2. RAMAYAN (COMPLETE CHAUPAI) ─────────────── */}
+          {/* ─────────────── 3. RAMAYAN (COMPLETE CHAUPAI) ─────────────── */}
           {activeTab === 'ramayan' && (
             <motion.div
               key="ramayan"
@@ -272,7 +498,7 @@ export default function VaniPage() {
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <ReadAloudButton text={`${ramayanItem.chaupaiLines.join(' ')}. अर्थ: ${ramayanItem.hindiMeaning}`} lang="hi-IN" size="md" />
+                    <ReadAloudButton text={`${ramayanItem.chaupaiLines.join(' ')}. अर्थ: ${ramayanItem.hindiMeaning}`} lang="hi" size="md" />
                     <SutraNoteButton roomId="vani" roomName="Vani" contentTitle={`Ramayan: ${ramayanItem.kand}`} />
                   </div>
                 </div>
@@ -325,7 +551,7 @@ export default function VaniPage() {
                   </div>
                 </div>
 
-                {/* Spiritual Significance & Key Vocabulary */}
+                {/* Spiritual Significance */}
                 <div className="p-4 rounded-xl border bg-[var(--bg-tertiary)]/30 space-y-2" style={{ borderColor: 'var(--border-default)' }}>
                   <span className="text-[10px] uppercase font-bold tracking-wider text-[#C4623F] block">यह प्रसंग क्यों महत्वपूर्ण है? (Why This Passage Matters)</span>
                   <p className="text-xs sm:text-sm leading-relaxed text-[var(--text-secondary)]">
@@ -337,7 +563,7 @@ export default function VaniPage() {
             </motion.div>
           )}
 
-          {/* ─────────────── 3. MAHABHARAT ─────────────── */}
+          {/* ─────────────── 4. MAHABHARAT ─────────────── */}
           {activeTab === 'mahabharat' && (
             <motion.div
               key="mahabharat"
@@ -361,7 +587,7 @@ export default function VaniPage() {
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <ReadAloudButton text={`${mahabharatItem.sanskritText}. अर्थ: ${mahabharatItem.hindiMeaning}`} lang="hi-IN" size="md" />
+                    <ReadAloudButton text={`${mahabharatItem.sanskritText}. अर्थ: ${mahabharatItem.hindiMeaning}`} lang="hi" size="md" />
                     <SutraNoteButton roomId="vani" roomName="Vani" contentTitle={`Mahabharat: ${mahabharatItem.parva}`} />
                   </div>
                 </div>
@@ -394,7 +620,7 @@ export default function VaniPage() {
             </motion.div>
           )}
 
-          {/* ─────────────── 4. UPANISHADS ─────────────── */}
+          {/* ─────────────── 5. UPANISHADS ─────────────── */}
           {activeTab === 'upanishad' && (
             <motion.div
               key="upanishad"
@@ -416,7 +642,7 @@ export default function VaniPage() {
                     <p className="text-xs text-[var(--text-muted)] mt-0.5">{upanishadItem.mantraReference}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <ReadAloudButton text={`${upanishadItem.sanskritMantra}. अर्थ: ${upanishadItem.hindiMeaning}`} lang="hi-IN" size="md" />
+                    <ReadAloudButton text={`${upanishadItem.sanskritMantra}. अर्थ: ${upanishadItem.hindiMeaning}`} lang="hi" size="md" />
                     <SutraNoteButton roomId="vani" roomName="Vani" contentTitle={upanishadItem.upanishadName} />
                   </div>
                 </div>
@@ -446,7 +672,7 @@ export default function VaniPage() {
             </motion.div>
           )}
 
-          {/* ─────────────── 5. VEDAS (DAILY 4 SELECTIONS) ─────────────── */}
+          {/* ─────────────── 6. VEDAS (DAILY 4 SELECTIONS) ─────────────── */}
           {activeTab === 'veda' && (
             <motion.div
               key="veda"
@@ -504,7 +730,7 @@ export default function VaniPage() {
             </motion.div>
           )}
 
-          {/* ─────────────── 6. PURANAS ─────────────── */}
+          {/* ─────────────── 7. PURANAS ─────────────── */}
           {activeTab === 'purana' && (
             <motion.div
               key="purana"
@@ -526,7 +752,7 @@ export default function VaniPage() {
                     <p className="text-xs text-[var(--text-muted)] mt-0.5">{puranaItem.chapterSection}</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <ReadAloudButton text={`${puranaItem.sanskritPassage}. अर्थ: ${puranaItem.hindiMeaning}`} lang="hi-IN" size="md" />
+                    <ReadAloudButton text={`${puranaItem.sanskritPassage}. अर्थ: ${puranaItem.hindiMeaning}`} lang="hi" size="md" />
                     <SutraNoteButton roomId="vani" roomName="Vani" contentTitle={puranaItem.puranaName} />
                   </div>
                 </div>
@@ -561,7 +787,7 @@ export default function VaniPage() {
             </motion.div>
           )}
 
-          {/* ─────────────── 7. BHARATIYA BHASHA (DAILY 3 WORDS) ─────────────── */}
+          {/* ─────────────── 8. BHARATIYA BHASHA (DAILY 3 WORDS) ─────────────── */}
           {activeTab === 'bhasha' && (
             <motion.div
               key="bhasha"
@@ -644,7 +870,7 @@ export default function VaniPage() {
             </motion.div>
           )}
 
-          {/* ─────────────── 8. HINDI VYAKARAN (DAILY PROGRESSIVE GRAMMAR) ─────────────── */}
+          {/* ─────────────── 9. HINDI VYAKARAN (DAILY PROGRESSIVE GRAMMAR) ─────────────── */}
           {activeTab === 'vyakaran' && (
             <motion.div
               key="vyakaran"
@@ -764,6 +990,124 @@ export default function VaniPage() {
             </motion.div>
           )}
 
+        </AnimatePresence>
+
+        {/* ─── POET PROFILE MODAL ─── */}
+        <AnimatePresence>
+          {selectedPoetProfile && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 10 }}
+                className="w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl border shadow-2xl p-6 sm:p-8 space-y-6 bg-[var(--bg-primary)]"
+                style={{ borderColor: HERITAGE_THEME.parchmentBorder }}
+              >
+                {/* Modal Header */}
+                <div className="flex justify-between items-start gap-4 pb-4 border-b" style={{ borderColor: 'var(--border-default)' }}>
+                  <div>
+                    <span className="text-[10px] uppercase font-bold tracking-widest px-2.5 py-0.5 rounded text-white" style={{ background: HERITAGE_THEME.primary }}>
+                      कवि परिचय एवं दर्शन · Poet Profile
+                    </span>
+                    <h3 className="font-devanagari text-2xl sm:text-3xl font-bold mt-2 text-[var(--text-primary)]">
+                      {selectedPoetProfile.nameDevanagari}
+                    </h3>
+                    <p className="font-serif text-xs text-[var(--text-muted)] italic">
+                      {selectedPoetProfile.nameEnglish} &middot; {selectedPoetProfile.tradition}
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={() => setSelectedPoetProfile(null)}
+                    className="p-2 rounded-full border hover:bg-[var(--bg-tertiary)] transition-all text-[var(--text-muted)] hover:text-[var(--text-primary)]"
+                    style={{ borderColor: 'var(--border-default)' }}
+                  >
+                    <X size={18} />
+                  </button>
+                </div>
+
+                {/* Quick Info Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                  <div className="p-3 rounded-xl border bg-[var(--bg-secondary)] flex items-start gap-2.5" style={{ borderColor: 'var(--border-default)' }}>
+                    <Clock size={15} className="text-[#8B3A3A] flex-shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-[10px] uppercase font-bold text-[var(--text-muted)]">काल / समय</p>
+                      <p className="font-medium text-[var(--text-primary)] mt-0.5">{selectedPoetProfile.period}</p>
+                    </div>
+                  </div>
+
+                  <div className="p-3 rounded-xl border bg-[var(--bg-secondary)] flex items-start gap-2.5" style={{ borderColor: 'var(--border-default)' }}>
+                    <MapPin size={15} className="text-[#8B3A3A] flex-shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-[10px] uppercase font-bold text-[var(--text-muted)]">क्षेत्र / जन्मभूमि</p>
+                      <p className="font-medium text-[var(--text-primary)] mt-0.5">{selectedPoetProfile.region}</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Biography Narrative */}
+                <div className="p-4 rounded-xl border bg-[var(--bg-secondary)] space-y-1.5" style={{ borderColor: 'var(--border-default)' }}>
+                  <p className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)]">जीवन परिचय (Biography)</p>
+                  <p className="font-devanagari text-xs sm:text-sm leading-relaxed text-[var(--text-secondary)]">
+                    {selectedPoetProfile.biography}
+                  </p>
+                </div>
+
+                {/* Core Philosophical Ideas */}
+                <div className="p-4 rounded-xl border bg-[var(--bg-tertiary)]/30 space-y-1.5" style={{ borderColor: 'var(--border-default)' }}>
+                  <p className="text-[10px] uppercase font-bold tracking-wider text-[#8B3A3A]">प्रमुख दार्शनिक विचार (Core Philosophy)</p>
+                  <p className="text-xs sm:text-sm leading-relaxed text-[var(--text-primary)]">
+                    {selectedPoetProfile.philosophicalIdeas}
+                  </p>
+                </div>
+
+                {/* Major Works & Dialect */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <p className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)]">प्रमुख रचनाएँ (Major Works)</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {selectedPoetProfile.majorWorks.map((work, wIdx) => (
+                        <span key={wIdx} className="text-xs px-2.5 py-1 rounded bg-[var(--bg-secondary)] border border-[var(--border-default)] font-devanagari font-medium text-[var(--text-primary)]">
+                          {work}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <p className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)]">भाषा एवं बोली (Dialect)</p>
+                    <p className="text-xs text-[var(--text-secondary)] bg-[var(--bg-secondary)] p-2 rounded-lg border border-[var(--border-default)] font-medium">
+                      {selectedPoetProfile.dialect}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Cultural Influence & Recommended Reading */}
+                <div className="p-4 rounded-xl border bg-amber-500/5 border-amber-500/20 space-y-2 text-xs">
+                  <div>
+                    <p className="text-[10px] uppercase font-bold text-amber-700 dark:text-amber-300">सांस्कृतिक प्रभाव (Influence)</p>
+                    <p className="text-[var(--text-secondary)] mt-0.5">{selectedPoetProfile.influence}</p>
+                  </div>
+                  <div className="border-t border-amber-500/10 pt-2">
+                    <p className="text-[10px] uppercase font-bold text-[var(--text-muted)]">अनुशंसित पठन (Recommended Reading)</p>
+                    <p className="text-[var(--text-primary)] font-serif italic mt-0.5">{selectedPoetProfile.recommendedReading}</p>
+                  </div>
+                </div>
+
+                {/* Close Button */}
+                <div className="flex justify-end pt-2">
+                  <button
+                    onClick={() => setSelectedPoetProfile(null)}
+                    className="px-5 py-2 rounded-xl text-xs font-semibold text-white transition-all shadow-sm"
+                    style={{ background: HERITAGE_THEME.primary }}
+                  >
+                    बन्द करें (Close Profile)
+                  </button>
+                </div>
+
+              </motion.div>
+            </div>
+          )}
         </AnimatePresence>
 
       </div>
