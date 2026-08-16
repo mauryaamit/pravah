@@ -48,6 +48,7 @@ export const ROOMS: Room[] = [
   { id: 'anusandhan',  name: 'Anusandhan',   nameHi: 'अनुसंधान',   nameHindi: 'अनुसंधान',   emoji: '🔬', description: 'Research papers across Science, Psychology, Math, and Social Sciences', route: '/anusandhan', colorVar: '--room-anusandhan', colorHex: '#2D5F5F', cluster: 'knowledge', ambientSound: 'library' },
 
   // WORLD
+  { id: 'khabar',      name: 'Khabar',       nameHi: 'खबर',        nameHindi: 'खबर',       emoji: '📰', description: 'Daily Intelligence & Current Affairs — India and the World', route: '/khabar', colorVar: '--room-khabar', colorHex: '#1E3A5F', cluster: 'world' },
   { id: 'vaishwik',    name: 'Vaishwik',     nameHi: 'वैश्विक',    nameHindi: 'वैश्विक',   emoji: '🌐', description: 'World Intelligence — Global Situations & Systems Explained', route: '/vaishwik', colorVar: '--room-duniya',       colorHex: '#4A7C59', cluster: 'world' },
   { id: 'safar',       name: 'Safar',        nameHi: 'सफ़र',        nameHindi: 'सफ़र',       emoji: '✈️', description: 'Travel the world from here',                  route: '/safar',        colorVar: '--room-safar',        colorHex: '#3A8A8A', cluster: 'world' },
   { id: 'bharat',      name: 'Bharat',       nameHi: 'भारत',       nameHindi: 'भारत',      emoji: '🇮🇳', description: 'Discover India - history, culture, wonder',   route: '/bharat',       colorVar: '--room-bharati',      colorHex: '#8A3A3A', cluster: 'world' },
