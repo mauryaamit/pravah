@@ -1,446 +1,770 @@
 'use client';
 
-import { useState } from 'react';
-import { getDayIndexForArray } from '@/lib/utils/date';
-import { SHLOKAS, DOHAS, CHAUPAIS, LOK_KATHAS, HINDI_WORDS } from './data';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FADE_UP } from '@/lib/utils/motion';
+import PageTransition from '@/components/layout/PageTransition';
 import ReadAloudButton from '@/components/shared/ReadAloudButton';
 import SutraNoteButton from '@/components/shared/SutraNoteButton';
 import RevisitButton from '@/components/shared/RevisitButton';
 import DayNavigator from '@/components/shared/DayNavigator';
-import PageTransition from '@/components/layout/PageTransition';
-import { Languages } from 'lucide-react';
+import { getDayIndexForArray } from '@/lib/utils/date';
+import {
+  RAMAYAN_CHAUPAIS,
+  GITA_SHLOKAS,
+  MAHABHARAT_ENTRIES,
+  UPANISHAD_ENTRIES,
+  VEDA_DAILY_SETS,
+  PURANA_ENTRIES,
+  BHASHA_DISCOVERY_SETS,
+  HINDI_VYAKARAN_ENTRIES,
+} from './data-heritage';
+import {
+  Scroll,
+  BookOpen,
+  Sparkles,
+  Compass,
+  Languages,
+  Layers,
+  GraduationCap,
+  Flame,
+  Check,
+  ChevronDown,
+  ChevronUp,
+} from 'lucide-react';
 
-interface EtymologyNote {
-  word: string;
-  root: string;
-  meaning: string;
-  explanation: string;
-}
+type VaniTab = 'geeta' | 'ramayan' | 'mahabharat' | 'upanishad' | 'veda' | 'purana' | 'bhasha' | 'vyakaran';
 
-const ETYMO_NOTES: Record<string, EtymologyNote> = {
-  "karma": {
-    word: "कर्म (Karma)",
-    root: "कृ (kṛ)",
-    meaning: "to do, to act",
-    explanation: "Derived from the root 'kṛ', karma represents any action, deed, or work. In Sanskrit philosophy, it refers to the physical or mental actions that shape our destiny and bind our consciousness."
-  },
-  "dharma": {
-    word: "धर्म (Dharma)",
-    root: "धृ (dhṛ)",
-    meaning: "to uphold, to sustain",
-    explanation: "From the root 'dhṛ', dharma is that which holds together, sustains, or upholds the cosmic order, righteousness, duty, and the essential nature of existence."
-  },
-  "yoga": {
-    word: "योग (Yoga)",
-    root: "युज् (yuj)",
-    meaning: "to yoke, to unite",
-    explanation: "From the root 'yuj', yoga means union, harmony, or integration. It is the steady control of the senses and the mind, leading to union with the ultimate reality."
-  },
-  "jnana": {
-    word: "ज्ञान (Jnana)",
-    root: "ज्ञा (jñā)",
-    meaning: "to know, to cognize",
-    explanation: "Derived from the root 'jñā', jnana refers to sacred knowledge, wisdom, or cognitive understanding. It is the realization of the true self and the ultimate truth."
-  },
-  "satya": {
-    word: "सत्य (Satya)",
-    root: "अस् (as)",
-    meaning: "to be, to exist",
-    explanation: "From the root 'as' (to exist), satya means truth, reality, or that which is unchangeable. It denotes truthfulness in thought, word, and deed."
-  },
-  "chitta": {
-    word: "चित्त (Chitta)",
-    root: "चित् (cit)",
-    meaning: "to perceive, to consciousness",
-    explanation: "From the root 'cit', chitta is the mind-stuff, memory bank, or individual consciousness. It is the canvas upon which our thoughts and impressions are painted."
-  },
-  "moha": {
-    word: "मोह (Moha)",
-    root: "मुह् (muh)",
-    meaning: "to become bewildered, to lose sense",
-    explanation: "From the root 'muh', moha signifies delusion, infatuation, or attachment. It is the mental cloudiness that prevents one from seeing things as they truly are."
-  },
-  "sukha": {
-    word: "सुख (Sukha)",
-    root: "सु-ख (su-kha)",
-    meaning: "good space, happiness",
-    explanation: "Combining 'su' (good, pleasant) and 'kha' (axle-hole, space), sukha originally meant a smooth-running chariot, representing ease, happiness, and comfort."
-  },
-  "dukkha": {
-    word: "दुःख (Duhkha)",
-    root: "दुष्-ख (duṣ-kha)",
-    meaning: "bad space, suffering",
-    explanation: "Combining 'duṣ' (bad, difficult) and 'kha' (space), duhkha originally referred to a stuck axle-hole, representing friction, discomfort, or suffering."
-  },
-  "prasada": {
-    word: "प्रसाद (Prasada)",
-    root: "सद् (sad) with prefix 'pra'",
-    meaning: "to sit down, to settle, to become clear",
-    explanation: "From the root 'sad' (to sit) with 'pra' (forward), prasada means to settle down, clarify, or become tranquil. It refers to a state of grace or mental clarity."
-  },
-  "manas": {
-    word: "मनस् (Manas)",
-    root: "मन् (man)",
-    meaning: "to think, to contemplate",
-    explanation: "Derived from the root 'man', manas is the coordinating faculty of the mind, the repository of thoughts, desires, and sensory coordination."
-  }
+const TABS: { id: VaniTab; label: string; labelHi: string; icon: any }[] = [
+  { id: 'geeta', label: 'Bhagavad Gita', labelHi: 'श्रीमद्भगवद्गीता', icon: Compass },
+  { id: 'ramayan', label: 'Ramayan', labelHi: 'श्रीरामचरितमानस', icon: Scroll },
+  { id: 'mahabharat', label: 'Mahabharat', labelHi: 'महाभारत', icon: Flame },
+  { id: 'upanishad', label: 'Upanishad', labelHi: 'उपनिषद्', icon: BookOpen },
+  { id: 'veda', label: 'Veda', labelHi: 'वेद (चतुर्वेद)', icon: Sparkles },
+  { id: 'purana', label: 'Purana', labelHi: 'पुराण', icon: Layers },
+  { id: 'bhasha', label: 'Bharatiya Bhasha', labelHi: 'भारतीय भाषा', icon: Languages },
+  { id: 'vyakaran', label: 'Hindi Vyakaran', labelHi: 'हिंदी व्याकरण', icon: GraduationCap },
+];
+
+const HERITAGE_THEME = {
+  primary: '#8B3A3A', // Deep traditional terracotta / madder red
+  gold: '#9A7E4A',    // Antique manuscript brass gold
+  parchment: '#FDFBF7',
+  parchmentBorder: '#E8E1D5',
+  cardBg: 'var(--bg-secondary)',
 };
-
-function getEtymologyNote(shloka: string, iast: string): EtymologyNote {
-  const shlokaLower = shloka.toLowerCase();
-  const iastLower = iast.toLowerCase();
-  
-  if (shlokaLower.includes("कर्म") || iastLower.includes("karma")) {
-    return ETYMO_NOTES.karma;
-  }
-  if (shlokaLower.includes("धर्म") || iastLower.includes("dharma")) {
-    return ETYMO_NOTES.dharma;
-  }
-  if (shlokaLower.includes("योग") || iastLower.includes("yoga")) {
-    return ETYMO_NOTES.yoga;
-  }
-  if (shlokaLower.includes("ज्ञान") || iastLower.includes("jñāna") || iastLower.includes("jnana")) {
-    return ETYMO_NOTES.jnana;
-  }
-  if (shlokaLower.includes("सत्य") || iastLower.includes("satya")) {
-    return ETYMO_NOTES.satya;
-  }
-  if (shlokaLower.includes("चित्त") || iastLower.includes("citta")) {
-    return ETYMO_NOTES.chitta;
-  }
-  if (shlokaLower.includes("मोह") || iastLower.includes("moha")) {
-    return ETYMO_NOTES.moha;
-  }
-  if (shlokaLower.includes("सुख") || iastLower.includes("sukha")) {
-    return ETYMO_NOTES.sukha;
-  }
-  if (shlokaLower.includes("दुःख") || iastLower.includes("duḥkha") || iastLower.includes("duhkha")) {
-    return ETYMO_NOTES.dukkha;
-  }
-  if (shlokaLower.includes("प्रसाद") || iastLower.includes("prasāda") || iastLower.includes("prasada")) {
-    return ETYMO_NOTES.prasada;
-  }
-  if (shlokaLower.includes("मन") || iastLower.includes("manas")) {
-    return ETYMO_NOTES.manas;
-  }
-  
-  return ETYMO_NOTES.dharma;
-}
 
 export default function VaniPage() {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
+  const [activeTab, setActiveTab] = useState<VaniTab>('geeta');
   const [showIast, setShowIast] = useState(false);
-  
-  const dayIndex = getDayIndexForArray(currentDate, 1000); // generic high ceiling
+  const [expandedSection, setExpandedSection] = useState<Record<string, boolean>>({});
+  const [vyakaranQuizSelected, setVyakaranQuizSelected] = useState<number | null>(null);
 
-  // Retrieve item for the day deterministically
-  const shlokaItem = SHLOKAS[getDayIndexForArray(currentDate, SHLOKAS.length)];
-  const dohaItem = DOHAS[getDayIndexForArray(currentDate, DOHAS.length)];
-  const chaupaiItem = CHAUPAIS[getDayIndexForArray(currentDate, CHAUPAIS.length)];
-  const lokKathaItem = LOK_KATHAS[getDayIndexForArray(currentDate, LOK_KATHAS.length)];
-  const hindiWordItem = HINDI_WORDS[getDayIndexForArray(currentDate, HINDI_WORDS.length)];
+  // Reset interactive states on date or tab change
+  useEffect(() => {
+    setVyakaranQuizSelected(null);
+  }, [currentDate, activeTab]);
 
-  const etymon = getEtymologyNote(shlokaItem.shloka, shlokaItem.iast);
+  const toggleExpand = (id: string) => {
+    setExpandedSection(prev => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  // Day index calculations
+  const dayIdx = getDayIndexForArray(currentDate, 10000);
+
+  // Deterministic daily items
+  const ramayanItem = RAMAYAN_CHAUPAIS[dayIdx % RAMAYAN_CHAUPAIS.length];
+  // Bhagavad Gita: Sequential journey through 700 verses
+  const gitaItem = GITA_SHLOKAS[dayIdx % GITA_SHLOKAS.length];
+  const mahabharatItem = MAHABHARAT_ENTRIES[dayIdx % MAHABHARAT_ENTRIES.length];
+  const upanishadItem = UPANISHAD_ENTRIES[dayIdx % UPANISHAD_ENTRIES.length];
+  const vedaItem = VEDA_DAILY_SETS[dayIdx % VEDA_DAILY_SETS.length];
+  const puranaItem = PURANA_ENTRIES[dayIdx % PURANA_ENTRIES.length];
+  const bhashaItem = BHASHA_DISCOVERY_SETS[dayIdx % BHASHA_DISCOVERY_SETS.length];
+  const vyakaranItem = HINDI_VYAKARAN_ENTRIES[dayIdx % HINDI_VYAKARAN_ENTRIES.length];
 
   return (
     <PageTransition>
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 space-y-8">
-        
-        {/* Header */}
-        <div className="border-b pb-4" style={{ borderColor: 'var(--border-default)' }}>
-          <h1 className="font-serif text-3xl" style={{ color: 'var(--text-primary)' }}>Vani</h1>
-          <p className="font-devanagari text-lg" style={{ color: '#8B3A3A' }}>वाणी - सरस्वती का वरदान</p>
-          <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>
-            Daily wisdom from ancient Sanskrit shlokas, Kabir's dohas, Ramcharitmanas verses, and regional folk wisdom.
-          </p>
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 space-y-6">
+
+        {/* ─── Header: Old Indian Library Aesthetic ─── */}
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 border-b pb-4" style={{ borderColor: HERITAGE_THEME.parchmentBorder }}>
+          <div className="text-left w-full sm:w-auto">
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] font-bold uppercase tracking-widest px-2 py-0.5 rounded text-white" style={{ background: HERITAGE_THEME.primary }}>
+                भारतीय ज्ञान एवं भाषा परंपरा
+              </span>
+            </div>
+            <h1 className="font-serif text-3xl font-bold mt-2" style={{ color: 'var(--text-primary)' }}>
+              वाणी · Vani
+            </h1>
+            <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
+              A sanctuary of India's linguistic, scriptural, and literary heritage.
+            </p>
+          </div>
+          <DayNavigator currentDate={currentDate} onDateChange={setCurrentDate} maxPastDays={30} />
         </div>
 
-        {/* Date Navigator */}
-        <DayNavigator currentDate={currentDate} onDateChange={setCurrentDate} />
+        {/* ─── Tab Bar: Scholarly Navigation ─── */}
+        <motion.div
+          variants={FADE_UP}
+          initial="initial"
+          animate="animate"
+          className="flex gap-2 flex-wrap"
+        >
+          {TABS.map(tab => {
+            const Icon = tab.icon;
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider transition-all duration-300 shadow-sm"
+                style={{
+                  background: isActive ? HERITAGE_THEME.primary : 'var(--bg-tertiary)',
+                  color: isActive ? 'white' : 'var(--text-muted)',
+                  border: `1px solid ${isActive ? HERITAGE_THEME.primary : 'var(--border-default)'}`,
+                }}
+              >
+                <Icon size={13} />
+                <span>{tab.label}</span>
+                <span className="opacity-70 text-[10px] font-devanagari">({tab.labelHi})</span>
+              </button>
+            );
+          })}
+        </motion.div>
 
-        {/* ─── Card 1: Shloka ─── */}
-        <div className="card-base p-6 space-y-4" style={{ borderLeft: '4px solid #8B3A3A' }}>
-          <div className="flex justify-between items-center">
-            <span className="text-xs font-semibold uppercase tracking-widest text-[#8B3A3A] font-serif">आज का श्लोक · Shloka of the Day</span>
-            <button
-              onClick={() => setShowIast(!showIast)}
-              className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border hover:bg-[var(--bg-tertiary)] transition-all"
-              style={{ borderColor: 'var(--border-default)', color: 'var(--text-secondary)' }}
+        {/* ─── Global Transliteration Toggle ─── */}
+        <div className="flex justify-end items-center">
+          <button
+            onClick={() => setShowIast(!showIast)}
+            className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border transition-all hover:bg-[var(--bg-tertiary)]"
+            style={{ borderColor: 'var(--border-default)', color: 'var(--text-secondary)' }}
+          >
+            <Languages size={13} style={{ color: HERITAGE_THEME.gold }} />
+            {showIast ? 'Show Devanagari Script' : 'Show Roman Transliteration (IAST)'}
+          </button>
+        </div>
+
+        {/* ─── Main Content Views ─── */}
+        <AnimatePresence mode="wait">
+
+          {/* ─────────────── 1. BHAGAVAD GITA (SEQUENTIAL JOURNEY) ─────────────── */}
+          {activeTab === 'geeta' && (
+            <motion.div
+              key="geeta"
+              variants={FADE_UP}
+              initial="initial"
+              animate="animate"
+              exit={{ opacity: 0, y: -10 }}
+              className="space-y-6"
             >
-              <Languages size={13} />
-              {showIast ? 'Show Devanagari' : 'Show Transliteration'}
-            </button>
-          </div>
+              <div className="card-base p-6 sm:p-8 space-y-6 border-l-4" style={{ borderLeftColor: HERITAGE_THEME.primary }}>
+                
+                {/* Header info */}
+                <div className="flex flex-wrap justify-between items-start gap-4 pb-4 border-b" style={{ borderColor: 'var(--border-default)' }}>
+                  <div>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-[10px] uppercase font-bold tracking-widest px-2.5 py-0.5 rounded text-white" style={{ background: HERITAGE_THEME.primary }}>
+                        श्रीमद्भगवद्गीता · दैनिक श्लोक
+                      </span>
+                      <span className="text-[11px] font-semibold font-mono px-2 py-0.5 rounded border border-[var(--border-default)] text-[var(--text-secondary)]">
+                        अध्याय {gitaItem.chapter}, श्लोक {gitaItem.verse} (प्रगति: {gitaItem.sequenceNumber}/700)
+                      </span>
+                    </div>
+                    <h2 className="font-devanagari text-2xl sm:text-3xl font-bold mt-2 text-[var(--text-primary)]">
+                      {gitaItem.chapterNameSanskrit}
+                    </h2>
+                    <p className="text-xs text-[var(--text-muted)] font-serif italic mt-0.5">
+                      {gitaItem.chapterNameEnglish} &middot; {gitaItem.chapterNameHindi}
+                    </p>
+                  </div>
 
-          {/* Main Shloka Text */}
-          <div className="py-2 text-center">
-            <p 
-              className={showIast ? "font-serif italic text-lg leading-relaxed" : "font-devanagari text-xl sm:text-2xl leading-loose font-semibold"}
-              style={{ color: 'var(--text-primary)', whiteSpace: 'pre-line' }}
-            >
-              {showIast ? shlokaItem.iast : shlokaItem.shloka}
-            </p>
-            <p className="text-xs font-serif text-right italic mt-3" style={{ color: 'var(--text-muted)' }}>
-              - {shlokaItem.source}
-            </p>
-          </div>
+                  <div className="flex items-center gap-2">
+                    <ReadAloudButton text={`${gitaItem.shlokaSanskrit}. अर्थ: ${gitaItem.hindiTranslation}`} lang="hi-IN" size="md" />
+                    <SutraNoteButton roomId="vani" roomName="Vani" contentTitle={`Gita ${gitaItem.chapter}.${gitaItem.verse}`} />
+                    <RevisitButton roomId="vani" roomName="Vani" contentTitle={`Gita ${gitaItem.chapter}.${gitaItem.verse}`} contentSummary={gitaItem.englishTranslation} />
+                  </div>
+                </div>
 
-          <div className="border-t pt-4 space-y-3" style={{ borderColor: 'var(--border-subtle)' }}>
-            {/* Hindi Meaning */}
-            <div className="space-y-1">
-              <span className="text-[10px] uppercase font-bold text-stone-500 block">अर्थ (Hindi)</span>
-              <p className="font-devanagari text-base" style={{ color: 'var(--text-secondary)' }}>
-                {shlokaItem.meaning_hindi}
-              </p>
-            </div>
+                {/* Shloka Presentation */}
+                <div className="py-4 text-center space-y-3 bg-[var(--bg-tertiary)]/20 p-6 rounded-xl border" style={{ borderColor: 'var(--border-default)' }}>
+                  <p className={showIast ? "font-serif italic text-lg sm:text-xl leading-relaxed text-[var(--text-primary)] whitespace-pre-line" : "font-devanagari text-xl sm:text-2xl font-bold leading-loose text-[var(--text-primary)] whitespace-pre-line"}>
+                    {showIast ? gitaItem.transliterationIAST : gitaItem.shlokaSanskrit}
+                  </p>
+                </div>
 
-            {/* English Meaning */}
-            <div className="space-y-1 pt-1">
-              <span className="text-[10px] uppercase font-bold text-stone-500 block">Translation (English)</span>
-              <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-                {shlokaItem.meaning_english}
-              </p>
-            </div>
+                {/* Word by Word Sanskrit Breakdown */}
+                <div className="space-y-2">
+                  <p className="text-[11px] uppercase font-bold tracking-wider text-[var(--text-muted)]">पदच्छेद एवं शब्दार्थ (Word-by-Word Sanskrit Breakdown)</p>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+                    {gitaItem.wordByWordMeaning.map((w, idx) => (
+                      <div key={idx} className="p-2 rounded border bg-[var(--bg-secondary)]" style={{ borderColor: 'var(--border-default)' }}>
+                        <p className="font-semibold text-[var(--text-primary)]">{w.sanskrit}</p>
+                        <p className="text-[11px] text-[var(--text-muted)] mt-0.5">{w.english}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
 
-            {/* Root Etymology display */}
-            {etymon && (
-              <div className="mt-4 p-4 rounded-xl border border-dashed text-xs space-y-1.5" style={{ borderColor: 'var(--border-default)', backgroundColor: 'color-mix(in srgb, #8B3A3A 4%, var(--bg-tertiary))' }}>
-                <span className="text-[10px] uppercase font-bold text-[#8B3A3A] block">शब्द व्युत्पत्ति · Root Etymology</span>
-                <p style={{ color: 'var(--text-primary)' }}>
-                  <strong className="font-semibold text-sm">{etymon.word}</strong> from the Sanskrit root <strong className="italic text-[#8B3A3A] font-serif text-sm">{etymon.root}</strong> (meaning &ldquo;{etymon.meaning}&rdquo;).
-                </p>
-                <p className="leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-                  {etymon.explanation}
-                </p>
+                {/* Translations */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                  <div className="p-4 rounded-xl border bg-[var(--bg-secondary)] space-y-1.5" style={{ borderColor: 'var(--border-default)' }}>
+                    <span className="text-[10px] uppercase font-bold tracking-wider text-[#8B3A3A] block">सरल भावार्थ (Hindi)</span>
+                    <p className="font-devanagari text-sm leading-relaxed text-[var(--text-primary)]">
+                      {gitaItem.hindiTranslation}
+                    </p>
+                  </div>
+
+                  <div className="p-4 rounded-xl border bg-[var(--bg-secondary)] space-y-1.5" style={{ borderColor: 'var(--border-default)' }}>
+                    <span className="text-[10px] uppercase font-bold tracking-wider text-[#9A7E4A] block">English Translation</span>
+                    <p className="font-serif text-sm leading-relaxed text-[var(--text-primary)]">
+                      {gitaItem.englishTranslation}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Deep Philosophical Commentary */}
+                <div className="p-5 rounded-xl border bg-[var(--bg-tertiary)]/30 space-y-2" style={{ borderColor: 'var(--border-default)' }}>
+                  <p className="text-[11px] uppercase font-bold tracking-wider text-[#8B3A3A]">गहन दार्शनिक मीमांसा (Philosophical Commentary)</p>
+                  <p className="text-xs sm:text-sm leading-relaxed text-[var(--text-secondary)]">
+                    {gitaItem.philosophicalCommentary}
+                  </p>
+                </div>
+
+                {/* Modern Practical Application */}
+                <div className="p-5 rounded-xl border border-emerald-500/20 bg-emerald-500/5 space-y-2">
+                  <p className="text-[11px] uppercase font-bold tracking-wider text-emerald-700 dark:text-emerald-300">आधुनिक जीवन में व्यावहारिक अनुप्रयोग (Practical Application)</p>
+                  <p className="text-xs sm:text-sm leading-relaxed text-[var(--text-primary)]">
+                    {gitaItem.modernPracticalApplication}
+                  </p>
+                </div>
+
               </div>
-            )}
+            </motion.div>
+          )}
 
-            {/* Read Aloud */}
-            <div className="flex justify-end items-center gap-1 pt-2">
-              <ReadAloudButton 
-                text={`${shlokaItem.shloka}. अर्थ: ${shlokaItem.meaning_hindi}`} 
-                lang="hi-IN" 
-                variant="pill" 
-              />
-              <RevisitButton
-                roomId="vani"
-                roomName="Vani"
-                contentTitle="Shloka of the Day"
-                contentSummary={shlokaItem.meaning_hindi}
-              />
-              <SutraNoteButton
-                roomId="vani"
-                roomName="Vani"
-                contentTitle="Shloka of the Day"
-                className=""
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* ─── Card 2: Doha ─── */}
-        <div className="card-base p-6 space-y-4" style={{ borderLeft: '4px solid #8B3A3A' }}>
-          <div className="flex justify-between items-center">
-            <span className="text-xs font-semibold uppercase tracking-widest text-[#8B3A3A] font-serif">आज का दोहा · Doha of the Day</span>
-            <span className="text-xs italic" style={{ color: 'var(--text-faint)' }}>Poet: {dohaItem.poet}</span>
-          </div>
-
-          {/* Doha Text */}
-          <div className="py-2 text-center">
-            <p 
-              className="font-devanagari text-xl sm:text-2xl leading-loose font-semibold"
-              style={{ color: 'var(--text-primary)', whiteSpace: 'pre-line' }}
+          {/* ─────────────── 2. RAMAYAN (COMPLETE CHAUPAI) ─────────────── */}
+          {activeTab === 'ramayan' && (
+            <motion.div
+              key="ramayan"
+              variants={FADE_UP}
+              initial="initial"
+              animate="animate"
+              exit={{ opacity: 0, y: -10 }}
+              className="space-y-6"
             >
-              {dohaItem.doha}
-            </p>
-            <p className="text-xs font-serif text-right italic mt-3" style={{ color: 'var(--text-muted)' }}>
-              - {dohaItem.poet}
-            </p>
-          </div>
+              <div className="card-base p-6 sm:p-8 space-y-6 border-l-4" style={{ borderLeftColor: '#C4623F' }}>
+                
+                {/* Header */}
+                <div className="flex flex-wrap justify-between items-start gap-4 pb-4 border-b" style={{ borderColor: 'var(--border-default)' }}>
+                  <div>
+                    <span className="text-[10px] uppercase font-bold tracking-widest px-2.5 py-0.5 rounded text-white bg-[#C4623F]">
+                      श्रीरामचरितमानस · सम्पूर्ण चौपाई
+                    </span>
+                    <h2 className="font-devanagari text-2xl sm:text-3xl font-bold mt-2 text-[var(--text-primary)]">
+                      {ramayanItem.kand} <span className="text-xs font-serif opacity-75 font-normal">({ramayanItem.kandEnglish})</span>
+                    </h2>
+                    <p className="text-xs text-[var(--text-muted)] mt-0.5">
+                      {ramayanItem.dohaNumber} &middot; पात्र: {ramayanItem.charactersInvolved.join(', ')}
+                    </p>
+                  </div>
 
-          <div className="border-t pt-4 space-y-2" style={{ borderColor: 'var(--border-subtle)' }}>
-            <div className="space-y-1">
-              <span className="text-[10px] uppercase font-bold text-stone-500 block">अर्थ</span>
-              <p className="font-devanagari text-base" style={{ color: 'var(--text-secondary)' }}>
-                {dohaItem.meaning_hindi}
-              </p>
-            </div>
+                  <div className="flex items-center gap-2">
+                    <ReadAloudButton text={`${ramayanItem.chaupaiLines.join(' ')}. अर्थ: ${ramayanItem.hindiMeaning}`} lang="hi-IN" size="md" />
+                    <SutraNoteButton roomId="vani" roomName="Vani" contentTitle={`Ramayan: ${ramayanItem.kand}`} />
+                  </div>
+                </div>
 
-            <div className="flex justify-end items-center gap-1 pt-2">
-              <ReadAloudButton 
-                text={`${dohaItem.doha}. अर्थ: ${dohaItem.meaning_hindi}`} 
-                lang="hi-IN" 
-                variant="pill" 
-              />
-              <RevisitButton
-                roomId="vani"
-                roomName="Vani"
-                contentTitle={`Doha by ${dohaItem.poet}`}
-                contentSummary={dohaItem.meaning_hindi}
-              />
-              <SutraNoteButton
-                roomId="vani"
-                roomName="Vani"
-                contentTitle={`Doha by ${dohaItem.poet}`}
-                className=""
-              />
-            </div>
-          </div>
-        </div>
+                {/* Complete Chaupai Text */}
+                <div className="py-4 text-center space-y-2 bg-[var(--bg-tertiary)]/20 p-6 rounded-xl border" style={{ borderColor: 'var(--border-default)' }}>
+                  {showIast ? (
+                    <div className="font-serif italic text-base sm:text-lg leading-relaxed text-[var(--text-primary)] space-y-1">
+                      {ramayanItem.transliteration.map((line, idx) => (
+                        <p key={idx}>{line}</p>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="font-devanagari text-xl sm:text-2xl font-bold leading-loose text-[var(--text-primary)] space-y-1">
+                      {ramayanItem.chaupaiLines.map((line, idx) => (
+                        <p key={idx}>{line}</p>
+                      ))}
+                    </div>
+                  )}
 
-        {/* ─── Card 3: Chaupai ─── */}
-        <div className="card-base p-6 space-y-4" style={{ borderLeft: '4px solid #8B3A3A' }}>
-          <div className="flex justify-between items-center">
-            <span className="text-xs font-semibold uppercase tracking-widest text-[#8B3A3A] font-serif">आज की चौपाई · Ramcharitmanas Verse</span>
-            <span className="text-xs px-2 py-0.5 rounded bg-orange-100 text-orange-800 text-[10px] font-semibold">
-              {chaupaiItem.kand}
-            </span>
-          </div>
+                  {ramayanItem.dohaLine && (
+                    <p className="font-devanagari text-lg text-[#C4623F] font-semibold pt-2 border-t mt-3" style={{ borderColor: 'var(--border-default)' }}>
+                      दुआ: {ramayanItem.dohaLine}
+                    </p>
+                  )}
+                </div>
 
-          {/* Chaupai Text */}
-          <div className="py-2 text-center">
-            <p 
-              className="font-devanagari text-xl sm:text-2xl leading-loose font-semibold"
-              style={{ color: 'var(--text-primary)', whiteSpace: 'pre-line' }}
+                {/* Narrative Context */}
+                <div className="p-4 rounded-xl border bg-[var(--bg-secondary)] space-y-1.5" style={{ borderColor: 'var(--border-default)' }}>
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)] block">प्रसंग (Narrative Setting)</span>
+                  <p className="text-xs sm:text-sm leading-relaxed text-[var(--text-secondary)]">
+                    {ramayanItem.context}
+                  </p>
+                </div>
+
+                {/* Hindi & English Meanings */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="p-4 rounded-xl border bg-[var(--bg-secondary)] space-y-1.5" style={{ borderColor: 'var(--border-default)' }}>
+                    <span className="text-[10px] uppercase font-bold tracking-wider text-[#C4623F] block">भावार्थ (Hindi)</span>
+                    <p className="font-devanagari text-sm leading-relaxed text-[var(--text-primary)]">
+                      {ramayanItem.hindiMeaning}
+                    </p>
+                  </div>
+
+                  <div className="p-4 rounded-xl border bg-[var(--bg-secondary)] space-y-1.5" style={{ borderColor: 'var(--border-default)' }}>
+                    <span className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)] block">English Translation</span>
+                    <p className="font-serif text-sm leading-relaxed text-[var(--text-primary)]">
+                      {ramayanItem.englishMeaning}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Spiritual Significance & Key Vocabulary */}
+                <div className="p-4 rounded-xl border bg-[var(--bg-tertiary)]/30 space-y-2" style={{ borderColor: 'var(--border-default)' }}>
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-[#C4623F] block">यह प्रसंग क्यों महत्वपूर्ण है? (Why This Passage Matters)</span>
+                  <p className="text-xs sm:text-sm leading-relaxed text-[var(--text-secondary)]">
+                    {ramayanItem.spiritualSignificance}
+                  </p>
+                </div>
+
+              </div>
+            </motion.div>
+          )}
+
+          {/* ─────────────── 3. MAHABHARAT ─────────────── */}
+          {activeTab === 'mahabharat' && (
+            <motion.div
+              key="mahabharat"
+              variants={FADE_UP}
+              initial="initial"
+              animate="animate"
+              exit={{ opacity: 0, y: -10 }}
+              className="space-y-6"
             >
-              {chaupaiItem.chaupai}
-            </p>
-            <p className="text-xs font-serif text-right italic mt-3" style={{ color: 'var(--text-muted)' }}>
-              - श्रीरामचरितमानस ({chaupaiItem.kand})
-            </p>
-          </div>
+              <div className="card-base p-6 sm:p-8 space-y-6 border-l-4" style={{ borderLeftColor: '#7A4A8B' }}>
+                <div className="flex justify-between items-start gap-4 pb-4 border-b" style={{ borderColor: 'var(--border-default)' }}>
+                  <div>
+                    <span className="text-[10px] uppercase font-bold tracking-widest px-2.5 py-0.5 rounded text-white bg-[#7A4A8B]">
+                      महाभारत · धर्म विमर्श
+                    </span>
+                    <h2 className="font-devanagari text-2xl sm:text-3xl font-bold mt-2 text-[var(--text-primary)]">
+                      {mahabharatItem.parva} ({mahabharatItem.parvaEnglish})
+                    </h2>
+                    <p className="text-xs text-[var(--text-muted)] mt-0.5">
+                      {mahabharatItem.chapterReference} &middot; संवाद: {mahabharatItem.charactersInvolved.join(' व ')}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <ReadAloudButton text={`${mahabharatItem.sanskritText}. अर्थ: ${mahabharatItem.hindiMeaning}`} lang="hi-IN" size="md" />
+                    <SutraNoteButton roomId="vani" roomName="Vani" contentTitle={`Mahabharat: ${mahabharatItem.parva}`} />
+                  </div>
+                </div>
 
-          <div className="border-t pt-4 space-y-2" style={{ borderColor: 'var(--border-subtle)' }}>
-            <div className="space-y-1">
-              <span className="text-[10px] uppercase font-bold text-stone-500 block">अर्थ</span>
-              <p className="font-devanagari text-base" style={{ color: 'var(--text-secondary)' }}>
-                {chaupaiItem.meaning_hindi}
-              </p>
-            </div>
+                <div className="py-4 text-center space-y-3 bg-[var(--bg-tertiary)]/20 p-6 rounded-xl border" style={{ borderColor: 'var(--border-default)' }}>
+                  <p className={showIast ? "font-serif italic text-lg sm:text-xl leading-relaxed text-[var(--text-primary)] whitespace-pre-line" : "font-devanagari text-xl sm:text-2xl font-bold leading-loose text-[var(--text-primary)] whitespace-pre-line"}>
+                    {showIast ? mahabharatItem.transliteration : mahabharatItem.sanskritText}
+                  </p>
+                </div>
 
-            <div className="flex justify-end items-center gap-1 pt-2">
-              <ReadAloudButton 
-                text={`${chaupaiItem.chaupai}. अर्थ: ${chaupaiItem.meaning_hindi}`} 
-                lang="hi-IN" 
-                variant="pill" 
-              />
-              <RevisitButton
-                roomId="vani"
-                roomName="Vani"
-                contentTitle={`Chaupai (${chaupaiItem.kand})`}
-                contentSummary={chaupaiItem.meaning_hindi}
-              />
-              <SutraNoteButton
-                roomId="vani"
-                roomName="Vani"
-                contentTitle={`Chaupai (${chaupaiItem.kand})`}
-                className=""
-              />
-            </div>
-          </div>
-        </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="p-4 rounded-xl border bg-[var(--bg-secondary)] space-y-1.5" style={{ borderColor: 'var(--border-default)' }}>
+                    <span className="text-[10px] uppercase font-bold text-[#7A4A8B]">हिंदी अर्थ</span>
+                    <p className="font-devanagari text-sm leading-relaxed text-[var(--text-primary)]">{mahabharatItem.hindiMeaning}</p>
+                  </div>
+                  <div className="p-4 rounded-xl border bg-[var(--bg-secondary)] space-y-1.5" style={{ borderColor: 'var(--border-default)' }}>
+                    <span className="text-[10px] uppercase font-bold text-[var(--text-muted)]">English Translation</span>
+                    <p className="font-serif text-sm leading-relaxed text-[var(--text-primary)]">{mahabharatItem.englishMeaning}</p>
+                  </div>
+                </div>
 
-        {/* ─── Card 4: Lok Katha / Folk Wisdom ─── */}
-        <div className="card-base p-6 space-y-4" style={{ borderLeft: '4px solid #8B3A3A' }}>
-          <div className="flex justify-between items-center">
-            <span className="text-xs font-semibold uppercase tracking-widest text-[#8B3A3A] font-serif">आज की कहावत · Dialect Folk Saying</span>
-            <span className="text-xs px-2.5 py-0.5 rounded-full font-semibold" style={{ background: 'rgba(139, 58, 58, 0.1)', color: '#8B3A3A' }}>
-              {lokKathaItem.language}
-            </span>
-          </div>
+                <div className="p-4 rounded-xl border bg-amber-500/5 border-amber-500/20 space-y-2">
+                  <span className="text-[10px] uppercase font-bold text-amber-700 dark:text-amber-300">धर्म संकट एवं नैतिक मीमांसा (Ethical Dilemma)</span>
+                  <p className="text-xs sm:text-sm leading-relaxed text-[var(--text-secondary)]">{mahabharatItem.ethicalDilemma}</p>
+                  <p className="text-xs sm:text-sm leading-relaxed text-[var(--text-primary)] pt-1 border-t border-amber-500/10 italic">
+                    💡 आधुनिक दृष्टि: {mahabharatItem.modernReflection}
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          )}
 
-          {/* Saying Text */}
-          <div className="py-2 text-center">
-            <p 
-              className="font-devanagari text-xl sm:text-2xl leading-loose font-semibold italic"
-              style={{ color: 'var(--text-primary)' }}
+          {/* ─────────────── 4. UPANISHADS ─────────────── */}
+          {activeTab === 'upanishad' && (
+            <motion.div
+              key="upanishad"
+              variants={FADE_UP}
+              initial="initial"
+              animate="animate"
+              exit={{ opacity: 0, y: -10 }}
+              className="space-y-6"
             >
-              &ldquo;{lokKathaItem.saying}&rdquo;
-            </p>
-          </div>
+              <div className="card-base p-6 sm:p-8 space-y-6 border-l-4" style={{ borderLeftColor: '#4A7A8B' }}>
+                <div className="flex justify-between items-start gap-4 pb-4 border-b" style={{ borderColor: 'var(--border-default)' }}>
+                  <div>
+                    <span className="text-[10px] uppercase font-bold tracking-widest px-2.5 py-0.5 rounded text-white bg-[#4A7A8B]">
+                      उपनिषद् · वेदान्त सार
+                    </span>
+                    <h2 className="font-devanagari text-2xl sm:text-3xl font-bold mt-2 text-[var(--text-primary)]">
+                      {upanishadItem.upanishadName} ({upanishadItem.upanishadNameEnglish})
+                    </h2>
+                    <p className="text-xs text-[var(--text-muted)] mt-0.5">{upanishadItem.mantraReference}</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <ReadAloudButton text={`${upanishadItem.sanskritMantra}. अर्थ: ${upanishadItem.hindiMeaning}`} lang="hi-IN" size="md" />
+                    <SutraNoteButton roomId="vani" roomName="Vani" contentTitle={upanishadItem.upanishadName} />
+                  </div>
+                </div>
 
-          <div className="border-t pt-4 space-y-2" style={{ borderColor: 'var(--border-subtle)' }}>
-            <div className="space-y-1">
-              <span className="text-[10px] uppercase font-bold text-stone-500 block">कहावत का अर्थ</span>
-              <p className="font-devanagari text-base" style={{ color: 'var(--text-secondary)' }}>
-                {lokKathaItem.meaning_hindi}
-              </p>
-            </div>
+                <div className="py-4 text-center space-y-3 bg-[var(--bg-tertiary)]/20 p-6 rounded-xl border" style={{ borderColor: 'var(--border-default)' }}>
+                  <p className={showIast ? "font-serif italic text-lg sm:text-xl leading-relaxed text-[var(--text-primary)] whitespace-pre-line" : "font-devanagari text-xl sm:text-2xl font-bold leading-loose text-[var(--text-primary)] whitespace-pre-line"}>
+                    {showIast ? upanishadItem.transliterationIAST : upanishadItem.sanskritMantra}
+                  </p>
+                </div>
 
-            <div className="flex justify-end items-center gap-1 pt-2">
-              <ReadAloudButton 
-                text={`${lokKathaItem.saying}. इसका अर्थ है: ${lokKathaItem.meaning_hindi}`} 
-                lang="hi-IN" 
-                variant="pill" 
-              />
-              <RevisitButton
-                roomId="vani"
-                roomName="Vani"
-                contentTitle="Folk Saying"
-                contentSummary={lokKathaItem.meaning_hindi}
-              />
-              <SutraNoteButton
-                roomId="vani"
-                roomName="Vani"
-                contentTitle="Folk Saying"
-                className=""
-              />
-            </div>
-          </div>
-        </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="p-4 rounded-xl border bg-[var(--bg-secondary)] space-y-1.5" style={{ borderColor: 'var(--border-default)' }}>
+                    <span className="text-[10px] uppercase font-bold text-[#4A7A8B]">हिंदी अर्थ</span>
+                    <p className="font-devanagari text-sm leading-relaxed text-[var(--text-primary)]">{upanishadItem.hindiMeaning}</p>
+                  </div>
+                  <div className="p-4 rounded-xl border bg-[var(--bg-secondary)] space-y-1.5" style={{ borderColor: 'var(--border-default)' }}>
+                    <span className="text-[10px] uppercase font-bold text-[var(--text-muted)]">English Meaning</span>
+                    <p className="font-serif text-sm leading-relaxed text-[var(--text-primary)]">{upanishadItem.englishMeaning}</p>
+                  </div>
+                </div>
 
-        {/* ─── Card 5: Hindi Word of the Day ─── */}
-        <div className="card-base p-6 space-y-4" style={{ borderLeft: '4px solid #8B3A3A' }}>
-          <div className="flex justify-between items-center">
-            <span className="text-xs font-semibold uppercase tracking-widest text-[#8B3A3A] font-serif">आज का शब्द · Hindi Word of the Day</span>
-          </div>
+                <div className="p-4 rounded-xl border bg-[var(--bg-tertiary)]/30 space-y-2" style={{ borderColor: 'var(--border-default)' }}>
+                  <span className="text-[10px] uppercase font-bold text-[#4A7A8B]">वेदान्त दर्शन सम्बंध (Vedantic Significance)</span>
+                  <p className="text-xs sm:text-sm leading-relaxed text-[var(--text-secondary)]">{upanishadItem.vedanticSignificance}</p>
+                </div>
+              </div>
+            </motion.div>
+          )}
 
-          {/* Word Text */}
-          <div className="py-2 text-center">
-            <p 
-              className="font-devanagari text-3xl leading-loose font-semibold"
-              style={{ color: 'var(--text-primary)' }}
+          {/* ─────────────── 5. VEDAS (DAILY 4 SELECTIONS) ─────────────── */}
+          {activeTab === 'veda' && (
+            <motion.div
+              key="veda"
+              variants={FADE_UP}
+              initial="initial"
+              animate="animate"
+              exit={{ opacity: 0, y: -10 }}
+              className="space-y-6"
             >
-              {hindiWordItem.word}
-            </p>
-          </div>
+              <div className="card-base p-6 sm:p-8 space-y-6 border-l-4" style={{ borderLeftColor: HERITAGE_THEME.gold }}>
+                <div className="flex justify-between items-start gap-4 pb-4 border-b" style={{ borderColor: 'var(--border-default)' }}>
+                  <div>
+                    <span className="text-[10px] uppercase font-bold tracking-widest px-2.5 py-0.5 rounded text-white" style={{ background: HERITAGE_THEME.gold }}>
+                      चतुर्वेद · दैनिक चतुष्टय (Daily 4 Selections)
+                    </span>
+                    <h2 className="font-serif text-2xl sm:text-3xl font-bold mt-2 text-[var(--text-primary)]">
+                      The Four Vedas
+                    </h2>
+                    <p className="text-xs text-[var(--text-muted)] mt-0.5">
+                      Daily representative selections from Rigveda, Yajurveda, Samaveda, and Atharvaveda.
+                    </p>
+                  </div>
+                  <SutraNoteButton roomId="vani" roomName="Vani" contentTitle="Chaturveda Selections" />
+                </div>
 
-          <div className="border-t pt-4 space-y-3" style={{ borderColor: 'var(--border-subtle)' }}>
-            <div className="space-y-1">
-              <span className="text-[10px] uppercase font-bold text-stone-500 block">अर्थ (Meaning)</span>
-              <p className="font-devanagari text-base" style={{ color: 'var(--text-secondary)' }}>
-                {hindiWordItem.meaning}
-              </p>
-            </div>
+                {/* 4 Selections Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {[
+                    { data: vedaItem.rigveda, badge: 'ऋग्वेद (Rigveda)', color: '#8B3A3A' },
+                    { data: vedaItem.yajurveda, badge: 'यजुर्वेद (Yajurveda)', color: '#4A7A8B' },
+                    { data: vedaItem.samaveda, badge: 'सामवेद (Samaveda)', color: '#7A4A8B' },
+                    { data: vedaItem.atharvaveda, badge: 'अथर्ववेद (Atharvaveda)', color: '#4A8C7A' },
+                  ].map((v, idx) => (
+                    <div key={idx} className="p-5 rounded-xl border bg-[var(--bg-secondary)] space-y-3" style={{ borderColor: 'var(--border-default)' }}>
+                      <div className="flex justify-between items-center">
+                        <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded text-white" style={{ background: v.color }}>
+                          {v.badge}
+                        </span>
+                        <span className="text-[10px] text-[var(--text-muted)] font-mono">{v.data.referenceNumber}</span>
+                      </div>
+                      <p className={showIast ? "font-serif italic text-sm text-[var(--text-primary)] leading-relaxed" : "font-devanagari text-base font-bold text-[var(--text-primary)] leading-relaxed"}>
+                        {showIast ? v.data.transliterationIAST : v.data.sanskritText}
+                      </p>
+                      <p className="font-devanagari text-xs text-[var(--text-secondary)] leading-relaxed border-t pt-2" style={{ borderColor: 'var(--border-default)' }}>
+                        <span className="font-bold text-[10px] text-[var(--text-muted)] block">अर्थ:</span>
+                        {v.data.hindiMeaning}
+                      </p>
+                      <p className="text-[11px] text-[var(--text-muted)] italic font-serif">
+                        {v.data.significance}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          )}
 
-            <div className="space-y-1">
-              <span className="text-[10px] uppercase font-bold text-stone-500 block">प्रयोग (Usage)</span>
-              <p className="font-devanagari text-base italic" style={{ color: 'var(--text-muted)' }}>
-                &ldquo;{hindiWordItem.usage}&rdquo;
-              </p>
-            </div>
+          {/* ─────────────── 6. PURANAS ─────────────── */}
+          {activeTab === 'purana' && (
+            <motion.div
+              key="purana"
+              variants={FADE_UP}
+              initial="initial"
+              animate="animate"
+              exit={{ opacity: 0, y: -10 }}
+              className="space-y-6"
+            >
+              <div className="card-base p-6 sm:p-8 space-y-6 border-l-4" style={{ borderLeftColor: '#8B5A3A' }}>
+                <div className="flex justify-between items-start gap-4 pb-4 border-b" style={{ borderColor: 'var(--border-default)' }}>
+                  <div>
+                    <span className="text-[10px] uppercase font-bold tracking-widest px-2.5 py-0.5 rounded text-white bg-[#8B5A3A]">
+                      पुराण कथा एवं तत्व ज्ञान
+                    </span>
+                    <h2 className="font-devanagari text-2xl sm:text-3xl font-bold mt-2 text-[var(--text-primary)]">
+                      {puranaItem.puranaName} ({puranaItem.puranaNameEnglish})
+                    </h2>
+                    <p className="text-xs text-[var(--text-muted)] mt-0.5">{puranaItem.chapterSection}</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <ReadAloudButton text={`${puranaItem.sanskritPassage}. अर्थ: ${puranaItem.hindiMeaning}`} lang="hi-IN" size="md" />
+                    <SutraNoteButton roomId="vani" roomName="Vani" contentTitle={puranaItem.puranaName} />
+                  </div>
+                </div>
 
-            <div className="flex justify-end items-center gap-1 pt-2">
-              <ReadAloudButton 
-                text={`${hindiWordItem.word}. इसका अर्थ है ${hindiWordItem.meaning}. उदाहरण वाक्य: ${hindiWordItem.usage}`} 
-                lang="hi-IN" 
-                variant="pill" 
-              />
-              <RevisitButton
-                roomId="vani"
-                roomName="Vani"
-                contentTitle={`Word of the Day - ${hindiWordItem.word}`}
-                contentSummary={hindiWordItem.meaning}
-              />
-              <SutraNoteButton
-                roomId="vani"
-                roomName="Vani"
-                contentTitle={`Word of the Day - ${hindiWordItem.word}`}
-                className=""
-              />
-            </div>
-          </div>
-        </div>
+                <div className="py-4 text-center space-y-3 bg-[var(--bg-tertiary)]/20 p-6 rounded-xl border" style={{ borderColor: 'var(--border-default)' }}>
+                  <p className={showIast ? "font-serif italic text-lg sm:text-xl leading-relaxed text-[var(--text-primary)] whitespace-pre-line" : "font-devanagari text-xl sm:text-2xl font-bold leading-loose text-[var(--text-primary)] whitespace-pre-line"}>
+                    {showIast ? puranaItem.transliteration : puranaItem.sanskritPassage}
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-xl border bg-[var(--bg-secondary)] space-y-1.5" style={{ borderColor: 'var(--border-default)' }}>
+                  <span className="text-[10px] uppercase font-bold text-[#8B5A3A]">पौराणिक आख्यान (Story & Context)</span>
+                  <p className="text-xs sm:text-sm leading-relaxed text-[var(--text-secondary)]">{puranaItem.storyNarrative}</p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="p-4 rounded-xl border bg-[var(--bg-secondary)] space-y-1.5" style={{ borderColor: 'var(--border-default)' }}>
+                    <span className="text-[10px] uppercase font-bold text-[#8B5A3A]">भावार्थ (Hindi)</span>
+                    <p className="font-devanagari text-sm leading-relaxed text-[var(--text-primary)]">{puranaItem.hindiMeaning}</p>
+                  </div>
+                  <div className="p-4 rounded-xl border bg-[var(--bg-secondary)] space-y-1.5" style={{ borderColor: 'var(--border-default)' }}>
+                    <span className="text-[10px] uppercase font-bold text-[var(--text-muted)]">English Translation</span>
+                    <p className="font-serif text-sm leading-relaxed text-[var(--text-primary)]">{puranaItem.englishMeaning}</p>
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-xl border bg-[var(--bg-tertiary)]/30 space-y-2" style={{ borderColor: 'var(--border-default)' }}>
+                  <span className="text-[10px] uppercase font-bold text-[#8B5A3A]">प्रतीक एवं सांस्कृतिक सन्देश (Symbolism & Significance)</span>
+                  <p className="text-xs sm:text-sm leading-relaxed text-[var(--text-secondary)]">{puranaItem.symbolismAndSignificance}</p>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {/* ─────────────── 7. BHARATIYA BHASHA (DAILY 3 WORDS) ─────────────── */}
+          {activeTab === 'bhasha' && (
+            <motion.div
+              key="bhasha"
+              variants={FADE_UP}
+              initial="initial"
+              animate="animate"
+              exit={{ opacity: 0, y: -10 }}
+              className="space-y-6"
+            >
+              <div className="card-base p-6 sm:p-8 space-y-6 border-l-4" style={{ borderLeftColor: '#3A7A6B' }}>
+                <div className="flex justify-between items-start gap-4 pb-4 border-b" style={{ borderColor: 'var(--border-default)' }}>
+                  <div>
+                    <span className="text-[10px] uppercase font-bold tracking-widest px-2.5 py-0.5 rounded text-white bg-[#3A7A6B]">
+                      दैनिक भाषा संगम · 3 Daily Words
+                    </span>
+                    <h2 className="font-serif text-2xl sm:text-3xl font-bold mt-2 text-[var(--text-primary)]">
+                      Linguistic Discovery
+                    </h2>
+                    <p className="text-xs text-[var(--text-muted)] mt-0.5">
+                      1 Sanskrit Root Word &middot; 1 Awadhi Word &middot; 1 Regional Indian Language Word
+                    </p>
+                  </div>
+                  <SutraNoteButton roomId="vani" roomName="Vani" contentTitle="Bharatiya Bhasha Discovery" />
+                </div>
+
+                {/* 3 Words Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {/* Sanskrit Word */}
+                  <div className="p-5 rounded-xl border bg-[var(--bg-secondary)] space-y-3" style={{ borderColor: 'var(--border-default)' }}>
+                    <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded text-white bg-[#8B3A3A]">
+                      1. संस्कृत शब्द
+                    </span>
+                    <h3 className="font-devanagari text-xl font-bold text-[var(--text-primary)]">
+                      {bhashaItem.sanskritWord.word}
+                    </h3>
+                    <p className="text-xs text-[var(--text-muted)] font-mono">{bhashaItem.sanskritWord.root}</p>
+                    <p className="font-devanagari text-xs text-[var(--text-secondary)] leading-relaxed">
+                      {bhashaItem.sanskritWord.meaningHindi}
+                    </p>
+                    <p className="text-[11px] text-[var(--text-muted)] font-serif italic border-t pt-2" style={{ borderColor: 'var(--border-default)' }}>
+                      💡 {bhashaItem.sanskritWord.etymologicalInsight}
+                    </p>
+                  </div>
+
+                  {/* Awadhi Word */}
+                  <div className="p-5 rounded-xl border bg-[var(--bg-secondary)] space-y-3" style={{ borderColor: 'var(--border-default)' }}>
+                    <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded text-white bg-[#C4623F]">
+                      2. अवधी शब्द
+                    </span>
+                    <h3 className="font-devanagari text-xl font-bold text-[var(--text-primary)]">
+                      {bhashaItem.awadhiWord.word}
+                    </h3>
+                    <p className="text-xs text-[var(--text-muted)] font-mono">{bhashaItem.awadhiWord.transliteration}</p>
+                    <p className="font-devanagari text-xs text-[var(--text-secondary)] leading-relaxed">
+                      {bhashaItem.awadhiWord.meaningHindi}
+                    </p>
+                    <p className="text-[11px] text-[var(--text-muted)] font-serif italic border-t pt-2" style={{ borderColor: 'var(--border-default)' }}>
+                      🌸 {bhashaItem.awadhiWord.folkContext}
+                    </p>
+                  </div>
+
+                  {/* Regional Word */}
+                  <div className="p-5 rounded-xl border bg-[var(--bg-secondary)] space-y-3" style={{ borderColor: 'var(--border-default)' }}>
+                    <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded text-white bg-[#3A7A6B]">
+                      3. {bhashaItem.regionalWord.language}
+                    </span>
+                    <h3 className="text-xl font-bold text-[var(--text-primary)]">
+                      {bhashaItem.regionalWord.originalScriptWord}
+                    </h3>
+                    <p className="text-xs text-[var(--text-muted)] font-mono">{bhashaItem.regionalWord.transliteration}</p>
+                    <p className="font-devanagari text-xs text-[var(--text-secondary)] leading-relaxed">
+                      {bhashaItem.regionalWord.meaningHindi}
+                    </p>
+                    <p className="text-[11px] text-[var(--text-muted)] font-serif italic border-t pt-2" style={{ borderColor: 'var(--border-default)' }}>
+                      🏛️ {bhashaItem.regionalWord.culturalContext}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {/* ─────────────── 8. HINDI VYAKARAN (DAILY PROGRESSIVE GRAMMAR) ─────────────── */}
+          {activeTab === 'vyakaran' && (
+            <motion.div
+              key="vyakaran"
+              variants={FADE_UP}
+              initial="initial"
+              animate="animate"
+              exit={{ opacity: 0, y: -10 }}
+              className="space-y-6"
+            >
+              <div className="card-base p-6 sm:p-8 space-y-6 border-l-4" style={{ borderLeftColor: '#3F6AC4' }}>
+                <div className="flex justify-between items-start gap-4 pb-4 border-b" style={{ borderColor: 'var(--border-default)' }}>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] uppercase font-bold tracking-widest px-2.5 py-0.5 rounded text-white bg-[#3F6AC4]">
+                        हिंदी व्याकरण वाटिका · Daily Grammar
+                      </span>
+                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-[var(--bg-tertiary)] text-[var(--text-muted)]">
+                        श्रेणी: {vyakaranItem.category} &middot; स्तर: {vyakaranItem.difficulty}
+                      </span>
+                    </div>
+                    <h2 className="font-devanagari text-2xl sm:text-3xl font-bold mt-2 text-[var(--text-primary)]">
+                      {vyakaranItem.conceptTitle}
+                    </h2>
+                  </div>
+                  <SutraNoteButton roomId="vani" roomName="Vani" contentTitle={`Vyakaran: ${vyakaranItem.conceptTitle}`} />
+                </div>
+
+                {/* Concept Explanation */}
+                <div className="p-5 rounded-xl border bg-[var(--bg-secondary)] space-y-2" style={{ borderColor: 'var(--border-default)' }}>
+                  <p className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)]">संकल्पना एवं परिभाषा (Concept Definition)</p>
+                  <p className="font-devanagari text-sm sm:text-base leading-relaxed text-[var(--text-primary)]">
+                    {vyakaranItem.simpleExplanation}
+                  </p>
+                </div>
+
+                {/* Rules & Formulas */}
+                <div className="p-4 rounded-xl border bg-[var(--bg-tertiary)]/20 space-y-2" style={{ borderColor: 'var(--border-default)' }}>
+                  <p className="text-[10px] uppercase font-bold tracking-wider text-[#3F6AC4]">व्याकरणिक नियम एवं सूत्र (Rules & Formulas)</p>
+                  <ul className="space-y-1 text-xs sm:text-sm font-devanagari text-[var(--text-secondary)]">
+                    {vyakaranItem.rulesAndFormulas.map((r, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <span className="text-[#3F6AC4] font-bold">▪</span>
+                        <span>{r}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Examples Breakdown */}
+                <div className="space-y-2">
+                  <p className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)]">प्रमुख उदाहरण (Examples Breakdown)</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {vyakaranItem.examples.map((ex, idx) => (
+                      <div key={idx} className="p-3 rounded-lg border bg-[var(--bg-secondary)] space-y-1" style={{ borderColor: 'var(--border-default)' }}>
+                        <p className="font-devanagari font-bold text-sm text-[var(--text-primary)]">{ex.original}</p>
+                        <p className="font-mono text-xs text-[#3F6AC4]">{ex.breakdown}</p>
+                        <p className="text-[11px] text-[var(--text-muted)]">{ex.meaning}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Common Mistakes to Avoid */}
+                <div className="p-4 rounded-xl border border-rose-500/20 bg-rose-500/5 space-y-2">
+                  <p className="text-[10px] uppercase font-bold text-rose-700 dark:text-rose-300">सामान्य अशुद्धियाँ (Common Mistakes to Avoid)</p>
+                  {vyakaranItem.commonMistakes.map((m, idx) => (
+                    <div key={idx} className="text-xs space-y-0.5">
+                      <p><span className="font-bold text-rose-600">❌ अशुद्ध:</span> {m.incorrect}</p>
+                      <p><span className="font-bold text-emerald-600">✅ शुद्ध:</span> {m.correct}</p>
+                      <p className="text-[11px] text-[var(--text-muted)] italic font-devanagari">कारण: {m.reason}</p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Interactive Mini-Quiz */}
+                <div className="p-5 rounded-xl border bg-[var(--bg-tertiary)]/30 space-y-3" style={{ borderColor: 'var(--border-default)' }}>
+                  <p className="text-xs font-bold font-devanagari text-[var(--text-primary)]">
+                    🎯 अभ्यास प्रश्न: {vyakaranItem.interactiveMiniQuiz.question}
+                  </p>
+                  <div className="grid grid-cols-2 gap-2">
+                    {vyakaranItem.interactiveMiniQuiz.options.map((opt, optIdx) => {
+                      const isSelected = vyakaranQuizSelected === optIdx;
+                      const isCorrect = optIdx === vyakaranItem.interactiveMiniQuiz.correctIndex;
+                      let style = 'border-[var(--border-default)] bg-[var(--bg-secondary)] text-[var(--text-secondary)]';
+                      if (vyakaranQuizSelected !== null) {
+                        if (isCorrect) style = 'border-emerald-500 bg-emerald-500/10 text-emerald-700 font-semibold';
+                        else if (isSelected) style = 'border-rose-500 bg-rose-500/10 text-rose-700';
+                      }
+                      return (
+                        <button
+                          key={optIdx}
+                          disabled={vyakaranQuizSelected !== null}
+                          onClick={() => setVyakaranQuizSelected(optIdx)}
+                          className={`text-left px-3.5 py-2 rounded-lg text-xs font-devanagari border transition-all ${style}`}
+                        >
+                          {opt}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  {vyakaranQuizSelected !== null && (
+                    <p className="text-[11px] font-devanagari text-[var(--text-muted)] italic pt-1">
+                      💡 {vyakaranItem.interactiveMiniQuiz.explanation}
+                    </p>
+                  )}
+                </div>
+
+                {/* Linguistic Fact */}
+                <div className="p-4 rounded-xl border bg-[var(--bg-secondary)] space-y-1" style={{ borderColor: 'var(--border-default)' }}>
+                  <p className="text-[10px] uppercase font-bold tracking-wider text-[#3F6AC4]">भाषा वैज्ञानिक तथ्य (Linguistic Fact)</p>
+                  <p className="font-devanagari text-xs leading-relaxed text-[var(--text-muted)] italic">
+                    {vyakaranItem.linguisticFact}
+                  </p>
+                </div>
+
+              </div>
+            </motion.div>
+          )}
+
+        </AnimatePresence>
 
       </div>
     </PageTransition>
