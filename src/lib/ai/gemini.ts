@@ -1,10 +1,10 @@
 // src/lib/ai/gemini.ts
 // Shared Gemini API client for Pravah's AI-powered features.
-// Reads GEMINI_API_KEY from environment. All calls use gemini-1.5-flash
-// for speed and cost efficiency. Includes retry with exponential backoff.
+// Reads GEMINI_API_KEY from environment. All calls use gemini-3.7-flash
+// for speed, high quality, and reliability. Includes retry with exponential backoff.
 
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta/models';
-const MODEL = 'gemini-1.5-flash';
+const MODEL = 'gemini-3.7-flash';
 const MAX_RETRIES = 3;
 const BASE_DELAY_MS = 1000;
 
@@ -15,13 +15,14 @@ export interface GeminiResponse {
 }
 
 export class GeminiError extends Error {
-  constructor(
-    message: string,
-    public readonly statusCode?: number,
-    public readonly raw?: unknown
-  ) {
+  readonly statusCode?: number;
+  readonly raw?: unknown;
+
+  constructor(message: string, statusCode?: number, raw?: unknown) {
     super(message);
     this.name = 'GeminiError';
+    this.statusCode = statusCode;
+    this.raw = raw;
   }
 }
 
