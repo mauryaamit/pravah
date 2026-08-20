@@ -13,6 +13,7 @@ import {
   UserLensMode,
   KhabarDailyEdition,
   StoryBadge,
+  MarketQuote,
 } from '@/lib/khabar/types';
 import {
   Newspaper,
@@ -41,20 +42,21 @@ import {
   Compass,
   RefreshCw,
   Flame,
-  Radio,
-  Eye,
   Check,
-  Calendar,
+  Activity,
+  ShieldCheck,
+  ArrowUpRight,
+  ArrowDownRight,
 } from 'lucide-react';
 
 const CATEGORIES: { id: KhabarCategory | 'all'; label: string; labelHi: string; icon: any }[] = [
   { id: 'all', label: 'All Stories', labelHi: 'सभी समाचार', icon: Layers },
   { id: 'hot', label: 'Hot Now', labelHi: 'प्रमुख हलचल', icon: Flame },
   { id: 'brief', label: "Aaj Kya Hua?", labelHi: 'आज क्या हुआ?', icon: Sparkles },
-  { id: 'india', label: 'Politics & Governance', labelHi: 'राजनीति एवं शासन', icon: Landmark },
+  { id: 'finance', label: 'Markets & Finance', labelHi: 'बाज़ार व वित्त', icon: DollarSign },
   { id: 'economy', label: 'Economy & Concepts', labelHi: 'अर्थव्यवस्था', icon: Scale },
   { id: 'business', label: 'Business & MBA', labelHi: 'उद्योग व व्यापार', icon: Building2 },
-  { id: 'finance', label: 'Markets & Finance', labelHi: 'बाज़ार व वित्त', icon: DollarSign },
+  { id: 'india', label: 'Politics & Governance', labelHi: 'राजनीति एवं शासन', icon: Landmark },
   { id: 'world', label: 'World Geopolitics', labelHi: 'विश्व परिदृश्य', icon: Globe2 },
   { id: 'tech', label: 'Technology & AI', labelHi: 'तकनीक व एआई', icon: Cpu },
   { id: 'science', label: 'Science & Space', labelHi: 'विज्ञान व अंतरिक्ष', icon: Atom },
@@ -85,7 +87,7 @@ export default function KhabarPage() {
   const [quizAnswers, setQuizAnswers] = useState<Record<number, number>>({});
   const [readStories, setReadStories] = useState<Set<string>>(new Set());
   const [newSinceLastVisit, setNewSinceLastVisit] = useState<number>(0);
-  const [showMarketsDetailed, setShowMarketsDetailed] = useState<boolean>(false);
+  const [showFullMarketView, setShowFullMarketView] = useState<boolean>(false);
 
   // Format date helper YYYY-MM-DD
   const formatDateKey = (d: Date) => {
@@ -96,8 +98,8 @@ export default function KhabarPage() {
   };
 
   // Fetch edition for selected date
-  const fetchEdition = useCallback(async (date: Date) => {
-    setLoading(true);
+  const fetchEdition = useCallback(async (date: Date, isSilent = false) => {
+    if (!isSilent) setLoading(true);
     const dateKey = formatDateKey(date);
     try {
       const res = await fetch(`/api/khabar/edition?date=${dateKey}`);
@@ -117,7 +119,7 @@ export default function KhabarPage() {
     } catch (e) {
       console.error('Failed to load Khabar edition:', e);
     } finally {
-      setLoading(false);
+      if (!isSilent) setLoading(false);
     }
   }, []);
 
@@ -125,6 +127,17 @@ export default function KhabarPage() {
     fetchEdition(currentDate);
     setQuizAnswers({});
     setExpandedStoryDetails({});
+  }, [currentDate, fetchEdition]);
+
+  // Periodic background refresh for live market data (every 90s)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const isToday = formatDateKey(currentDate) === formatDateKey(new Date());
+      if (isToday) {
+        fetchEdition(currentDate, true);
+      }
+    }, 90000);
+    return () => clearInterval(interval);
   }, [currentDate, fetchEdition]);
 
   // Load read state from localStorage
@@ -202,14 +215,14 @@ export default function KhabarPage() {
                 Daily Intelligence Journal
               </span>
               
-              {/* Dynamic Live / Closed Badge */}
-              <span className={`text-[10px] font-semibold flex items-center gap-1 px-2 py-0.5 rounded ${
-                edition?.statusText === 'Live'
+              {/* Dynamic Live / Delayed / Closed Badge */}
+              <span className={`text-[10px] font-semibold flex items-center gap-1.5 px-2 py-0.5 rounded ${
+                edition?.marketSnapshot?.isMarketOpen
                   ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30'
                   : 'bg-stone-500/10 text-stone-600 dark:text-stone-400 border border-stone-500/30'
               }`}>
-                <span className={`w-1.5 h-1.5 rounded-full ${edition?.statusText === 'Live' ? 'bg-emerald-500 animate-ping' : 'bg-stone-400'}`} />
-                {edition?.statusText || 'Live'} &middot; {edition?.marketSnapshot?.timestamp || 'Updated recently'}
+                <span className={`w-1.5 h-1.5 rounded-full ${edition?.marketSnapshot?.isMarketOpen ? 'bg-emerald-500 animate-ping' : 'bg-stone-400'}`} />
+                {edition?.marketSnapshot?.freshnessTag || '15-min delayed'} &middot; {edition?.marketSnapshot?.timestamp || 'Updated recently'}
               </span>
 
               {edition && (
@@ -223,7 +236,7 @@ export default function KhabarPage() {
               खबर · Khabar
             </h1>
             <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-              Living, data-driven daily intelligence room. Spend 15 minutes to master today's developments in India and the world.
+              Living, data-driven intelligence room. Sourced directly from verified wire feeds and live financial market data.
             </p>
           </div>
 
@@ -235,7 +248,7 @@ export default function KhabarPage() {
               onClick={handleManualRefresh}
               disabled={refreshing || loading}
               className="p-2 rounded-lg border border-[var(--border-default)] bg-[var(--bg-secondary)] text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-all shadow-sm flex items-center gap-1.5 text-xs"
-              title="Refresh today's Khabar"
+              title="Refresh today's Khabar & Market Data"
             >
               <RefreshCw size={14} className={refreshing ? 'animate-spin text-[#1E3A5F]' : ''} />
               <span className="hidden sm:inline font-medium">{refreshing ? 'Updating...' : 'Refresh'}</span>
@@ -263,26 +276,31 @@ export default function KhabarPage() {
           </motion.div>
         )}
 
-        {/* ─── DYNAMIC MARKET & MACRO INTELLIGENCE PANEL ─── */}
-        {edition && (
-          <div className="p-4 rounded-xl border bg-[var(--bg-secondary)] space-y-3" style={{ borderColor: 'var(--border-default)' }}>
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b pb-2.5" style={{ borderColor: 'var(--border-default)' }}>
+        {/* ─── AUTHORITATIVE LIVE MARKET DASHBOARD ─── */}
+        {edition && edition.marketSnapshot && (
+          <div className="p-5 rounded-xl border bg-[var(--bg-secondary)] space-y-4" style={{ borderColor: 'var(--border-default)' }}>
+            {/* Header & Global Operating Hours */}
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b pb-3" style={{ borderColor: 'var(--border-default)' }}>
               <div className="flex items-center gap-2">
-                <TrendingUp size={14} style={{ color: KHABAR_GOLD }} />
-                <span className="text-[11px] uppercase font-bold tracking-wider text-[var(--text-primary)]">
+                <Activity size={15} style={{ color: KHABAR_GOLD }} />
+                <span className="text-xs uppercase font-bold tracking-wider text-[var(--text-primary)]">
                   Live Market & Macro Intelligence
+                </span>
+                <span className="text-[10px] text-[var(--text-muted)]">
+                  ({edition.marketSnapshot.freshnessTag})
                 </span>
               </div>
 
-              {/* Global Exchange Operating Hours Status */}
-              <div className="flex items-center gap-2 flex-wrap text-[10px]">
+              {/* Dynamic Global Exchange Badges */}
+              <div className="flex items-center gap-1.5 flex-wrap text-[10px]">
                 {edition.marketSnapshot.exchanges.map((ex, idx) => (
                   <span
                     key={idx}
-                    className={`px-2 py-0.5 rounded font-mono font-semibold ${
+                    title={ex.scheduleDetail}
+                    className={`px-2 py-0.5 rounded font-mono font-semibold transition-colors cursor-help ${
                       ex.isOpen
-                        ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'
-                        : 'bg-stone-500/10 text-[var(--text-muted)]'
+                        ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30'
+                        : 'bg-stone-500/10 text-[var(--text-muted)] border border-stone-500/20'
                     }`}
                   >
                     {ex.exchange.split(' ')[0]}: {ex.statusText}
@@ -291,81 +309,127 @@ export default function KhabarPage() {
               </div>
             </div>
 
-            {/* Quick Macro Ticker */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2.5 text-xs">
-              {edition.marketSnapshot.indianIndices.slice(0, 3).concat(edition.marketSnapshot.forex.slice(0, 1)).concat(edition.marketSnapshot.commodities.slice(0, 2)).map((m, idx) => (
-                <div key={idx} className="p-2.5 rounded-lg border bg-[var(--bg-tertiary)]/40 space-y-0.5" style={{ borderColor: 'var(--border-default)' }}>
-                  <p className="text-[10px] text-[var(--text-muted)] uppercase font-semibold truncate">{m.name}</p>
-                  <p className="font-bold text-[var(--text-primary)] font-mono">{m.value}</p>
-                  <p className={`text-[10px] font-semibold ${m.isUp ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`}>
-                    {m.change} ({m.changePercent})
-                  </p>
-                </div>
-              ))}
+            {/* Core Ticker Cards (Real verified values) */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+              {(edition.marketSnapshot.headlineIndices || []).map((m, idx) => {
+                const isUnavailable = m.freshness === 'Temporarily unavailable';
+                return (
+                  <div key={idx} className="p-3 rounded-lg border bg-[var(--bg-tertiary)]/40 space-y-1" style={{ borderColor: 'var(--border-default)' }}>
+                    <div className="flex justify-between items-start">
+                      <p className="text-[10px] text-[var(--text-muted)] uppercase font-semibold truncate">{m.name}</p>
+                      {m.rawPrice > 0 && (
+                        m.isUp ? <ArrowUpRight size={12} className="text-emerald-600" /> : <ArrowDownRight size={12} className="text-rose-600" />
+                      )}
+                    </div>
+                    <p className="font-bold text-[var(--text-primary)] font-mono text-sm tracking-tight">
+                      {isUnavailable ? '—' : m.value}
+                    </p>
+                    <p className={`text-[10px] font-semibold font-mono ${
+                      isUnavailable ? 'text-[var(--text-muted)]' : m.isUp ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'
+                    }`}>
+                      {isUnavailable ? 'Unavailable' : `${m.change} (${m.changePercent})`}
+                    </p>
+                    <p className="text-[9px] text-[var(--text-muted)] font-mono pt-0.5 truncate">{m.timestamp}</p>
+                  </div>
+                );
+              })}
             </div>
 
-            {/* "Markets Today" Analytical Explanation */}
-            <div className="p-3 rounded-lg bg-[var(--bg-tertiary)]/30 border border-[var(--border-default)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs">
-              <p className="text-[var(--text-secondary)] italic font-serif leading-relaxed">
-                <strong>Markets Today:</strong> {edition.marketSnapshot.marketExplanation}
-              </p>
+            {/* Sector Pulse Heatmap */}
+            {edition.marketSnapshot.indianSectorals && edition.marketSnapshot.indianSectorals.length > 0 && (
+              <div className="space-y-2 pt-1">
+                <div className="flex justify-between items-center text-[10px] uppercase font-bold text-[var(--text-muted)]">
+                  <span>Sector Pulse (NSE Sectoral Indices)</span>
+                  <span className="font-normal font-mono lowercase">15-min delayed</span>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-2">
+                  {edition.marketSnapshot.indianSectorals.map((sec, idx) => (
+                    <div
+                      key={idx}
+                      className={`p-2 rounded-lg border text-center transition-all ${
+                        sec.rawPrice <= 0
+                          ? 'bg-[var(--bg-tertiary)]/20 border-[var(--border-default)]'
+                          : sec.isUp
+                          ? 'bg-emerald-500/10 border-emerald-500/25 text-emerald-800 dark:text-emerald-300'
+                          : 'bg-rose-500/10 border-rose-500/25 text-rose-800 dark:text-rose-300'
+                      }`}
+                    >
+                      <p className="text-[10px] font-bold truncate">{sec.name.replace('NIFTY ', '')}</p>
+                      <p className="text-[11px] font-mono font-bold mt-0.5">
+                        {sec.rawPrice > 0 ? sec.changePercent : '—'}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* "Markets Today" Analytical Summary */}
+            <div className="p-3 rounded-lg bg-[var(--bg-tertiary)]/30 border border-[var(--border-default)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+              <div className="space-y-0.5">
+                <p className="text-[var(--text-primary)] font-serif italic leading-relaxed">
+                  <strong>Markets Today:</strong> {edition.marketSnapshot.marketExplanation}
+                </p>
+                <p className="text-[9px] text-[var(--text-muted)] flex items-center gap-1 font-mono">
+                  <ShieldCheck size={11} className="text-emerald-600" />
+                  {edition.marketSnapshot.provenance}
+                </p>
+              </div>
               <button
-                onClick={() => setShowMarketsDetailed(!showMarketsDetailed)}
+                onClick={() => setShowFullMarketView(!showFullMarketView)}
                 className="text-[11px] font-semibold text-[#1E3A5F] dark:text-sky-300 hover:underline flex-shrink-0"
               >
-                {showMarketsDetailed ? 'Hide Full Dashboard' : 'View Global & Sectoral Dashboard →'}
+                {showFullMarketView ? 'Hide Global & FX Details' : 'View Global Indices, FX & Commodities →'}
               </button>
             </div>
 
-            {/* Expandable Comprehensive Market Dashboard */}
-            {showMarketsDetailed && (
+            {/* Expandable Global & Commodity Dashboard */}
+            {showFullMarketView && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 className="pt-3 border-t space-y-4"
                 style={{ borderColor: 'var(--border-default)' }}
               >
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
-                  {/* Indian Sectoral Indices */}
-                  <div className="space-y-1.5 p-3 rounded-lg border bg-[var(--bg-tertiary)]/20" style={{ borderColor: 'var(--border-default)' }}>
-                    <p className="text-[10px] uppercase font-bold text-[var(--text-muted)]">Indian Sectorals</p>
-                    {edition.marketSnapshot.indianIndices.map((q, idx) => (
-                      <div key={idx} className="flex justify-between items-center py-0.5 border-b border-[var(--border-default)]/40 last:border-none">
-                        <span className="text-[var(--text-secondary)]">{q.name}</span>
-                        <span className={`font-mono font-semibold ${q.isUp ? 'text-emerald-600' : 'text-rose-600'}`}>{q.value}</span>
-                      </div>
-                    ))}
-                  </div>
-
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-xs">
                   {/* Global Indices */}
-                  <div className="space-y-1.5 p-3 rounded-lg border bg-[var(--bg-tertiary)]/20" style={{ borderColor: 'var(--border-default)' }}>
-                    <p className="text-[10px] uppercase font-bold text-[var(--text-muted)]">Global Indices</p>
+                  <div className="space-y-2 p-3 rounded-lg border bg-[var(--bg-tertiary)]/20" style={{ borderColor: 'var(--border-default)' }}>
+                    <p className="text-[10px] uppercase font-bold text-[var(--text-muted)]">Global Benchmark Indices</p>
                     {edition.marketSnapshot.globalIndices.map((q, idx) => (
-                      <div key={idx} className="flex justify-between items-center py-0.5 border-b border-[var(--border-default)]/40 last:border-none">
+                      <div key={idx} className="flex justify-between items-center py-1 border-b border-[var(--border-default)]/40 last:border-none">
                         <span className="text-[var(--text-secondary)]">{q.name}</span>
-                        <span className={`font-mono font-semibold ${q.isUp ? 'text-emerald-600' : 'text-rose-600'}`}>{q.value}</span>
+                        <div className="text-right font-mono">
+                          <span className="font-semibold text-[var(--text-primary)] block">{q.value}</span>
+                          <span className={`text-[10px] ${q.isUp ? 'text-emerald-600' : 'text-rose-600'}`}>{q.changePercent}</span>
+                        </div>
                       </div>
                     ))}
                   </div>
 
                   {/* Currencies (Forex) */}
-                  <div className="space-y-1.5 p-3 rounded-lg border bg-[var(--bg-tertiary)]/20" style={{ borderColor: 'var(--border-default)' }}>
-                    <p className="text-[10px] uppercase font-bold text-[var(--text-muted)]">Currencies</p>
+                  <div className="space-y-2 p-3 rounded-lg border bg-[var(--bg-tertiary)]/20" style={{ borderColor: 'var(--border-default)' }}>
+                    <p className="text-[10px] uppercase font-bold text-[var(--text-muted)]">Currencies (Forex)</p>
                     {edition.marketSnapshot.forex.map((q, idx) => (
-                      <div key={idx} className="flex justify-between items-center py-0.5 border-b border-[var(--border-default)]/40 last:border-none">
+                      <div key={idx} className="flex justify-between items-center py-1 border-b border-[var(--border-default)]/40 last:border-none">
                         <span className="text-[var(--text-secondary)]">{q.name}</span>
-                        <span className={`font-mono font-semibold ${q.isUp ? 'text-emerald-600' : 'text-rose-600'}`}>{q.value}</span>
+                        <div className="text-right font-mono">
+                          <span className="font-semibold text-[var(--text-primary)] block">{q.value}</span>
+                          <span className={`text-[10px] ${q.isUp ? 'text-emerald-600' : 'text-rose-600'}`}>{q.changePercent}</span>
+                        </div>
                       </div>
                     ))}
                   </div>
 
-                  {/* Commodities & Yields */}
-                  <div className="space-y-1.5 p-3 rounded-lg border bg-[var(--bg-tertiary)]/20" style={{ borderColor: 'var(--border-default)' }}>
-                    <p className="text-[10px] uppercase font-bold text-[var(--text-muted)]">Commodities & Bonds</p>
+                  {/* Commodities & Sovereign Yields */}
+                  <div className="space-y-2 p-3 rounded-lg border bg-[var(--bg-tertiary)]/20" style={{ borderColor: 'var(--border-default)' }}>
+                    <p className="text-[10px] uppercase font-bold text-[var(--text-muted)]">Commodities & Sovereign Yields</p>
                     {edition.marketSnapshot.commodities.concat(edition.marketSnapshot.bonds).map((q, idx) => (
-                      <div key={idx} className="flex justify-between items-center py-0.5 border-b border-[var(--border-default)]/40 last:border-none">
+                      <div key={idx} className="flex justify-between items-center py-1 border-b border-[var(--border-default)]/40 last:border-none">
                         <span className="text-[var(--text-secondary)]">{q.name}</span>
-                        <span className={`font-mono font-semibold ${q.isUp ? 'text-emerald-600' : 'text-rose-600'}`}>{q.value}</span>
+                        <div className="text-right font-mono">
+                          <span className="font-semibold text-[var(--text-primary)] block">{q.value}</span>
+                          <span className={`text-[10px] ${q.isUp ? 'text-emerald-600' : 'text-rose-600'}`}>{q.changePercent}</span>
+                        </div>
                       </div>
                     ))}
                   </div>

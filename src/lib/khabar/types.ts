@@ -121,14 +121,19 @@ export interface KhabarStory {
 export interface MarketQuote {
   name: string;
   symbol: string;
+  category: 'indian_index' | 'sectoral' | 'global_index' | 'currency' | 'commodity' | 'bond';
   value: string;
+  rawPrice: number;
   change: string;
   changePercent: string;
+  rawChangePercent: number;
   isUp: boolean;
   previousClose?: string;
   dayHigh?: string;
   dayLow?: string;
-  freshness: 'Real-time' | '15-min delayed' | 'End-of-day';
+  unit?: string;
+  freshness: 'Real-time' | '15-min delayed' | 'Previous close' | 'Temporarily unavailable';
+  sourceProvider: string;
   timestamp: string;
 }
 
@@ -136,19 +141,33 @@ export interface MarketExchangeStatus {
   exchange: 'Indian Market (NSE/BSE)' | 'US Market (NYSE/NASDAQ)' | 'European Market (LSE/DAX)' | 'Asian Markets';
   isOpen: boolean;
   statusText: 'OPEN' | 'CLOSED' | 'PRE-OPEN' | 'HOLIDAY';
-  nextEvent: string; // e.g. "Closes at 3:30 PM IST" or "Opens at 9:15 AM IST"
+  scheduleDetail: string; // e.g. "Closes in 1h 24m at 3:30 PM IST" or "Opens tomorrow at 9:15 AM IST"
+}
+
+export interface SectorPulseItem {
+  name: string;
+  symbol: string;
+  value: string;
+  changePercent: string;
+  rawChangePercent: number;
+  isUp: boolean;
 }
 
 export interface FullMarketSnapshot {
-  timestamp: string;
-  freshnessTag: 'Live' | '15-min delayed' | 'Market Closed';
+  timestamp: string; // e.g. "20 Aug 2026, 3:30 PM IST"
+  freshnessTag: 'Live' | '15-min delayed' | 'Market Closed' | 'Previous close';
+  isMarketOpen: boolean;
   exchanges: MarketExchangeStatus[];
-  indianIndices: MarketQuote[];
-  globalIndices: MarketQuote[];
-  forex: MarketQuote[];
-  commodities: MarketQuote[];
-  bonds: MarketQuote[];
-  marketExplanation: string; // Explains what moved and why based on verified data
+  headlineIndices: MarketQuote[]; // NIFTY 50, SENSEX, NIFTY BANK, USD/INR, Brent, Gold
+  indianSectorals: MarketQuote[]; // IT, Auto, Pharma, FMCG, Metal, Realty, Energy, Fin Services
+  globalIndices: MarketQuote[]; // S&P 500, Nasdaq, Dow, FTSE, DAX, Nikkei, Hang Seng
+  forex: MarketQuote[]; // USD/INR, EUR/INR, GBP/INR, EUR/USD
+  commodities: MarketQuote[]; // Brent, WTI, Gold spot/futures, Silver, Natural Gas
+  bonds: MarketQuote[]; // India 10Y, US 10Y
+  topGainers: MarketQuote[];
+  topLosers: MarketQuote[];
+  marketExplanation: string; // Generated strictly from actual price action
+  provenance: string; // Source attribution statement
 }
 
 export interface DailyQuizQuestion {
