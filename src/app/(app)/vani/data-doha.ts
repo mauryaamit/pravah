@@ -601,25 +601,586 @@ export const DOHA_COLLECTION: DohaEntry[] = [
       { word: 'भरम (Bharam)', meaning: 'अज्ञान, संशय, सांसारिक भ्रम' }
     ],
     lifeLesson: 'उन गुरुओं और शिक्षकों के प्रति सदैव कृतज्ञ रहें जिन्होंने आपके जीवन से अज्ञान के पर्दे हटाए।'
+  },
+
+  // ── 9. NEW DOHAS ──
+  {
+    id: 'doha-kabir-3',
+    sequenceNumber: 11,
+    dohaDevanagari: [
+      'काल करे सो आज कर, आज करे सो अब।',
+      'पल में परलय होयगी, बहुरि करेगो कब॥'
+    ],
+    transliteration: [
+      'Kāla kare so āja kara, āja kare so aba |',
+      'Pala meṁ paralaya hoyagī, bahuri karego kaba ||'
+    ],
+    poetId: 'kabir',
+    poetNameDevanagari: 'कबीरदास',
+    poetNameEnglish: 'Kabir',
+    theme: 'discipline',
+    themeHindi: 'अनुशासन और समय का महत्त्व',
+    languageDialect: 'सधुक्कड़ी / अवधी',
+    source: 'कबीर ग्रंथावली',
+    attributionConfidence: 'Verified Canonical',
+    hindiMeaning: 'कबीरदास जी कहते हैं कि जो काम कल करना है, उसे आज ही कर लो। और जो आज करना है, उसे अभी कर लो। पल भर में प्रलय (विनाश) हो सकता है, फिर काम कब करोगे?',
+    englishMeaning: 'Kabir says: What you have to do tomorrow, do it today. What you have to do today, do it now. If the world ends in a moment, when will you finish your work?',
+    deeperInterpretation: 'यह दोहा समय के सदुपयोग और टालमटोल (procrastination) से बचने की गहरी चेतावनी है। जीवन की अनिश्चितता को स्वीकार करते हुए हर क्षण का सही उपयोग करना ही ज्ञान है।',
+    contextBackground: 'यह कबीर के सबसे प्रसिद्ध और व्यावहारिक दोहों में से एक है।',
+    importantVocabulary: [
+      { word: 'परलय (Paralaya)', meaning: 'विनाश / प्रलय / मृत्यु' },
+      { word: 'बहुरि (Bahuri)', meaning: 'फिर / बाद में' }
+    ],
+    lifeLesson: 'टालमटोल की आदत छोड़ें और वर्तमान क्षण में अपने कर्तव्यों को पूरा करें।'
+  },
+  {
+    id: 'doha-kabir-4',
+    sequenceNumber: 12,
+    dohaDevanagari: [
+      'बड़ा हुआ तो क्या हुआ, जैसे पेड़ खजूर।',
+      'पंछी छाया न होय फल लागे अति दूर॥'
+    ],
+    transliteration: [
+      'Baṛā huā to kyā huā, jaise peṛa khajūra |',
+      'Paṁchī chāyā na hoya phala lāge ati dūra ||'
+    ],
+    poetId: 'kabir',
+    poetNameDevanagari: 'कबीरदास',
+    poetNameEnglish: 'Kabir',
+    theme: 'humility',
+    themeHindi: 'विनम्रता और उपयोगिता',
+    languageDialect: 'सधुक्कड़ी',
+    source: 'कबीर ग्रंथावली',
+    attributionConfidence: 'Verified Canonical',
+    hindiMeaning: 'केवल शरीर या पद में बड़े होने से क्या लाभ, जैसे खजूर का पेड़। वह राहगीरों को छाया भी नहीं देता और उसके फल भी बहुत ऊँचाई पर लगते हैं।',
+    englishMeaning: 'What is the use of just being big, like a date palm tree? It offers no shade to travelers, and its fruits are out of reach.',
+    deeperInterpretation: 'कबीर समझाते हैं कि बड़प्पन आकार या संपत्ति में नहीं, बल्कि उपयोगिता और परोपकार में है। जो व्यक्ति दूसरों के काम न आए, उसकी महानता व्यर्थ है।',
+    contextBackground: 'अहंकार और निरर्थक दिखावे पर प्रहार करते हुए कबीर ने यह दृष्टांत दिया।',
+    importantVocabulary: [
+      { word: 'खजूर (Khajoor)', meaning: 'खजूर का पेड़ (Date palm)' }
+    ],
+    lifeLesson: 'सच्चा बड़प्पन इस बात में है कि आप दूसरों के लिए कितने उपयोगी और सुलभ हैं।'
+  },
+  {
+    id: 'doha-kabir-5',
+    sequenceNumber: 13,
+    dohaDevanagari: [
+      'दुःख में सुमिरन सब करें, सुख में करे न कोय।',
+      'जो सुख में सुमिरन करे, दुःख काहे होय॥'
+    ],
+    transliteration: [
+      'Duḥkha meṁ sumirana saba kareṁ, sukha meṁ kare na koya |',
+      'Jo sukha meṁ sumirana kare, duḥkha kāhe hoya ||'
+    ],
+    poetId: 'kabir',
+    poetNameDevanagari: 'कबीरदास',
+    poetNameEnglish: 'Kabir',
+    theme: 'devotion',
+    themeHindi: 'निरंतर स्मरण',
+    languageDialect: 'सधुक्कड़ी',
+    source: 'कबीर ग्रंथावली',
+    attributionConfidence: 'Verified Canonical',
+    hindiMeaning: 'दुःख में सभी ईश्वर को याद करते हैं, लेकिन सुख में कोई नहीं करता। यदि सुख के समय भी ईश्वर को याद किया जाए, तो दुःख कैसे आ सकता है?',
+    englishMeaning: 'Everyone remembers God in sorrow, but no one does in joy. If one remembers God in joy, why would sorrow even come?',
+    deeperInterpretation: 'मनुष्य की यह प्रवृत्ति है कि वह केवल संकट में ही परमात्मा की शरण जाता है। सच्ची भक्ति वह है जो सुख और दुःख दोनों में समान रूप से बनी रहे। समता का भाव ही दुःख का नाश करता है।',
+    contextBackground: 'सच्ची और निरंतर भक्ति का महत्व समझाने के लिए कबीर ने यह बात कही।',
+    importantVocabulary: [
+      { word: 'सुमिरन (Sumiran)', meaning: 'स्मरण / याद करना' }
+    ],
+    lifeLesson: 'अच्छे समय में भी कृतज्ञ रहें और परमात्मा को याद रखें, केवल संकट में नहीं।'
+  },
+  {
+    id: 'doha-kabir-6',
+    sequenceNumber: 14,
+    dohaDevanagari: [
+      'जो तोको काँटा बुवे, ताको बोय तू फूल।',
+      'तोहि फूल को फूल है, वाको शूल सो शूल॥'
+    ],
+    transliteration: [
+      'Jo toko kāṭā buve, tāko boya tū phūla |',
+      'Tohi phūla ko phūla hai, vāko śūla so śūla ||'
+    ],
+    poetId: 'kabir',
+    poetNameDevanagari: 'कबीरदास',
+    poetNameEnglish: 'Kabir',
+    theme: 'compassion',
+    themeHindi: 'क्षमा और करुणा',
+    languageDialect: 'सधुक्कड़ी',
+    source: 'कबीर ग्रंथावली',
+    attributionConfidence: 'Verified Canonical',
+    hindiMeaning: 'जो तुम्हारे लिए काँटे बोता है, तुम उसके लिए फूल बोओ। तुम्हें तो फूल बोने के बदले फूल ही मिलेंगे, किन्तु उसे उसके बोए काँटों के बदले काँटे ही चुभेंगे।',
+    englishMeaning: 'For one who sows thorns for you, sow flowers in return. You will reap the flowers you sowed, while they will suffer from their own thorns.',
+    deeperInterpretation: 'बुरे के साथ बुराई करने से केवल बुराई बढ़ती है। कबीर सिखाते हैं कि अपनी अच्छाई मत छोड़ो, क्योंकि कर्म का सिद्धांत (Law of Karma) अपना काम करेगा।',
+    contextBackground: 'क्षमा और अहिंसा के मार्ग का अनुसरण करने की प्रेरणा।',
+    importantVocabulary: [
+      { word: 'शूल (Shool)', meaning: 'काँटा / पीड़ा' }
+    ],
+    lifeLesson: 'दूसरों के बुरे व्यवहार के कारण अपनी अच्छाई और स्वभाव को न बदलें।'
+  },
+  {
+    id: 'doha-rahim-3',
+    sequenceNumber: 15,
+    dohaDevanagari: [
+      'बिगड़ी बात बनै नहीं, लाख करो किन कोय।',
+      'रहिमन फाटे दूध को, मथे न माखन होय॥'
+    ],
+    transliteration: [
+      'Bigaṛī bāta banai nahīṁ, lākha karo kina koya |',
+      'Rahimana phāṭe dūdha ko, mathe na mākhana hoya ||'
+    ],
+    poetId: 'rahim',
+    poetNameDevanagari: 'रहीम',
+    poetNameEnglish: 'Rahim',
+    theme: 'relationships',
+    themeHindi: 'रिश्तों की संवेदनशीलता',
+    languageDialect: 'ब्रजभाषा',
+    source: 'रहीम दोहावली',
+    attributionConfidence: 'Verified Canonical',
+    hindiMeaning: 'जब कोई बात एक बार बिगड़ जाती है, तो लाख कोशिश करने पर भी पहले जैसी नहीं हो सकती। ठीक वैसे ही, जैसे फटे हुए दूध को मथने से मक्खन नहीं निकलता।',
+    englishMeaning: 'Once things go wrong, a million attempts cannot make them right again. Rahim says, just as churning curdled milk cannot yield butter.',
+    deeperInterpretation: 'रहीम रिश्तों और परिस्थितियों में सावधानी बरतने की सलाह देते हैं। विश्वास या रिश्ते एक बार टूट जाएं, तो उन्हें मूल स्वरूप में वापस लाना लगभग असंभव होता है।',
+    contextBackground: 'वाणी और व्यवहार में संयम रखने की नीति।',
+    importantVocabulary: [
+      { word: 'फाटे दूध (Phaate doodh)', meaning: 'फटा हुआ दूध' }
+    ],
+    lifeLesson: 'अपने व्यवहार और शब्दों के प्रति सावधान रहें, क्योंकि कुछ नुकसान की भरपाई नहीं की जा सकती।'
+  },
+  {
+    id: 'doha-rahim-4',
+    sequenceNumber: 16,
+    dohaDevanagari: [
+      'एकै साधे सब सधे, सब साधे सब जाय।',
+      'रहिमन मूलहि सींचिबो, फूलै फलै अघाय॥'
+    ],
+    transliteration: [
+      'Ekai sādhe saba sadhe, saba sādhe saba jāya |',
+      'Rahimana mūlahi sīṁcibo, phūlai phalai aghāya ||'
+    ],
+    poetId: 'rahim',
+    poetNameDevanagari: 'रहीम',
+    poetNameEnglish: 'Rahim',
+    theme: 'wisdom',
+    themeHindi: 'एकाग्रता और मूल तत्त्व',
+    languageDialect: 'ब्रजभाषा',
+    source: 'रहीम दोहावली',
+    attributionConfidence: 'Verified Canonical',
+    hindiMeaning: 'एक (मूल लक्ष्य या ईश्वर) को साधने से सब कुछ सध जाता है, और सब कुछ एक साथ साधने के प्रयास में सब कुछ हाथ से निकल जाता है। जैसे पेड़ की जड़ को सींचने से ही वह खूब फलता-फूलता है।',
+    englishMeaning: 'By focusing on the one root cause, everything else is achieved. Trying to grasp everything at once leads to losing it all. Rahim says, water the root, and the tree will bloom and bear fruit abundantly.',
+    deeperInterpretation: 'यह एकाग्रता (Focus) और प्राथमिकता तय करने का उत्तम सिद्धांत है। जीवन में कई चीज़ों के पीछे भागने के बजाय जो सबसे महत्वपूर्ण और मूलभूत है, उस पर ध्यान देना चाहिए।',
+    contextBackground: 'नीति और जीवन प्रबंधन का उत्कृष्ट उदाहरण।',
+    importantVocabulary: [
+      { word: 'मूलहि (Moolahi)', meaning: 'जड़ को (to the root)' },
+      { word: 'अघाय (Aghaya)', meaning: 'तृप्त होकर / भरपूर' }
+    ],
+    lifeLesson: 'अपनी ऊर्जा को अनेक दिशाओं में बिखेरने के बजाय एक मुख्य लक्ष्य पर केंद्रित करें।'
+  },
+  {
+    id: 'doha-tulsi-2',
+    sequenceNumber: 17,
+    dohaDevanagari: [
+      'सरनागत कहुँ जे तजहिं, निज अनहित अनुमानि।',
+      'ते नर पाँवर पापमय, तिन्हहि दर्सनु बानि॥'
+    ],
+    transliteration: [
+      'Saranāgata kahu je tajahiṁ, nija anahita anumāni |',
+      'Te nara pāvara pāpamaya, tinhahi darsanu bāni ||'
+    ],
+    poetId: 'tulsidas',
+    poetNameDevanagari: 'तुलसीदास',
+    poetNameEnglish: 'Tulsidas',
+    theme: 'morality',
+    themeHindi: 'शरणागत की रक्षा',
+    languageDialect: 'अवधी',
+    source: 'रामचरितमानस',
+    attributionConfidence: 'Verified Canonical',
+    hindiMeaning: 'तुलसीदास जी कहते हैं कि जो लोग अपने नुकसान की आशंका से, शरण में आए हुए व्यक्ति का त्याग कर देते हैं, वे मनुष्य नीच और पापमय हैं; उनका दर्शन भी अशुभ होता है।',
+    englishMeaning: 'Those who abandon someone seeking refuge out of fear for their own self-interest are lowly and sinful; even seeing them brings misfortune.',
+    deeperInterpretation: 'यह दोहा शरणार्थी की रक्षा को परम धर्म बताता है। स्वार्थ के कारण किसी निस्सहाय को छोड़ देना इंसानियत का सबसे बड़ा पतन है। यह भगवान राम के आदर्श को दर्शाता है।',
+    contextBackground: 'रामचरितमानस में विभीषण के राम की शरण में आने पर राम द्वारा कहा गया वचन।',
+    importantVocabulary: [
+      { word: 'सरनागत (Saranagat)', meaning: 'शरण में आया हुआ' },
+      { word: 'पाँवर (Paanvar)', meaning: 'नीच / क्षुद्र' }
+    ],
+    lifeLesson: 'यदि कोई सहायता या सुरक्षा के लिए आपकी शरण में आए, तो अपने स्वार्थ के कारण उसे निराश न करें।'
+  },
+  {
+    id: 'doha-tulsi-3',
+    sequenceNumber: 18,
+    dohaDevanagari: [
+      'धीरज, धर्म, मित्र अरु नारी।',
+      'आपत काल परखिए चारी॥'
+    ],
+    transliteration: [
+      'Dhīraja, dharma, mitra aru nārī |',
+      'Āpata kāla parakhie cārī ||'
+    ],
+    poetId: 'tulsidas',
+    poetNameDevanagari: 'तुलसीदास',
+    poetNameEnglish: 'Tulsidas',
+    theme: 'wisdom',
+    themeHindi: 'संकट में असली पहचान',
+    languageDialect: 'अवधी',
+    source: 'रामचरितमानस',
+    attributionConfidence: 'Verified Canonical',
+    hindiMeaning: 'धैर्य, धर्म, मित्र और पत्नी—इन चारों की असली परीक्षा संकट के समय (आपत्तिकाल) में ही होती है।',
+    englishMeaning: 'Patience, righteousness, a friend, and a spouse—these four are truly tested only in times of adversity.',
+    deeperInterpretation: 'सुख के समय तो सभी साथ देते हैं, लेकिन जब जीवन में कठिनाइयाँ आती हैं, तब व्यक्ति का असली चरित्र और रिश्तों की सच्चाई सामने आती है।',
+    contextBackground: 'रामचरितमानस के अरण्यकाण्ड में जीवन की वास्तविकता का वर्णन।',
+    importantVocabulary: [
+      { word: 'आपत काल (Apat Kaal)', meaning: 'संकट या विपत्ति का समय' }
+    ],
+    lifeLesson: 'संकट का समय ही आपके धैर्य और रिश्तों की सच्चाई की सच्ची कसौटी है।'
+  },
+  {
+    id: 'doha-bihari-2',
+    sequenceNumber: 19,
+    dohaDevanagari: [
+      'नहिं पराग नहिं मधुर मधु, नहिं विकास यहि काल।',
+      'अलि कलि सोई सुख देत है, वा रादा वासल।।'
+    ],
+    transliteration: [
+      'Nahiṁ parāga nahiṁ madhura madhu, nahiṁ vikāsa yahi kāla |',
+      'Ali kali soī sukha deta hai, vā rādā vāsala ||'
+    ],
+    poetId: 'bihari',
+    poetNameDevanagari: 'बिहारीलाल',
+    poetNameEnglish: 'Bihari',
+    theme: 'human_behaviour',
+    themeHindi: 'समय पूर्व आसक्ति',
+    languageDialect: 'ब्रजभाषा',
+    source: 'बिहारी सतसई',
+    attributionConfidence: 'Verified Canonical',
+    hindiMeaning: 'इस कली में अभी न तो पराग है, न ही मीठा मकरंद, और न ही इसका पूरी तरह विकास हुआ है। हे भौंरे, यदि तू अभी से इस कली में सुख ढूंढ रहा है, तो आगे तेरा क्या हाल होगा?',
+    englishMeaning: 'There is neither pollen nor sweet nectar, nor is it fully blossomed yet. O bee, if you are already so infatuated with this bud, what will happen to you in the future?',
+    deeperInterpretation: 'यह दोहा राजा जयसिंह को सचेत करने के लिए लिखा गया था, जो अपनी नवविवाहिता पत्नी के प्रेम में इतने डूब गए थे कि राजकाज भूल गए। यह कर्तव्य-विमुखता पर एक व्यंग्य है।',
+    contextBackground: 'बिहारीलाल द्वारा रचित यह दोहा अन्योक्ति अलंकार का उत्कृष्ट उदाहरण है।',
+    importantVocabulary: [
+      { word: 'अलि (Ali)', meaning: 'भौंरा (Bee)' }
+    ],
+    lifeLesson: 'अपरिपक्व अवस्था में ही किसी चीज़ के प्रति अत्यधिक आसक्ति भविष्य के लिए हानिकारक हो सकती है।'
+  },
+  {
+    id: 'doha-ravidas-2',
+    sequenceNumber: 20,
+    dohaDevanagari: [
+      'मन चंगा तो कठौती में गंगा।',
+      'मन निर्मल मैला तो सोना।।'
+    ],
+    transliteration: [
+      'Mana caṅgā to kaṭhautī meṁ gaṅgā |',
+      'Mana nirmala mailā to sonā ||'
+    ],
+    poetId: 'ravidas',
+    poetNameDevanagari: 'संत रविदास',
+    poetNameEnglish: 'Ravidas',
+    theme: 'spirituality',
+    themeHindi: 'मन की पवित्रता',
+    languageDialect: 'सधुक्कड़ी',
+    source: 'रविदास वाणी',
+    attributionConfidence: 'Verified Canonical',
+    hindiMeaning: 'यदि हमारा मन पवित्र और शुद्ध है, तो चमड़ा रंगने वाले बर्तन (कठौती) का जल भी गंगाजल के समान पवित्र है। मन की निर्मलता ही सबसे बड़ा तीर्थ है।',
+    englishMeaning: 'If the mind is pure, even the water in a cobbler’s bowl is as sacred as the river Ganges. A clean mind is the highest pilgrimage.',
+    deeperInterpretation: 'संत रविदास बाह्य कर्मकांडों और तीर्थाटन का खंडन करते हुए आंतरिक शुद्धि पर जोर देते हैं। ईश्वर किसी विशेष स्थान पर नहीं, बल्कि एक शुद्ध अंतःकरण में निवास करता है।',
+    contextBackground: 'यह संत रविदास का सबसे लोकप्रिय और क्रांतिकारी संदेश है।',
+    importantVocabulary: [
+      { word: 'चंगा (Changa)', meaning: 'स्वस्थ / शुद्ध / अच्छा' },
+      { word: 'कठौती (Kathauti)', meaning: 'चमड़ा धोने या रखने का लकड़ी का पात्र' }
+    ],
+    lifeLesson: 'सच्ची पवित्रता बाहरी दिखावे में नहीं, बल्कि मन की शुद्धि में है।'
+  },
+  {
+    id: 'doha-dadu-2',
+    sequenceNumber: 21,
+    dohaDevanagari: [
+      'दादू हरि के नाम बिन, होर सकल जंजाल।',
+      'माया में उलझान रहा, निकसत नाहीं बाल॥'
+    ],
+    transliteration: [
+      'Dādū hari ke nāma bina, hora sakala jaṁjāla |',
+      'Māyā meṁ ulajhāna rahā, nikasata nāhīṁ bāla ||'
+    ],
+    poetId: 'dadudayal',
+    poetNameDevanagari: 'दादू दयाल',
+    poetNameEnglish: 'Dadu Dayal',
+    theme: 'spirituality',
+    themeHindi: 'ईश्वर-नाम की महिमा',
+    languageDialect: 'सधुक्कड़ी / राजस्थानी',
+    source: 'दादू वाणी',
+    attributionConfidence: 'Verified Canonical',
+    hindiMeaning: 'दादू दयाल कहते हैं कि ईश्वर के नाम-स्मरण के बिना यह सारा संसार केवल एक झंझट (जंजाल) है। मनुष्य माया में ऐसा उलझा रहता है कि उसका एक बाल भी नहीं बच पाता।',
+    englishMeaning: 'Dadu says: Without the name of the Lord, everything else is just an entanglement. Man remains so caught up in the illusion of the world that not a single hair is spared.',
+    deeperInterpretation: 'माया का जाल इतना सूक्ष्म और व्यापक है कि व्यक्ति अनजाने में ही इसमें फंस जाता है। केवल हरि-स्मरण ही वह धागा है जो इस भूलभुलैया से बाहर निकाल सकता है।',
+    contextBackground: 'दादू दयाल निर्गुण भक्ति धारा के प्रमुख संत थे, जिन्होंने सरलता का संदेश दिया।',
+    importantVocabulary: [
+      { word: 'जंजाल (Janjaal)', meaning: 'व्यर्थ का बंधन / झंझट' }
+    ],
+    lifeLesson: 'सांसारिक उलझनों के बीच भी परमात्मा के स्मरण को न भूलें, वही आपको मुक्त रखेगा।'
+  },
+  {
+    id: 'doha-namdev-1',
+    sequenceNumber: 22,
+    dohaDevanagari: [
+      'नामदेव प्रभु मेरो है, उनसे नाहीं कुछ दूर।',
+      'सेवक और स्वामी एक हैं, मिटे भव का भूर।।'
+    ],
+    transliteration: [
+      'Nāmadeva prabhu mero hai, unase nāhīṁ kucha dūra |',
+      'Sevaka aura svāmī eka haiṁ, miṭe bhava kā bhūra ||'
+    ],
+    poetId: 'namdev',
+    poetNameDevanagari: 'संत नामदेव',
+    poetNameEnglish: 'Namdev',
+    theme: 'devotion',
+    themeHindi: 'ईश्वर से अद्वैत संबंध',
+    languageDialect: 'सधुक्कड़ी / मराठी प्रभाव',
+    source: 'नामदेव वाणी',
+    attributionConfidence: 'Verified Canonical',
+    hindiMeaning: 'संत नामदेव कहते हैं कि प्रभु मेरे हैं और मुझसे तनिक भी दूर नहीं हैं। जब सेवक और स्वामी (भक्त और भगवान) एक हो जाते हैं, तो संसार का सारा भय और भ्रम मिट जाता है।',
+    englishMeaning: 'Namdev declares: The Lord is mine, and He is not at all far from me. When the servant and the Master become one, all worldly illusions and fears disappear.',
+    deeperInterpretation: 'भक्ति की चरम अवस्था में भक्त और भगवान का भेद मिट जाता है। यह अद्वैत (Non-duality) का अनुभव ही जीवन के सारे बंधनों को काट देता है।',
+    contextBackground: 'नामदेव महाराष्ट्र के महान संत थे, जो भगवान विट्ठल के परम भक्त थे।',
+    importantVocabulary: [
+      { word: 'भव का भूर (Bhava ka bhoor)', meaning: 'संसार का भय या भ्रम' }
+    ],
+    lifeLesson: 'ईश्वर को बाहर नहीं, अपने भीतर खोजें, क्योंकि वह आपसे कभी दूर नहीं है।'
+  },
+  {
+    id: 'doha-kabir-7',
+    sequenceNumber: 23,
+    dohaDevanagari: [
+      'अति का भला न बोलना, अति की भली न चूप।',
+      'अति का भला न बरसना, अति की भली न धूप॥'
+    ],
+    transliteration: [
+      'Ati kā bhalā na bolanā, ati kī bhalī na cūpa |',
+      'Ati kā bhalā na barasanā, ati kī bhalī na dhūpa ||'
+    ],
+    poetId: 'kabir',
+    poetNameDevanagari: 'कबीरदास',
+    poetNameEnglish: 'Kabir',
+    theme: 'wisdom',
+    themeHindi: 'मध्यम मार्ग का महत्व',
+    languageDialect: 'सधुक्कड़ी',
+    source: 'कबीर ग्रंथावली',
+    attributionConfidence: 'Verified Canonical',
+    hindiMeaning: 'कबीर कहते हैं कि न तो बहुत अधिक बोलना अच्छा है, और न ही हमेशा चुप रहना। जैसे न तो बहुत अधिक वर्षा अच्छी होती है, और न ही बहुत अधिक धूप।',
+    englishMeaning: 'Kabir says: Neither speaking too much is good, nor is excessive silence. Just as neither too much rain is beneficial, nor is relentless sunshine.',
+    deeperInterpretation: 'यह दोहा जीवन में संतुलन (Balance) और \'मध्यम मार्ग\' (The Middle Path) का समर्थन करता है। अति (Extremes) हर चीज़ में हानिकारक होती है, चाहे वह व्यवहार हो या प्रकृति।',
+    contextBackground: 'स्वभाव और आचरण में संयम बनाए रखने की सलाह।',
+    importantVocabulary: [
+      { word: 'अति (Ati)', meaning: 'अधिकता / बहुत ज़्यादा (Excess)' }
+    ],
+    lifeLesson: 'जीवन के हर क्षेत्र में संतुलन बनाए रखें; अति से बचें।'
+  },
+  {
+    id: 'doha-kabir-8',
+    sequenceNumber: 24,
+    dohaDevanagari: [
+      'गुरु गोविन्द दोउ खड़े, काके लागूँ पाय।',
+      'बलिहारी गुरु आपने को, जिन गोविन्द दियो बताय॥'
+    ],
+    transliteration: [
+      'Guru govinda dou khaṛe, kāke lāgū pāya |',
+      'Balihārī guru āpane ko, jina govinda diyo batāya ||'
+    ],
+    poetId: 'kabir',
+    poetNameDevanagari: 'कबीरदास',
+    poetNameEnglish: 'Kabir',
+    theme: 'devotion',
+    themeHindi: 'गुरु की महिमा',
+    languageDialect: 'सधुक्कड़ी',
+    source: 'कबीर ग्रंथावली',
+    attributionConfidence: 'Verified Canonical',
+    hindiMeaning: 'गुरु और ईश्वर (गोविन्द) दोनों एक साथ खड़े हैं, मैं किसके चरण स्पर्श करूँ? मैं अपने गुरु पर न्योछावर हूँ, जिन्होंने मुझे ईश्वर तक पहुँचने का मार्ग बता दिया।',
+    englishMeaning: 'Both the Guru and the Lord (Govind) are standing before me; whose feet should I touch first? I sacrifice myself to the Guru, for it was he who showed me the way to the Lord.',
+    deeperInterpretation: 'कबीर ने गुरु को ईश्वर से भी उच्च स्थान दिया है, क्योंकि गुरु के बिना ईश्वर का ज्ञान और प्राप्ति संभव नहीं है। यह आध्यात्मिक गुरु के प्रति परम कृतज्ञता का प्रतीक है।',
+    contextBackground: 'गुरु-शिष्य परंपरा का सबसे प्रतिष्ठित और उद्धृत किया जाने वाला दोहा।',
+    importantVocabulary: [
+      { word: 'बलिहारी (Balihari)', meaning: 'न्योछावर होना / कृतज्ञ होना' }
+    ],
+    lifeLesson: 'उन गुरुओं और शिक्षकों का सदैव सम्मान करें जो आपको सही मार्ग दिखाते हैं।'
+  },
+  {
+    id: 'doha-rahim-5',
+    sequenceNumber: 25,
+    dohaDevanagari: [
+      'रहिमन चुप हो बैठिए, देखि दिनन के फेर।',
+      'जब नैयार होइहि पार तह, चहींगे सब हेर॥'
+    ],
+    transliteration: [
+      'Rahimana cupa ho baiṭhie, dekhi dinana ke phera |',
+      'Jaba naiyāra hoihi pāra taha, cahīṁge saba hera ||'
+    ],
+    poetId: 'rahim',
+    poetNameDevanagari: 'रहीम',
+    poetNameEnglish: 'Rahim',
+    theme: 'wisdom',
+    themeHindi: 'धैर्य और समय का चक्र',
+    languageDialect: 'ब्रजभाषा',
+    source: 'रहीम दोहावली',
+    attributionConfidence: 'Verified Canonical',
+    hindiMeaning: 'रहीम कहते हैं कि जब समय खराब चल रहा हो, तो चुपचाप धैर्य धारण कर बैठना चाहिए। जब अच्छे दिन लौटकर आएंगे, तो बिगड़े हुए काम अपने आप बन जाएंगे।',
+    englishMeaning: 'Rahim advises keeping quiet and patiently waiting out bad times. When favorable days return, things will fall into place and everyone will look up to you again.',
+    deeperInterpretation: 'बुरा समय कभी स्थायी नहीं होता। संघर्ष के समय व्यर्थ की प्रतिक्रिया या ऊर्जा नष्ट करने के बजाय, धैर्यपूर्वक उचित अवसर की प्रतीक्षा करना ही बुद्धिमानी है।',
+    contextBackground: 'समय की परिवर्तनशीलता पर रहीम की गहरी समझ।',
+    importantVocabulary: [
+      { word: 'दिनन के फेर (Dinan ke pher)', meaning: 'समय का बदलाव / बुरे दिन' }
+    ],
+    lifeLesson: 'प्रतिकूल परिस्थितियों में धैर्य बनाए रखें; समय बदलते ही सब ठीक हो जाएगा।'
+  },
+  {
+    id: 'doha-rahim-6',
+    sequenceNumber: 26,
+    dohaDevanagari: [
+      'रहिमन पानी राखिए, बिन पानी सब सून।',
+      'पानी गए न उबरे, मोती, मानुस, चून॥'
+    ],
+    transliteration: [
+      'Rahimana pānī rākhie, bina pānī saba sūna |',
+      'Pānī gae na ubare, motī, mānusa, cūna ||'
+    ],
+    poetId: 'rahim',
+    poetNameDevanagari: 'रहीम',
+    poetNameEnglish: 'Rahim',
+    theme: 'morality',
+    themeHindi: 'आत्मसम्मान का महत्व',
+    languageDialect: 'ब्रजभाषा',
+    source: 'रहीम दोहावली',
+    attributionConfidence: 'Verified Canonical',
+    hindiMeaning: 'रहीम कहते हैं कि पानी (सम्मान/चमक/जल) हमेशा बचाकर रखना चाहिए, क्योंकि इसके बिना सब कुछ सूना है। पानी चले जाने पर मोती (चमक), मनुष्य (सम्मान) और चून/आटा (जल) किसी काम के नहीं रहते।',
+    englishMeaning: 'Rahim says to preserve "paani" (water/luster/honor), for without it everything is desolate. Without it, a pearl loses its luster, a person their honor, and dough cannot be made.',
+    deeperInterpretation: 'यहाँ \'पानी\' शब्द का प्रयोग श्लेष अलंकार (Pun) के रूप में हुआ है। मनुष्य के लिए इसका अर्थ आत्मसम्मान है। सम्मान खोने के बाद जीवन का मूल्य शून्य हो जाता है।',
+    contextBackground: 'यह दोहा रहीम की नीति और भाषा-कौशल (श्लेष अलंकार) का सबसे प्रसिद्ध उदाहरण है।',
+    importantVocabulary: [
+      { word: 'सून (Soon)', meaning: 'सूना / व्यर्थ / शून्य' }
+    ],
+    lifeLesson: 'अपना आत्मसम्मान और चरित्र सदैव सुरक्षित रखें, यही आपकी असली संपत्ति है।'
+  },
+  {
+    id: 'doha-garibdas-1',
+    sequenceNumber: 27,
+    dohaDevanagari: [
+      'सत को सत जानों सदा, असत को असत मान।',
+      'गरास मति पाइये, जीव गति पहचान।।'
+    ],
+    transliteration: [
+      'Sata ko sata jānoṁ sadā, asata ko asata māna |',
+      'Garāsa mati pāiye, jīva gati pahacāna ||'
+    ],
+    poetId: 'garibdas',
+    poetNameDevanagari: 'संत गरीबदास',
+    poetNameEnglish: 'Garibdas',
+    theme: 'spirituality',
+    themeHindi: 'सत्य की पहचान',
+    languageDialect: 'हरियाणवी / सधुक्कड़ी',
+    source: 'गरीबदास की वाणी',
+    attributionConfidence: 'Verified Canonical',
+    hindiMeaning: 'सत्य को सदैव सत्य ही जानो और असत्य को असत्य मानो। मोह-माया में फँसकर अपना विनाश मत करो, बल्कि आत्मा की सही दिशा (गति) को पहचानो।',
+    englishMeaning: 'Always recognize truth as truth and untruth as untruth. Do not let yourself be consumed by illusion; instead, realize the true state and path of the soul.',
+    deeperInterpretation: 'सत्य और असत्य के बीच स्पष्ट विवेक ही आध्यात्मिक प्रगति का पहला कदम है। जो व्यक्ति इस विवेक को खो देता है, वह संसार की क्षणभंगुरता में उलझकर अपनी आत्मा का हनन कर लेता है।',
+    contextBackground: 'संत गरीबदास ने सत्य और असत्य के बीच विवेक करने पर जोर दिया है।',
+    importantVocabulary: [
+      { word: 'सत (Sat)', meaning: 'सत्य / शाश्वत सत्य' },
+      { word: 'गरास (Garas)', meaning: 'ग्रास बनना / नष्ट होना' }
+    ],
+    lifeLesson: 'जीवन में सच और झूठ का स्पष्ट भेद करना सीखें और सच्चाई का साथ दें।'
+  },
+  {
+    id: 'doha-malukdas-1',
+    sequenceNumber: 28,
+    dohaDevanagari: [
+      'अजगर करै न चाकरी, पंछी करै न काम।',
+      'दास मलूका कहि गए, सब के दाता राम॥'
+    ],
+    transliteration: [
+      'Ajagara karai na cākarī, paṁchī karai na kāma |',
+      'Dāsa malūkā kahi gae, saba ke dātā rāma ||'
+    ],
+    poetId: 'malukdas',
+    poetNameDevanagari: 'संत मलूकदास',
+    poetNameEnglish: 'Malukdas',
+    theme: 'devotion',
+    themeHindi: 'ईश्वर पर पूर्ण विश्वास',
+    languageDialect: 'अवधी / सधुक्कड़ी',
+    source: 'मलूक ग्रंथावली',
+    attributionConfidence: 'Verified Canonical',
+    hindiMeaning: 'न तो अजगर किसी की नौकरी करता है, और न ही पक्षी कोई काम-धंधा करते हैं। संत मलूकदास कहते हैं कि सबका भरण-पोषण करने वाला केवल राम (ईश्वर) ही है।',
+    englishMeaning: 'The python does no job, and the bird does no work. Malukdas says: The Lord provides for all.',
+    deeperInterpretation: 'यह दोहा अकर्मण्यता (आलस्य) का नहीं, बल्कि ईश्वर पर पूर्ण निर्भरता (Surrender) का संदेश देता है। जब प्रकृति के हर जीव का पालनहार ईश्वर है, तो मनुष्य को व्यर्थ की चिंता नहीं करनी चाहिए।',
+    contextBackground: 'यह दोहा वैराग्य और ईश्वर के पालनहार स्वरूप पर अटूट विश्वास को दर्शाता है।',
+    importantVocabulary: [
+      { word: 'चाकरी (Chaakari)', meaning: 'नौकरी / सेवा' }
+    ],
+    lifeLesson: 'अपनी ओर से प्रयास करें, लेकिन भविष्य की अत्यधिक चिंता न करें—ईश्वर सबका ध्यान रखता है।'
+  },
+  {
+    id: 'doha-tulsi-4',
+    sequenceNumber: 29,
+    dohaDevanagari: [
+      'तुलसी काइआ न साथि जग, तन की नाना गति।',
+      'परमारथी असाधु को, सथं संत संगाति॥'
+    ],
+    transliteration: [
+      'Tulasī kāiā na sāthi jaga, tana kī nānā gati |',
+      'Paramārathī asādhu ko, sathaṁ saṁta saṁgāti ||'
+    ],
+    poetId: 'tulsidas',
+    poetNameDevanagari: 'तुलसीदास',
+    poetNameEnglish: 'Tulsidas',
+    theme: 'impermanence',
+    themeHindi: 'सत्संग और नश्वरता',
+    languageDialect: 'अवधी',
+    source: 'तुलसी साहित्य',
+    attributionConfidence: 'Verified Canonical',
+    hindiMeaning: 'तुलसीदास कहते हैं कि यह काया (शरीर) इस जगत में सदा साथ नहीं निभाती, इसकी अनेक गतियाँ होती हैं। परमार्थ चाहने वाले व्यक्ति को असाधुओं का संग छोड़कर संतों की संगति करनी चाहिए।',
+    englishMeaning: 'Tulsidas says that this body does not remain a companion forever in this world; it has various fleeting states. A seeker of higher truth should leave the company of the wicked and associate with the holy.',
+    deeperInterpretation: 'शरीर की नश्वरता को समझाते हुए तुलसीदास अच्छे संग (Satsang) के महत्व को रेखांकित करते हैं। जीवन छोटा है, इसलिए इसका उपयोग सत्संग और परमार्थ में करना चाहिए।',
+    contextBackground: 'सत्संग के प्रभाव को समझाने के लिए रचित विचार।',
+    importantVocabulary: [
+      { word: 'काइआ (Kaia)', meaning: 'काया / शरीर' },
+      { word: 'संगाति (Sangaati)', meaning: 'संगति / साथ' }
+    ],
+    lifeLesson: 'जीवन क्षणभंगुर है, इसलिए अच्छे लोगों की संगति में रहें जो आपको सही मार्ग दिखाएं।'
+  },
+  {
+    id: 'doha-sahajo-2',
+    sequenceNumber: 30,
+    dohaDevanagari: [
+      'सहजो मन निर्मल कर, जैसे निर्मल आकाश।',
+      'तब ही आतमा टहलता, पावे परम प्रकाश॥'
+    ],
+    transliteration: [
+      'Sahajo mana nirmala kara, jaise nirmala ākāśa |',
+      'Taba hī ātamā ṭahalatā, pāve parama prakāśa ||'
+    ],
+    poetId: 'sahajobai',
+    poetNameDevanagari: 'संत सहजो बाई',
+    poetNameEnglish: 'Sahajo Bai',
+    theme: 'spirituality',
+    themeHindi: 'मन की शुद्धि',
+    languageDialect: 'मेवाती / ब्रजभाषा',
+    source: 'सहज प्रकाश',
+    attributionConfidence: 'Verified Canonical',
+    hindiMeaning: 'सहजो बाई कहती हैं कि अपने मन को निर्मल आकाश के समान स्वच्छ कर लो। तभी आत्मा निर्बाध रूप से विचरती हुई उस परम प्रकाश (ईश्वर) को प्राप्त कर सकेगी।',
+    englishMeaning: 'Sahajo advises: Purify your mind, making it as clear as the cloudless sky. Only then can the soul wander freely and attain the Supreme Light.',
+    deeperInterpretation: 'जब तक मन में विचारों और इच्छाओं के बादल छाए रहते हैं, तब तक आत्मा का स्वरूप स्पष्ट नहीं होता। मन का खाली और शुद्ध होना ही आत्म-साक्षात्कार (Self-realization) की कुंजी है।',
+    contextBackground: 'सहजो बाई द्वारा मन की शुद्धि को साधना का मूल बताया गया है।',
+    importantVocabulary: [
+      { word: 'टहलता (Tahalata)', meaning: 'स्वतंत्र रूप से विचरता हुआ' }
+    ],
+    lifeLesson: 'अपने विचारों को शुद्ध और स्पष्ट रखें; एक शांत मन ही सही दिशा में सोच सकता है।'
   }
 ];
 
-// ─────────────── 3. DAILY SET ROTATION HELPER ───────────────
+export const DOHA_CORPUS_COUNT = DOHA_COLLECTION.length;
 
-/**
- * Returns 3-4 distinct, curated dohas for a given day index,
- * intelligently selecting across different poets and themes.
- */
 export function getDailyDohasForDay(dayIndex: number): DohaEntry[] {
   const count = 3;
   const total = DOHA_COLLECTION.length;
-  const result: DohaEntry[] = [];
   const startIdx = Math.abs(dayIndex * 3) % total;
-
+  const result: DohaEntry[] = [];
   for (let i = 0; i < count; i++) {
-    const item = DOHA_COLLECTION[(startIdx + i) % total];
-    result.push(item);
+    result.push(DOHA_COLLECTION[(startIdx + i) % total]);
   }
-
   return result;
 }
