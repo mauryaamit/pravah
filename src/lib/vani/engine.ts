@@ -5,6 +5,7 @@
 //   userId + section + date → one deterministic assignment
 //   Assignment is created atomically and cached. Never random.
 //   Progress advances only when the user explicitly marks an item as consumed.
+//   Historical dates (past) only retrieve stored assignments, never generating new ones.
 //
 // Firestore Architecture (Root Collections with Deterministic Keys):
 //   vani_daily_assignments/{userId}_{date}_{section}     ← daily idempotency
@@ -105,15 +106,17 @@ async function getConsumedSet(userId: string, section: VaniSection): Promise<Set
 // ─────────────── CORE ENGINE ───────────────
 
 export interface AssignmentResult {
-  assignment: VaniAssignment;
+  assignment: VaniAssignment | null;
   items: RegistryItem[];
   progress: VaniCorpusProgress;
   isExhausted: boolean;
+  noRecord?: boolean;
 }
 
 /**
  * Get or create today's assignment for a user+section.
- * Fully idempotent: calling it N times on the same date returns the exact same assignment.
+ * For today's date: fully idempotent (creates on first visit, returns existing on subsequent).
+ * For historical dates: only retrieves if already recorded; does NOT generate new content.
  */
 export async function getOrCreateTodayAssignment(
   userId: string,
@@ -121,11 +124,13 @@ export async function getOrCreateTodayAssignment(
   dateKey?: string,
 ): Promise<AssignmentResult> {
   const db = getAdminDb();
-  const date = dateKey || getTodayDateKey();
+  const todayKey = getTodayDateKey();
+  const date = dateKey || todayKey;
+  const isHistorical = date < todayKey;
   const docId = assignmentDocId(userId, section, date);
   const assignmentRef = db.collection(COLLECTIONS.DAILY_ASSIGNMENTS).doc(docId);
 
-  // 1. Check if today's assignment already exists
+  // 1. Check if assignment already exists for this date
   const existingDoc = await assignmentRef.get();
   if (existingDoc.exists) {
     const assignment = existingDoc.data() as VaniAssignment;
@@ -148,10 +153,29 @@ export async function getOrCreateTodayAssignment(
         isExhausted: progress.isExhausted,
       },
       isExhausted: progress.isExhausted,
+      noRecord: false,
     };
   }
 
-  // 2. No existing assignment — create one atomically
+  // 2. If it's a historical date and no assignment was recorded, do NOT generate new assignment
+  if (isHistorical) {
+    const progress = await getProgress(userId, section);
+    const total = getCorpusTotalCount(section);
+    return {
+      assignment: null,
+      items: [],
+      progress: {
+        consumed: progress.consumedCount,
+        total: total > 0 ? total : null,
+        cycleNumber: progress.cycleNumber,
+        isExhausted: progress.isExhausted,
+      },
+      isExhausted: false,
+      noRecord: true,
+    };
+  }
+
+  // 3. For today's date: create a new assignment atomically from progression engine
   const dailyCount = VANI_DAILY_COUNT[section] || 1;
   const total = getCorpusTotalCount(section);
 
@@ -178,10 +202,11 @@ export async function getOrCreateTodayAssignment(
         isExhausted: true,
       },
       isExhausted: true,
+      noRecord: false,
     };
   }
 
-  // 3. Find next N unconsumed items
+  // 4. Find next N unconsumed items
   const selectedItems: RegistryItem[] = [];
 
   if (dailyCount === 1) {
@@ -216,10 +241,11 @@ export async function getOrCreateTodayAssignment(
         isExhausted: true,
       },
       isExhausted: true,
+      noRecord: false,
     };
   }
 
-  // 4. Create assignment atomically using a transaction
+  // 5. Create assignment atomically using a transaction
   const assignment: VaniAssignment = {
     contentId: selectedItems[0].id,
     contentIds: selectedItems.map((i) => i.id),
@@ -257,6 +283,7 @@ export async function getOrCreateTodayAssignment(
       isExhausted: false,
     },
     isExhausted: false,
+    noRecord: false,
   };
 }
 
@@ -288,7 +315,7 @@ export async function markConsumed(
 
   await consumptionRef.set(consumptionRecord);
 
-  // Mark today's assignment as consumed
+  // Mark today's assignment as consumed if it exists
   const date = getTodayDateKey();
   const assignDocId = assignmentDocId(userId, section, date);
   await db

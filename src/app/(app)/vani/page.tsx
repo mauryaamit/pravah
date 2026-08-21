@@ -7,6 +7,7 @@ import PageTransition from '@/components/layout/PageTransition';
 import ReadAloudButton from '@/components/shared/ReadAloudButton';
 import SutraNoteButton from '@/components/shared/SutraNoteButton';
 import RevisitButton from '@/components/shared/RevisitButton';
+import DayNavigator from '@/components/shared/DayNavigator';
 import { useVaniSection } from '@/lib/hooks/useVaniSection';
 import { POET_PROFILES, PoetProfile } from './data-doha';
 import {
@@ -28,6 +29,7 @@ import {
   RefreshCw,
   Award,
   BookMarked,
+  History,
 } from 'lucide-react';
 
 type VaniTab = 'doha' | 'geeta' | 'ramayan' | 'mahabharat' | 'upanishad' | 'veda' | 'purana' | 'bhasha' | 'vyakaran';
@@ -52,7 +54,7 @@ const HERITAGE_THEME = {
 
 // ─── Shared sub-components ───────────────────────────────────────────────────
 
-function LoadingState({ section }: { section: string }) {
+function LoadingState() {
   return (
     <div className="card-base p-12 text-center space-y-3">
       <RefreshCw size={22} className="animate-spin mx-auto" style={{ color: HERITAGE_THEME.primary }} />
@@ -76,8 +78,21 @@ function ErrorState({ error, reload }: { error: string; reload: () => void }) {
   );
 }
 
-function ExhaustedState({ section, sectionLabel, progress, onBeginCycle }: {
-  section: string;
+function NoRecordState() {
+  return (
+    <div className="card-base p-12 text-center space-y-3 border-dashed">
+      <BookOpen size={36} className="mx-auto text-[var(--text-muted)] opacity-50" />
+      <h3 className="font-serif text-lg font-bold text-[var(--text-primary)]">
+        No Vaani edition was recorded for this day.
+      </h3>
+      <p className="text-xs text-[var(--text-muted)] max-w-sm mx-auto">
+        No edition was stored for this day. Use the date navigator above to view other dates or return to today.
+      </p>
+    </div>
+  );
+}
+
+function ExhaustedState({ sectionLabel, progress, onBeginCycle }: {
   sectionLabel: string;
   progress: any;
   onBeginCycle: () => void;
@@ -135,7 +150,15 @@ function MarkExploredButton({ state, label = 'Mark as Explored' }: { state: any;
     return (
       <span className="flex items-center gap-1.5 text-xs font-medium text-emerald-600 dark:text-emerald-400">
         <CheckCircle2 size={14} />
-        Explored today
+        {state.isHistorical ? 'Explored' : 'Explored today'}
+      </span>
+    );
+  }
+  if (state.isHistorical) {
+    return (
+      <span className="flex items-center gap-1.5 text-xs font-medium text-[var(--text-muted)]">
+        <History size={13} />
+        Historical Edition
       </span>
     );
   }
@@ -155,17 +178,16 @@ function MarkExploredButton({ state, label = 'Mark as Explored' }: { state: any;
 
 export default function VaniPage() {
   const [activeTab, setActiveTab] = useState<VaniTab>('doha');
+  const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [showIast, setShowIast] = useState(false);
   const [vyakaranQuizSelected, setVyakaranQuizSelected] = useState<number | null>(null);
   const [expandedDohaStages, setExpandedDohaStages] = useState<Record<string, 'understand' | 'deeper' | 'closed'>>({});
   const [selectedPoetProfile, setSelectedPoetProfile] = useState<PoetProfile | null>(null);
 
-  const activeTabData = TABS.find(t => t.id === activeTab)!;
-
   useEffect(() => {
     setVyakaranQuizSelected(null);
     setExpandedDohaStages({});
-  }, [activeTab]);
+  }, [activeTab, currentDate]);
 
   const toggleDohaStage = (dohaId: string, stage: 'understand' | 'deeper') => {
     setExpandedDohaStages(prev => {
@@ -197,6 +219,15 @@ export default function VaniPage() {
               Sequential daily journey through India&apos;s complete knowledge corpus. Every day: new content.
             </p>
           </div>
+        </div>
+
+        {/* ─── Date Navigator (Historical 30-Day Support) ─── */}
+        <div className="border-b pb-2" style={{ borderColor: 'var(--border-default)' }}>
+          <DayNavigator
+            currentDate={currentDate}
+            onDateChange={setCurrentDate}
+            maxPastDays={30}
+          />
         </div>
 
         {/* ─── Tab Bar ─── */}
@@ -235,35 +266,49 @@ export default function VaniPage() {
           </button>
         </div>
 
-        {/* ─── Content Sections (API-driven) ─── */}
+        {/* ─── Content Sections (API-driven with historical date support) ─── */}
         <AnimatePresence mode="wait">
 
           {/* ─── 1. DOHA ─── */}
-          {activeTab === 'doha' && <DohaSection showIast={showIast} expandedDohaStages={expandedDohaStages} toggleDohaStage={toggleDohaStage} setSelectedPoetProfile={setSelectedPoetProfile} />}
+          {activeTab === 'doha' && (
+            <DohaSection
+              currentDate={currentDate}
+              showIast={showIast}
+              expandedDohaStages={expandedDohaStages}
+              toggleDohaStage={toggleDohaStage}
+              setSelectedPoetProfile={setSelectedPoetProfile}
+            />
+          )}
 
           {/* ─── 2. BHAGAVAD GITA ─── */}
-          {activeTab === 'geeta' && <GitaSection showIast={showIast} />}
+          {activeTab === 'geeta' && <GitaSection currentDate={currentDate} showIast={showIast} />}
 
           {/* ─── 3. RAMAYAN ─── */}
-          {activeTab === 'ramayan' && <RamayanSection showIast={showIast} />}
+          {activeTab === 'ramayan' && <RamayanSection currentDate={currentDate} showIast={showIast} />}
 
           {/* ─── 4. MAHABHARAT ─── */}
-          {activeTab === 'mahabharat' && <MahabharatSection showIast={showIast} />}
+          {activeTab === 'mahabharat' && <MahabharatSection currentDate={currentDate} showIast={showIast} />}
 
           {/* ─── 5. UPANISHAD ─── */}
-          {activeTab === 'upanishad' && <UpanishadSection showIast={showIast} />}
+          {activeTab === 'upanishad' && <UpanishadSection currentDate={currentDate} showIast={showIast} />}
 
           {/* ─── 6. VEDA ─── */}
-          {activeTab === 'veda' && <VedaSection showIast={showIast} />}
+          {activeTab === 'veda' && <VedaSection currentDate={currentDate} showIast={showIast} />}
 
           {/* ─── 7. PURANA ─── */}
-          {activeTab === 'purana' && <PuranaSection showIast={showIast} />}
+          {activeTab === 'purana' && <PuranaSection currentDate={currentDate} showIast={showIast} />}
 
           {/* ─── 8. BHARATIYA BHASHA ─── */}
-          {activeTab === 'bhasha' && <BhashaSection />}
+          {activeTab === 'bhasha' && <BhashaSection currentDate={currentDate} />}
 
           {/* ─── 9. HINDI VYAKARAN ─── */}
-          {activeTab === 'vyakaran' && <VyakaranSection vyakaranQuizSelected={vyakaranQuizSelected} setVyakaranQuizSelected={setVyakaranQuizSelected} />}
+          {activeTab === 'vyakaran' && (
+            <VyakaranSection
+              currentDate={currentDate}
+              vyakaranQuizSelected={vyakaranQuizSelected}
+              setVyakaranQuizSelected={setVyakaranQuizSelected}
+            />
+          )}
 
         </AnimatePresence>
 
@@ -342,15 +387,19 @@ export default function VaniPage() {
 
 // ─── Section Components ───────────────────────────────────────────────────────
 
-function DohaSection({ showIast, expandedDohaStages, toggleDohaStage, setSelectedPoetProfile }: any) {
-  const state = useVaniSection('doha');
+function DohaSection({ currentDate, showIast, expandedDohaStages, toggleDohaStage, setSelectedPoetProfile }: any) {
+  const state = useVaniSection('doha', currentDate);
 
   return (
     <motion.div key="doha" variants={FADE_UP} initial="initial" animate="animate" exit={{ opacity: 0, y: -10 }} className="space-y-6">
       <div className="p-4 rounded-xl border bg-[var(--bg-tertiary)]/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3" style={{ borderColor: 'var(--border-default)' }}>
         <div>
-          <h2 className="font-devanagari text-lg font-bold text-[var(--text-primary)]">दैनिक दोहा अमृत · 3 Daily Couplets</h2>
-          <p className="text-xs text-[var(--text-muted)] mt-0.5">Unique dohas every day. Each item is shown once until you complete the full corpus.</p>
+          <h2 className="font-devanagari text-lg font-bold text-[var(--text-primary)]">
+            दैनिक दोहा अमृत · 3 Daily Couplets
+          </h2>
+          <p className="text-xs text-[var(--text-muted)] mt-0.5">
+            Unique dohas every day. Each item is shown once until you complete the full corpus.
+          </p>
           {state.progress && (
             <div className="mt-1.5">
               <ProgressBar progress={state.progress} />
@@ -363,13 +412,14 @@ function DohaSection({ showIast, expandedDohaStages, toggleDohaStage, setSelecte
         </div>
       </div>
 
-      {state.loading && <LoadingState section="doha" />}
+      {state.loading && <LoadingState />}
       {state.error && <ErrorState error={state.error} reload={state.reload} />}
+      {state.noRecord && <NoRecordState />}
       {state.isExhausted && (
-        <ExhaustedState section="doha" sectionLabel="दोहा कोश" progress={state.progress} onBeginCycle={state.beginNextCycle} />
+        <ExhaustedState sectionLabel="दोहा कोश" progress={state.progress} onBeginCycle={state.beginNextCycle} />
       )}
 
-      {!state.loading && !state.error && !state.isExhausted && (
+      {!state.loading && !state.error && !state.noRecord && !state.isExhausted && (
         <div className="space-y-6">
           {state.items.map((item: any) => {
             const doha = item.content;
@@ -479,17 +529,18 @@ function DohaSection({ showIast, expandedDohaStages, toggleDohaStage, setSelecte
   );
 }
 
-function GitaSection({ showIast }: { showIast: boolean }) {
-  const state = useVaniSection('gita');
+function GitaSection({ currentDate, showIast }: { currentDate?: Date; showIast: boolean }) {
+  const state = useVaniSection('gita', currentDate);
   const c = state.item?.content;
 
   return (
     <motion.div key="geeta" variants={FADE_UP} initial="initial" animate="animate" exit={{ opacity: 0, y: -10 }} className="space-y-6">
-      {state.loading && <LoadingState section="gita" />}
+      {state.loading && <LoadingState />}
       {state.error && <ErrorState error={state.error} reload={state.reload} />}
-      {state.isExhausted && <ExhaustedState section="gita" sectionLabel="श्रीमद्भगवद्गीता" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
+      {state.noRecord && <NoRecordState />}
+      {state.isExhausted && <ExhaustedState sectionLabel="श्रीमद्भगवद्गीता" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
 
-      {!state.loading && !state.error && !state.isExhausted && c && (
+      {!state.loading && !state.error && !state.noRecord && !state.isExhausted && c && (
         <div className="card-base p-6 sm:p-8 space-y-6 border-l-4" style={{ borderLeftColor: HERITAGE_THEME.primary }}>
           <div className="flex flex-wrap justify-between items-start gap-4 pb-4 border-b" style={{ borderColor: 'var(--border-default)' }}>
             <div>
@@ -567,17 +618,18 @@ function GitaSection({ showIast }: { showIast: boolean }) {
   );
 }
 
-function RamayanSection({ showIast }: { showIast: boolean }) {
-  const state = useVaniSection('ramayan');
+function RamayanSection({ currentDate, showIast }: { currentDate?: Date; showIast: boolean }) {
+  const state = useVaniSection('ramayan', currentDate);
   const c = state.item?.content;
 
   return (
     <motion.div key="ramayan" variants={FADE_UP} initial="initial" animate="animate" exit={{ opacity: 0, y: -10 }} className="space-y-6">
-      {state.loading && <LoadingState section="ramayan" />}
+      {state.loading && <LoadingState />}
       {state.error && <ErrorState error={state.error} reload={state.reload} />}
-      {state.isExhausted && <ExhaustedState section="ramayan" sectionLabel="श्रीरामचरितमानस" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
+      {state.noRecord && <NoRecordState />}
+      {state.isExhausted && <ExhaustedState sectionLabel="श्रीरामचरितमानस" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
 
-      {!state.loading && !state.error && !state.isExhausted && c && (
+      {!state.loading && !state.error && !state.noRecord && !state.isExhausted && c && (
         <div className="card-base p-6 sm:p-8 space-y-6 border-l-4" style={{ borderLeftColor: '#C4623F' }}>
           <div className="flex flex-wrap justify-between items-start gap-4 pb-4 border-b" style={{ borderColor: 'var(--border-default)' }}>
             <div>
@@ -640,17 +692,18 @@ function RamayanSection({ showIast }: { showIast: boolean }) {
   );
 }
 
-function MahabharatSection({ showIast }: { showIast: boolean }) {
-  const state = useVaniSection('mahabharat');
+function MahabharatSection({ currentDate, showIast }: { currentDate?: Date; showIast: boolean }) {
+  const state = useVaniSection('mahabharat', currentDate);
   const c = state.item?.content;
 
   return (
     <motion.div key="mahabharat" variants={FADE_UP} initial="initial" animate="animate" exit={{ opacity: 0, y: -10 }} className="space-y-6">
-      {state.loading && <LoadingState section="mahabharat" />}
+      {state.loading && <LoadingState />}
       {state.error && <ErrorState error={state.error} reload={state.reload} />}
-      {state.isExhausted && <ExhaustedState section="mahabharat" sectionLabel="महाभारत" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
+      {state.noRecord && <NoRecordState />}
+      {state.isExhausted && <ExhaustedState sectionLabel="महाभारत" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
 
-      {!state.loading && !state.error && !state.isExhausted && c && (
+      {!state.loading && !state.error && !state.noRecord && !state.isExhausted && c && (
         <div className="card-base p-6 sm:p-8 space-y-6 border-l-4" style={{ borderLeftColor: '#7A4A8B' }}>
           <div className="flex justify-between items-start gap-4 pb-4 border-b" style={{ borderColor: 'var(--border-default)' }}>
             <div>
@@ -699,17 +752,18 @@ function MahabharatSection({ showIast }: { showIast: boolean }) {
   );
 }
 
-function UpanishadSection({ showIast }: { showIast: boolean }) {
-  const state = useVaniSection('upanishad');
+function UpanishadSection({ currentDate, showIast }: { currentDate?: Date; showIast: boolean }) {
+  const state = useVaniSection('upanishad', currentDate);
   const c = state.item?.content;
 
   return (
     <motion.div key="upanishad" variants={FADE_UP} initial="initial" animate="animate" exit={{ opacity: 0, y: -10 }} className="space-y-6">
-      {state.loading && <LoadingState section="upanishad" />}
+      {state.loading && <LoadingState />}
       {state.error && <ErrorState error={state.error} reload={state.reload} />}
-      {state.isExhausted && <ExhaustedState section="upanishad" sectionLabel="उपनिषद्" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
+      {state.noRecord && <NoRecordState />}
+      {state.isExhausted && <ExhaustedState sectionLabel="उपनिषद्" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
 
-      {!state.loading && !state.error && !state.isExhausted && c && (
+      {!state.loading && !state.error && !state.noRecord && !state.isExhausted && c && (
         <div className="card-base p-6 sm:p-8 space-y-6 border-l-4" style={{ borderLeftColor: '#3A7A6B' }}>
           <div className="flex flex-wrap justify-between items-start gap-4 pb-4 border-b" style={{ borderColor: 'var(--border-default)' }}>
             <div>
@@ -759,8 +813,8 @@ function UpanishadSection({ showIast }: { showIast: boolean }) {
   );
 }
 
-function VedaSection({ showIast }: { showIast: boolean }) {
-  const state = useVaniSection('veda');
+function VedaSection({ currentDate, showIast }: { currentDate?: Date; showIast: boolean }) {
+  const state = useVaniSection('veda', currentDate);
 
   const vedaColors: Record<string, string> = {
     rigveda: '#8B4513',
@@ -789,11 +843,12 @@ function VedaSection({ showIast }: { showIast: boolean }) {
         </div>
       </div>
 
-      {state.loading && <LoadingState section="veda" />}
+      {state.loading && <LoadingState />}
       {state.error && <ErrorState error={state.error} reload={state.reload} />}
-      {state.isExhausted && <ExhaustedState section="veda" sectionLabel="वेद" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
+      {state.noRecord && <NoRecordState />}
+      {state.isExhausted && <ExhaustedState sectionLabel="वेद" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
 
-      {!state.loading && !state.error && !state.isExhausted && (
+      {!state.loading && !state.error && !state.noRecord && !state.isExhausted && (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {state.items.map((item: any) => {
             const c = item.content;
@@ -841,17 +896,18 @@ function VedaSection({ showIast }: { showIast: boolean }) {
   );
 }
 
-function PuranaSection({ showIast }: { showIast: boolean }) {
-  const state = useVaniSection('purana');
+function PuranaSection({ currentDate, showIast }: { currentDate?: Date; showIast: boolean }) {
+  const state = useVaniSection('purana', currentDate);
   const c = state.item?.content;
 
   return (
     <motion.div key="purana" variants={FADE_UP} initial="initial" animate="animate" exit={{ opacity: 0, y: -10 }} className="space-y-6">
-      {state.loading && <LoadingState section="purana" />}
+      {state.loading && <LoadingState />}
       {state.error && <ErrorState error={state.error} reload={state.reload} />}
-      {state.isExhausted && <ExhaustedState section="purana" sectionLabel="पुराण" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
+      {state.noRecord && <NoRecordState />}
+      {state.isExhausted && <ExhaustedState sectionLabel="पुराण" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
 
-      {!state.loading && !state.error && !state.isExhausted && c && (
+      {!state.loading && !state.error && !state.noRecord && !state.isExhausted && c && (
         <div className="card-base p-6 sm:p-8 space-y-6 border-l-4" style={{ borderLeftColor: '#8B6914' }}>
           <div className="flex flex-wrap justify-between items-start gap-4 pb-4 border-b" style={{ borderColor: 'var(--border-default)' }}>
             <div>
@@ -901,8 +957,8 @@ function PuranaSection({ showIast }: { showIast: boolean }) {
   );
 }
 
-function BhashaSection() {
-  const state = useVaniSection('bhasha');
+function BhashaSection({ currentDate }: { currentDate?: Date }) {
+  const state = useVaniSection('bhasha', currentDate);
 
   return (
     <motion.div key="bhasha" variants={FADE_UP} initial="initial" animate="animate" exit={{ opacity: 0, y: -10 }} className="space-y-6">
@@ -917,11 +973,12 @@ function BhashaSection() {
         </div>
       </div>
 
-      {state.loading && <LoadingState section="bhasha" />}
+      {state.loading && <LoadingState />}
       {state.error && <ErrorState error={state.error} reload={state.reload} />}
-      {state.isExhausted && <ExhaustedState section="bhasha" sectionLabel="भारतीय भाषा" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
+      {state.noRecord && <NoRecordState />}
+      {state.isExhausted && <ExhaustedState sectionLabel="भारतीय भाषा" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
 
-      {!state.loading && !state.error && !state.isExhausted && state.item && (() => {
+      {!state.loading && !state.error && !state.noRecord && !state.isExhausted && state.item && (() => {
         const c = state.item!.content;
         const words = c.words || (c.sanskritWord ? [
           { language: 'Sanskrit', script: 'Devanagari', word: c.sanskritWord, transliteration: c.sanskritTranslit, hindiMeaning: c.sanskritMeaning, englishMeaning: c.sanskritEnglish, exampleSentence: c.sanskritExample, culturalContext: c.sanskritContext },
@@ -959,17 +1016,18 @@ function BhashaSection() {
   );
 }
 
-function VyakaranSection({ vyakaranQuizSelected, setVyakaranQuizSelected }: { vyakaranQuizSelected: number | null; setVyakaranQuizSelected: (v: number | null) => void }) {
-  const state = useVaniSection('vyakaran');
+function VyakaranSection({ currentDate, vyakaranQuizSelected, setVyakaranQuizSelected }: { currentDate?: Date; vyakaranQuizSelected: number | null; setVyakaranQuizSelected: (v: number | null) => void }) {
+  const state = useVaniSection('vyakaran', currentDate);
   const c = state.item?.content;
 
   return (
     <motion.div key="vyakaran" variants={FADE_UP} initial="initial" animate="animate" exit={{ opacity: 0, y: -10 }} className="space-y-6">
-      {state.loading && <LoadingState section="vyakaran" />}
+      {state.loading && <LoadingState />}
       {state.error && <ErrorState error={state.error} reload={state.reload} />}
-      {state.isExhausted && <ExhaustedState section="vyakaran" sectionLabel="हिंदी व्याकरण" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
+      {state.noRecord && <NoRecordState />}
+      {state.isExhausted && <ExhaustedState sectionLabel="हिंदी व्याकरण" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
 
-      {!state.loading && !state.error && !state.isExhausted && c && (
+      {!state.loading && !state.error && !state.noRecord && !state.isExhausted && c && (
         <div className="card-base p-6 sm:p-8 space-y-6 border-l-4" style={{ borderLeftColor: '#3A5A8B' }}>
           <div className="flex flex-wrap justify-between items-start gap-4 pb-4 border-b" style={{ borderColor: 'var(--border-default)' }}>
             <div>

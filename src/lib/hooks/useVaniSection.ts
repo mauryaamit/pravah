@@ -1,10 +1,9 @@
 // src/lib/hooks/useVaniSection.ts
-// React hook for fetching and managing Vaani section content.
-// Replaces all client-side corpus selection with backend API calls.
+// React hook for fetching and managing Vaani section content with historical date support.
 
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { VaniSection } from '@/lib/vani/types';
 
 export interface VaniContentItem {
@@ -39,6 +38,9 @@ export interface VaniSectionState {
   error: string | null;
   isConsumed: boolean;
   isExhausted: boolean;
+  isHistorical: boolean;
+  noRecord: boolean;
+  dateKey: string;
   // Actions
   markAsExplored: () => Promise<void>;
   beginNextCycle: () => Promise<void>;
@@ -52,25 +54,37 @@ const DEFAULT_PROGRESS: VaniCorpusProgress = {
   isExhausted: false,
 };
 
-/**
- * Fetch today's Vaani content for a section.
- * Results are cached in sessionStorage to prevent redundant API calls on tab switches.
- */
-export function useVaniSection(section: VaniSection): VaniSectionState {
+function formatDateToKey(d: Date): string {
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+export function useVaniSection(section: VaniSection, selectedDate?: Date): VaniSectionState {
   const [items, setItems] = useState<VaniContentItem[]>([]);
   const [progress, setProgress] = useState<VaniCorpusProgress | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isConsumed, setIsConsumed] = useState(false);
   const [isExhausted, setIsExhausted] = useState(false);
+  const [noRecord, setNoRecord] = useState(false);
+  const [isHistorical, setIsHistorical] = useState(false);
 
-  const cacheKey = `vani-${section}-${new Date().toISOString().slice(0, 10)}`;
+  const dateKey = useMemo(() => {
+    return selectedDate ? formatDateToKey(selectedDate) : formatDateToKey(new Date());
+  }, [selectedDate]);
+
+  const todayKey = useMemo(() => formatDateToKey(new Date()), []);
+  const isPast = dateKey < todayKey;
+
+  const cacheKey = `vani-${section}-${dateKey}`;
 
   const fetchContent = useCallback(async () => {
     setLoading(true);
     setError(null);
 
-    // Check sessionStorage cache first (prevents redundant API calls when switching tabs)
+    // Check sessionStorage cache first
     try {
       const cached = sessionStorage.getItem(cacheKey);
       if (cached) {
@@ -79,13 +93,16 @@ export function useVaniSection(section: VaniSection): VaniSectionState {
         setProgress(parsed.progress || DEFAULT_PROGRESS);
         setIsConsumed(parsed.isConsumed || false);
         setIsExhausted(parsed.isExhausted || false);
+        setNoRecord(parsed.noRecord || false);
+        setIsHistorical(parsed.isHistorical ?? isPast);
         setLoading(false);
         return;
       }
     } catch {}
 
     try {
-      const res = await fetch(`/api/vani/${section}/today`);
+      const url = `/api/vani/${section}/today?date=${dateKey}`;
+      const res = await fetch(url);
       if (!res.ok) {
         const errData = await res.json().catch(() => ({}));
         throw new Error(errData.error || `HTTP ${res.status}`);
@@ -97,8 +114,13 @@ export function useVaniSection(section: VaniSection): VaniSectionState {
       let resolvedProgress: VaniCorpusProgress = DEFAULT_PROGRESS;
       let resolvedIsConsumed = false;
       let resolvedIsExhausted = data.isExhausted || false;
+      let resolvedNoRecord = data.noRecord || false;
+      let resolvedIsHistorical = data.isHistorical ?? isPast;
 
-      if (resolvedIsExhausted) {
+      if (resolvedNoRecord) {
+        resolvedItems = [];
+        resolvedProgress = data.corpusProgress || DEFAULT_PROGRESS;
+      } else if (resolvedIsExhausted) {
         resolvedProgress = data.corpusProgress || DEFAULT_PROGRESS;
       } else if (data.items && Array.isArray(data.items)) {
         // Multi-item response (doha, veda)
@@ -107,13 +129,15 @@ export function useVaniSection(section: VaniSection): VaniSectionState {
         resolvedIsConsumed = data.isAlreadyConsumed || false;
       } else if (data.contentId) {
         // Single-item response
-        resolvedItems = [{
-          contentId: data.contentId,
-          sequence: data.sequence,
-          content: data.content,
-          source: data.source,
-          subsection: data.subsection,
-        }];
+        resolvedItems = [
+          {
+            contentId: data.contentId,
+            sequence: data.sequence,
+            content: data.content,
+            source: data.source,
+            subsection: data.subsection,
+          },
+        ];
         resolvedProgress = data.corpusProgress || DEFAULT_PROGRESS;
         resolvedIsConsumed = data.isAlreadyConsumed || false;
       }
@@ -122,32 +146,39 @@ export function useVaniSection(section: VaniSection): VaniSectionState {
       setProgress(resolvedProgress);
       setIsConsumed(resolvedIsConsumed);
       setIsExhausted(resolvedIsExhausted);
+      setNoRecord(resolvedNoRecord);
+      setIsHistorical(resolvedIsHistorical);
 
       // Cache result for this session
       try {
-        sessionStorage.setItem(cacheKey, JSON.stringify({
-          items: resolvedItems,
-          progress: resolvedProgress,
-          isConsumed: resolvedIsConsumed,
-          isExhausted: resolvedIsExhausted,
-        }));
+        sessionStorage.setItem(
+          cacheKey,
+          JSON.stringify({
+            items: resolvedItems,
+            progress: resolvedProgress,
+            isConsumed: resolvedIsConsumed,
+            isExhausted: resolvedIsExhausted,
+            noRecord: resolvedNoRecord,
+            isHistorical: resolvedIsHistorical,
+          })
+        );
       } catch {}
     } catch (e: any) {
       setError(e.message || 'Failed to load content');
     } finally {
       setLoading(false);
     }
-  }, [section, cacheKey]);
+  }, [section, dateKey, cacheKey, isPast]);
 
   useEffect(() => {
     fetchContent();
   }, [fetchContent]);
 
   const markAsExplored = useCallback(async () => {
-    if (isConsumed || isExhausted || items.length === 0) return;
+    if (isConsumed || isExhausted || items.length === 0 || noRecord) return;
 
     try {
-      const contentIds = items.map(i => i.contentId);
+      const contentIds = items.map((i) => i.contentId);
       const res = await fetch(`/api/vani/${section}/mark-consumed`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -158,19 +189,25 @@ export function useVaniSection(section: VaniSection): VaniSectionState {
         const data = await res.json();
         setIsConsumed(true);
         setIsExhausted(data.isExhausted || false);
-        setProgress(prev => prev ? {
-          ...prev,
-          consumed: data.consumedCount,
-          isExhausted: data.isExhausted || false,
-        } : prev);
+        setProgress((prev) =>
+          prev
+            ? {
+                ...prev,
+                consumed: data.consumedCount,
+                isExhausted: data.isExhausted || false,
+              }
+            : prev
+        );
 
-        // Invalidate cache so next load gets fresh assignment
-        try { sessionStorage.removeItem(cacheKey); } catch {}
+        // Invalidate cache so next load gets updated state
+        try {
+          sessionStorage.removeItem(cacheKey);
+        } catch {}
       }
     } catch (e) {
       console.error('[useVaniSection] markAsExplored failed:', e);
     }
-  }, [section, items, isConsumed, isExhausted, cacheKey]);
+  }, [section, items, isConsumed, isExhausted, noRecord, cacheKey]);
 
   const beginNextCycleAction = useCallback(async () => {
     try {
@@ -179,7 +216,9 @@ export function useVaniSection(section: VaniSection): VaniSectionState {
         setIsExhausted(false);
         setIsConsumed(false);
         setProgress(DEFAULT_PROGRESS);
-        try { sessionStorage.removeItem(cacheKey); } catch {}
+        try {
+          sessionStorage.removeItem(cacheKey);
+        } catch {}
         await fetchContent();
       }
     } catch (e) {
@@ -195,6 +234,9 @@ export function useVaniSection(section: VaniSection): VaniSectionState {
     error,
     isConsumed,
     isExhausted,
+    isHistorical,
+    noRecord,
+    dateKey,
     markAsExplored,
     beginNextCycle: beginNextCycleAction,
     reload: fetchContent,
