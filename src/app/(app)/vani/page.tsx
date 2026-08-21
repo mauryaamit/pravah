@@ -122,7 +122,7 @@ function ExhaustedState({ sectionLabel, progress, onBeginCycle }: {
   );
 }
 
-function ProgressBar({ progress }: { progress: any }) {
+function ProgressBar({ progress, unit = 'entries' }: { progress: any; unit?: string }) {
   if (!progress) return null;
   const { consumed, total, cycleNumber } = progress;
   const pct = total ? Math.round((consumed / total) * 100) : 0;
@@ -130,7 +130,7 @@ function ProgressBar({ progress }: { progress: any }) {
   return (
     <div className="flex items-center gap-3 text-xs text-[var(--text-muted)]">
       <span className="font-medium whitespace-nowrap">
-        {total ? `${consumed} / ${total} explored` : `${consumed} explored`}
+        {total ? `${consumed} / ${total} ${unit} explored` : `${consumed} ${unit} explored`}
         {cycleNumber > 1 ? ` (Cycle ${cycleNumber})` : ''}
       </span>
       {total && (
@@ -402,7 +402,7 @@ function DohaSection({ currentDate, showIast, expandedDohaStages, toggleDohaStag
           </p>
           {state.progress && (
             <div className="mt-1.5">
-              <ProgressBar progress={state.progress} />
+              <ProgressBar progress={state.progress} unit="dohas" />
             </div>
           )}
         </div>
@@ -558,7 +558,7 @@ function GitaSection({ currentDate, showIast }: { currentDate?: Date; showIast: 
               <p className="text-xs text-[var(--text-muted)] font-serif italic mt-0.5">
                 {c.chapterNameEnglish} · {c.chapterNameHindi}
               </p>
-              <div className="mt-2"><ProgressBar progress={state.progress} /></div>
+              <div className="mt-2"><ProgressBar progress={state.progress} unit="verses" /></div>
             </div>
             <div className="flex items-center gap-2">
               <MarkExploredButton state={state} />
@@ -638,7 +638,7 @@ function RamayanSection({ currentDate, showIast }: { currentDate?: Date; showIas
                 {c.kand} <span className="text-xs font-serif opacity-75 font-normal">({c.kandEnglish})</span>
               </h2>
               <p className="text-xs text-[var(--text-muted)] mt-0.5">{c.dohaNumber} · पात्र: {c.charactersInvolved?.join(', ')}</p>
-              <div className="mt-2"><ProgressBar progress={state.progress} /></div>
+              <div className="mt-2"><ProgressBar progress={state.progress} unit="chaupais" /></div>
             </div>
             <div className="flex items-center gap-2">
               <MarkExploredButton state={state} />
@@ -714,7 +714,7 @@ function MahabharatSection({ currentDate, showIast }: { currentDate?: Date; show
               <p className="text-xs text-[var(--text-muted)] mt-0.5">
                 {c.chapterReference} · संवाद: {c.charactersInvolved?.join(' व ')}
               </p>
-              <div className="mt-2"><ProgressBar progress={state.progress} /></div>
+              <div className="mt-2"><ProgressBar progress={state.progress} unit="passages" /></div>
             </div>
             <div className="flex items-center gap-2">
               <MarkExploredButton state={state} />
@@ -773,7 +773,7 @@ function UpanishadSection({ currentDate, showIast }: { currentDate?: Date; showI
               <h2 className="font-devanagari text-2xl sm:text-3xl font-bold mt-2 text-[var(--text-primary)]">
                 {c.upanishadName || 'उपनिषद्'} — मंत्र {c.mantraNumber || state.item?.sequence}
               </h2>
-              <div className="mt-2"><ProgressBar progress={state.progress} /></div>
+              <div className="mt-2"><ProgressBar progress={state.progress} unit="mantras" /></div>
             </div>
             <div className="flex items-center gap-2">
               <MarkExploredButton state={state} />
@@ -835,7 +835,7 @@ function VedaSection({ currentDate, showIast }: { currentDate?: Date; showIast: 
         <div>
           <h2 className="font-devanagari text-lg font-bold text-[var(--text-primary)]">चतुर्वेद · Daily Selections from All 4 Vedas</h2>
           <p className="text-xs text-[var(--text-muted)] mt-0.5">One mantra from each Veda, sequentially. Never repeated until the corpus is complete.</p>
-          <div className="mt-1.5"><ProgressBar progress={state.progress} /></div>
+          <div className="mt-1.5"><ProgressBar progress={state.progress} unit="mantras" /></div>
         </div>
         <div className="flex items-center gap-2">
           <MarkExploredButton state={state} label="Mark All Explored" />
@@ -917,7 +917,7 @@ function PuranaSection({ currentDate, showIast }: { currentDate?: Date; showIast
               <h2 className="font-devanagari text-2xl sm:text-3xl font-bold mt-2 text-[var(--text-primary)]">
                 {c.title || `${c.purana || 'पुराण'} — ${c.sectionReference || ''}`}
               </h2>
-              <div className="mt-2"><ProgressBar progress={state.progress} /></div>
+              <div className="mt-2"><ProgressBar progress={state.progress} unit="passages" /></div>
             </div>
             <div className="flex items-center gap-2">
               <MarkExploredButton state={state} />
@@ -966,7 +966,7 @@ function BhashaSection({ currentDate }: { currentDate?: Date }) {
         <div>
           <h2 className="font-devanagari text-lg font-bold text-[var(--text-primary)]">भारतीय भाषा · Daily Word Discovery</h2>
           <p className="text-xs text-[var(--text-muted)] mt-0.5">Sanskrit + Awadhi + regional language word, new every day.</p>
-          <div className="mt-1.5"><ProgressBar progress={state.progress} /></div>
+          <div className="mt-1.5"><ProgressBar progress={state.progress} unit="word sets" /></div>
         </div>
         <div className="flex items-center gap-2">
           <MarkExploredButton state={state} label="Mark Explored" />
@@ -1038,7 +1038,7 @@ function VyakaranSection({ currentDate, vyakaranQuizSelected, setVyakaranQuizSel
                 {c.title || c.topic}
               </h2>
               {c.subtopic && <p className="text-xs text-[var(--text-muted)] mt-0.5">{c.subtopic}</p>}
-              <div className="mt-2"><ProgressBar progress={state.progress} /></div>
+              <div className="mt-2"><ProgressBar progress={state.progress} unit="concepts" /></div>
             </div>
             <div className="flex items-center gap-2">
               <MarkExploredButton state={state} />
