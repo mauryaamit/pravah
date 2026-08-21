@@ -1,17 +1,13 @@
 // src/lib/vani/engine.ts
-// Vaani Zero-Repetition Content Engine
+// Vaani Zero-Repetition Content Engine with Historical Persistence
 //
-// Core principle:
-//   userId + section + date → one deterministic assignment
-//   Assignment is created atomically and cached. Never random.
-//   Progress advances only when the user explicitly marks an item as consumed.
-//   Historical dates (past) only retrieve stored assignments, never generating new ones.
-//
-// Firestore Architecture (Root Collections with Deterministic Keys):
-//   vani_daily_assignments/{userId}_{date}_{section}     ← daily idempotency
-//   vani_user_progress/{userId}_{section}               ← sequence cursor
-//   vani_consumption/{userId}_{section}_{contentId}    ← consumed items
-//   vani_consumption_archive/{userId}_{section}_cycle{N}_{contentId} ← archived cycles
+// Core principles:
+//   1. TODAY: userId + section + todayDate → atomic assignment via progression cursor.
+//      Persisted permanently in vani_daily_assignments/{userId}_{date}_{section}.
+//   2. HISTORY: userId + section + pastDate → read-only lookup of stored assignment,
+//      falling back to deterministic canonical corpus edition if prior to zero-repetition engine.
+//      Never advances progression cursor, never modifies consumption set.
+//   3. PROGRESS: advances ONLY when user explicitly marks item as consumed.
 
 import { getAdminDb } from '@/lib/firebase/admin';
 import {
@@ -27,6 +23,7 @@ import {
   getCorpusItemById,
   findNextUnconsumed,
   getNextNItems,
+  getDeterministicHistoricalItems,
   RegistryItem,
 } from './corpus-registry';
 
@@ -111,12 +108,14 @@ export interface AssignmentResult {
   progress: VaniCorpusProgress;
   isExhausted: boolean;
   noRecord?: boolean;
+  isHistorical?: boolean;
 }
 
 /**
  * Get or create today's assignment for a user+section.
  * For today's date: fully idempotent (creates on first visit, returns existing on subsequent).
- * For historical dates: only retrieves if already recorded; does NOT generate new content.
+ * For historical dates: read-only retrieval of stored assignment or canonical daily fallback.
+ * Never advances progress when viewing past dates.
  */
 export async function getOrCreateTodayAssignment(
   userId: string,
@@ -130,7 +129,7 @@ export async function getOrCreateTodayAssignment(
   const docId = assignmentDocId(userId, section, date);
   const assignmentRef = db.collection(COLLECTIONS.DAILY_ASSIGNMENTS).doc(docId);
 
-  // 1. Check if assignment already exists for this date
+  // 1. Check if assignment already exists in Firestore for this user + date + section
   const existingDoc = await assignmentRef.get();
   if (existingDoc.exists) {
     const assignment = existingDoc.data() as VaniAssignment;
@@ -153,14 +152,43 @@ export async function getOrCreateTodayAssignment(
         isExhausted: progress.isExhausted,
       },
       isExhausted: progress.isExhausted,
-      noRecord: false,
+      noRecord: items.length === 0,
+      isHistorical,
     };
   }
 
-  // 2. If it's a historical date and no assignment was recorded, do NOT generate new assignment
+  // 2. If it's a historical date and no assignment document was explicitly created in Firestore,
+  // resolve the deterministic historical edition that was presented on that date.
   if (isHistorical) {
     const progress = await getProgress(userId, section);
     const total = getCorpusTotalCount(section);
+    const historicalItems = getDeterministicHistoricalItems(section, date);
+
+    if (historicalItems.length > 0) {
+      const assignment: VaniAssignment = {
+        contentId: historicalItems[0].id,
+        contentIds: historicalItems.map((i) => i.id),
+        section,
+        date,
+        assignedAt: new Date(date).toISOString(),
+        isConsumed: false,
+      };
+
+      return {
+        assignment,
+        items: historicalItems,
+        progress: {
+          consumed: progress.consumedCount,
+          total: total > 0 ? total : null,
+          cycleNumber: progress.cycleNumber,
+          isExhausted: progress.isExhausted,
+        },
+        isExhausted: false,
+        noRecord: false,
+        isHistorical: true,
+      };
+    }
+
     return {
       assignment: null,
       items: [],
@@ -172,6 +200,7 @@ export async function getOrCreateTodayAssignment(
       },
       isExhausted: false,
       noRecord: true,
+      isHistorical: true,
     };
   }
 
@@ -203,6 +232,7 @@ export async function getOrCreateTodayAssignment(
       },
       isExhausted: true,
       noRecord: false,
+      isHistorical: false,
     };
   }
 
@@ -242,10 +272,11 @@ export async function getOrCreateTodayAssignment(
       },
       isExhausted: true,
       noRecord: false,
+      isHistorical: false,
     };
   }
 
-  // 5. Create assignment atomically using a transaction
+  // 5. Create assignment atomically using a transaction and persist permanently
   const assignment: VaniAssignment = {
     contentId: selectedItems[0].id,
     contentIds: selectedItems.map((i) => i.id),
@@ -284,6 +315,7 @@ export async function getOrCreateTodayAssignment(
     },
     isExhausted: false,
     noRecord: false,
+    isHistorical: false,
   };
 }
 

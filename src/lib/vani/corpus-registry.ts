@@ -14,6 +14,7 @@ import {
 } from '@/app/(app)/vani/data-heritage';
 import { DOHA_COLLECTION } from '@/app/(app)/vani/data-doha';
 import { VaniSection, CorpusSource } from './types';
+import { differenceInDays } from 'date-fns';
 
 // ─────────────── CORPUS ITEM INTERFACE ───────────────
 
@@ -139,7 +140,6 @@ export const VYAKARAN_REGISTRY = buildCorpus(HINDI_VYAKARAN_ENTRIES, 'vyakaran',
 // Veda is special: each "set" contains 4 sub-entries (one per Veda)
 // We expand each set into individual items for the engine
 export const VEDA_REGISTRY: RegistryItem[] = VEDA_DAILY_SETS.flatMap((set: any, setIndex: number) => {
-  const vedas = ['rigveda', 'samaveda', 'yajurveda', 'atharvaveda'];
   const fields = ['rigveda', 'samaveda', 'yajurveda', 'atharvaveda'];
   return fields.map((veda, vIdx) => ({
     id: set[veda]?.id || `${veda.substring(0, 3)}-auto-${String(setIndex + 1).padStart(3, '0')}`,
@@ -265,3 +265,43 @@ export function findNextUnconsumed(
   return null;
 }
 
+/**
+ * Deterministic historical fallback for any past date prior to zero-repetition Firestore records.
+ * Reconstructs the exact canonical daily edition presented on that date.
+ */
+const EPOCH = new Date('2024-01-01T00:00:00Z');
+
+export function getDeterministicHistoricalItems(
+  section: VaniSection,
+  dateKey: string
+): RegistryItem[] {
+  const [year, month, day] = dateKey.split('-').map(Number);
+  const targetDate = new Date(Date.UTC(year, month - 1, day, 12, 0, 0));
+  const diff = differenceInDays(targetDate, EPOCH);
+  const dayIdx = Math.abs(diff);
+
+  if (section === 'doha') {
+    const total = DOHA_REGISTRY.length;
+    if (total === 0) return [];
+    const startIdx = Math.abs(dayIdx * 3) % total;
+    const items: RegistryItem[] = [];
+    for (let i = 0; i < 3; i++) {
+      items.push(DOHA_REGISTRY[(startIdx + i) % total]);
+    }
+    return items;
+  }
+
+  if (section === 'veda') {
+    const totalSets = VEDA_DAILY_SETS.length;
+    if (totalSets === 0) return [];
+    const setIdx = dayIdx % totalSets;
+    return VEDA_REGISTRY.filter(
+      item => item.content.setIndex === setIdx + 1 || Math.floor((item.globalSequenceNumber - 1) / 4) === setIdx
+    );
+  }
+
+  const reg = REGISTRIES[section];
+  if (!reg || reg.length === 0) return [];
+  const item = reg[dayIdx % reg.length];
+  return item ? [item] : [];
+}
