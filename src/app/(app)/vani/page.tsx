@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -33,15 +33,15 @@ import {
 type VaniTab = 'doha' | 'geeta' | 'ramayan' | 'mahabharat' | 'upanishad' | 'veda' | 'purana' | 'bhasha' | 'vyakaran';
 
 const TABS: { id: VaniTab; label: string; labelHi: string; icon: any; section: string }[] = [
-  { id: 'doha', label: 'Doha', labelHi: 'à¤¦à¥‹à¤¹à¤¾', icon: Feather, section: 'doha' },
-  { id: 'geeta', label: 'Bhagavad Gita', labelHi: 'à¤¶à¥à¤°à¥€à¤®à¤¦à¥à¤­à¤—à¤µà¤¦à¥à¤—à¥€à¤¤à¤¾', icon: Compass, section: 'gita' },
-  { id: 'ramayan', label: 'Ramayan', labelHi: 'à¤¶à¥à¤°à¥€à¤°à¤¾à¤®à¤šà¤°à¤¿à¤¤à¤®à¤¾à¤¨à¤¸', icon: Scroll, section: 'ramayan' },
-  { id: 'mahabharat', label: 'Mahabharat', labelHi: 'à¤®à¤¹à¤¾à¤­à¤¾à¤°à¤¤', icon: Flame, section: 'mahabharat' },
-  { id: 'upanishad', label: 'Upanishad', labelHi: 'à¤‰à¤ªà¤¨à¤¿à¤·à¤¦à¥', icon: BookOpen, section: 'upanishad' },
-  { id: 'veda', label: 'Veda', labelHi: 'à¤µà¥‡à¤¦ (à¤šà¤¤à¥à¤°à¥à¤µà¥‡à¤¦)', icon: Sparkles, section: 'veda' },
-  { id: 'purana', label: 'Purana', labelHi: 'à¤ªà¥à¤°à¤¾à¤£', icon: Layers, section: 'purana' },
-  { id: 'bhasha', label: 'Bharatiya Bhasha', labelHi: 'à¤­à¤¾à¤°à¤¤à¥€à¤¯ à¤­à¤¾à¤·à¤¾', icon: Languages, section: 'bhasha' },
-  { id: 'vyakaran', label: 'Hindi Vyakaran', labelHi: 'à¤¹à¤¿à¤‚à¤¦à¥€ à¤µà¥à¤¯à¤¾à¤•à¤°à¤£', icon: GraduationCap, section: 'vyakaran' },
+  { id: 'doha', label: 'Doha', labelHi: 'दोहा', icon: Feather, section: 'doha' },
+  { id: 'geeta', label: 'Bhagavad Gita', labelHi: 'श्रीमद्भगवद्गीता', icon: Compass, section: 'gita' },
+  { id: 'ramayan', label: 'Ramayan', labelHi: 'श्रीरामचरितमानस', icon: Scroll, section: 'ramayan' },
+  { id: 'mahabharat', label: 'Mahabharat', labelHi: 'महाभारत', icon: Flame, section: 'mahabharat' },
+  { id: 'upanishad', label: 'Upanishad', labelHi: 'उपनिषद्', icon: BookOpen, section: 'upanishad' },
+  { id: 'veda', label: 'Veda', labelHi: 'वेद (चतुर्वेद)', icon: Sparkles, section: 'veda' },
+  { id: 'purana', label: 'Purana', labelHi: 'पुराण', icon: Layers, section: 'purana' },
+  { id: 'bhasha', label: 'Bharatiya Bhasha', labelHi: 'भारतीय भाषा', icon: Languages, section: 'bhasha' },
+  { id: 'vyakaran', label: 'Hindi Vyakaran', labelHi: 'हिंदी व्याकरण', icon: GraduationCap, section: 'vyakaran' },
 ];
 
 const HERITAGE_THEME = {
@@ -50,7 +50,7 @@ const HERITAGE_THEME = {
   parchmentBorder: '#E8E1D5',
 };
 
-// â”€â”€â”€ Shared sub-components â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Shared sub-components ───────────────────────────────────────────────────
 
 function LoadingState({ section }: { section: string }) {
   return (
@@ -64,7 +64,7 @@ function LoadingState({ section }: { section: string }) {
 function ErrorState({ error, reload }: { error: string; reload: () => void }) {
   return (
     <div className="card-base p-8 text-center space-y-3">
-      <p className="text-sm text-[var(--text-secondary)]">âš ï¸ {error}</p>
+      <p className="text-sm text-[var(--text-secondary)]">⚠️ {error}</p>
       <button
         onClick={reload}
         className="px-4 py-1.5 rounded-lg text-xs font-semibold text-white transition-all"
@@ -87,7 +87,7 @@ function ExhaustedState({ section, sectionLabel, progress, onBeginCycle }: {
       <Award size={36} style={{ color: HERITAGE_THEME.gold }} className="mx-auto" />
       <div className="space-y-2">
         <h3 className="font-serif text-2xl font-bold text-[var(--text-primary)]">
-          {sectionLabel} â€” à¤ªà¥‚à¤°à¥à¤£ à¤¯à¤¾à¤¤à¥à¤°à¤¾ à¤¸à¤‚à¤ªà¤¨à¥à¤¨ ðŸ™
+          {sectionLabel} — पूर्ण यात्रा संपन्न 🙏
         </h3>
         <p className="text-sm text-[var(--text-secondary)] max-w-md mx-auto">
           You have explored all <strong>{progress?.consumed || progress?.total || ''}</strong> available entries in this section. Your knowledge journey is complete for Cycle {progress?.cycleNumber || 1}.
@@ -98,10 +98,10 @@ function ExhaustedState({ section, sectionLabel, progress, onBeginCycle }: {
         className="px-6 py-2.5 rounded-xl text-sm font-bold text-white shadow-md transition-transform hover:scale-105"
         style={{ background: HERITAGE_THEME.primary }}
       >
-        Begin Cycle {(progress?.cycleNumber || 1) + 1} â€” Start Again â†º
+        Begin Cycle {(progress?.cycleNumber || 1) + 1} — Start Again ↺
       </button>
       <p className="text-[10px] text-[var(--text-muted)]">
-        Your previous cycle's journey will be archived. This is a fresh beginning.
+        Your previous cycle&apos;s journey will be archived. This is a fresh beginning.
       </p>
     </div>
   );
@@ -151,7 +151,7 @@ function MarkExploredButton({ state, label = 'Mark as Explored' }: { state: any;
   );
 }
 
-// â”€â”€â”€ Main Page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Main Page ───────────────────────────────────────────────────────────────
 
 export default function VaniPage() {
   const [activeTab, setActiveTab] = useState<VaniTab>('doha');
@@ -161,7 +161,6 @@ export default function VaniPage() {
   const [selectedPoetProfile, setSelectedPoetProfile] = useState<PoetProfile | null>(null);
 
   const activeTabData = TABS.find(t => t.id === activeTab)!;
-  const sectionKey = activeTabData.section as any;
 
   useEffect(() => {
     setVyakaranQuizSelected(null);
@@ -180,27 +179,27 @@ export default function VaniPage() {
     <PageTransition>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 space-y-6">
 
-        {/* â”€â”€â”€ Header â”€â”€â”€ */}
+        {/* ─── Header ─── */}
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 border-b pb-4" style={{ borderColor: HERITAGE_THEME.parchmentBorder }}>
           <div className="text-left w-full sm:w-auto">
             <div className="flex items-center gap-2">
               <span className="text-[11px] font-bold uppercase tracking-widest px-2 py-0.5 rounded text-white" style={{ background: HERITAGE_THEME.primary }}>
-                à¤­à¤¾à¤°à¤¤à¥€à¤¯ à¤œà¥à¤žà¤¾à¤¨ à¤à¤µà¤‚ à¤­à¤¾à¤·à¤¾ à¤ªà¤°à¤‚à¤ªà¤°à¤¾
+                भारतीय ज्ञान एवं भाषा परंपरा
               </span>
               <span className="text-[10px] font-medium px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
                 Zero-Repetition Engine Active
               </span>
             </div>
             <h1 className="font-serif text-3xl font-bold mt-2" style={{ color: 'var(--text-primary)' }}>
-              à¤µà¤¾à¤£à¥€ Â· Vani
+              वाणी · Vani
             </h1>
             <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
-              Sequential daily journey through India's complete knowledge corpus. Every day: new content.
+              Sequential daily journey through India&apos;s complete knowledge corpus. Every day: new content.
             </p>
           </div>
         </div>
 
-        {/* â”€â”€â”€ Tab Bar â”€â”€â”€ */}
+        {/* ─── Tab Bar ─── */}
         <motion.div variants={FADE_UP} initial="initial" animate="animate" className="flex gap-2 flex-wrap">
           {TABS.map(tab => {
             const Icon = tab.icon;
@@ -224,7 +223,7 @@ export default function VaniPage() {
           })}
         </motion.div>
 
-        {/* â”€â”€â”€ Global Transliteration Toggle â”€â”€â”€ */}
+        {/* ─── Global Transliteration Toggle ─── */}
         <div className="flex justify-end items-center">
           <button
             onClick={() => setShowIast(!showIast)}
@@ -236,39 +235,39 @@ export default function VaniPage() {
           </button>
         </div>
 
-        {/* â”€â”€â”€ Content Sections (API-driven) â”€â”€â”€ */}
+        {/* ─── Content Sections (API-driven) ─── */}
         <AnimatePresence mode="wait">
 
-          {/* â”€â”€â”€ 1. DOHA â”€â”€â”€ */}
+          {/* ─── 1. DOHA ─── */}
           {activeTab === 'doha' && <DohaSection showIast={showIast} expandedDohaStages={expandedDohaStages} toggleDohaStage={toggleDohaStage} setSelectedPoetProfile={setSelectedPoetProfile} />}
 
-          {/* â”€â”€â”€ 2. BHAGAVAD GITA â”€â”€â”€ */}
+          {/* ─── 2. BHAGAVAD GITA ─── */}
           {activeTab === 'geeta' && <GitaSection showIast={showIast} />}
 
-          {/* â”€â”€â”€ 3. RAMAYAN â”€â”€â”€ */}
+          {/* ─── 3. RAMAYAN ─── */}
           {activeTab === 'ramayan' && <RamayanSection showIast={showIast} />}
 
-          {/* â”€â”€â”€ 4. MAHABHARAT â”€â”€â”€ */}
+          {/* ─── 4. MAHABHARAT ─── */}
           {activeTab === 'mahabharat' && <MahabharatSection showIast={showIast} />}
 
-          {/* â”€â”€â”€ 5. UPANISHAD â”€â”€â”€ */}
+          {/* ─── 5. UPANISHAD ─── */}
           {activeTab === 'upanishad' && <UpanishadSection showIast={showIast} />}
 
-          {/* â”€â”€â”€ 6. VEDA â”€â”€â”€ */}
+          {/* ─── 6. VEDA ─── */}
           {activeTab === 'veda' && <VedaSection showIast={showIast} />}
 
-          {/* â”€â”€â”€ 7. PURANA â”€â”€â”€ */}
+          {/* ─── 7. PURANA ─── */}
           {activeTab === 'purana' && <PuranaSection showIast={showIast} />}
 
-          {/* â”€â”€â”€ 8. BHARATIYA BHASHA â”€â”€â”€ */}
+          {/* ─── 8. BHARATIYA BHASHA ─── */}
           {activeTab === 'bhasha' && <BhashaSection />}
 
-          {/* â”€â”€â”€ 9. HINDI VYAKARAN â”€â”€â”€ */}
+          {/* ─── 9. HINDI VYAKARAN ─── */}
           {activeTab === 'vyakaran' && <VyakaranSection vyakaranQuizSelected={vyakaranQuizSelected} setVyakaranQuizSelected={setVyakaranQuizSelected} />}
 
         </AnimatePresence>
 
-        {/* â”€â”€â”€ Poet Profile Modal â”€â”€â”€ */}
+        {/* ─── Poet Profile Modal ─── */}
         <AnimatePresence>
           {selectedPoetProfile && (
             <motion.div
@@ -288,7 +287,7 @@ export default function VaniPage() {
                 <div className="flex justify-between items-start gap-4">
                   <div>
                     <span className="text-[10px] uppercase font-bold tracking-widest px-2 py-0.5 rounded text-white" style={{ background: HERITAGE_THEME.primary }}>
-                      à¤•à¤µà¤¿ à¤ªà¤°à¤¿à¤šà¤¯
+                      कवि परिचय
                     </span>
                     <h3 className="font-devanagari text-2xl font-bold mt-2 text-[var(--text-primary)]">
                       {selectedPoetProfile.nameDevanagari}
@@ -302,10 +301,10 @@ export default function VaniPage() {
 
                 <div className="grid grid-cols-2 gap-3 text-xs">
                   {[
-                    { label: 'à¤•à¤¾à¤² (Period)', value: selectedPoetProfile.period },
-                    { label: 'à¤•à¥à¤·à¥‡à¤¤à¥à¤° (Region)', value: selectedPoetProfile.region },
-                    { label: 'à¤ªà¤°à¤‚à¤ªà¤°à¤¾ (Tradition)', value: selectedPoetProfile.tradition },
-                    { label: 'à¤­à¤¾à¤·à¤¾ (Dialect)', value: selectedPoetProfile.dialect },
+                    { label: 'काल (Period)', value: selectedPoetProfile.period },
+                    { label: 'क्षेत्र (Region)', value: selectedPoetProfile.region },
+                    { label: 'परंपरा (Tradition)', value: selectedPoetProfile.tradition },
+                    { label: 'भाषा (Dialect)', value: selectedPoetProfile.dialect },
                   ].map((item, idx) => (
                     <div key={idx} className="p-2.5 rounded-lg border bg-[var(--bg-secondary)]" style={{ borderColor: 'var(--border-default)' }}>
                       <p className="text-[10px] uppercase font-bold text-[var(--text-muted)]">{item.label}</p>
@@ -315,14 +314,14 @@ export default function VaniPage() {
                 </div>
 
                 <div className="p-4 rounded-xl border bg-[var(--bg-tertiary)]/20 space-y-1.5" style={{ borderColor: 'var(--border-default)' }}>
-                  <p className="text-[10px] uppercase font-bold text-[var(--text-muted)]">à¤œà¥€à¤µà¤¨ à¤ªà¤°à¤¿à¤šà¤¯ (Biography)</p>
+                  <p className="text-[10px] uppercase font-bold text-[var(--text-muted)]">जीवन परिचय (Biography)</p>
                   <p className="text-xs sm:text-sm font-devanagari leading-relaxed text-[var(--text-secondary)]">
                     {selectedPoetProfile.biography}
                   </p>
                 </div>
 
                 <div className="space-y-1.5">
-                  <p className="text-[10px] uppercase font-bold text-[var(--text-muted)]">à¤ªà¥à¤°à¤®à¥à¤– à¤°à¤šà¤¨à¤¾à¤à¤ (Major Works)</p>
+                  <p className="text-[10px] uppercase font-bold text-[var(--text-muted)]">प्रमुख रचनाएं (Major Works)</p>
                   <div className="flex flex-wrap gap-2">
                     {selectedPoetProfile.majorWorks.map((work, idx) => (
                       <span key={idx} className="px-2.5 py-1 rounded-full text-xs border font-medium" style={{ borderColor: HERITAGE_THEME.parchmentBorder, color: 'var(--text-secondary)' }}>
@@ -341,7 +340,7 @@ export default function VaniPage() {
   );
 }
 
-// â”€â”€â”€ Section Components â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Section Components ───────────────────────────────────────────────────────
 
 function DohaSection({ showIast, expandedDohaStages, toggleDohaStage, setSelectedPoetProfile }: any) {
   const state = useVaniSection('doha');
@@ -350,7 +349,7 @@ function DohaSection({ showIast, expandedDohaStages, toggleDohaStage, setSelecte
     <motion.div key="doha" variants={FADE_UP} initial="initial" animate="animate" exit={{ opacity: 0, y: -10 }} className="space-y-6">
       <div className="p-4 rounded-xl border bg-[var(--bg-tertiary)]/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3" style={{ borderColor: 'var(--border-default)' }}>
         <div>
-          <h2 className="font-devanagari text-lg font-bold text-[var(--text-primary)]">à¤¦à¥ˆà¤¨à¤¿à¤• à¤¦à¥‹à¤¹à¤¾ à¤…à¤®à¥ƒà¤¤ Â· 3 Daily Couplets</h2>
+          <h2 className="font-devanagari text-lg font-bold text-[var(--text-primary)]">दैनिक दोहा अमृत · 3 Daily Couplets</h2>
           <p className="text-xs text-[var(--text-muted)] mt-0.5">Unique dohas every day. Each item is shown once until you complete the full corpus.</p>
           {state.progress && (
             <div className="mt-1.5">
@@ -367,7 +366,7 @@ function DohaSection({ showIast, expandedDohaStages, toggleDohaStage, setSelecte
       {state.loading && <LoadingState section="doha" />}
       {state.error && <ErrorState error={state.error} reload={state.reload} />}
       {state.isExhausted && (
-        <ExhaustedState section="doha" sectionLabel="à¤¦à¥‹à¤¹à¤¾ à¤•à¥‹à¤¶" progress={state.progress} onBeginCycle={state.beginNextCycle} />
+        <ExhaustedState section="doha" sectionLabel="दोहा कोश" progress={state.progress} onBeginCycle={state.beginNextCycle} />
       )}
 
       {!state.loading && !state.error && !state.isExhausted && (
@@ -390,18 +389,18 @@ function DohaSection({ showIast, expandedDohaStages, toggleDohaStage, setSelecte
                         <User size={12} />
                         <span>{doha.poetNameDevanagari}</span>
                         <span className="text-[10px] opacity-75 font-serif">({doha.poetNameEnglish})</span>
-                        <span className="text-[9px] bg-white/20 px-1.5 rounded ml-1 group-hover:bg-white/30">à¤•à¤µà¤¿ à¤ªà¤°à¤¿à¤šà¤¯ â†’</span>
+                        <span className="text-[9px] bg-white/20 px-1.5 rounded ml-1 group-hover:bg-white/30">कवि परिचय →</span>
                       </button>
                       <span className="text-[10px] uppercase font-semibold px-2 py-0.5 rounded bg-[var(--bg-tertiary)] text-[var(--text-secondary)] border border-[var(--border-default)]">
                         {doha.themeHindi}
                       </span>
                     </div>
                     <p className="text-[11px] text-[var(--text-muted)] italic font-serif mt-1.5">
-                      à¤¸à¥à¤°à¥‹à¤¤: {doha.source} Â· <span className="text-emerald-600 dark:text-emerald-400 font-medium">âœ“ {doha.attributionConfidence}</span>
+                      स्रोत: {doha.source} · <span className="text-emerald-600 dark:text-emerald-400 font-medium">✓ {doha.attributionConfidence}</span>
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <ReadAloudButton text={`${doha.dohaDevanagari?.join(' ')}. à¤…à¤°à¥à¤¥: ${doha.hindiMeaning}`} lang="hi" size="md" />
+                    <ReadAloudButton text={`${doha.dohaDevanagari?.join(' ')}. अर्थ: ${doha.hindiMeaning}`} lang="hi" size="md" />
                     <SutraNoteButton roomId="vani" roomName="Vani" contentTitle={`Doha: ${doha.poetNameDevanagari}`} />
                   </div>
                 </div>
@@ -419,17 +418,17 @@ function DohaSection({ showIast, expandedDohaStages, toggleDohaStage, setSelecte
 
                 <div className="flex flex-wrap items-center gap-2 pt-1 border-t" style={{ borderColor: 'var(--border-default)' }}>
                   <button onClick={() => toggleDohaStage(doha.id, 'understand')} className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${currentStage === 'understand' ? 'text-white shadow-sm' : 'bg-[var(--bg-tertiary)] text-[var(--text-secondary)] border border-[var(--border-default)]'}`} style={currentStage === 'understand' ? { background: HERITAGE_THEME.primary } : {}}>
-                    <BookOpen size={13} /><span>à¤¸à¤®à¤à¥‡à¤‚ Â· Understand</span>{currentStage === 'understand' ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
+                    <BookOpen size={13} /><span>समझें · Understand</span>{currentStage === 'understand' ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
                   </button>
                   <button onClick={() => toggleDohaStage(doha.id, 'deeper')} className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${currentStage === 'deeper' ? 'text-white shadow-sm' : 'bg-[var(--bg-tertiary)] text-[var(--text-secondary)] border border-[var(--border-default)]'}`} style={currentStage === 'deeper' ? { background: HERITAGE_THEME.gold } : {}}>
-                    <Sparkles size={13} /><span>à¤—à¤¹à¤¨ à¤µà¤¿à¤šà¤¾à¤° Â· Go Deeper</span>{currentStage === 'deeper' ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
+                    <Sparkles size={13} /><span>गहन विचार · Go Deeper</span>{currentStage === 'deeper' ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
                   </button>
                 </div>
 
                 {currentStage === 'understand' && (
                   <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="p-4 rounded-xl border bg-[var(--bg-secondary)] space-y-1.5" style={{ borderColor: 'var(--border-default)' }}>
-                      <span className="text-[10px] uppercase font-bold tracking-wider block" style={{ color: HERITAGE_THEME.primary }}>à¤¸à¤°à¤² à¤¹à¤¿à¤‚à¤¦à¥€ à¤­à¤¾à¤µà¤¾à¤°à¥à¤¥</span>
+                      <span className="text-[10px] uppercase font-bold tracking-wider block" style={{ color: HERITAGE_THEME.primary }}>सरल हिंदी भावार्थ</span>
                       <p className="font-devanagari text-sm leading-relaxed text-[var(--text-primary)]">{doha.hindiMeaning}</p>
                     </div>
                     <div className="p-4 rounded-xl border bg-[var(--bg-secondary)] space-y-1.5" style={{ borderColor: 'var(--border-default)' }}>
@@ -442,15 +441,15 @@ function DohaSection({ showIast, expandedDohaStages, toggleDohaStage, setSelecte
                 {currentStage === 'deeper' && (
                   <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="space-y-4">
                     <div className="p-5 rounded-xl border bg-[var(--bg-tertiary)]/30 space-y-2" style={{ borderColor: 'var(--border-default)' }}>
-                      <p className="text-[11px] uppercase font-bold tracking-wider" style={{ color: HERITAGE_THEME.primary }}>à¤¦à¤¾à¤°à¥à¤¶à¤¨à¤¿à¤• à¤à¤µà¤‚ à¤®à¤¨à¥‹à¤µà¥ˆà¤œà¥à¤žà¤¾à¤¨à¤¿à¤• à¤¦à¥ƒà¤·à¥à¤Ÿà¤¿</p>
+                      <p className="text-[11px] uppercase font-bold tracking-wider" style={{ color: HERITAGE_THEME.primary }}>दार्शनिक एवं मनोवैज्ञानिक दृष्टि</p>
                       <p className="text-xs sm:text-sm leading-relaxed text-[var(--text-secondary)] font-serif">{doha.deeperInterpretation}</p>
                       {doha.contextBackground && (
-                        <p className="text-xs text-[var(--text-muted)] italic pt-1 border-t border-[var(--border-default)]">ðŸ“œ {doha.contextBackground}</p>
+                        <p className="text-xs text-[var(--text-muted)] italic pt-1 border-t border-[var(--border-default)]">📜 {doha.contextBackground}</p>
                       )}
                     </div>
                     {doha.importantVocabulary?.length > 0 && (
                       <div className="space-y-2">
-                        <p className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)]">à¤®à¤¹à¤¤à¥à¤µà¤ªà¥‚à¤°à¥à¤£ à¤¶à¤¬à¥à¤¦à¤¾à¤°à¥à¤¥</p>
+                        <p className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)]">महत्वपूर्ण शब्दार्थ</p>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                           {doha.importantVocabulary.map((v: any, vIdx: number) => (
                             <div key={vIdx} className="p-2.5 rounded-lg border bg-[var(--bg-secondary)]" style={{ borderColor: 'var(--border-default)' }}>
@@ -467,7 +466,7 @@ function DohaSection({ showIast, expandedDohaStages, toggleDohaStage, setSelecte
                 <div className="p-3.5 rounded-xl border border-amber-500/20 bg-amber-500/5 flex items-start gap-2.5">
                   <Lightbulb size={16} className="text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="text-[10px] uppercase font-bold tracking-wider text-amber-700 dark:text-amber-300">à¤¸à¥à¤®à¤°à¤£ à¤°à¤–à¥‡à¤‚ Â· Daily Takeaway</p>
+                    <p className="text-[10px] uppercase font-bold tracking-wider text-amber-700 dark:text-amber-300">स्मरण रखें · Daily Takeaway</p>
                     <p className="text-xs sm:text-sm font-medium text-[var(--text-primary)] mt-0.5">{doha.lifeLesson}</p>
                   </div>
                 </div>
@@ -488,7 +487,7 @@ function GitaSection({ showIast }: { showIast: boolean }) {
     <motion.div key="geeta" variants={FADE_UP} initial="initial" animate="animate" exit={{ opacity: 0, y: -10 }} className="space-y-6">
       {state.loading && <LoadingState section="gita" />}
       {state.error && <ErrorState error={state.error} reload={state.reload} />}
-      {state.isExhausted && <ExhaustedState section="gita" sectionLabel="à¤¶à¥à¤°à¥€à¤®à¤¦à¥à¤­à¤—à¤µà¤¦à¥à¤—à¥€à¤¤à¤¾" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
+      {state.isExhausted && <ExhaustedState section="gita" sectionLabel="श्रीमद्भगवद्गीता" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
 
       {!state.loading && !state.error && !state.isExhausted && c && (
         <div className="card-base p-6 sm:p-8 space-y-6 border-l-4" style={{ borderLeftColor: HERITAGE_THEME.primary }}>
@@ -496,23 +495,23 @@ function GitaSection({ showIast }: { showIast: boolean }) {
             <div>
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-[10px] uppercase font-bold tracking-widest px-2.5 py-0.5 rounded text-white" style={{ background: HERITAGE_THEME.primary }}>
-                  à¤¶à¥à¤°à¥€à¤®à¤¦à¥à¤­à¤—à¤µà¤¦à¥à¤—à¥€à¤¤à¤¾ Â· à¤¦à¥ˆà¤¨à¤¿à¤• à¤¶à¥à¤²à¥‹à¤•
+                  श्रीमद्भगवद्गीता · दैनिक श्लोक
                 </span>
                 <span className="text-[11px] font-semibold font-mono px-2 py-0.5 rounded border border-[var(--border-default)] text-[var(--text-secondary)]">
-                  à¤…à¤§à¥à¤¯à¤¾à¤¯ {c.chapter}, à¤¶à¥à¤²à¥‹à¤• {c.verse}
+                  अध्याय {c.chapter}, श्लोक {c.verse}
                 </span>
               </div>
               <h2 className="font-devanagari text-2xl sm:text-3xl font-bold mt-2 text-[var(--text-primary)]">
                 {c.chapterNameSanskrit}
               </h2>
               <p className="text-xs text-[var(--text-muted)] font-serif italic mt-0.5">
-                {c.chapterNameEnglish} Â· {c.chapterNameHindi}
+                {c.chapterNameEnglish} · {c.chapterNameHindi}
               </p>
               <div className="mt-2"><ProgressBar progress={state.progress} /></div>
             </div>
             <div className="flex items-center gap-2">
               <MarkExploredButton state={state} />
-              <ReadAloudButton text={`${c.shlokaSanskrit}. à¤…à¤°à¥à¤¥: ${c.hindiTranslation}`} lang="hi" size="md" />
+              <ReadAloudButton text={`${c.shlokaSanskrit}. अर्थ: ${c.hindiTranslation}`} lang="hi" size="md" />
               <SutraNoteButton roomId="vani" roomName="Vani" contentTitle={`Gita ${c.chapter}.${c.verse}`} />
               <RevisitButton roomId="vani" roomName="Vani" contentTitle={`Gita ${c.chapter}.${c.verse}`} contentSummary={c.englishTranslation} />
             </div>
@@ -526,7 +525,7 @@ function GitaSection({ showIast }: { showIast: boolean }) {
 
           {c.wordByWordMeaning?.length > 0 && (
             <div className="space-y-2">
-              <p className="text-[11px] uppercase font-bold tracking-wider text-[var(--text-muted)]">à¤ªà¤¦à¤šà¥à¤›à¥‡à¤¦ à¤à¤µà¤‚ à¤¶à¤¬à¥à¤¦à¤¾à¤°à¥à¤¥</p>
+              <p className="text-[11px] uppercase font-bold tracking-wider text-[var(--text-muted)]">पदच्छेद एवं शब्दार्थ</p>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
                 {c.wordByWordMeaning.map((w: any, idx: number) => (
                   <div key={idx} className="p-2 rounded border bg-[var(--bg-secondary)]" style={{ borderColor: 'var(--border-default)' }}>
@@ -540,7 +539,7 @@ function GitaSection({ showIast }: { showIast: boolean }) {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
             <div className="p-4 rounded-xl border bg-[var(--bg-secondary)] space-y-1.5" style={{ borderColor: 'var(--border-default)' }}>
-              <span className="text-[10px] uppercase font-bold tracking-wider block" style={{ color: HERITAGE_THEME.primary }}>à¤¸à¤°à¤² à¤­à¤¾à¤µà¤¾à¤°à¥à¤¥ (Hindi)</span>
+              <span className="text-[10px] uppercase font-bold tracking-wider block" style={{ color: HERITAGE_THEME.primary }}>सरल भावार्थ (Hindi)</span>
               <p className="font-devanagari text-sm leading-relaxed text-[var(--text-primary)]">{c.hindiTranslation}</p>
             </div>
             <div className="p-4 rounded-xl border bg-[var(--bg-secondary)] space-y-1.5" style={{ borderColor: 'var(--border-default)' }}>
@@ -551,14 +550,14 @@ function GitaSection({ showIast }: { showIast: boolean }) {
 
           {c.philosophicalCommentary && (
             <div className="p-5 rounded-xl border bg-[var(--bg-tertiary)]/30 space-y-2" style={{ borderColor: 'var(--border-default)' }}>
-              <p className="text-[11px] uppercase font-bold tracking-wider" style={{ color: HERITAGE_THEME.primary }}>à¤—à¤¹à¤¨ à¤¦à¤¾à¤°à¥à¤¶à¤¨à¤¿à¤• à¤®à¥€à¤®à¤¾à¤‚à¤¸à¤¾</p>
+              <p className="text-[11px] uppercase font-bold tracking-wider" style={{ color: HERITAGE_THEME.primary }}>गहन दार्शनिक मीमांसा</p>
               <p className="text-xs sm:text-sm leading-relaxed text-[var(--text-secondary)]">{c.philosophicalCommentary}</p>
             </div>
           )}
 
           {c.modernPracticalApplication && (
             <div className="p-5 rounded-xl border border-emerald-500/20 bg-emerald-500/5 space-y-2">
-              <p className="text-[11px] uppercase font-bold tracking-wider text-emerald-700 dark:text-emerald-300">à¤†à¤§à¥à¤¨à¤¿à¤• à¤œà¥€à¤µà¤¨ à¤®à¥‡à¤‚ à¤µà¥à¤¯à¤¾à¤µà¤¹à¤¾à¤°à¤¿à¤• à¤…à¤¨à¥à¤ªà¥à¤°à¤¯à¥‹à¤—</p>
+              <p className="text-[11px] uppercase font-bold tracking-wider text-emerald-700 dark:text-emerald-300">आधुनिक जीवन में व्यावहारिक अनुप्रयोग</p>
               <p className="text-xs sm:text-sm leading-relaxed text-[var(--text-primary)]">{c.modernPracticalApplication}</p>
             </div>
           )}
@@ -576,22 +575,22 @@ function RamayanSection({ showIast }: { showIast: boolean }) {
     <motion.div key="ramayan" variants={FADE_UP} initial="initial" animate="animate" exit={{ opacity: 0, y: -10 }} className="space-y-6">
       {state.loading && <LoadingState section="ramayan" />}
       {state.error && <ErrorState error={state.error} reload={state.reload} />}
-      {state.isExhausted && <ExhaustedState section="ramayan" sectionLabel="à¤¶à¥à¤°à¥€à¤°à¤¾à¤®à¤šà¤°à¤¿à¤¤à¤®à¤¾à¤¨à¤¸" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
+      {state.isExhausted && <ExhaustedState section="ramayan" sectionLabel="श्रीरामचरितमानस" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
 
       {!state.loading && !state.error && !state.isExhausted && c && (
         <div className="card-base p-6 sm:p-8 space-y-6 border-l-4" style={{ borderLeftColor: '#C4623F' }}>
           <div className="flex flex-wrap justify-between items-start gap-4 pb-4 border-b" style={{ borderColor: 'var(--border-default)' }}>
             <div>
-              <span className="text-[10px] uppercase font-bold tracking-widest px-2.5 py-0.5 rounded text-white bg-[#C4623F]">à¤¶à¥à¤°à¥€à¤°à¤¾à¤®à¤šà¤°à¤¿à¤¤à¤®à¤¾à¤¨à¤¸ Â· à¤¸à¤®à¥à¤ªà¥‚à¤°à¥à¤£ à¤šà¥Œà¤ªà¤¾à¤ˆ</span>
+              <span className="text-[10px] uppercase font-bold tracking-widest px-2.5 py-0.5 rounded text-white bg-[#C4623F]">श्रीरामचरितमानस · सम्पूर्ण चौपाई</span>
               <h2 className="font-devanagari text-2xl sm:text-3xl font-bold mt-2 text-[var(--text-primary)]">
                 {c.kand} <span className="text-xs font-serif opacity-75 font-normal">({c.kandEnglish})</span>
               </h2>
-              <p className="text-xs text-[var(--text-muted)] mt-0.5">{c.dohaNumber} Â· à¤ªà¤¾à¤¤à¥à¤°: {c.charactersInvolved?.join(', ')}</p>
+              <p className="text-xs text-[var(--text-muted)] mt-0.5">{c.dohaNumber} · पात्र: {c.charactersInvolved?.join(', ')}</p>
               <div className="mt-2"><ProgressBar progress={state.progress} /></div>
             </div>
             <div className="flex items-center gap-2">
               <MarkExploredButton state={state} />
-              <ReadAloudButton text={`${c.chaupaiLines?.join(' ')}. à¤…à¤°à¥à¤¥: ${c.hindiMeaning}`} lang="hi" size="md" />
+              <ReadAloudButton text={`${c.chaupaiLines?.join(' ')}. अर्थ: ${c.hindiMeaning}`} lang="hi" size="md" />
               <SutraNoteButton roomId="vani" roomName="Vani" contentTitle={`Ramayan: ${c.kand}`} />
             </div>
           </div>
@@ -608,19 +607,19 @@ function RamayanSection({ showIast }: { showIast: boolean }) {
             )}
             {c.dohaLine && (
               <p className="font-devanagari text-lg font-semibold pt-2 border-t mt-3" style={{ color: '#C4623F', borderColor: 'var(--border-default)' }}>
-                à¤¦à¥à¤†: {c.dohaLine}
+                दुआ: {c.dohaLine}
               </p>
             )}
           </div>
 
           <div className="p-4 rounded-xl border bg-[var(--bg-secondary)] space-y-1.5" style={{ borderColor: 'var(--border-default)' }}>
-            <span className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)] block">à¤ªà¥à¤°à¤¸à¤‚à¤— (Narrative Setting)</span>
+            <span className="text-[10px] uppercase font-bold tracking-wider text-[var(--text-muted)] block">प्रसंग (Narrative Setting)</span>
             <p className="text-xs sm:text-sm leading-relaxed text-[var(--text-secondary)]">{c.context}</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="p-4 rounded-xl border bg-[var(--bg-secondary)] space-y-1.5" style={{ borderColor: 'var(--border-default)' }}>
-              <span className="text-[10px] uppercase font-bold tracking-wider block" style={{ color: '#C4623F' }}>à¤­à¤¾à¤µà¤¾à¤°à¥à¤¥ (Hindi)</span>
+              <span className="text-[10px] uppercase font-bold tracking-wider block" style={{ color: '#C4623F' }}>भावार्थ (Hindi)</span>
               <p className="font-devanagari text-sm leading-relaxed text-[var(--text-primary)]">{c.hindiMeaning}</p>
             </div>
             <div className="p-4 rounded-xl border bg-[var(--bg-secondary)] space-y-1.5" style={{ borderColor: 'var(--border-default)' }}>
@@ -631,7 +630,7 @@ function RamayanSection({ showIast }: { showIast: boolean }) {
 
           {c.spiritualSignificance && (
             <div className="p-4 rounded-xl border bg-[var(--bg-tertiary)]/30 space-y-2" style={{ borderColor: 'var(--border-default)' }}>
-              <span className="text-[10px] uppercase font-bold tracking-wider block" style={{ color: '#C4623F' }}>à¤¯à¤¹ à¤ªà¥à¤°à¤¸à¤‚à¤— à¤•à¥à¤¯à¥‹à¤‚ à¤®à¤¹à¤¤à¥à¤µà¤ªà¥‚à¤°à¥à¤£ à¤¹à¥ˆ?</span>
+              <span className="text-[10px] uppercase font-bold tracking-wider block" style={{ color: '#C4623F' }}>यह प्रसंग क्यों महत्वपूर्ण है?</span>
               <p className="text-xs sm:text-sm leading-relaxed text-[var(--text-secondary)]">{c.spiritualSignificance}</p>
             </div>
           )}
@@ -649,24 +648,24 @@ function MahabharatSection({ showIast }: { showIast: boolean }) {
     <motion.div key="mahabharat" variants={FADE_UP} initial="initial" animate="animate" exit={{ opacity: 0, y: -10 }} className="space-y-6">
       {state.loading && <LoadingState section="mahabharat" />}
       {state.error && <ErrorState error={state.error} reload={state.reload} />}
-      {state.isExhausted && <ExhaustedState section="mahabharat" sectionLabel="à¤®à¤¹à¤¾à¤­à¤¾à¤°à¤¤" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
+      {state.isExhausted && <ExhaustedState section="mahabharat" sectionLabel="महाभारत" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
 
       {!state.loading && !state.error && !state.isExhausted && c && (
         <div className="card-base p-6 sm:p-8 space-y-6 border-l-4" style={{ borderLeftColor: '#7A4A8B' }}>
           <div className="flex justify-between items-start gap-4 pb-4 border-b" style={{ borderColor: 'var(--border-default)' }}>
             <div>
-              <span className="text-[10px] uppercase font-bold tracking-widest px-2.5 py-0.5 rounded text-white bg-[#7A4A8B]">à¤®à¤¹à¤¾à¤­à¤¾à¤°à¤¤ Â· à¤§à¤°à¥à¤® à¤µà¤¿à¤®à¤°à¥à¤¶</span>
+              <span className="text-[10px] uppercase font-bold tracking-widest px-2.5 py-0.5 rounded text-white bg-[#7A4A8B]">महाभारत · धर्म विमर्श</span>
               <h2 className="font-devanagari text-2xl sm:text-3xl font-bold mt-2 text-[var(--text-primary)]">
                 {c.parva} {c.parvaEnglish ? `(${c.parvaEnglish})` : ''}
               </h2>
               <p className="text-xs text-[var(--text-muted)] mt-0.5">
-                {c.chapterReference} Â· à¤¸à¤‚à¤µà¤¾à¤¦: {c.charactersInvolved?.join(' à¤µ ')}
+                {c.chapterReference} · संवाद: {c.charactersInvolved?.join(' व ')}
               </p>
               <div className="mt-2"><ProgressBar progress={state.progress} /></div>
             </div>
             <div className="flex items-center gap-2">
               <MarkExploredButton state={state} />
-              <ReadAloudButton text={`${c.sanskritText}. à¤…à¤°à¥à¤¥: ${c.hindiMeaning}`} lang="hi" size="md" />
+              <ReadAloudButton text={`${c.sanskritText}. अर्थ: ${c.hindiMeaning}`} lang="hi" size="md" />
               <SutraNoteButton roomId="vani" roomName="Vani" contentTitle={`Mahabharat: ${c.parva}`} />
             </div>
           </div>
@@ -679,7 +678,7 @@ function MahabharatSection({ showIast }: { showIast: boolean }) {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="p-4 rounded-xl border bg-[var(--bg-secondary)] space-y-1.5" style={{ borderColor: 'var(--border-default)' }}>
-              <span className="text-[10px] uppercase font-bold tracking-wider block" style={{ color: '#7A4A8B' }}>à¤¹à¤¿à¤‚à¤¦à¥€ à¤­à¤¾à¤µà¤¾à¤°à¥à¤¥</span>
+              <span className="text-[10px] uppercase font-bold tracking-wider block" style={{ color: '#7A4A8B' }}>हिंदी भावार्थ</span>
               <p className="font-devanagari text-sm leading-relaxed text-[var(--text-primary)]">{c.hindiMeaning}</p>
             </div>
             <div className="p-4 rounded-xl border bg-[var(--bg-secondary)] space-y-1.5" style={{ borderColor: 'var(--border-default)' }}>
@@ -690,7 +689,7 @@ function MahabharatSection({ showIast }: { showIast: boolean }) {
 
           {c.philosophicalSignificance && (
             <div className="p-4 rounded-xl border bg-[var(--bg-tertiary)]/30 space-y-2" style={{ borderColor: 'var(--border-default)' }}>
-              <span className="text-[10px] uppercase font-bold tracking-wider block" style={{ color: '#7A4A8B' }}>à¤¦à¤¾à¤°à¥à¤¶à¤¨à¤¿à¤• à¤®à¤¹à¤¤à¥à¤µ</span>
+              <span className="text-[10px] uppercase font-bold tracking-wider block" style={{ color: '#7A4A8B' }}>दार्शनिक महत्व</span>
               <p className="text-xs sm:text-sm leading-relaxed text-[var(--text-secondary)]">{c.philosophicalSignificance}</p>
             </div>
           )}
@@ -708,17 +707,17 @@ function UpanishadSection({ showIast }: { showIast: boolean }) {
     <motion.div key="upanishad" variants={FADE_UP} initial="initial" animate="animate" exit={{ opacity: 0, y: -10 }} className="space-y-6">
       {state.loading && <LoadingState section="upanishad" />}
       {state.error && <ErrorState error={state.error} reload={state.reload} />}
-      {state.isExhausted && <ExhaustedState section="upanishad" sectionLabel="à¤‰à¤ªà¤¨à¤¿à¤·à¤¦à¥" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
+      {state.isExhausted && <ExhaustedState section="upanishad" sectionLabel="उपनिषद्" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
 
       {!state.loading && !state.error && !state.isExhausted && c && (
         <div className="card-base p-6 sm:p-8 space-y-6 border-l-4" style={{ borderLeftColor: '#3A7A6B' }}>
           <div className="flex flex-wrap justify-between items-start gap-4 pb-4 border-b" style={{ borderColor: 'var(--border-default)' }}>
             <div>
               <span className="text-[10px] uppercase font-bold tracking-widest px-2.5 py-0.5 rounded text-white bg-[#3A7A6B]">
-                {c.upanishadName || 'à¤‰à¤ªà¤¨à¤¿à¤·à¤¦à¥'} Â· {c.sectionReference || ''}
+                {c.upanishadName || 'उपनिषद्'} · {c.sectionReference || ''}
               </span>
               <h2 className="font-devanagari text-2xl sm:text-3xl font-bold mt-2 text-[var(--text-primary)]">
-                {c.upanishadName || 'à¤‰à¤ªà¤¨à¤¿à¤·à¤¦à¥'} â€” à¤®à¤‚à¤¤à¥à¤° {c.mantraNumber || state.item?.sequence}
+                {c.upanishadName || 'उपनिषद्'} — मंत्र {c.mantraNumber || state.item?.sequence}
               </h2>
               <div className="mt-2"><ProgressBar progress={state.progress} /></div>
             </div>
@@ -737,7 +736,7 @@ function UpanishadSection({ showIast }: { showIast: boolean }) {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="p-4 rounded-xl border bg-[var(--bg-secondary)] space-y-1.5" style={{ borderColor: 'var(--border-default)' }}>
-              <span className="text-[10px] uppercase font-bold tracking-wider block text-[#3A7A6B]">à¤¹à¤¿à¤‚à¤¦à¥€ à¤­à¤¾à¤µà¤¾à¤°à¥à¤¥</span>
+              <span className="text-[10px] uppercase font-bold tracking-wider block text-[#3A7A6B]">हिंदी भावार्थ</span>
               <p className="font-devanagari text-sm leading-relaxed text-[var(--text-primary)]">{c.hindiMeaning}</p>
             </div>
             <div className="p-4 rounded-xl border bg-[var(--bg-secondary)] space-y-1.5" style={{ borderColor: 'var(--border-default)' }}>
@@ -748,7 +747,7 @@ function UpanishadSection({ showIast }: { showIast: boolean }) {
 
           {(c.philosophicalExplanation || c.deeperExplanation || c.significance) && (
             <div className="p-4 rounded-xl border bg-[var(--bg-tertiary)]/30 space-y-2" style={{ borderColor: 'var(--border-default)' }}>
-              <span className="text-[10px] uppercase font-bold tracking-wider block text-[#3A7A6B]">à¤¦à¤¾à¤°à¥à¤¶à¤¨à¤¿à¤• à¤—à¤¹à¤°à¤¾à¤ˆ</span>
+              <span className="text-[10px] uppercase font-bold tracking-wider block text-[#3A7A6B]">दार्शनिक गहराई</span>
               <p className="text-xs sm:text-sm leading-relaxed text-[var(--text-secondary)]">
                 {c.philosophicalExplanation || c.deeperExplanation || c.significance}
               </p>
@@ -770,17 +769,17 @@ function VedaSection({ showIast }: { showIast: boolean }) {
     atharvaveda: '#8B5A2B',
   };
   const vedaNames: Record<string, string> = {
-    rigveda: 'à¤‹à¤—à¥à¤µà¥‡à¤¦',
-    samaveda: 'à¤¸à¤¾à¤®à¤µà¥‡à¤¦',
-    yajurveda: 'à¤¯à¤œà¥à¤°à¥à¤µà¥‡à¤¦',
-    atharvaveda: 'à¤…à¤¥à¤°à¥à¤µà¤µà¥‡à¤¦',
+    rigveda: 'ऋग्वेद',
+    samaveda: 'सामवेद',
+    yajurveda: 'यजुर्वेद',
+    atharvaveda: 'अथर्ववेद',
   };
 
   return (
     <motion.div key="veda" variants={FADE_UP} initial="initial" animate="animate" exit={{ opacity: 0, y: -10 }} className="space-y-6">
       <div className="p-4 rounded-xl border bg-[var(--bg-tertiary)]/20 flex items-center justify-between" style={{ borderColor: 'var(--border-default)' }}>
         <div>
-          <h2 className="font-devanagari text-lg font-bold text-[var(--text-primary)]">à¤šà¤¤à¥à¤°à¥à¤µà¥‡à¤¦ Â· Daily Selections from All 4 Vedas</h2>
+          <h2 className="font-devanagari text-lg font-bold text-[var(--text-primary)]">चतुर्वेद · Daily Selections from All 4 Vedas</h2>
           <p className="text-xs text-[var(--text-muted)] mt-0.5">One mantra from each Veda, sequentially. Never repeated until the corpus is complete.</p>
           <div className="mt-1.5"><ProgressBar progress={state.progress} /></div>
         </div>
@@ -792,7 +791,7 @@ function VedaSection({ showIast }: { showIast: boolean }) {
 
       {state.loading && <LoadingState section="veda" />}
       {state.error && <ErrorState error={state.error} reload={state.reload} />}
-      {state.isExhausted && <ExhaustedState section="veda" sectionLabel="à¤µà¥‡à¤¦" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
+      {state.isExhausted && <ExhaustedState section="veda" sectionLabel="वेद" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
 
       {!state.loading && !state.error && !state.isExhausted && (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -819,7 +818,7 @@ function VedaSection({ showIast }: { showIast: boolean }) {
                 <div className="text-xs space-y-1.5">
                   {c.hindiMeaning && (
                     <div>
-                      <span className="text-[10px] uppercase font-bold text-[var(--text-muted)]">à¤¹à¤¿à¤‚à¤¦à¥€ à¤…à¤°à¥à¤¥</span>
+                      <span className="text-[10px] uppercase font-bold text-[var(--text-muted)]">हिंदी अर्थ</span>
                       <p className="font-devanagari text-[var(--text-primary)] leading-relaxed mt-0.5">{c.hindiMeaning}</p>
                     </div>
                   )}
@@ -850,17 +849,17 @@ function PuranaSection({ showIast }: { showIast: boolean }) {
     <motion.div key="purana" variants={FADE_UP} initial="initial" animate="animate" exit={{ opacity: 0, y: -10 }} className="space-y-6">
       {state.loading && <LoadingState section="purana" />}
       {state.error && <ErrorState error={state.error} reload={state.reload} />}
-      {state.isExhausted && <ExhaustedState section="purana" sectionLabel="à¤ªà¥à¤°à¤¾à¤£" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
+      {state.isExhausted && <ExhaustedState section="purana" sectionLabel="पुराण" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
 
       {!state.loading && !state.error && !state.isExhausted && c && (
         <div className="card-base p-6 sm:p-8 space-y-6 border-l-4" style={{ borderLeftColor: '#8B6914' }}>
           <div className="flex flex-wrap justify-between items-start gap-4 pb-4 border-b" style={{ borderColor: 'var(--border-default)' }}>
             <div>
               <span className="text-[10px] uppercase font-bold tracking-widest px-2.5 py-0.5 rounded text-white bg-[#8B6914]">
-                {c.purana || 'à¤ªà¥à¤°à¤¾à¤£'} Â· {c.skandha || c.section || ''}
+                {c.purana || 'पुराण'} · {c.skandha || c.section || ''}
               </span>
               <h2 className="font-devanagari text-2xl sm:text-3xl font-bold mt-2 text-[var(--text-primary)]">
-                {c.title || `${c.purana || 'à¤ªà¥à¤°à¤¾à¤£'} â€” ${c.sectionReference || ''}`}
+                {c.title || `${c.purana || 'पुराण'} — ${c.sectionReference || ''}`}
               </h2>
               <div className="mt-2"><ProgressBar progress={state.progress} /></div>
             </div>
@@ -881,7 +880,7 @@ function PuranaSection({ showIast }: { showIast: boolean }) {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="p-4 rounded-xl border bg-[var(--bg-secondary)]" style={{ borderColor: 'var(--border-default)' }}>
-              <span className="text-[10px] uppercase font-bold block mb-1 text-[#8B6914]">à¤¹à¤¿à¤‚à¤¦à¥€ à¤­à¤¾à¤µà¤¾à¤°à¥à¤¥</span>
+              <span className="text-[10px] uppercase font-bold block mb-1 text-[#8B6914]">हिंदी भावार्थ</span>
               <p className="font-devanagari text-sm leading-relaxed text-[var(--text-primary)]">{c.hindiMeaning}</p>
             </div>
             <div className="p-4 rounded-xl border bg-[var(--bg-secondary)]" style={{ borderColor: 'var(--border-default)' }}>
@@ -892,7 +891,7 @@ function PuranaSection({ showIast }: { showIast: boolean }) {
 
           {(c.philosophicalSignificance || c.significance) && (
             <div className="p-4 rounded-xl border bg-[var(--bg-tertiary)]/30 space-y-2" style={{ borderColor: 'var(--border-default)' }}>
-              <span className="text-[10px] uppercase font-bold block text-[#8B6914]">à¤®à¤¹à¤¤à¥à¤µ</span>
+              <span className="text-[10px] uppercase font-bold block text-[#8B6914]">महत्व</span>
               <p className="text-xs sm:text-sm leading-relaxed text-[var(--text-secondary)]">{c.philosophicalSignificance || c.significance}</p>
             </div>
           )}
@@ -909,7 +908,7 @@ function BhashaSection() {
     <motion.div key="bhasha" variants={FADE_UP} initial="initial" animate="animate" exit={{ opacity: 0, y: -10 }} className="space-y-6">
       <div className="p-4 rounded-xl border bg-[var(--bg-tertiary)]/20 flex items-center justify-between" style={{ borderColor: 'var(--border-default)' }}>
         <div>
-          <h2 className="font-devanagari text-lg font-bold text-[var(--text-primary)]">à¤­à¤¾à¤°à¤¤à¥€à¤¯ à¤­à¤¾à¤·à¤¾ Â· Daily Word Discovery</h2>
+          <h2 className="font-devanagari text-lg font-bold text-[var(--text-primary)]">भारतीय भाषा · Daily Word Discovery</h2>
           <p className="text-xs text-[var(--text-muted)] mt-0.5">Sanskrit + Awadhi + regional language word, new every day.</p>
           <div className="mt-1.5"><ProgressBar progress={state.progress} /></div>
         </div>
@@ -920,7 +919,7 @@ function BhashaSection() {
 
       {state.loading && <LoadingState section="bhasha" />}
       {state.error && <ErrorState error={state.error} reload={state.reload} />}
-      {state.isExhausted && <ExhaustedState section="bhasha" sectionLabel="à¤­à¤¾à¤°à¤¤à¥€à¤¯ à¤­à¤¾à¤·à¤¾" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
+      {state.isExhausted && <ExhaustedState section="bhasha" sectionLabel="भारतीय भाषा" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
 
       {!state.loading && !state.error && !state.isExhausted && state.item && (() => {
         const c = state.item!.content;
@@ -945,7 +944,7 @@ function BhashaSection() {
                     <p className="font-serif italic text-xs text-[var(--text-muted)] mt-1">{word.transliteration}</p>
                   </div>
                   <div className="text-xs space-y-1.5">
-                    {word.hindiMeaning && <div><span className="font-bold text-[10px] text-[var(--text-muted)]">à¤¹à¤¿à¤‚à¤¦à¥€:</span><p className="font-devanagari text-[var(--text-primary)] mt-0.5">{word.hindiMeaning}</p></div>}
+                    {word.hindiMeaning && <div><span className="font-bold text-[10px] text-[var(--text-muted)]">हिंदी:</span><p className="font-devanagari text-[var(--text-primary)] mt-0.5">{word.hindiMeaning}</p></div>}
                     {word.englishMeaning && <div><span className="font-bold text-[10px] text-[var(--text-muted)]">English:</span><p className="text-[var(--text-secondary)] mt-0.5">{word.englishMeaning}</p></div>}
                     {word.exampleSentence && <div className="p-2 rounded bg-[var(--bg-tertiary)]/40 border border-[var(--border-default)]"><span className="font-bold text-[10px] text-[var(--text-muted)]">Example:</span><p className="font-devanagari text-[var(--text-secondary)] mt-0.5 italic">{word.exampleSentence}</p></div>}
                     {word.culturalContext && <p className="text-[10px] text-[var(--text-muted)] italic">{word.culturalContext}</p>}
@@ -968,14 +967,14 @@ function VyakaranSection({ vyakaranQuizSelected, setVyakaranQuizSelected }: { vy
     <motion.div key="vyakaran" variants={FADE_UP} initial="initial" animate="animate" exit={{ opacity: 0, y: -10 }} className="space-y-6">
       {state.loading && <LoadingState section="vyakaran" />}
       {state.error && <ErrorState error={state.error} reload={state.reload} />}
-      {state.isExhausted && <ExhaustedState section="vyakaran" sectionLabel="à¤¹à¤¿à¤‚à¤¦à¥€ à¤µà¥à¤¯à¤¾à¤•à¤°à¤£" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
+      {state.isExhausted && <ExhaustedState section="vyakaran" sectionLabel="हिंदी व्याकरण" progress={state.progress} onBeginCycle={state.beginNextCycle} />}
 
       {!state.loading && !state.error && !state.isExhausted && c && (
         <div className="card-base p-6 sm:p-8 space-y-6 border-l-4" style={{ borderLeftColor: '#3A5A8B' }}>
           <div className="flex flex-wrap justify-between items-start gap-4 pb-4 border-b" style={{ borderColor: 'var(--border-default)' }}>
             <div>
               <span className="text-[10px] uppercase font-bold tracking-widest px-2.5 py-0.5 rounded text-white bg-[#3A5A8B]">
-                à¤¹à¤¿à¤‚à¤¦à¥€ à¤µà¥à¤¯à¤¾à¤•à¤°à¤£ Â· {c.topic || 'à¤µà¥à¤¯à¤¾à¤•à¤°à¤£'}
+                हिंदी व्याकरण · {c.topic || 'व्याकरण'}
               </span>
               <h2 className="font-devanagari text-2xl sm:text-3xl font-bold mt-2 text-[var(--text-primary)]">
                 {c.title || c.topic}
@@ -991,14 +990,14 @@ function VyakaranSection({ vyakaranQuizSelected, setVyakaranQuizSelected }: { vy
 
           {c.explanation && (
             <div className="p-4 rounded-xl border bg-[var(--bg-secondary)] space-y-2" style={{ borderColor: 'var(--border-default)' }}>
-              <span className="text-[10px] uppercase font-bold text-[#3A5A8B] block">à¤µà¥à¤¯à¤¾à¤–à¥à¤¯à¤¾ (Explanation)</span>
+              <span className="text-[10px] uppercase font-bold text-[#3A5A8B] block">व्याख्या (Explanation)</span>
               <p className="font-devanagari text-sm leading-relaxed text-[var(--text-primary)]">{c.explanation}</p>
             </div>
           )}
 
           {c.rules?.length > 0 && (
             <div className="space-y-2">
-              <p className="text-[11px] uppercase font-bold tracking-wider text-[var(--text-muted)]">à¤¨à¤¿à¤¯à¤® (Rules)</p>
+              <p className="text-[11px] uppercase font-bold tracking-wider text-[var(--text-muted)]">नियम (Rules)</p>
               <div className="space-y-1.5">
                 {c.rules.map((rule: string, idx: number) => (
                   <div key={idx} className="flex items-start gap-2 p-2.5 rounded-lg bg-[var(--bg-tertiary)]/30 border border-[var(--border-default)] text-xs">
@@ -1012,7 +1011,7 @@ function VyakaranSection({ vyakaranQuizSelected, setVyakaranQuizSelected }: { vy
 
           {c.examples?.length > 0 && (
             <div className="space-y-2">
-              <p className="text-[11px] uppercase font-bold tracking-wider text-[var(--text-muted)]">à¤‰à¤¦à¤¾à¤¹à¤°à¤£ (Examples)</p>
+              <p className="text-[11px] uppercase font-bold tracking-wider text-[var(--text-muted)]">उदाहरण (Examples)</p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
                 {c.examples.map((ex: any, idx: number) => (
                   <div key={idx} className="p-2.5 rounded-lg border bg-[var(--bg-secondary)]" style={{ borderColor: 'var(--border-default)' }}>
@@ -1027,7 +1026,7 @@ function VyakaranSection({ vyakaranQuizSelected, setVyakaranQuizSelected }: { vy
 
           {c.interactiveMiniQuiz && (
             <div className="p-5 rounded-xl border border-sky-500/20 bg-sky-500/5 space-y-3">
-              <p className="text-[11px] uppercase font-bold tracking-wider text-sky-700 dark:text-sky-300">ðŸ§  à¤²à¤˜à¥ à¤ªà¤°à¥€à¤•à¥à¤·à¤¾ â€” Mini Quiz</p>
+              <p className="text-[11px] uppercase font-bold tracking-wider text-sky-700 dark:text-sky-300">🧠 लघु परीक्षा — Mini Quiz</p>
               <p className="font-devanagari text-sm font-medium text-[var(--text-primary)]">{c.interactiveMiniQuiz.question}</p>
               <div className="space-y-1.5">
                 {c.interactiveMiniQuiz.options.map((opt: string, optIdx: number) => {
@@ -1049,7 +1048,7 @@ function VyakaranSection({ vyakaranQuizSelected, setVyakaranQuizSelected }: { vy
               </div>
               {vyakaranQuizSelected !== null && (
                 <p className="text-[11px] text-[var(--text-muted)] italic font-devanagari pt-1">
-                  ðŸ’¡ {c.interactiveMiniQuiz.explanation}
+                  💡 {c.interactiveMiniQuiz.explanation}
                 </p>
               )}
             </div>
@@ -1066,4 +1065,3 @@ function VyakaranSection({ vyakaranQuizSelected, setVyakaranQuizSelected }: { vy
     </motion.div>
   );
 }
-

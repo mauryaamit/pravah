@@ -153,7 +153,7 @@ export const VEDA_REGISTRY: RegistryItem[] = VEDA_DAILY_SETS.flatMap((set: any, 
 
 // ─────────────── CORPUS LOOKUP MAP ───────────────
 
-const REGISTRIES: Record<VaniSection, RegistryItem[]> = {
+export const REGISTRIES: Record<VaniSection, RegistryItem[]> = {
   doha: DOHA_REGISTRY,
   gita: GITA_REGISTRY,
   ramayan: RAMAYAN_REGISTRY,
@@ -164,6 +164,8 @@ const REGISTRIES: Record<VaniSection, RegistryItem[]> = {
   bhasha: BHASHA_REGISTRY,
   vyakaran: VYAKARAN_REGISTRY,
 };
+
+export const CORPUS_MAP = REGISTRIES;
 
 // Build O(1) id-to-item maps
 const ID_MAPS: Record<VaniSection, Map<string, RegistryItem>> = {} as any;
@@ -263,4 +265,3 @@ export function findNextUnconsumed(
   return null;
 }
 
-export { REGISTRIES };

@@ -6,10 +6,11 @@
 //   Assignment is created atomically and cached. Never random.
 //   Progress advances only when the user explicitly marks an item as consumed.
 //
-// Firestore Collections:
-//   vani_assignments/{userId}_{section}/{date}   ← daily idempotency
-//   vani_progress/{userId}_{section}             ← sequence cursor
-//   vani_consumption/{userId}_{section}/{contentId} ← consumed items
+// Firestore Architecture (Root Collections with Deterministic Keys):
+//   vani_daily_assignments/{userId}_{date}_{section}     ← daily idempotency
+//   vani_user_progress/{userId}_{section}               ← sequence cursor
+//   vani_consumption/{userId}_{section}_{contentId}    ← consumed items
+//   vani_consumption_archive/{userId}_{section}_cycle{N}_{contentId} ← archived cycles
 
 import { getAdminDb } from '@/lib/firebase/admin';
 import {
@@ -22,25 +23,31 @@ import {
 } from './types';
 import {
   getCorpusTotalCount,
-  getCorpusItems,
   getCorpusItemById,
   findNextUnconsumed,
   getNextNItems,
   RegistryItem,
 } from './corpus-registry';
 
-// ─────────────── FIRESTORE PATH HELPERS ───────────────
+// ─────────────── FIRESTORE COLLECTIONS & DOC IDS ───────────────
 
-function assignmentDocPath(userId: string, section: VaniSection, date: string) {
-  return `vani_assignments/${userId}_${section}/daily/${date}`;
+const COLLECTIONS = {
+  DAILY_ASSIGNMENTS: 'vani_daily_assignments',
+  USER_PROGRESS: 'vani_user_progress',
+  CONSUMPTION: 'vani_consumption',
+  CONSUMPTION_ARCHIVE: 'vani_consumption_archive',
+} as const;
+
+function assignmentDocId(userId: string, section: VaniSection, date: string): string {
+  return `${userId}_${date}_${section}`;
 }
 
-function progressDocPath(userId: string, section: VaniSection) {
-  return `vani_progress/${userId}_${section}`;
+function progressDocId(userId: string, section: VaniSection): string {
+  return `${userId}_${section}`;
 }
 
-function consumptionColPath(userId: string, section: VaniSection) {
-  return `vani_consumption/${userId}_${section}`;
+function consumptionDocId(userId: string, section: VaniSection, contentId: string): string {
+  return `${userId}_${section}_${contentId}`;
 }
 
 // ─────────────── DATE HELPER ───────────────
@@ -48,7 +55,7 @@ function consumptionColPath(userId: string, section: VaniSection) {
 export function getTodayDateKey(): string {
   const now = new Date();
   // Use IST (UTC+5:30) for consistent daily boundaries for Indian users
-  const ist = new Date(now.getTime() + (5.5 * 60 * 60 * 1000));
+  const ist = new Date(now.getTime() + 5.5 * 60 * 60 * 1000);
   return ist.toISOString().slice(0, 10);
 }
 
@@ -56,10 +63,15 @@ export function getTodayDateKey(): string {
 
 async function getProgress(userId: string, section: VaniSection): Promise<VaniProgress> {
   const db = getAdminDb();
-  const doc = await db.doc(progressDocPath(userId, section)).get();
+  const doc = await db
+    .collection(COLLECTIONS.USER_PROGRESS)
+    .doc(progressDocId(userId, section))
+    .get();
+
   if (doc.exists) {
     return doc.data() as VaniProgress;
   }
+
   // Default: start from sequence 1
   return {
     section,
@@ -74,9 +86,20 @@ async function getProgress(userId: string, section: VaniSection): Promise<VaniPr
 
 async function getConsumedSet(userId: string, section: VaniSection): Promise<Set<string>> {
   const db = getAdminDb();
-  const colRef = db.collection(consumptionColPath(userId, section));
-  const snap = await colRef.get();
-  return new Set(snap.docs.map(d => d.id));
+  const snap = await db
+    .collection(COLLECTIONS.CONSUMPTION)
+    .where('userId', '==', userId)
+    .where('section', '==', section)
+    .get();
+
+  const set = new Set<string>();
+  snap.forEach((doc) => {
+    const data = doc.data();
+    if (data.contentId) {
+      set.add(data.contentId);
+    }
+  });
+  return set;
 }
 
 // ─────────────── CORE ENGINE ───────────────
@@ -90,7 +113,7 @@ export interface AssignmentResult {
 
 /**
  * Get or create today's assignment for a user+section.
- * This is fully idempotent: calling it N times on the same date returns the same result.
+ * Fully idempotent: calling it N times on the same date returns the exact same assignment.
  */
 export async function getOrCreateTodayAssignment(
   userId: string,
@@ -99,10 +122,11 @@ export async function getOrCreateTodayAssignment(
 ): Promise<AssignmentResult> {
   const db = getAdminDb();
   const date = dateKey || getTodayDateKey();
-  const assignmentPath = assignmentDocPath(userId, section, date);
+  const docId = assignmentDocId(userId, section, date);
+  const assignmentRef = db.collection(COLLECTIONS.DAILY_ASSIGNMENTS).doc(docId);
 
   // 1. Check if today's assignment already exists
-  const existingDoc = await db.doc(assignmentPath).get();
+  const existingDoc = await assignmentRef.get();
   if (existingDoc.exists) {
     const assignment = existingDoc.data() as VaniAssignment;
     const progress = await getProgress(userId, section);
@@ -111,7 +135,7 @@ export async function getOrCreateTodayAssignment(
     // Resolve content items from registry
     const contentIds = assignment.contentIds || (assignment.contentId ? [assignment.contentId] : []);
     const items = contentIds
-      .map(id => getCorpusItemById(section, id))
+      .map((id) => getCorpusItemById(section, id))
       .filter((item): item is RegistryItem => item !== null);
 
     return {
@@ -128,7 +152,7 @@ export async function getOrCreateTodayAssignment(
   }
 
   // 2. No existing assignment — create one atomically
-  const dailyCount = VANI_DAILY_COUNT[section];
+  const dailyCount = VANI_DAILY_COUNT[section] || 1;
   const total = getCorpusTotalCount(section);
 
   // Load progress and consumed set
@@ -161,22 +185,19 @@ export async function getOrCreateTodayAssignment(
   const selectedItems: RegistryItem[] = [];
 
   if (dailyCount === 1) {
-    // Single-item section
     const next = findNextUnconsumed(section, progress.currentSequenceNumber, consumed);
     if (next) selectedItems.push(next);
   } else {
-    // Multi-item section (doha: 3, veda: 4)
     const items = getNextNItems(section, progress.currentSequenceNumber, dailyCount, consumed);
     selectedItems.push(...items);
   }
 
   // Handle corpus exhaustion (no unconsumed items found)
   if (selectedItems.length === 0) {
-    // Mark as exhausted in progress
-    await db.doc(progressDocPath(userId, section)).set(
-      { isExhausted: true },
-      { merge: true }
-    );
+    await db
+      .collection(COLLECTIONS.USER_PROGRESS)
+      .doc(progressDocId(userId, section))
+      .set({ isExhausted: true }, { merge: true });
 
     return {
       assignment: {
@@ -201,28 +222,29 @@ export async function getOrCreateTodayAssignment(
   // 4. Create assignment atomically using a transaction
   const assignment: VaniAssignment = {
     contentId: selectedItems[0].id,
-    contentIds: selectedItems.map(i => i.id),
+    contentIds: selectedItems.map((i) => i.id),
     section,
     date,
     assignedAt: new Date().toISOString(),
     isConsumed: false,
   };
 
-  // Use a transaction to prevent race conditions across devices
   await db.runTransaction(async (txn) => {
-    const docRef = db.doc(assignmentPath);
-    const snap = await txn.get(docRef);
+    const snap = await txn.get(assignmentRef);
     if (!snap.exists) {
-      txn.set(docRef, assignment);
+      txn.set(assignmentRef, {
+        ...assignment,
+        userId,
+      });
     }
   });
 
   // Re-read to handle the case where another device wrote first
-  const finalDoc = await db.doc(assignmentPath).get();
+  const finalDoc = await assignmentRef.get();
   const finalAssignment = finalDoc.data() as VaniAssignment;
   const finalContentIds = finalAssignment.contentIds || [finalAssignment.contentId];
   const finalItems = finalContentIds
-    .map(id => getCorpusItemById(section, id))
+    .map((id) => getCorpusItemById(section, id))
     .filter((item): item is RegistryItem => item !== null);
 
   return {
@@ -241,7 +263,6 @@ export async function getOrCreateTodayAssignment(
 /**
  * Mark a content item as consumed by the user.
  * Advances the progress cursor to the next unconsumed item.
- * Returns: new progress state.
  */
 export async function markConsumed(
   userId: string,
@@ -253,12 +274,12 @@ export async function markConsumed(
   const progress = await getProgress(userId, section);
   const total = getCorpusTotalCount(section);
 
-  // Write consumption record
-  const consumptionRef = db
-    .collection(consumptionColPath(userId, section))
-    .doc(contentId);
+  // Write consumption record into root vani_consumption collection
+  const docId = consumptionDocId(userId, section, contentId);
+  const consumptionRef = db.collection(COLLECTIONS.CONSUMPTION).doc(docId);
 
-  const consumptionRecord: VaniConsumption = {
+  const consumptionRecord: VaniConsumption & { userId: string } = {
+    userId,
     contentId,
     section,
     consumedAt: new Date().toISOString(),
@@ -269,8 +290,11 @@ export async function markConsumed(
 
   // Mark today's assignment as consumed
   const date = getTodayDateKey();
-  const assignmentPath = assignmentDocPath(userId, section, date);
-  await db.doc(assignmentPath).set({ isConsumed: true, consumedAt: new Date().toISOString() }, { merge: true });
+  const assignDocId = assignmentDocId(userId, section, date);
+  await db
+    .collection(COLLECTIONS.DAILY_ASSIGNMENTS)
+    .doc(assignDocId)
+    .set({ isConsumed: true, consumedAt: new Date().toISOString() }, { merge: true });
 
   // Get updated consumed set
   const consumed = await getConsumedSet(userId, section);
@@ -283,16 +307,18 @@ export async function markConsumed(
   const currentItem = getCorpusItemById(section, contentId);
   const nextStartSeq = currentItem ? currentItem.globalSequenceNumber + 1 : progress.currentSequenceNumber + 1;
   const nextItem = isExhausted ? null : findNextUnconsumed(section, nextStartSeq, consumed);
-  
+
   // Also check from beginning if nothing found from current position
-  const nextSeq = nextItem ? nextItem.globalSequenceNumber : (
-    isExhausted ? progress.currentSequenceNumber : (
-      findNextUnconsumed(section, 1, consumed)?.globalSequenceNumber ?? progress.currentSequenceNumber
-    )
-  );
+  const nextSeq = nextItem
+    ? nextItem.globalSequenceNumber
+    : isExhausted
+    ? progress.currentSequenceNumber
+    : findNextUnconsumed(section, 1, consumed)?.globalSequenceNumber ?? progress.currentSequenceNumber;
 
   // Update progress
-  const updatedProgress: Partial<VaniProgress> = {
+  const updatedProgress: Partial<VaniProgress> & { userId: string } = {
+    userId,
+    section,
     currentSequenceNumber: nextSeq,
     consumedCount: newConsumedCount,
     lastContentId: contentId,
@@ -300,7 +326,10 @@ export async function markConsumed(
     isExhausted,
   };
 
-  await db.doc(progressDocPath(userId, section)).set(updatedProgress, { merge: true });
+  await db
+    .collection(COLLECTIONS.USER_PROGRESS)
+    .doc(progressDocId(userId, section))
+    .set(updatedProgress, { merge: true });
 
   return {
     nextSequenceNumber: nextSeq,
@@ -311,7 +340,6 @@ export async function markConsumed(
 
 /**
  * Mark all items in today's multi-item assignment as consumed.
- * Used for sections with dailyCount > 1 (doha, veda).
  */
 export async function markAllConsumed(
   userId: string,
@@ -326,7 +354,7 @@ export async function markAllConsumed(
 }
 
 /**
- * Get current progress for a user+section (for progress bars).
+ * Get current progress for a user+section.
  */
 export async function getProgressForUser(
   userId: string,
@@ -338,35 +366,38 @@ export async function getProgressForUser(
 }
 
 /**
- * Begin Cycle 2 — resets the consumption cursor and increments cycleNumber.
+ * Begin Cycle 2+ — resets the consumption cursor and increments cycleNumber.
  * All consumption records from the previous cycle are ARCHIVED (not deleted).
- * User must explicitly call this after corpus exhaustion.
  */
-export async function beginNextCycle(
-  userId: string,
-  section: VaniSection,
-): Promise<void> {
+export async function beginNextCycle(userId: string, section: VaniSection): Promise<void> {
   const db = getAdminDb();
   const progress = await getProgress(userId, section);
   const newCycleNumber = progress.cycleNumber + 1;
 
-  // Archive existing consumption records with cycle label
-  const colRef = db.collection(consumptionColPath(userId, section));
-  const existing = await colRef.get();
+  // Query existing consumption records for this user+section
+  const snap = await db
+    .collection(COLLECTIONS.CONSUMPTION)
+    .where('userId', '==', userId)
+    .where('section', '==', section)
+    .get();
 
   const batch = db.batch();
-  for (const doc of existing.docs) {
-    // Move to archive
-    const archiveRef = db.collection(
-      `vani_consumption_archive/${userId}_${section}_cycle${progress.cycleNumber}`
-    ).doc(doc.id);
-    batch.set(archiveRef, doc.data());
+  for (const doc of snap.docs) {
+    const data = doc.data();
+    const archiveId = `${userId}_${section}_cycle${progress.cycleNumber}_${data.contentId}`;
+    const archiveRef = db.collection(COLLECTIONS.CONSUMPTION_ARCHIVE).doc(archiveId);
+    batch.set(archiveRef, {
+      ...data,
+      archivedAt: new Date().toISOString(),
+      originalCycleNumber: progress.cycleNumber,
+    });
     batch.delete(doc.ref);
   }
   await batch.commit();
 
   // Reset progress for new cycle
-  const newProgress: VaniProgress = {
+  const newProgress: VaniProgress & { userId: string } = {
+    userId,
     section,
     currentSequenceNumber: 1,
     consumedCount: 0,
@@ -376,5 +407,8 @@ export async function beginNextCycle(
     isExhausted: false,
   };
 
-  await db.doc(progressDocPath(userId, section)).set(newProgress);
+  await db
+    .collection(COLLECTIONS.USER_PROGRESS)
+    .doc(progressDocId(userId, section))
+    .set(newProgress);
 }

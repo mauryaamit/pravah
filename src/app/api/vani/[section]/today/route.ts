@@ -2,11 +2,12 @@
 // GET /api/vani/{section}/today
 // Returns today's deterministic assignment for the authenticated user.
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import { cookies } from 'next/headers';
 import { getAdminAuth } from '@/lib/firebase/admin';
 import { getOrCreateTodayAssignment, getTodayDateKey } from '@/lib/vani/engine';
 import { VaniSection, VANI_SECTIONS } from '@/lib/vani/types';
+import { jsonUtf8 } from '@/lib/vani/api-helper';
 
 export const dynamic = 'force-dynamic';
 
@@ -30,12 +31,12 @@ export async function GET(
     const section = params.section as VaniSection;
 
     if (!VANI_SECTIONS.includes(section)) {
-      return NextResponse.json({ error: `Unknown section: ${section}` }, { status: 400 });
+      return jsonUtf8({ error: `Unknown section: ${section}` }, { status: 400 });
     }
 
     const userId = await getUserId(req);
     if (!userId) {
-      return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
+      return jsonUtf8({ error: 'Authentication required' }, { status: 401 });
     }
 
     const dateParam = req.nextUrl.searchParams.get('date');
@@ -44,7 +45,7 @@ export async function GET(
     const result = await getOrCreateTodayAssignment(userId, section, dateKey);
 
     if (result.isExhausted) {
-      return NextResponse.json({
+      return jsonUtf8({
         section,
         date: dateKey,
         isExhausted: true,
@@ -59,7 +60,7 @@ export async function GET(
 
     if (dailyCount === 1) {
       const item = result.items[0];
-      return NextResponse.json({
+      return jsonUtf8({
         section,
         date: dateKey,
         contentId: item.id,
@@ -74,13 +75,13 @@ export async function GET(
     }
 
     // Multi-item sections (doha: 3, veda: 4)
-    return NextResponse.json({
+    return jsonUtf8({
       section,
       date: dateKey,
-      contentIds: result.items.map(i => i.id),
+      contentIds: result.items.map((i) => i.id),
       isAlreadyConsumed: result.assignment.isConsumed,
       corpusProgress: result.progress,
-      items: result.items.map(item => ({
+      items: result.items.map((item) => ({
         contentId: item.id,
         sequence: item.globalSequenceNumber,
         content: item.content,
@@ -90,6 +91,6 @@ export async function GET(
     });
   } catch (err: any) {
     console.error('[/api/vani/today]', err);
-    return NextResponse.json({ error: err.message || 'Internal error' }, { status: 500 });
+    return jsonUtf8({ error: err.message || 'Internal error' }, { status: 500 });
   }
 }
