@@ -239,9 +239,14 @@ export default function AntarmanPage() {
   // Real-time listener for dates with todos
   useEffect(() => {
     if (!user || !db) return;
-    const q = collection(db, `users/${user.uid}/todos`);
+    const q = collection(db, `users/${user.uid}/tasks`);
     const unsub = onSnapshot(q, (snap) => {
-      const dates = new Set(snap.docs.map(d => d.id));
+      const dates = new Set<string>();
+      snap.docs.forEach(d => {
+        const data = d.data();
+        if (data.createdDate) dates.add(data.createdDate);
+        if (data.completedDate) dates.add(data.completedDate);
+      });
       setDatesWithTodos(dates);
     }, (err) => {
       console.error('Failed to load todo dates:', err);
@@ -1080,10 +1085,145 @@ export default function AntarmanPage() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              className={cn("grid grid-cols-1 gap-8 items-start", isFullScreen ? "grid-cols-1" : "lg:grid-cols-12")}
+              className="space-y-6 max-w-4xl mx-auto"
             >
-              {/* LEFT COLUMN: Section Editor (col-span-7) */}
-              <div className={cn("space-y-5", isFullScreen ? "col-span-1" : "lg:col-span-7")}>
+              {/* ─── TOP: Daily Checklist Section ─── */}
+              {!isFullScreen && (
+                <div 
+                  className="p-5 card-base practice-card space-y-4"
+                  style={{ borderRadius: 16 }}
+                >
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-serif text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>Daily Checklist</h3>
+                    <button
+                      onClick={carryForward}
+                      className="text-xs px-2.5 py-1 rounded-full border transition-all hover:bg-[var(--bg-primary)]"
+                      style={{ borderColor: 'var(--border-default)', color: 'var(--text-secondary)' }}
+                      title="Carry forward incomplete tasks from yesterday"
+                    >
+                      Carry Forward
+                    </button>
+                  </div>
+
+                  {/* Add task form */}
+                  <form onSubmit={handleAddTodoSubmit} className="flex gap-2">
+                    <input
+                      type="text"
+                      value={newTodoText}
+                      onChange={e => setNewTodoText(e.target.value)}
+                      placeholder="Add a task..."
+                      className="flex-1 bg-transparent outline-none text-sm py-1.5 border-b focus:border-accent-moss transition-colors"
+                      style={{
+                        borderColor: 'var(--border-strong)',
+                        color: 'var(--text-primary)'
+                      }}
+                    />
+                    <button
+                      type="submit"
+                      className="p-1.5 rounded-lg border transition-all hover:bg-[var(--bg-primary)] flex-shrink-0"
+                      style={{ borderColor: 'var(--border-default)', color: 'var(--text-muted)' }}
+                    >
+                      <Plus size={16} />
+                    </button>
+                  </form>
+
+                  {todoError && (
+                    <p className="text-xs text-red-500">{todoError}</p>
+                  )}
+
+                  {/* Todo List */}
+                  {todos.length === 0 ? (
+                    <p className="text-sm text-center py-6" style={{ color: 'var(--text-faint)' }}>
+                      No tasks for today. Start fresh!
+                    </p>
+                  ) : (
+                    <Reorder.Group axis="y" values={todos} onReorder={saveTodos} className="space-y-2">
+                      {todos.map(todo => (
+                        <Reorder.Item
+                          key={todo.id}
+                          value={todo}
+                          className="group flex items-center gap-3 p-3 rounded-xl transition-all relative border"
+                          style={{
+                            background: todo.completed 
+                              ? 'color-mix(in srgb, var(--accent-moss) 4%, var(--bg-primary))' 
+                              : 'var(--bg-primary)',
+                            borderColor: todo.completed
+                              ? 'color-mix(in srgb, var(--accent-moss) 20%, var(--border-default))'
+                              : 'var(--border-default)',
+                            opacity: todo.completed ? 0.6 : 1,
+                          }}
+                        >
+                          <button
+                            type="button"
+                            onClick={() => toggleTodo(todo.id)}
+                            className="flex-shrink-0 focus:outline-none"
+                          >
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="flex-shrink-0">
+                              <circle 
+                                cx="12" 
+                                cy="12" 
+                                r="10" 
+                                stroke="currentColor" 
+                                strokeWidth="2" 
+                                style={{ color: todo.completed ? 'var(--accent-moss)' : 'var(--border-strong)' }}
+                              />
+                              {todo.completed && (
+                                <motion.path
+                                  d="M6 12l4 4 8-8"
+                                  stroke="var(--accent-moss)"
+                                  strokeWidth="3"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  initial={{ pathLength: 0 }}
+                                  animate={{ pathLength: 1 }}
+                                  transition={{ duration: 0.25 }}
+                                />
+                              )}
+                            </svg>
+                          </button>
+
+                          <span 
+                            className="truncate pr-12 text-[15px]"
+                            style={{
+                              color: todo.completed ? 'var(--text-muted)' : 'var(--text-primary)',
+                              textDecoration: todo.completed ? 'line-through' : 'none',
+                            }}
+                          >
+                            {todo.text}
+                          </span>
+
+                          <div className="absolute right-9 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity cursor-grab pr-1">
+                            <GripVertical size={14} style={{ color: 'var(--text-faint)' }} />
+                          </div>
+
+                          <button
+                            type="button"
+                            onClick={() => deleteTodo(todo.id)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-lg font-light leading-none focus:outline-none"
+                            style={{ color: 'var(--text-faint)' }}
+                          >
+                            ×
+                          </button>
+                        </Reorder.Item>
+                      ))}
+                    </Reorder.Group>
+                  )}
+
+                  {todos.some(t => t.completed) && (
+                    <div className="flex justify-end pt-2">
+                      <button
+                        onClick={clearCompleted}
+                        className="text-xs text-red-500 hover:underline"
+                      >
+                        Clear Completed
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* ─── Section Editor (Writing Area) ─── */}
+              <div className="space-y-5">
                 
                 {/* Section selection pills */}
                 {!isFullScreen && (
@@ -1907,141 +2047,6 @@ export default function AntarmanPage() {
                 )}
 
               </div>
-
-              {/* RIGHT COLUMN: Checklist / Todo Section (col-span-5) */}
-              {!isFullScreen && (
-                <div 
-                  className="lg:col-span-5 p-5 card-base practice-card space-y-4"
-                  style={{ borderRadius: 16 }}
-                >
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-serif text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>Daily Checklist</h3>
-                    <button
-                      onClick={carryForward}
-                      className="text-xs px-2.5 py-1 rounded-full border transition-all hover:bg-[var(--bg-primary)]"
-                      style={{ borderColor: 'var(--border-default)', color: 'var(--text-secondary)' }}
-                      title="Carry forward incomplete tasks from yesterday"
-                    >
-                      Carry Forward
-                    </button>
-                  </div>
-
-                  {/* Add task form */}
-                  <form onSubmit={handleAddTodoSubmit} className="flex gap-2">
-                    <input
-                      type="text"
-                      value={newTodoText}
-                      onChange={e => setNewTodoText(e.target.value)}
-                      placeholder="Add a task..."
-                      className="flex-1 bg-transparent outline-none text-sm py-1.5 border-b focus:border-accent-moss transition-colors"
-                      style={{
-                        borderColor: 'var(--border-strong)',
-                        color: 'var(--text-primary)'
-                      }}
-                    />
-                    <button
-                      type="submit"
-                      className="p-1.5 rounded-lg border transition-all hover:bg-[var(--bg-primary)] flex-shrink-0"
-                      style={{ borderColor: 'var(--border-default)', color: 'var(--text-muted)' }}
-                    >
-                      <Plus size={16} />
-                    </button>
-                  </form>
-
-                  {todoError && (
-                    <p className="text-xs text-red-500">{todoError}</p>
-                  )}
-
-                  {/* Todo List */}
-                  {todos.length === 0 ? (
-                    <p className="text-sm text-center py-8" style={{ color: 'var(--text-faint)' }}>
-                      No tasks for today. Start fresh!
-                    </p>
-                  ) : (
-                    <Reorder.Group axis="y" values={todos} onReorder={saveTodos} className="space-y-2">
-                      {todos.map(todo => (
-                        <Reorder.Item
-                          key={todo.id}
-                          value={todo}
-                          className="group flex items-center gap-3 p-3 rounded-xl transition-all relative border"
-                          style={{
-                            background: todo.completed 
-                              ? 'color-mix(in srgb, var(--accent-moss) 4%, var(--bg-primary))' 
-                              : 'var(--bg-primary)',
-                            borderColor: todo.completed
-                              ? 'color-mix(in srgb, var(--accent-moss) 20%, var(--border-default))'
-                              : 'var(--border-default)',
-                            opacity: todo.completed ? 0.6 : 1,
-                          }}
-                        >
-                          <button
-                            type="button"
-                            onClick={() => toggleTodo(todo.id)}
-                            className="flex-shrink-0 focus:outline-none"
-                          >
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="flex-shrink-0">
-                              <circle 
-                                cx="12" 
-                                cy="12" 
-                                r="10" 
-                                stroke="currentColor" 
-                                strokeWidth="2" 
-                                style={{ color: todo.completed ? 'var(--accent-moss)' : 'var(--border-strong)' }}
-                              />
-                              {todo.completed && (
-                                <motion.path
-                                  d="M6 12l4 4 8-8"
-                                  stroke="var(--accent-moss)"
-                                  strokeWidth="3"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  initial={{ pathLength: 0 }}
-                                  animate={{ pathLength: 1 }}
-                                  transition={{ duration: 0.25 }}
-                                />
-                              )}
-                            </svg>
-                          </button>
-
-                          <span 
-                            className="truncate pr-12 text-[15px]"
-                            style={{
-                              color: todo.completed ? 'var(--text-muted)' : 'var(--text-primary)',
-                              textDecoration: todo.completed ? 'line-through' : 'none',
-                            }}
-                          >
-                            {todo.text}
-                          </span>
-
-                          <div className="absolute right-9 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity cursor-grab pr-1">
-                            <GripVertical size={14} style={{ color: 'var(--text-faint)' }} />
-                          </div>
-
-                          <button
-                            type="button"
-                            onClick={() => deleteTodo(todo.id)}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-lg font-light leading-none focus:outline-none"
-                            style={{ color: 'var(--text-faint)' }}
-                          >
-                            ×
-                          </button>
-                        </Reorder.Item>
-                      ))}
-                    </Reorder.Group>
-                  )}
-
-                  {todos.some(t => t.completed) && (
-                    <div className="flex justify-end pt-2">
-                      <button
-                        onClick={clearCompleted}
-                        className="text-xs text-red-500 hover:underline"
-                      >
-                        Clear Completed
-                      </button>
-                    </div>
-                  )}
-                </div>
-              )}
             </motion.div>
           )}
 

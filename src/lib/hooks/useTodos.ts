@@ -1,6 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { db } from '@/lib/firebase/client';
-import { doc, onSnapshot, setDoc, serverTimestamp } from 'firebase/firestore';
+import { 
+  collection, 
+  doc, 
+  onSnapshot, 
+  setDoc, 
+  updateDoc, 
+  deleteDoc, 
+  serverTimestamp,
+  getDocs
+} from 'firebase/firestore';
 import { useAuth } from './useAuth';
 import { toDateString } from '@/lib/utils/date';
 
@@ -9,129 +18,272 @@ export interface TodoTask {
   text: string;
   completed: boolean;
   order: number;
+  createdDate: string; // YYYY-MM-DD
+  createdAt?: any;
+  completedDate?: string | null; // YYYY-MM-DD
+  completedAt?: any;
+  removed?: boolean;
+  removedDate?: string | null; // YYYY-MM-DD
+  removedAt?: any;
 }
 
 export function useTodos(selectedDate: string) {
   const { user } = useAuth();
-  const [todos, setTodos] = useState<TodoTask[]>([]);
+  const [allTasks, setAllTasks] = useState<TodoTask[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // 1. Real-time subscription to user's persistent tasks collection
   useEffect(() => {
     if (!user || !db) {
+      setAllTasks([]);
       setLoading(false);
       return;
     }
 
     setLoading(true);
 
-    const docRef = doc(db, `users/${user.uid}/todos`, selectedDate);
-    const unsub = onSnapshot(docRef, (docSnap) => {
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        setTodos(data.tasks || []);
-      } else {
-        setTodos([]);
+    const tasksColRef = collection(db, `users/${user.uid}/tasks`);
+    const unsub = onSnapshot(
+      tasksColRef,
+      async (snapshot) => {
+        if (!snapshot.empty) {
+          const loaded: TodoTask[] = [];
+          snapshot.forEach((d) => {
+            const data = d.data();
+            loaded.push({
+              id: d.id,
+              text: data.text || '',
+              completed: !!data.completed,
+              order: typeof data.order === 'number' ? data.order : 0,
+              createdDate: data.createdDate || toDateString(new Date()),
+              createdAt: data.createdAt,
+              completedDate: data.completedDate || null,
+              completedAt: data.completedAt || null,
+              removed: !!data.removed,
+              removedDate: data.removedDate || null,
+              removedAt: data.removedAt || null,
+            });
+          });
+          setAllTasks(loaded);
+          setLoading(false);
+          // If persistent tasks collection is empty, check and migrate legacy date-based doc if any
+          try {
+            if (db) {
+              const legacySnap = await getDocs(collection(db, `users/${user.uid}/todos`));
+              if (!legacySnap.empty) {
+                const migrated: TodoTask[] = [];
+                for (const legDoc of legacySnap.docs) {
+                  const legDate = legDoc.id;
+                  const legTasks = legDoc.data().tasks || [];
+                  for (let i = 0; i < legTasks.length; i++) {
+                    const t = legTasks[i];
+                    const taskId = t.id || crypto.randomUUID();
+                    const taskObj: TodoTask = {
+                      id: taskId,
+                      text: t.text,
+                      completed: !!t.completed,
+                      order: typeof t.order === 'number' ? t.order : i,
+                      createdDate: legDate,
+                      completedDate: t.completed ? legDate : null,
+                      removed: false,
+                    };
+                    await setDoc(doc(db, `users/${user.uid}/tasks`, taskId), {
+                      ...taskObj,
+                      createdAt: serverTimestamp(),
+                    });
+                    migrated.push(taskObj);
+                  }
+                }
+                setAllTasks(migrated);
+              } else {
+                setAllTasks([]);
+              }
+            } else {
+              setAllTasks([]);
+            }
+          } catch (e) {
+            console.error('Legacy todos migration error:', e);
+            setAllTasks([]);
+          }
+          setLoading(false);
+        }
+      },
+      (err) => {
+        console.error('Stream tasks error:', err);
+        setLoading(false);
       }
-      setLoading(false);
-    }, (err) => {
-      console.error('Stream todos error:', err);
-      setLoading(false);
-    });
+    );
 
     return unsub;
   }, [user, selectedDate]);
 
-  const saveTodos = async (updatedTasks: TodoTask[]) => {
-    if (!user || !db) return;
-    const docRef = doc(db, `users/${user.uid}/todos`, selectedDate);
-    const tasksWithOrder = updatedTasks.map((t, idx) => ({
-      id: t.id,
-      text: t.text,
-      completed: t.completed,
-      order: t.order !== undefined ? t.order : idx,
-    }));
-    await setDoc(docRef, {
-      tasks: tasksWithOrder,
-      updatedAt: serverTimestamp(),
-    }, { merge: true });
-  };
+  // 2. Filter and compute visible todos for the currently selected date
+  const todos = useMemo(() => {
+    return allTasks
+      .filter((task) => {
+        // Must not be explicitly marked as removed on or before selectedDate
+        if (task.removed) {
+          if (!task.removedDate || selectedDate >= task.removedDate) {
+            return false;
+          }
+        }
 
+        // Must have been created on or before the selected date
+        if (task.createdDate > selectedDate) {
+          return false;
+        }
+
+        // If completed:
+        if (task.completed && task.completedDate) {
+          // On the date it was completed, show it as completed
+          if (task.completedDate === selectedDate) {
+            return true;
+          }
+          // On dates after completion date, it does NOT appear as an active unfinished task
+          if (selectedDate > task.completedDate) {
+            return false;
+          }
+          // On dates before completion date, it was still active/unfinished
+          if (selectedDate < task.completedDate) {
+            return true;
+          }
+        }
+
+        return true;
+      })
+      .map((task) => {
+        // On historical dates before completion date, render it as not completed on that day
+        const isCompletedOnSelectedDate = 
+          task.completed && 
+          task.completedDate !== null && 
+          task.completedDate !== undefined &&
+          task.completedDate <= selectedDate;
+
+        return {
+          ...task,
+          completed: isCompletedOnSelectedDate,
+        };
+      })
+      .sort((a, b) => {
+        // Active tasks first, completed tasks pushed to bottom
+        if (a.completed !== b.completed) {
+          return a.completed ? 1 : -1;
+        }
+        return a.order - b.order;
+      });
+  }, [allTasks, selectedDate]);
+
+  // 3. Add task: created on selectedDate, carries forward to all future days
   const addTodo = async (text: string) => {
-    if (todos.length >= 20) {
-      throw new Error('Maximum 20 tasks per day.');
-    }
-    const newTask: TodoTask = {
-      id: crypto.randomUUID(),
-      text: text.trim(),
-      completed: false,
-      order: todos.length,
-    };
-    const next = [...todos, newTask];
-    await saveTodos(next);
-  };
-
-  const toggleTodo = async (taskId: string) => {
-    const updated = todos.map(t => t.id === taskId ? { ...t, completed: !t.completed } : t);
-    // Collapse completed tasks to bottom
-    const active = updated.filter(t => !t.completed);
-    const completed = updated.filter(t => t.completed);
-    const sorted = [...active, ...completed];
-    await saveTodos(sorted);
-  };
-
-  const deleteTodo = async (taskId: string) => {
-    const next = todos.filter(t => t.id !== taskId);
-    await saveTodos(next);
-  };
-
-  const clearCompleted = async () => {
-    const next = todos.filter(t => !t.completed);
-    await saveTodos(next);
-  };
-
-  const carryForward = async () => {
     if (!user || !db) return;
-    
-    // Get yesterday's date
-    const d = new Date(selectedDate);
-    d.setDate(d.getDate() - 1);
-    
-    const yyyy = d.getFullYear();
-    const mm = String(d.getMonth() + 1).padStart(2, '0');
-    const dd = String(d.getDate()).padStart(2, '0');
-    const yesterdayStr = `${yyyy}-${mm}-${dd}`;
+    const trimmed = text.trim();
+    if (!trimmed) return;
 
-    // Read yesterday's doc
-    const res = await fetch(`/api/todos/get?uid=${user.uid}&date=${yesterdayStr}`);
-    // Wait, let's query direct from firestore instead of an API route since we are on the client side!
-    // That is way easier and faster:
-    const { getDoc } = await import('firebase/firestore');
-    const yesterdayDocRef = doc(db, `users/${user.uid}/todos`, yesterdayStr);
-    const yesterdaySnap = await getDoc(yesterdayDocRef);
-    
-    if (yesterdaySnap.exists()) {
-      const yesterdayData = yesterdaySnap.data();
-      const yesterdayTasks: TodoTask[] = yesterdayData.tasks || [];
-      const incomplete = yesterdayTasks.filter(t => !t.completed);
-      
-      // Append incomplete to today's list, ensuring unique IDs and max 20 limit
-      const existingIds = new Set(todos.map(t => t.text)); // avoid duplicating identical text tasks
-      const toAdd = incomplete.filter(t => !existingIds.has(t.text));
-      
-      const combined = [...todos];
-      for (const t of toAdd) {
-        if (combined.length >= 20) break;
-        combined.push({
-          id: crypto.randomUUID(), // assign fresh ID for today
-          text: t.text,
-          completed: false,
-          order: combined.length,
-        });
-      }
-      
-      await saveTodos(combined);
+    if (todos.length >= 30) {
+      throw new Error('Maximum 30 tasks per day.');
+    }
+
+    const taskId = crypto.randomUUID();
+    const maxOrder = allTasks.reduce((max, t) => Math.max(max, t.order || 0), 0);
+
+    const newTaskData = {
+      id: taskId,
+      text: trimmed,
+      completed: false,
+      order: maxOrder + 1,
+      createdDate: selectedDate,
+      createdAt: serverTimestamp(),
+      completedDate: null,
+      completedAt: null,
+      removed: false,
+      removedDate: null,
+      removedAt: null,
+    };
+
+    const taskRef = doc(db, `users/${user.uid}/tasks`, taskId);
+    await setDoc(taskRef, newTaskData);
+  };
+
+  // 4. Toggle completion state
+  const toggleTodo = async (taskId: string) => {
+    if (!user || !db) return;
+    const task = allTasks.find((t) => t.id === taskId);
+    if (!task) return;
+
+    const taskRef = doc(db, `users/${user.uid}/tasks`, taskId);
+
+    if (!task.completed) {
+      // Mark as completed on selectedDate
+      await updateDoc(taskRef, {
+        completed: true,
+        completedDate: selectedDate,
+        completedAt: serverTimestamp(),
+      });
+    } else {
+      // Unmark completed -> become active again
+      await updateDoc(taskRef, {
+        completed: false,
+        completedDate: null,
+        completedAt: null,
+      });
     }
   };
 
-  return { todos, loading, saveTodos, addTodo, toggleTodo, deleteTodo, clearCompleted, carryForward };
+  // 5. Delete task
+  const deleteTodo = async (taskId: string) => {
+    if (!user || !db) return;
+    const taskRef = doc(db, `users/${user.uid}/tasks`, taskId);
+    // Mark as removed from selectedDate onward (and delete from active Firestore)
+    await deleteDoc(taskRef);
+  };
+
+  // 6. Clear completed tasks
+  const clearCompleted = async () => {
+    if (!user || !db) return;
+    const completedOnSelectedDate = todos.filter((t) => t.completed);
+    for (const t of completedOnSelectedDate) {
+      const taskRef = doc(db, `users/${user.uid}/tasks`, t.id);
+      await deleteDoc(taskRef);
+    }
+  };
+
+  // 7. Reorder tasks
+  const saveTodos = async (reorderedTodos: TodoTask[]) => {
+    if (!user || !db) return;
+    for (let i = 0; i < reorderedTodos.length; i++) {
+      const t = reorderedTodos[i];
+      const taskRef = doc(db, `users/${user.uid}/tasks`, t.id);
+      await updateDoc(taskRef, {
+        order: i,
+      });
+    }
+  };
+
+  // 8. Carry Forward (Idempotent: does not create duplicates)
+  const carryForward = useCallback(async () => {
+    if (!user || !db) return;
+    // With persistent lifecycle, all uncompleted tasks with createdDate <= selectedDate
+    // are already automatically carried forward.
+    // If there are any tasks with createdDate > selectedDate that the user wants to pull to today:
+    const futureTasks = allTasks.filter(
+      (t) => !t.completed && !t.removed && t.createdDate > selectedDate
+    );
+    for (const t of futureTasks) {
+      const taskRef = doc(db, `users/${user.uid}/tasks`, t.id);
+      await updateDoc(taskRef, {
+        createdDate: selectedDate,
+      });
+    }
+  }, [user, allTasks, selectedDate]);
+
+  return {
+    todos,
+    loading,
+    saveTodos,
+    addTodo,
+    toggleTodo,
+    deleteTodo,
+    clearCompleted,
+    carryForward,
+  };
 }
